@@ -21,7 +21,6 @@ Blade {
         id: optionsModel
         ListElement { name: "VIEW"; type: "view"; options: "LIST,BIG LIST,THUMBNAIL,PIC THUMBS,IMAGE WRAP,POSTER"; currentOption: 0} // cannot assign js array :/
         ListElement { name: "SORT BY"; type: "sort"; options: "NAME,SIZE,DATE"; currentOption: 0}
-        ListElement { name: "SLIDESHOW"; type: "slideshow" }
     }
 
     content: Column {
@@ -46,8 +45,6 @@ Blade {
                     videoOptions.viewChanged(item.modeldata.options.split(",")[item.modeldata.currentOption])
                 else if (item.modeldata.type == "sort")
                     videoOptions.sortOrderChanged(item.modeldata.options.split(",")[item.modeldata.currentOption])
-                else if (item.modeldata.type == "slideshow")
-                    videoOptions.slideShowClicked()
             }
         }
     }

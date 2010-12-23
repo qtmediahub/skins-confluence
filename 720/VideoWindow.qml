@@ -47,12 +47,6 @@ Window {
         onSortOrderChanged: {
             videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, sortOrderType)
         }
-
-        onSlideShowClicked: {
-            root.maximized = true // ## broken
-            slideShow.rootIndex = viewLoader.item.rootIndex
-            slideShow.running = true
-        }
     }
 
     Component {
