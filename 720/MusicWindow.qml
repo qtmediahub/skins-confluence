@@ -19,71 +19,60 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.components 1.0
+import "../components/"
 
 Window {
     id: root
 
-    Panel {
-        id: sourcesWindow
-        x: 60
-        y: 80
-        width: 700
-        height: 550
+    bladeComponent: MusicWindowBlade {
+        id: musicWindowBlade
+        parent: root
+        visible: true
+        z: 1
 
-       TreeView {
-            id: sourcesListView
-            anchors.fill: parent;
-            treeModel: musicEngine.pluginProperties.musicModel
-            clip: true
-            focus: true;
-            onClicked: {
-                if (currentItem.itemdata.type == "AddNewSource")
-                    confluence.showModal(addMediaSourceDialog)
-                else
-                    videoPlayer.play(currentItem.itemdata.filePath)
+        onViewChanged:  {
+            if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
+                viewLoader.sourceComponent = thumbnailView
+                viewLoader.item.hidePreview = viewType == "PIC THUMBS"
+            } else if (viewType == "LIST" || viewType == "BIG LIST") {
+                viewLoader.sourceComponent = listView
+                viewLoader.item.hidePreview = viewType == "BIG LIST"
             }
-            Keys.onPressed: {
-                if (event.key == Qt.Key_Delete) {
-                    treeModel.removeSearchPath(currentIndex);
-                    event.accepted = true;
-                }
-            }
+        }
+
+        onSortOrderChanged: {
+            musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, sortOrderType)
+                            }
+    }
+
+    Component {
+        id: thumbnailView
+        MediaThumbnailView {
+            engineName: musicEngine.name
+            engineModel: musicEngine.pluginProperties.musicModel
         }
     }
 
-    Item {
-        id: sourceArtWindow
-        anchors.left: sourcesWindow.right;
-        anchors.leftMargin: 65;
-        anchors.bottom: sourcesWindow.bottom;
-
-        width: sourcesArt.width
-        height: sourcesArt.height
-
-        ImageCrossFader {
-            id: sourcesArt
-            anchors.fill: parent;
-
-            width: sourcesListView.currentItem.itemdata.previewWidth
-            height: sourcesListView.currentItem.itemdata.previewHeight
-            source: sourcesListView.currentItem.itemdata.previewUrl
+    Component {
+        id: listView
+        MediaListView {
+            engineName: musicEngine.name
+            engineModel: musicEngine.pluginProperties.musicModel
         }
+    }
+
+    Loader {
+        id: viewLoader
     }
 
     Component.onCompleted: {
         musicEngine.visualElement = root;
         musicEngine.pluginProperties.musicModel.setThemeResourcePath(themeResourcePath);
-    }
 
-    Component {
-        id: addMediaSourceDialog
-        AddMediaSource {
-            title: qsTr("Add Music source")
-            engineModel: musicEngine.pluginProperties.musicModel
-            opacity: 0
-
-            onClosed: sourcesListView.forceActiveFocus()
-        }
+        // FIXME: restore from settings
+        viewLoader.sourceComponent = listView
+        viewLoader.item.engineName = musicEngine.name
+        viewLoader.item.engineModel = musicEngine.pluginProperties.musicModel
     }
 }
 
