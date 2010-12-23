@@ -172,8 +172,7 @@ FocusScope {
                 show(selectedElement)
             else
                 show(mainBlade)
-        } else if((event.key == Qt.Key_Enter) && (event.modifiers == Qt.AltModifier))
-            //else if(event.key == Qt.Key_F12)
+        } else if(event.key == Qt.Key_F12)
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
         else if(event.key == Qt.Key_F11) {
             showModal(aboutDialogComponent)
