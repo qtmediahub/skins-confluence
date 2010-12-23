@@ -61,14 +61,19 @@ Window {
             clip: true
             boundsBehavior: Flickable.StopAtBounds
             flickableDirection:  Flickable.VerticalFlick
-            width: root.maximized ? confluence.width : webView.width; 
-            height: root.maximized ? confluence.height : root.height - 60
+            property int webviewMargin: 200
+            width: root.maximized ? confluence.width : confluence.width - webviewMargin
+            height: root.maximized ? confluence.height : confluence.height - webviewMargin
             contentWidth: webView.width; 
             contentHeight: webView.height
             WebView {
                 id: webView
                 url: defaultUrl
                 opacity: progress == 1 ? 1 : 0.5
+                width: webViewport.width
+                //Need a default/initial value in excess of what I eventually require
+                //or we see unintialized pixmap in the Flickable
+                height: confluence.height
 
                 Behavior on opacity {
                     NumberAnimation{}
