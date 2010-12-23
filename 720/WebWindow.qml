@@ -70,10 +70,10 @@ Window {
                 id: webView
                 url: defaultUrl
                 opacity: progress == 1 ? 1 : 0.5
-                width: webViewport.width
+                preferredWidth: webViewport.width
                 //Need a default/initial value in excess of what I eventually require
                 //or we see unintialized pixmap in the Flickable
-                height: confluence.height
+                preferredHeight: confluence.height
 
                 Behavior on opacity {
                     NumberAnimation{}
@@ -81,7 +81,11 @@ Window {
             }
 
             Behavior on width {
-                NumberAnimation { }
+                NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+            }
+
+            Behavior on height {
+                NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
             }
         }
 
