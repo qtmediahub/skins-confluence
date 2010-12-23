@@ -34,7 +34,7 @@ Item {
                         event.accepted = true
                     }
                 } else if (itemType == "File") {
-                    if (event.key == Qt.Key_I) {
+                    if (event.key == Qt.Key_I && informationSheetComponent) {
                         var sheet =  confluence.showModal(informationSheetComponent)
                         sheet.currentItem = sourcesListView.currentItem // this is not a binding for lazy loading
                         event.accepted = true

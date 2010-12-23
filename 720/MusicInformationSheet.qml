@@ -18,68 +18,62 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import "util.js" as Util
 import confluence.components 1.0
-import "../components/"
 
-Window {
-    id: root
+// We explicitly want to build the model in the QML since we want to the view
+// to entirely control the display of information. 
+// Future work:
+// 1. A live map showing geolocation
 
-    Component {
-        id: musicInformationSheet
-        MusicInformationSheet { }
+Sheet {
+    property variant currentItem
+    width: 600
+    title: qsTr("Music Information")
+
+    resources : ListModel {
+        id: listModel
     }
 
-
-    bladeComponent: MusicWindowBlade {
-        id: musicWindowBlade
-        parent: root
-        visible: true
-        z: 1
-
-        onViewChanged:  {
-            if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
-                viewLoader.sourceComponent = thumbnailView
-                viewLoader.item.hidePreview = viewType == "PIC THUMBS"
-            } else if (viewType == "LIST" || viewType == "BIG LIST") {
-                viewLoader.sourceComponent = listView
-                viewLoader.item.hidePreview = viewType == "BIG LIST"
-            }
+    onCurrentItemChanged : {
+        listModel.clear()
+        var item = currentItem.itemdata
+        // First add items that are guaranteed to be present
+        listModel.append({key: qsTr("File name"), value: item.fileName})
+        listModel.append({key: qsTr("File path"), value: item.filePath})
+        listModel.append({key: qsTr("File size"), value: Util.toHumanReadableBytes(item.fileSize)})
+        listModel.append({key: qsTr("File date/time"), value: item.fileDateTime})
+        // Tag information may or may not be present
+        var translations = { // FIXME: make global
+            title: qsTr("Title"),
+            artist: qsTr("Artist"),
+            album: qsTr("Album"),
+            comment: qsTr("Comment"),
+            genre: qsTr("Genre"),
+            year: qsTr("Year"),
+            track: qsTr("Track"),
+            length: qsTr("Length"),
+            bitrate: qsTr("Bitrate"),
+            sampleRate: qsTr("Sample Rate"),
+            channels: qsTr("Channels")
         }
-
-        onSortOrderChanged: {
-            musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, sortOrderType)
-                            }
-    }
-
-    Component {
-        id: thumbnailView
-        MediaThumbnailView {
-            engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.musicModel
+        for (var k in item.tagProperties) {
+            var v = item.tagProperties[k];
+            if (v == "" || !(k in translations))
+                continue;
+            listModel.append({key: translations[k], value: v})
         }
-    }
+                           }
 
-    Component {
+    ConfluenceListView {
         id: listView
-        MediaListView {
-            engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.musicModel
+        anchors.fill: parent
+        model : listModel
+
+        delegate: ConfluenceTwoColumnDelegate {
+            column1Text: model.key
+            column2Text: model.value
         }
-    }
-
-    Loader {
-        id: viewLoader
-    }
-
-    Component.onCompleted: {
-        musicEngine.visualElement = root;
-        musicEngine.pluginProperties.musicModel.setThemeResourcePath(themeResourcePath);
-
-        // FIXME: restore from settings
-        viewLoader.sourceComponent = listView
-        viewLoader.item.engineName = musicEngine.name
-        viewLoader.item.engineModel = musicEngine.pluginProperties.musicModel
-        viewLoader.item.informationSheetComponent = musicInformationSheet
     }
 }
 
