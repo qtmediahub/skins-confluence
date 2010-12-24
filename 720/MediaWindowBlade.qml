@@ -26,7 +26,7 @@ Blade {
             anchors.bottomMargin: 10
         }
         
-        ConfluenceListView2 {
+        ActionListView {
             id: listView
             width: parent.width
             height: parent.height - banner.height
