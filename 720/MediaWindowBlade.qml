@@ -5,7 +5,9 @@ Blade {
     id: pictureOptions
     clip: false
 
-    property variant actionList
+    // ## Need to check why list<ConfluenceAction> does not work, but it works
+    // in my standalone example.
+    property list<QtObject> actionList
 
     bladeWidth: banner.x + banner.width + 50
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"

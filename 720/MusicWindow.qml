@@ -39,13 +39,13 @@ Window {
 
         resources: [
             // standard actions shared by all views
-            Action {
+            ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
                 onActivated: musicWindowBlade.viewChanged()
             },
-            Action {
+            ConfluenceAction {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]

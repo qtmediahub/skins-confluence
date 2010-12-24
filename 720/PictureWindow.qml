@@ -52,19 +52,19 @@ Window {
 
         resources: [
             // standard actions shared by all views
-            Action {
+            ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
                 onActivated: pictureWindowBlade.viewChanged()
             },
-            Action {
+            ConfluenceAction {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
                 onActivated: pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, currentOption())
             },
-            Action {
+            ConfluenceAction {
                 id: slideShowAction
                 text: qsTr("SLIDESHOW")
                 onActivated: pictureWindowBlade.startSlideShow()
