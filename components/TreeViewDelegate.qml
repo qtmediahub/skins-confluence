@@ -22,6 +22,7 @@ Item {
     }
 
     function trigger() {
+        var visualDataModel = ListView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
             ListView.view.rootIndexChanged();
