@@ -22,7 +22,6 @@ import QtQuick 1.0
 Repeater {
     id: repeater
     property int currentIndex: 0
-    property string translationContext
     property alias actionModel: repeater.model
 
     signal activated(variant item)
