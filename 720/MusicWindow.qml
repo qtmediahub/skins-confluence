@@ -30,13 +30,30 @@ Window {
     }
 
 
-    bladeComponent: MusicWindowBlade {
+    bladeComponent: MediaWindowBlade {
         id: musicWindowBlade
         parent: root
         visible: true
         z: 1
+        actionList: [viewAction, sortByAction]
 
-        onViewChanged:  {
+        resources: [
+            // standard actions shared by all views
+            Action {
+                id: viewAction
+                text: qsTr("VIEW")
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
+                onActivated: musicWindowBlade.viewChanged()
+            },
+            Action {
+                id: sortByAction
+                text: qsTr("SORT BY")
+                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
+                onActivated: musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, currentOption())
+            }]
+
+        function viewChanged() {
+            var viewType = viewAction.currentOption()
             if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
                 viewLoader.sourceComponent = thumbnailView
                 viewLoader.item.hidePreview = viewType == "PIC THUMBS"
@@ -45,10 +62,6 @@ Window {
                 viewLoader.item.hidePreview = viewType == "BIG LIST"
             }
         }
-
-        onSortOrderChanged: {
-            musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, sortOrderType)
-                            }
     }
 
     Component {

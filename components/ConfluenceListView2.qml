@@ -23,6 +23,7 @@ Repeater {
     id: repeater
     property int currentIndex: 0
     property string translationContext
+    property alias actionModel: repeater.model
 
     signal activated(variant item)
 
@@ -57,7 +58,7 @@ Repeater {
         ConfluenceText {
             id: delegateText
             font.pointSize: 16
-            text: qsTranslate(repeater.translationContext, model.name)
+            text: model.modelData.text
             horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: delegateImage.left
@@ -67,7 +68,7 @@ Repeater {
         ConfluenceText {
             id: delegateValue
             font.pointSize: 16
-            text: model.options ? model.options.split(",")[model.currentOption] : ""
+            text: model.modelData.currentOption()
             horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: delegateImage.right
@@ -101,13 +102,7 @@ Repeater {
                 repeater.forceActiveFocus()
             }
 
-            onClicked: {
-                if (model.options) {
-                    var options = model.options.split(",")
-                    repeater.model.setProperty(index, "currentOption", (currentOption+1)%options.length)
-                }
-                repeater.activated(delegate)
-            }
+            onClicked: model.modelData.activateNextOption()
         }
     }
 }

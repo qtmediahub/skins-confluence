@@ -19,17 +19,35 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.components 1.0
+import "../components/"
 
 Window {
     id: root
 
-    bladeComponent: VideoWindowBlade {
+    bladeComponent: MediaWindowBlade {
         id: videoWindowBlade
         parent: root
         visible: true
         z: 1
+        actionList: [viewAction, sortByAction]
 
-        onViewChanged:  {
+        resources: [
+            // standard actions shared by all views
+            Action {
+                id: viewAction
+                text: qsTr("VIEW")
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
+                onActivated: videoWindowBlade.viewChanged()
+            },
+            Action {
+                id: sortByAction
+                text: qsTr("SORT BY")
+                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
+                onActivated: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption())
+            }]
+
+        function viewChanged() {
+            var viewType = viewAction.currentOption()
             if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
                 viewLoader.sourceComponent = thumbnailView
                 viewLoader.item.hidePreview = viewType == "PIC THUMBS"
@@ -39,13 +57,6 @@ Window {
             } else if (viewType == "POSTER") {
                 viewLoader.sourceComponent = posterView
             }
-
-            viewLoader.item.engineName = videoEngine.name
-            viewLoader.item.engineModel = videoEngine.pluginProperties.videoModel
-        }
-
-        onSortOrderChanged: {
-            videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, sortOrderType)
         }
     }
 

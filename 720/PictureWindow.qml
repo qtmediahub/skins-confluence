@@ -43,13 +43,35 @@ Window {
             }
     }
 
-    bladeComponent: PictureWindowBlade {
+    bladeComponent: MediaWindowBlade {
         id: pictureWindowBlade
         parent: root
         visible: true
         z: 1
+        actionList: [viewAction, sortByAction, slideShowAction]
 
-        onViewChanged:  {
+        resources: [
+            // standard actions shared by all views
+            Action {
+                id: viewAction
+                text: qsTr("VIEW")
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
+                onActivated: pictureWindowBlade.viewChanged()
+            },
+            Action {
+                id: sortByAction
+                text: qsTr("SORT BY")
+                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
+                onActivated: pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, currentOption())
+            },
+            Action {
+                id: slideShowAction
+                text: qsTr("SLIDESHOW")
+                onActivated: pictureWindowBlade.startSlideShow()
+            }]
+
+        function viewChanged() {
+            var viewType = viewAction.currentOption()
             if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
                 viewLoader.sourceComponent = thumbnailView
                 viewLoader.item.hidePreview = viewType == "PIC THUMBS"
@@ -59,15 +81,11 @@ Window {
             }
         }
 
-        onSortOrderChanged: {
-            pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, sortOrderType)
-                            }
-
-        onSlideShowClicked: {
+        function startSlideShow() {
             slideShow.rootIndex = viewLoader.item.rootIndex
             slideShow.restart()
             confluence.showFullScreen(slideShow)
-                            }
+        }
     }
 
     Component {
