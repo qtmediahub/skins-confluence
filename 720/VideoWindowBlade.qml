@@ -17,10 +17,9 @@ Blade {
     onExited: state = "closed"
 
     resources: ListModel {
-        // FIXME: Cannot qsTr() the values of ListElement. We need the equivalent of QT_TRANSLATE_NOOP
         id: optionsModel
-        ListElement { name: "VIEW"; type: "view"; options: "LIST,BIG LIST,THUMBNAIL,PIC THUMBS,IMAGE WRAP,POSTER"; currentOption: 0} // cannot assign js array :/
-        ListElement { name: "SORT BY"; type: "sort"; options: "NAME,SIZE,DATE"; currentOption: 0}
+        ListElement { name: QT_TR_NOOP("VIEW"); type: "view"; options: "LIST,BIG LIST,THUMBNAIL,PIC THUMBS,IMAGE WRAP,POSTER"; currentOption: 0} // cannot assign js array :/
+        ListElement { name: QT_TR_NOOP("SORT BY"); type: "sort"; options: "NAME,SIZE,DATE"; currentOption: 0}
     }
 
     content: Column {
@@ -40,6 +39,7 @@ Blade {
             width: parent.width
             height: parent.height - banner.height
             model: optionsModel
+            translationContext: "VideoWindowBlade"
             onActivated: {
                 if (item.modeldata.type == "view")
                     videoOptions.viewChanged(item.modeldata.options.split(",")[item.modeldata.currentOption])

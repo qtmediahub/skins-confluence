@@ -22,6 +22,7 @@ import QtQuick 1.0
 Repeater {
     id: repeater
     property int currentIndex: 0
+    property string translationContext
 
     signal activated(variant item)
 
@@ -56,7 +57,7 @@ Repeater {
         ConfluenceText {
             id: delegateText
             font.pointSize: 16
-            text: model.name
+            text: qsTranslate(repeater.translationContext, model.name)
             horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: delegateImage.left
