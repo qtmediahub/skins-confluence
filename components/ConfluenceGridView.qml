@@ -44,62 +44,7 @@ GridView {
 
     VisualDataModel {
         id: visualDataModel
-        delegate : Item {
-            id: delegateItem
-            property variant itemdata : model
-            width: sourceImg.width
-            height: sourceImg.height
-
-            Image {
-                id: sourceImg
-                width: 142
-                height: 142
-                fillMode: Image.PreserveAspectFit
-                anchors.verticalCenter: parent.verticalCenter
-                z: 1 // ensure it is above the background
-                source: model.previewUrl
-            }
-
-            Text {
-                anchors.bottom: sourceImg.bottom
-                z: 2 // ensure it is above the background
-                width:  sourceImg.width
-                text: model.display
-                elide: Text.ElideRight
-                horizontalAlignment: Text.AlignHCenter
-                font.pointSize: 10
-                font.weight: Font.Light
-                color: "white"
-                visible: model.type != "File"
-            }
-
-            function trigger() {
-                if (model.hasModelChildren) {
-                    visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-                    gridView.rootIndexChanged();
-                } else if (model.type == "DotDot") { // FIXME: Make this MediaModel.DotDot when we put the model code in a library
-                    visualDataModel.rootIndex = visualDataModel.parentModelIndex();
-                    gridView.rootIndexChanged();
-                } else {
-                    gridView.currentIndex = index;
-                    gridView.clicked()
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent;
-                hoverEnabled: true
-                onEntered: {
-                    gridView.currentIndex = index
-                    currentItem.forceActiveFocus()
-                }
-                onClicked: {
-                    delegateItem.trigger()
-                }
-            }
-
-            Keys.onReturnPressed: delegateItem.trigger()
-        }
+        delegate : GridViewDelegate { }
     }
 }
 
