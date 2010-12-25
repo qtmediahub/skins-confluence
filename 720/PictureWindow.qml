@@ -43,6 +43,11 @@ Window {
             }
     }
 
+    MediaScanInfo {
+        x: 765
+        currentPath: pictureEngine.pluginProperties.pictureModel.currentScanPath
+    }
+
     bladeComponent: MediaWindowBlade {
         id: pictureWindowBlade
         parent: root

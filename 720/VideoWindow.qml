@@ -24,6 +24,11 @@ import "../components/"
 Window {
     id: root
 
+    MediaScanInfo {
+        x: 765
+        currentPath: videoEngine.pluginProperties.videoModel.currentScanPath
+    }
+
     bladeComponent: MediaWindowBlade {
         id: videoWindowBlade
         parent: root

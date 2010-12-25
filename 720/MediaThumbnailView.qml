@@ -15,9 +15,11 @@ Item {
         ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onActivated: sourcesListView.rootIndex = undefined; }
         ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: engineModel.removeSearchPath(sourcesListView.currentIndex)
                            enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" } 
+        ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onActivated: engineModel.rescan(sourcesListView.currentIndex)
+                           enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" } 
         ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
 
-        actionModel: [rootAction, removeAction, addSourceAction]
+        actionModel: [rootAction, removeAction, rescanAction, addSourceAction]
     }
 
     Panel {

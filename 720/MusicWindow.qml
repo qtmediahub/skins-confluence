@@ -29,6 +29,10 @@ Window {
         MusicInformationSheet { }
     }
 
+    MediaScanInfo {
+        x: 765
+        currentPath: musicEngine.pluginProperties.musicModel.currentScanPath
+    }
 
     bladeComponent: MediaWindowBlade {
         id: musicWindowBlade
