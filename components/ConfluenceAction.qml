@@ -23,11 +23,13 @@ QtObject {
     property string text
     property variant options
     property int currentOptionIndex : 0
+    property bool enabled: true
 
     signal activated
     
     function activate() {
-        activated()
+        if (enabled)
+            activated()
     }
 
     function currentOption() {

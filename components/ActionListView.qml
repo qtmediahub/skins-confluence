@@ -60,7 +60,7 @@ Column {
             Text {
                 id: delegateText
                 font.pointSize: 16
-                color: "white"
+                color: model.modelData.enabled ? "white" : "gray"
                 text: model.modelData.text
                 horizontalAlignment: Text.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
@@ -71,7 +71,7 @@ Column {
             Text {
                 id: delegateValue
                 font.pointSize: 16
-                color: "white"
+                color: model.modelData.enabled ? "white" : "gray"
                 text: model.modelData.currentOption()
                 horizontalAlignment: Text.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
@@ -100,6 +100,7 @@ Column {
                 id: mouseArea
                 anchors.fill: parent
                 hoverEnabled: true
+                enabled: model.modelData.enabled
 
                 onEntered: {
                     root.currentIndex = index
