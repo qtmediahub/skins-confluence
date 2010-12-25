@@ -26,9 +26,6 @@ Item {
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
             ListView.view.rootIndexChanged();
-        } else if (model.type == "DotDot") { // FIXME: Make this MediaModel.DotDot when we put the model code in a library
-            visualDataModel.rootIndex = visualDataModel.parentModelIndex();
-            ListView.view.rootIndexChanged();
         } else {
             ListView.view.currentIndex = index;
             ListView.view.clicked()
