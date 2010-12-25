@@ -417,6 +417,16 @@ FocusScope {
             activeFocus ? videoPlayer.forceActiveFocus() : undefined
     }
 
+    function showContextMenu(item, x, y) {
+        mouseGrabber.opacity = 0.9
+        item.closed.connect(function() { mouseGrabber.opacity = 0 })
+        item.parent = confluence // ## restore parent?
+        item.z = background.z + 2
+        item.x = x
+        item.y = y
+        item.opacity = 1
+    }
+
     function showModal(component) {
         var item = component.createObject(mouseGrabber)
         mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state

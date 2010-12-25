@@ -22,28 +22,30 @@ import QtQuick 1.0
 Column {
     id: root
     property alias actionModel: repeater.model
-    signal activated(variant item)
+    signal activated(variant index)
+    width: 400 // ## Requires explicit width to be set for now
+    property bool hideItemBackground: false
+    property int currentIndex: 0
 
     Repeater {
         id: repeater
-        property int currentIndex: 0
 
         Keys.onEnterPressed:
-            repeater.activated(repeater.currentItem)
+            root.activated(root.currentItem)
 
         delegate: Item {
             id: delegate
             property variant modeldata: model
-            anchors.right: parent.right
-            transformOrigin: Item.Right
-            width: parent.width
+            width: root.width
             height: delegateText.height + 20
             focus: true
+            clip: true
 
             Image {
                 id: delegateBackground
                 source: themeResourcePath + "/media/button-nofocus.png"
                 anchors.fill: parent
+                visible: !root.hideItemBackground
             }
 
             Image {
@@ -53,22 +55,23 @@ Column {
                 width: parent.width-4
                 height: parent.height
                 opacity: 0
-
             }
 
-            ConfluenceText {
+            Text {
                 id: delegateText
                 font.pointSize: 16
+                color: "white"
                 text: model.modelData.text
                 horizontalAlignment: Text.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: delegateImage.left
-                anchors.leftMargin: 10
+                anchors.leftMargin: 15
             }
 
-            ConfluenceText {
+            Text {
                 id: delegateValue
                 font.pointSize: 16
+                color: "white"
                 text: model.modelData.currentOption()
                 horizontalAlignment: Text.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
@@ -79,7 +82,7 @@ Column {
             states:  [
                 State {
                     name: "selected"
-                    when: repeater.currentIndex == index
+                    when: root.currentIndex == index
                     PropertyChanges {
                         target: delegateImage
                         opacity: 1
@@ -99,11 +102,15 @@ Column {
                 hoverEnabled: true
 
                 onEntered: {
-                    repeater.currentIndex = index
+                    root.currentIndex = index
                     repeater.forceActiveFocus()
                 }
 
-                onClicked: model.modelData.activateNextOption()
+                onClicked: {
+                    // ## Order is important for ContextMenu
+                    root.activated(root.currentIndex)
+                    model.modelData.activateNextOption()
+                           }
             }
         }
     }

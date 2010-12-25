@@ -24,6 +24,7 @@ ConfluenceListView {
     property alias treeModel : visualDataModel.model
     property alias rootIndex : visualDataModel.rootIndex
     signal clicked()
+    signal rightClicked(int mouseX, int mouseY)
     signal rootIndexChanged() // this should be automatic, but doesn't trigger :/
 
     function currentModelIndex() {

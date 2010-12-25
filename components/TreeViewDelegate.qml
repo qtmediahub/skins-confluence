@@ -35,12 +35,17 @@ Item {
     MouseArea {
         anchors.fill: parent;
         hoverEnabled: true
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: {
             ListView.view.currentIndex = index
             currentItem.forceActiveFocus()
         }
         onClicked: {
-            delegateItem.trigger()
+            if (mouse.button == Qt.LeftButton)
+                delegateItem.trigger()
+            else {
+                ListView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
+            }
         }
     }
 
