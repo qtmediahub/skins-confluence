@@ -13,11 +13,11 @@ Item {
         id: contextMenu
         title: qsTr("Actions")
         ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onActivated: sourcesListView.rootIndex = undefined; }
-        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: { console.log(sourcesListView.currentIndex); engineModel.removeSearchPath(sourcesListView.currentIndex) } }
-        ConfluenceAction { id: viewAction; text: qsTr("View"); }
+        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: engineModel.removeSearchPath(sourcesListView.currentIndex)
+                           enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" } 
         ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
 
-        actionModel: [rootAction, removeAction, viewAction, addSourceAction]
+        actionModel: [rootAction, removeAction, addSourceAction]
     }
 
     Panel {
@@ -39,7 +39,6 @@ Item {
             }
             onRightClicked: {
                 var scenePos = sourcesPanel.mapToItem(null, mouseX, mouseY)
-                console.log(scenePos.x + ' ' + scenePos.y)
                 confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
             }
             Keys.onPressed: {
