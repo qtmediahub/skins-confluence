@@ -43,12 +43,17 @@ Item {
     MouseArea {
         anchors.fill: parent;
         hoverEnabled: true
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: {
             GridView.view.currentIndex = index
             currentItem.forceActiveFocus()
         }
         onClicked: {
-            delegateItem.trigger()
+            if (mouse.button == Qt.LeftButton)
+                delegateItem.trigger()
+            else {
+                GridView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
+            }
         }
     }
 

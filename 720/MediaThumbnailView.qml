@@ -9,8 +9,19 @@ Item {
     property bool hidePreview: false
     property alias rootIndex: sourcesListView.rootIndex
 
+    ContextMenu {
+        id: contextMenu
+        title: qsTr("Actions")
+        ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onActivated: sourcesListView.rootIndex = undefined; }
+        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: engineModel.removeSearchPath(sourcesListView.currentIndex) }
+        ConfluenceAction { id: viewAction; text: qsTr("View"); }
+        ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
+
+        actionModel: [rootAction, removeAction, viewAction, addSourceAction]
+    }
+
     Panel {
-        id: sourcesWindow
+        id: sourcesPanel
         x: 60
         y: 80
         width: root.hidePreview ? 950 : 700
@@ -25,6 +36,10 @@ Item {
             onClicked: {
                 if (currentItem.itemdata.type == "AddNewSource")
                     confluence.showModal(addMediaSourceDialog)
+            }
+            onRightClicked: {
+                var scenePos = sourcesPanel.mapToItem(null, mouseX, mouseY)
+                confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
             }
             Keys.onPressed: {
                 var itemType = sourcesListView.currentItem.itemdata.type
@@ -46,9 +61,9 @@ Item {
 
     Item {
         id: sourceArtWindow
-        anchors.left: sourcesWindow.right;
+        anchors.left: sourcesPanel.right;
         anchors.leftMargin: 65;
-        anchors.bottom: sourcesWindow.bottom;
+        anchors.bottom: sourcesPanel.bottom;
         opacity: root.hidePreview ? 0 : 1
 
         width: sourcesArt.width
