@@ -31,25 +31,9 @@ GridView {
         return visualDataModel.modelIndex(currentIndex);
     }
 
-    BorderImage {
-        id: scrollbar
-        height: listView.height
-        anchors.right: listView.right
-
-        source: themeResourcePath + "/media/ScrollBarV.png"
-        border { top: 14; right: 0; bottom: 14; left: 0; }
-        width: 24
-
-        BorderImage {
-            id: slider
-            width: scrollbar.width
-            // got to love the math here
-            y: Math.max(0, listView.visibleArea.yPosition * scrollbar.height)
-            height: listView.visibleArea.heightRatio * scrollbar.height + Math.min(0, listView.visibleArea.yPosition * scrollbar.height)
-                    + Math.min((1-listView.visibleArea.heightRatio-listView.visibleArea.yPosition) * scrollbar.height, 0)
-            source: themeResourcePath + "/media/ScrollBarV_bar.png"
-            border { top: 14; right: 0; bottom: 14; left: 0; }
-        }
+    ScrollBar {
+        id: verticalScrollbar
+        flickable: listView
     }
 
     model : visualDataModel
