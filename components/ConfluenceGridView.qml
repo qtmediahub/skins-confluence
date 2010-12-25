@@ -20,7 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 
 GridView {
-    id: listView
+    id: gridView
     property alias treeModel : visualDataModel.model
     property alias rootIndex : visualDataModel.rootIndex
     signal clicked()
@@ -33,7 +33,7 @@ GridView {
 
     ScrollBar {
         id: verticalScrollbar
-        flickable: listView
+        flickable: gridView
     }
 
     model : visualDataModel
@@ -76,13 +76,13 @@ GridView {
             function trigger() {
                 if (model.hasModelChildren) {
                     visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-                    listView.rootIndexChanged();
+                    gridView.rootIndexChanged();
                 } else if (model.type == "DotDot") { // FIXME: Make this MediaModel.DotDot when we put the model code in a library
                     visualDataModel.rootIndex = visualDataModel.parentModelIndex();
-                    listView.rootIndexChanged();
+                    gridView.rootIndexChanged();
                 } else {
-                    listView.currentIndex = index;
-                    listView.clicked()
+                    gridView.currentIndex = index;
+                    gridView.clicked()
                 }
             }
 
@@ -90,7 +90,7 @@ GridView {
                 anchors.fill: parent;
                 hoverEnabled: true
                 onEntered: {
-                    listView.currentIndex = index
+                    gridView.currentIndex = index
                     currentItem.forceActiveFocus()
                 }
                 onClicked: {
