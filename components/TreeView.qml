@@ -27,7 +27,6 @@ ConfluenceListView {
     signal rootIndexChanged() // this should be automatic, but doesn't trigger :/
 
     function currentModelIndex() {
-        //console.log(currentItem.itemdata.filePath);
         return visualDataModel.modelIndex(currentIndex);
     }
 
