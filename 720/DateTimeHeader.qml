@@ -4,23 +4,33 @@ import "../components/"
 Header {
     id: root
     property bool showDate: true
-    width: text.x + text.width + 10
+    width: dateTimeText.x + dateTimeText.width + 10
+    property variant now
+
+    Timer {
+        id: updateTimer
+        interval: 1000
+        repeat: true
+        running: true
+        triggeredOnStart: true
+        onTriggered: { root.now = backend.currentDateTime() }
+    }
 
     function currentTime() {
-              return "<span style=\"color:'white'\">" + Qt.formatDateTime(backend.currentDateTime, "hh:mm:ss AP") + "</span>"
+        var now = new Date();
+        return "<span style=\"color:'white'\">" + Qt.formatDateTime(root.now, "hh:mm:ss AP") + "</span>"
     }
 
     function currentDateTime() {
-        return "<span style=\"color:'gray'\">" + Qt.formatDateTime(backend.currentDateTime, "dddd, MMMM, yyyy") + " </span> " 
+        return "<span style=\"color:'gray'\">" + Qt.formatDateTime(root.now, "dddd, MMMM, yyyy") + " </span> " 
                + "<span style=\"color:'white'\"> | </span>"
                + currentTime()
  
     }
 
     Text {
-        property string plainCurrentTime: Qt.formatDateTime(backend.currentDateTime, "hh:mm:ss AP")
-        property string plainCurrentDateTime: Qt.formatDateTime(backend.currentDateTime, "dddd, MMMM, yyyy") + " | "
-                                              + plainCurrentTime
+        property string plainCurrentTime: Qt.formatDateTime(root.now, "hh:mm:ss AP")
+        property string plainCurrentDateTime: Qt.formatDateTime(root.now, "dddd, MMMM, yyyy") + " | " + plainCurrentTime
         id: shadowText
         x: root.showDate ? 41 : 21;
         y: 1
@@ -30,10 +40,11 @@ Header {
     }
 
     Text {
+        id: dateTimeText
         x: root.showDate ? 40 : 20
-        id: text // same as the property?
         text: showDate ? currentDateTime() : currentTime()
         font.pointSize: 14
+        color: "white"
     }
 }
 
