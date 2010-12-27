@@ -22,7 +22,7 @@ Header {
     }
 
     function currentDateTime() {
-        return "<span style=\"color:'gray'\">" + Qt.formatDateTime(root.now, "dddd, MMMM, yyyy") + " </span> " 
+        return "<span style=\"color:'gray'\">" + Qt.formatDateTime(root.now, "dddd, MMMM dd, yyyy") + " </span> " 
                + "<span style=\"color:'white'\"> | </span>"
                + currentTime()
  
@@ -30,7 +30,7 @@ Header {
 
     Text {
         property string plainCurrentTime: Qt.formatDateTime(root.now, "hh:mm:ss AP")
-        property string plainCurrentDateTime: Qt.formatDateTime(root.now, "dddd, MMMM, yyyy") + " | " + plainCurrentTime
+        property string plainCurrentDateTime: Qt.formatDateTime(root.now, "dddd, MMMM dd, yyyy") + " | " + plainCurrentTime
         id: shadowText
         x: root.showDate ? 41 : 21;
         y: 1
