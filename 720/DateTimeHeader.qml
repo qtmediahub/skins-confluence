@@ -13,7 +13,7 @@ Header {
         repeat: true
         running: true
         triggeredOnStart: true
-        onTriggered: { root.now = backend.currentDateTime() }
+        onTriggered: { root.now = new Date() }
     }
 
     function currentTime() {
