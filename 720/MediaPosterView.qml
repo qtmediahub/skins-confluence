@@ -27,6 +27,8 @@ Item {
     property variant engineName
     property variant engineModel
 
+    signal itemTriggered(variant filePath)
+
     BorderImage {
         id: background
         source: themeResourcePath + "/media/ContentPanel2.png"
