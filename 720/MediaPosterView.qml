@@ -27,7 +27,7 @@ Item {
     property variant engineName
     property variant engineModel
 
-    signal itemTriggered(variant filePath)
+    signal itemTriggered(variant itemData)
 
     BorderImage {
         id: background

@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
-import confluence.components 1.0
 import "../components/"
 
 Window {
@@ -41,7 +40,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
+                options: [qsTr("LIST"), qsTr("POSTER"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
                 onActivated: videoWindowBlade.viewChanged()
             },
             ConfluenceAction {
@@ -70,7 +69,7 @@ Window {
         MediaThumbnailView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemTriggered: videoPlayer.playForeground(filePath)
+            onItemTriggered: videoPlayer.playForeground(itemData.filePath)
         }
     }
 
@@ -79,7 +78,7 @@ Window {
         MediaListView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemTriggered: videoPlayer.playForeground(filePath)
+            onItemTriggered: videoPlayer.playForeground(itemData.filePath)
         }
     }
 
@@ -110,27 +109,5 @@ Window {
         viewLoader.item.engineName = videoEngine.name
         viewLoader.item.engineModel = videoEngine.pluginProperties.videoModel
     }
-
-//        states: [
-//            State {
-//                name: "hidden"
-//                PropertyChanges {
-//                    target: sourcesPosterWindow
-//                    opacity: 0
-//                }
-//                PropertyChanges {
-//                    target: sourcesPosterWindow.anchors
-//                    topMargin: root.height
-//                }
-//            }
-//        ]
-
-//        transitions: [
-//            Transition {
-//                NumberAnimation { property: "opacity"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
-//                NumberAnimation { target: sourcesPosterWindow.anchors; property: "topMargin"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
-//            }
-//        ]
-//    }
 }
 
