@@ -55,7 +55,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: video.metaData.coverArtUrlSmall ? video.metaData.coverArtUrlSmall : themeResourcePath + "/media/DefaultAlbumCover.png"
+            source: video.currentItem ? video.currentItem.previewUrl : themeResourcePath + "/media/DefaultAlbumCover.png"
             anchors.fill: parent
             anchors.margins: 6
 

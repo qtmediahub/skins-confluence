@@ -76,9 +76,29 @@ Item {
             }
         }
 
-        Image {
-            id: thumbnail
-            source: video.metaData.coverArtUrlSmall ? video.metaData.coverArtUrlSmall : themeResourcePath + "/media/DefaultAlbumCover.png"
+        BorderImage {
+            id: thumbnailBorder
+            source: themeResourcePath + "/media/" + "ThumbBorder.png"
+            border.left: 10; border.top: 10
+            border.right: 10; border.bottom: 10
+            width: 256
+            height: 256
+
+            Image {
+                id: thumbnail
+                source: video.currentItem ? video.currentItem.previewUrl : themeResourcePath + "/media/DefaultAlbumCover.png"
+                anchors.fill: parent
+                anchors.margins: 6
+
+                Image {
+                    id: glassOverlay
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    width: parent.width*0.7
+                    height: parent.height*0.6
+                    source: themeResourcePath + "/media/" + "GlassOverlay.png"
+                }
+            }
         }
     }
 

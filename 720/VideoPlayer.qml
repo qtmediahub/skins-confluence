@@ -64,6 +64,9 @@ FocusScope {
 
     Video {
         id: videoItem
+
+        property variant currentItem
+
         anchors.fill: parent
 
         function togglePlayPause() {
@@ -164,7 +167,7 @@ FocusScope {
             engineModel: videoEngine.pluginProperties.videoModel
 
             onItemTriggered: {
-                root.play(itemData.filePath)
+                root.play(itemData)
                 videoListDialog.close()
             }
         }
@@ -184,7 +187,7 @@ FocusScope {
             engineModel: musicEngine.pluginProperties.musicModel
 
             onItemTriggered: {
-                root.play(itemData.filePath)
+                root.play(itemData)
                 musicListDialog.close()
             }
         }
@@ -231,23 +234,24 @@ FocusScope {
         }
     }
 
-    function play(uri) {
-        if(uri == null) {
+    function play(item) {
+        if(item == null) {
             video.play()
         } else {
             video.stop();
-            video.source = uri
+            video.source = item.filePath
+            video.currentItem = item
             video.play();
         }
     }
 
-    function playForeground(uri) {
+    function playForeground(item) {
         root.state = "maximized";
-        root.play(uri);
+        root.play(item);
     }
 
-    function playBackground(uri) {
+    function playBackground(item) {
         root.state = "background";
-        root.play(uri);
+        root.play(item);
     }
 }

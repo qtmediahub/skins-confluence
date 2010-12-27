@@ -73,7 +73,7 @@ Window {
         MediaThumbnailView {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
-            onItemTriggered: videoPlayer.playForeground(itemData.filePath)
+            onItemTriggered: videoPlayer.playForeground(itemData)
         }
     }
 
@@ -82,7 +82,7 @@ Window {
         MediaListView {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
-            onItemTriggered: videoPlayer.playForeground(itemData.filePath)
+            onItemTriggered: videoPlayer.playForeground(itemData)
         }
     }
 
