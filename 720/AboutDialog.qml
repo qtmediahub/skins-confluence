@@ -26,6 +26,8 @@ Dialog {
     property variant startupAnimationComponent
     property variant startupAnimation
 
+    title: qsTr("About QtMediaHub")
+
     ConfluenceFlipable {
         id: flipable
         anchors.centerIn: parent
@@ -46,26 +48,35 @@ Dialog {
             id: backPanel
             anchors.fill: parent
             Flow {
-                anchors.centerIn: parent
                 flow:  Flow.TopToBottom
-                Item {
-                    width: childrenRect.width; height: childrenRect.height
-                    ConfluenceText { id: confTxt; text: qsTr("All resources and style from ") }
+                Row {
+                    ConfluenceText { 
+                        id: confTxt
+                        text: qsTr("All resources and style from") 
+                        height: confluenceImage.height
+                        verticalAlignment: Text.AlignVCenter
+                        wrapMode: Text.NoWrap
+                    }
                     Image {
-                        anchors { left: confTxt.right; verticalCenter: confTxt.verticalCenter }
+                        id: confluenceImage
                         source: themeResourcePath + "/media/Confluence_Logo.png"
                     }
                 }
-                Item {
-                    width: childrenRect.width; height: childrenRect.height
-                    ConfluenceText { id: xbmcTxt; text: qsTr("Inspired by ") }
+                Row {
+                    ConfluenceText { 
+                        id: xbmcTxt
+                        text: qsTr("Inspired by ") 
+                        height: xbmcImage.height
+                        verticalAlignment: Text.AlignVCenter
+                        wrapMode: Text.NoWrap
+                    }
                     Image {
-                        anchors { left: xbmcTxt.right; verticalCenter: xbmcTxt.verticalCenter }
+                        id: xbmcImage
                         source: themeResourcePath + "/media/XBMC_Logo.png"
                     }
                 }
-                ConfluenceText { text: "http://xbmc.org/"}
-                ConfluenceText { text: "QtMediaCenter is hosted at http://gitorious.org/qtmediahub"}
+                ConfluenceText { text: "<br/>http://xbmc.org/"}
+                ConfluenceText { text: "<br/> <br/> <br/>" + qsTr("QtMediaHub is hosted at %1").arg("http://gitorious.org/qtmediahub")}
             }
         }
     }
