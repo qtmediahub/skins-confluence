@@ -28,6 +28,7 @@ Window {
     maximizable: true
 
     property alias url: webView.url
+    property string initialUrl: defaultUrl
     property string defaultUrl: "http://www.google.com"
 
     function onVisibleTransitionComplete() {
@@ -202,7 +203,25 @@ Window {
         }
     }
 
-    Engine { name: qsTr("Web"); role: "web"; visualElement: root; visualElementProperties: ["url", defaultUrl] }
-    Engine { name: qsTr("Store"); role: "ovi-store"; visualElement: root; visualElementProperties: ["url", "http://store.ovi.com/"] }
-    Engine { name: qsTr("Maps"); role: "maps"; visualElement: root; visualElementProperties: ["url", generalResourcePath + "/Google\ Maps/Nokia.html"] }
+    onVisibleChanged:
+        webView.url = visible ? initialUrl : ""
+
+    Component.onCompleted:
+        //Conditional on plugins (read flash) being enabled
+        config.isEnabled("wk-plugins", false)
+        ? Qt.createQmlObject('\
+                             import confluence.components 1.0; \
+                             Engine { name: qsTr("Youtube"); \
+                                      role: "youtube"; \
+                                      visualElement: root; \
+                                      visualElementProperties: ["initialUrl", "http://www.youtube.com/xl"] }',
+                             root,
+                             null)
+        : undefined
+
+    //Fixme: Enable when functional
+    //Engine { name: qsTr("Tv Clicker"); role: "tv-clicker"; visualElement: root; visualElementProperties: ["url", "http://tv.clicker.com/"] }
+    Engine { name: qsTr("Web"); role: "web"; visualElement: root; visualElementProperties: ["initialUrl", defaultUrl] }
+    Engine { name: qsTr("Store"); role: "ovi-store"; visualElement: root; visualElementProperties: ["initialUrl", "http://store.ovi.com/"] }
+    Engine { name: qsTr("Maps"); role: "maps"; visualElement: root; visualElementProperties: ["initialUrl", generalResourcePath + "/Google\ Maps/Nokia.html"] }
 }
