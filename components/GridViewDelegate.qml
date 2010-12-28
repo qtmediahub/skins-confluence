@@ -58,5 +58,6 @@ Item {
     }
 
     Keys.onReturnPressed: delegateItem.trigger()
+    Keys.onMenuPressed: GridView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
 }
 
