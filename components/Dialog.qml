@@ -94,16 +94,19 @@ FocusScope {
 
     Image {
         id: closeButton
-        source: themeResourcePath + "/media/" + (closeButtonMouseArea.pressed ? "DialogCloseButton-focus.png" : "DialogCloseButton.png")
+        source: themeResourcePath + "/media/" + (closeButtonMouseArea.containsMouse || activeFocus ? "DialogCloseButton-focus.png" : "DialogCloseButton.png")
         anchors.top: panel.top
         anchors.right: panel.right
         anchors { rightMargin: 10; topMargin: 5; }
         MouseArea {
             id: closeButtonMouseArea
-            anchors.fill: parent;
+            anchors.fill: parent
+            hoverEnabled: true
 
             onClicked: root.reject();
         }
+        Keys.onEnterPressed: root.reject()
+        Keys.onReturnPressed: root.reject()
     }
 }
 

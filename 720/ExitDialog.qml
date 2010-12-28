@@ -25,12 +25,6 @@ Dialog {
 
     title: qsTr("Exit")
 
-    Keys.onUpPressed:
-        closeButton.focus = true
-
-    onVisibleChanged:
-        buttonList.resetFocus()
-
     ButtonList {
         id: buttonList
         PixmapButton { focus: true; basePixmap: "ButtonMenuExitNF"; focusedPixmap: "ButtonMenuExitFO"; onClicked: Qt.quit() }
