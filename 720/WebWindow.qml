@@ -69,6 +69,22 @@ Window {
             WebView {
                 id: webView
                 url: defaultUrl
+
+                settings.javaEnabled: config.isEnabled("wk-java", false)
+                settings.javascriptCanAccessClipboard: config.isEnabled("wk-js-clipboard", false)
+                settings.javascriptCanOpenWindows: config.isEnabled("wk-js-windows", false)
+                settings.javascriptEnabled: config.isEnabled("wk-js", true)
+                settings.linksIncludedInFocusChain: config.isEnabled("wk-focus-links", true)
+                settings.localContentCanAccessRemoteUrls: config.isEnabled("wk-local-acc-remote", true)
+                settings.localStorageDatabaseEnabled: config.isEnabled("wk-local-store", true)
+                settings.offlineStorageDatabaseEnabled: config.isEnabled("wk-offline-store", true)
+                settings.offlineWebApplicationCacheEnabled: config.isEnabled("wk-web-app-cache", true)
+                settings.printElementBackgrounds: config.isEnabled("wk-print-bg", false)
+                settings.privateBrowsingEnabled: config.isEnabled("wk-private", false)
+                settings.zoomTextOnly: config.isEnabled("wk-zoom-text", false)
+                settings.pluginsEnabled: config.isEnabled("wk-plugins", false)
+                settings.autoLoadImages: config.isEnabled("wk-auto-load-images", true)
+
                 opacity: progress == 1 ? 1 : 0.5
                 preferredWidth: webViewport.width
                 //Need a default/initial value in excess of what I eventually require
