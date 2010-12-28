@@ -27,15 +27,12 @@ Item {
     property string focusedPixmap
 
     signal clicked
-    signal highlighted
 
     Keys.onEnterPressed:
         button.clicked()
+
     Keys.onReturnPressed:
         button.clicked()
-    onFocusChanged:
-        if(activeFocus)
-            button.highlighted()
 
     Image {
         id: pixmap
