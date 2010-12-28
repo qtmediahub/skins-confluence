@@ -18,26 +18,53 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
-import confluence.components 1.0
+import "../components"
 
 Window {
     id: root
+    z: 100
 
-    maximizable: true
     Loader {
         id: loader;
         anchors.centerIn: parent
     }
 
-    Button {
-        anchors.horizontalCenter: parent.horizontalCenter
+    Column {
         anchors.bottom: parent.bottom
-        text: qsTr("Reload")
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 10
 
-        onClicked: {
-            backend.clearComponentCache()
-            loader.source = ""
-            loader.source = "http://nebulon.de/RemoteApp.qml"
+        Image {
+            id: sourceNameEntry
+            width: 500
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: themeResourcePath + "/media/" + (sourceNameEntryMouseArea.containsMouse || sourceNameInput.activeFocus ? "MenuItemFO.png" : "MenuItemNF.png");
+
+            TextInput {
+                id: sourceNameInput
+                anchors.centerIn: parent
+                text: "http://nebulon.de/RemoteApp.qml"
+                color: "white"
+                font.pointSize: 15
+            }
+
+            MouseArea {
+                id: sourceNameEntryMouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: sourceNameInput.forceActiveFocus()
+            }
+        }
+
+        Button {
+            text: qsTr("Reload")
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            onClicked: {
+                backend.clearComponentCache()
+                loader.source = ""
+                loader.source = sourceNameInput.text
+            }
         }
     }
 

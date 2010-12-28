@@ -41,6 +41,5 @@ Item {
         property string programs: "programs.jpg"
         property string system: "system.jpg"
         property string dashboard: "programs.jpg"
-        property string remoteApp: "settings.jpg"
     }
 }

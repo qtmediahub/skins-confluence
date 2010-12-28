@@ -276,7 +276,8 @@ FocusScope {
 
         var remoteAppLoader = Qt.createComponent("RemoteAppWindow.qml");
         if (remoteAppLoader.status == Component.Ready) {
-            remoteAppLoader.createObject(confluence)
+            var remoteAppWindow = remoteAppLoader.createObject(confluence)
+            remoteAppWindow.z = background.z + 2
         } else if (remoteAppLoader.status == Component.Error) {
             backend.log(remoteAppLoader.errorString())
         }
