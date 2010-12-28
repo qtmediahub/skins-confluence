@@ -124,6 +124,6 @@ Window {
         viewLoader.item.informationSheet = pictureInformationSheet
     }
 
-    Keys.onRightPressed: confluence.showBlade(defaultBlade)
+    Keys.onRightPressed: confluence.showBlade(blade)
 }
 

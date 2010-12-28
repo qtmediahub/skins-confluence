@@ -27,7 +27,7 @@ Window {
     Dashboard {
         id: db
         anchors.fill: parent
-        anchors.leftMargin: dashboardWindow.defaultBlade.closedBladePeek
+        anchors.leftMargin: dashboardWindow.blade.closedBladePeek
 
         widgetPath: generalResourcePath + "/widgets"
 

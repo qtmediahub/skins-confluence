@@ -101,6 +101,6 @@ Window {
         viewLoader.item.informationSheet = musicInformationSheet
     }
 
-    Keys.onRightPressed: confluence.showBlade(defaultBlade)
+    Keys.onRightPressed: confluence.showBlade(blade)
 }
 
