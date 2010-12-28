@@ -46,7 +46,7 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: {
             GridView.view.currentIndex = index
-            currentItem.forceActiveFocus()
+            currentItem.focus = true
         }
         onClicked: {
             if (mouse.button == Qt.LeftButton)

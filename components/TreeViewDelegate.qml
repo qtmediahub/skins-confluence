@@ -38,7 +38,7 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: {
             ListView.view.currentIndex = index
-            currentItem.forceActiveFocus()
+            currentItem.focus = true
         }
         onClicked: {
             if (mouse.button == Qt.LeftButton)
