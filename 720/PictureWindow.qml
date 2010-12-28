@@ -48,7 +48,7 @@ Window {
     bladeComponent: MediaWindowBlade {
         id: pictureWindowBlade
         parent: root
-        visible: true
+        visible: root.scale == 1.0
         z: 1
         actionList: [viewAction, sortByAction, slideShowAction]
 
