@@ -99,7 +99,7 @@ FocusScope {
 
     ButtonList {
         id: buttonGrid
-        y: parent.height - height; // # FIXME: Should not access mainBlade
+        y: parent.height - height
         spacing: 2
         width: parent.width
 
@@ -123,3 +123,4 @@ FocusScope {
         }
     }
 }
+
