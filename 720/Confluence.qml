@@ -348,7 +348,6 @@ FocusScope {
 
     MainBlade { 
         id: mainBlade; 
-        focus: true 
         z: background.z + 1
         onClicked: confluence.show(mainBlade)
     }
