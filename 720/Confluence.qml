@@ -40,6 +40,7 @@ FocusScope {
     property variant browserWindow
     property variant ticker
     property variant weatherWindow
+    property variant systemInfoWindow
 
     height: 720; width: 1280
     focus: true
@@ -173,10 +174,12 @@ FocusScope {
                 show(selectedElement)
             else
                 show(mainBlade)
-        } else if(event.key == Qt.Key_F12)
+        } else if(event.key == Qt.Key_F12) {
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
-        else if(event.key == Qt.Key_F11) {
+        } else if(event.key == Qt.Key_F11) {
             showModal(aboutDialog)
+        } else if(event.key == Qt.Key_F10) {
+            show(systemInfoWindow)
         }
     }
 
@@ -284,7 +287,7 @@ FocusScope {
 
         var systemInfoLoader = Qt.createComponent("SystemInfoWindow.qml");
         if (systemInfoLoader.status == Component.Ready) {
-            var systemInfoWindow = systemInfoLoader.createObject(confluence)
+            systemInfoWindow = systemInfoLoader.createObject(confluence)
             systemInfoWindow.z = background.z + 2
         } else if (systemInfoLoader.status == Component.Error) {
             backend.log(systemInfoLoader.errorString())

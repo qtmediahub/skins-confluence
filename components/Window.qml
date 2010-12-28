@@ -46,7 +46,7 @@ FocusScope {
         bladeWidth: 50
         bladePixmap: themeResourcePath + "/media/HomeBlade.png"
         parent: root
-        visible: (scale == 1.0) && !maximized
+        visible: (root.scale == 1.0) && !maximized
         z: 1
         onClicked: confluence.state = "showingRootBlade" // # FIXME: Don't miss with another component's state!
     }

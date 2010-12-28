@@ -34,12 +34,12 @@ Window {
 
         Flow {
             flow: Flow.TopToBottom
+            ConfluenceText { id: heading; text: "System Information"; horizontalAlignment: Qt.AlignHCenter; width: parent.width; font.weight: Font.Bold }
+            Item { width: heading.width; height: heading.height }
             ConfluenceText { text: "Mac address: " + networkInfo.macAddress }
             ConfluenceText { text: "Network status: " + networkInfo.networkStatus }
             ConfluenceText { text: "Network name: " + networkInfo.networkName }
             ConfluenceText { text: "Network signal strength: " + networkInfo.networkSignalStrength }
         }
     }
-
-    Engine { name: qsTr("System Info"); role: "system-info"; visualElement: root }
 }
