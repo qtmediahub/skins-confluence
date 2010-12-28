@@ -100,5 +100,7 @@ Window {
         viewLoader.item.engineModel = musicEngine.pluginProperties.musicModel
         viewLoader.item.informationSheet = musicInformationSheet
     }
+
+    Keys.onRightPressed: confluence.showBlade(defaultBlade)
 }
 

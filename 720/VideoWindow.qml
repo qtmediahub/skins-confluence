@@ -110,5 +110,7 @@ Window {
         viewLoader.item.engineName = videoEngine.name
         viewLoader.item.engineModel = videoEngine.pluginProperties.videoModel
     }
+
+    Keys.onRightPressed: confluence.showBlade(defaultBlade)
 }
 

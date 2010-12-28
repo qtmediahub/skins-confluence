@@ -30,10 +30,13 @@ Blade {
         
         ActionListView {
             id: listView
+            focus: true
             width: parent.width
             height: parent.height - banner.height
             model: pictureOptions.actionList
         }
     }
+
+    Keys.onEscapePressed: state = "closed"
 }
 

@@ -123,5 +123,7 @@ Window {
         viewLoader.item.engineModel = pictureEngine.pluginProperties.pictureModel
         viewLoader.item.informationSheet = pictureInformationSheet
     }
+
+    Keys.onRightPressed: confluence.showBlade(defaultBlade)
 }
 

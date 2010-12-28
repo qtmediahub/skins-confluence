@@ -453,7 +453,7 @@ FocusScope {
     function showBlade(blade) {
         var currentFocusedItem = frontend.focusItem()
         blade.closed.connect(function() { if (currentFocusedItem) currentFocusedItem.forceActiveFocus() })
-        blade.open()
+        blade.state = "open"
         blade.forceActiveFocus()
     }
 
