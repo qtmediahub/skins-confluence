@@ -38,7 +38,6 @@ Column {
             property variant modeldata: model
             width: root.width
             height: delegateText.height + 20
-            focus: true
             clip: true
 
             Image {
