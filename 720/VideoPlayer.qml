@@ -69,6 +69,10 @@ FocusScope {
 
         anchors.fill: parent
 
+        onPositionChanged: {
+            audioVisualisationPlaceholder.metronomTick()
+        }
+
         function togglePlayPause() {
             if (Math.abs(videoItem.playbackRate) != 1) {
                 videoItem.play()
@@ -85,11 +89,11 @@ FocusScope {
         }
     }
 
-    Rectangle {
+    AudioVisualisation {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
-        color: "black"
         visible: !videoItem.hasVideo
+        running: visible && !videoItem.paused
     }
 
     VideoPlayerControlOSD {
