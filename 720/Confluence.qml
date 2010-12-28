@@ -450,6 +450,7 @@ FocusScope {
         mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
         item.closed.connect(function() { mouseGrabber.opacity = 0; delete item })
         item.open()
+        item.focus = true
         return item
     }
 
