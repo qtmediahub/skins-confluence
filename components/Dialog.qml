@@ -108,5 +108,7 @@ FocusScope {
         Keys.onEnterPressed: root.reject()
         Keys.onReturnPressed: root.reject()
     }
+
+    Keys.onEscapePressed: root.reject()
 }
 
