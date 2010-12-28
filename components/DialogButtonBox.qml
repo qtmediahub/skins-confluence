@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 
-Row {
+FocusScope {
     id: root
     signal accepted()
     signal rejected()
@@ -32,22 +32,34 @@ Row {
         root.rejected()
     }
 
-    Button {
-        id: okButton
-        text: qsTr("OK")
-        onClicked: root.accept()
-    }
+    width: row.width
+    height: row.height
 
-    Item {
-        id: spacer
-        width: 30
-        height: 1
-    }
+    Row {
+        id: row
+        Button {
+            id: okButton
+            text: qsTr("OK")
+            focus: true
+            onClicked: root.accept()
+            KeyNavigation.right: cancelButton
+            KeyNavigation.tab: cancelButton
+        }
 
-    Button {
-        id: cancelButton
-        text: qsTr("Cancel")
-        onClicked: root.reject()
+        Item {
+            id: spacer
+            width: 30
+            height: 1
+        }
+
+        Button {
+            id: cancelButton
+            text: qsTr("Cancel")
+            onClicked: root.reject()
+            Keys.onTabPressed: { okButton.focus = true; event.accepted = false } // When tabbed out, reset focus because FocusScope remembers focus item
+            KeyNavigation.left: okButton
+            KeyNavigation.backtab: okButton
+        }
     }
 }
 

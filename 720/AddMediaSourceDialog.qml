@@ -46,7 +46,7 @@ Dialog {
             focus: true
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
-            Keys.onTabPressed: sourceNameInput.forceActiveFocus()
+            KeyNavigation.tab: sourceNameInput
         }
         Text {
             id: sourceNameLabel
@@ -67,14 +67,15 @@ Dialog {
                 text: qsTr("Home")
                 color: "white"
 
-                Keys.onTabPressed: buttonBox.forceActiveFocus()
+                KeyNavigation.tab: buttonBox
+                KeyNavigation.backtab: fileSystemView
             }
 
             MouseArea {
                 id: sourceNameEntryMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: sourceNameInput.forceActiveFocus()
+                onClicked: sourceNameInput.focus = true
             }
         }
         DialogButtonBox {
@@ -87,9 +88,9 @@ Dialog {
             onRejected: {
                 root.reject()
             }
+            KeyNavigation.tab: fileSystemView
+            KeyNavigation.backtab: sourceNameInput
         }
-
-     }
+    }
 }
-
 

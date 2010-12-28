@@ -27,7 +27,7 @@ Image {
     width: 150
     height: textLabel.height+10
 
-    source: themeResourcePath + "/media/" + (mouseArea.containsMouse ? "button-focus.png" : "button-nofocus.png")
+    source: themeResourcePath + "/media/" + (mouseArea.containsMouse || activeFocus ? "button-focus.png" : "button-nofocus.png")
 
     MouseArea {
         id: mouseArea
@@ -36,6 +36,9 @@ Image {
 
         onClicked: root.clicked()
     }
+
+    Keys.onEnterPressed: root.clicked()
+    Keys.onReturnPressed: root.clicked()
 
     ConfluenceText {
         id: textLabel
