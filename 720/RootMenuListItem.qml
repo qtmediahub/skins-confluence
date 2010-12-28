@@ -59,7 +59,7 @@ Item {
 
         onEntered: {
             rootMenuList.currentIndex = index
-            rootMenuList.forceActiveFocus()
+            rootMenuList.focus = true
         }
         onClicked: {
             trigger()

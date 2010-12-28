@@ -42,7 +42,8 @@ FocusScope {
     property variant weatherWindow
 
     height: 720; width: 1280
-    focus: true; clip: true
+    focus: true
+    clip: true
 
     states: [
         State {
@@ -50,6 +51,7 @@ FocusScope {
             PropertyChanges {
                 target: mainBlade
                 state: "open"
+                focus: true
             }
             PropertyChanges {
                 target: qtcube
@@ -69,7 +71,6 @@ FocusScope {
                 x: confluence.width - dateTimeHeader.width
                 showDate: true
             }
-            StateChangeScript { script: mainBlade.forceActiveFocus() }
         },
         State {
             name: "showingSelectedElement"

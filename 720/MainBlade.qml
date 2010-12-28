@@ -37,6 +37,7 @@ Blade {
 
     content: RootMenu {
         id: rootMenu
+        focus: true
         buttonGridX: bladeX + 5 + bladeRightMargin; 
         onOpenSubMenu: {
             if (currentItem.hasSubBlade) {

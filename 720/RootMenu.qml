@@ -41,12 +41,7 @@ FocusScope {
         } else if (clickComponent.status == Component.Error) {
             backend.log(clickComponent.errorString())
         }
-
-        rootMenuList.currentIndex = 0;
     }
-
-    Keys.onLeftPressed:
-        buttonGrid.focusUpperItem()
 
     ListView {
         id: rootMenuList
@@ -56,6 +51,7 @@ FocusScope {
         //Oversized fonts being downscaled
         spacing: 30
         focus: true
+        keyNavigationWraps: true
 
         anchors.fill: parent
         preferredHighlightBegin: banner.height; preferredHighlightEnd: height - buttonGrid.height
@@ -83,6 +79,8 @@ FocusScope {
             currentItem.trigger()
         Keys.onRightPressed:
             rootMenu.openSubMenu()
+        KeyNavigation.left: playMediaButton
+        KeyNavigation.tab: playMediaButton
     }
 
     Image {
@@ -97,29 +95,38 @@ FocusScope {
         ExitDialog { }
     }
 
-    ButtonList {
+    Row {
         id: buttonGrid
         y: parent.height - height
         spacing: 2
         width: parent.width
 
-        onUpperBoundExceeded: {
-            rootMenuList.focus = true
-        }
-
         PixmapButton {
+            id: playMediaButton
             basePixmap: "home-playmedia"
             focusedPixmap: "home-playmedia-FO"
-            onClicked: {
-                confluence.show(videoPlayer)
-            }
+            onClicked: confluence.show(videoPlayer)
+            KeyNavigation.left: rootMenuList
+            KeyNavigation.backtab: rootMenuList
+            KeyNavigation.right: favouritesButton
+            KeyNavigation.tab: favouritesButton
         }
-        PixmapButton { basePixmap: "home-favourites"; focusedPixmap: "home-favourites-FO" }
         PixmapButton {
+            id: favouritesButton
+            basePixmap: "home-favourites"
+            focusedPixmap: "home-favourites-FO" 
+            KeyNavigation.left: playMediaButton
+            KeyNavigation.backtab: playMediaButton
+            KeyNavigation.right: powerButton
+            KeyNavigation.tab: powerButton
+        }
+        PixmapButton {
+            id: powerButton
             basePixmap: "home-power";
             focusedPixmap: "home-power-FO";
-            onClicked:
-                confluence.showModal(exitDialogComponent)
+            onClicked: confluence.showModal(exitDialogComponent)
+            KeyNavigation.left: favouritesButton
+            KeyNavigation.backtab: favouritesButton
         }
     }
 }

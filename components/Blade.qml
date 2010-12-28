@@ -67,17 +67,6 @@ FocusScope {
         }
     ]
 
-    transitions: [
-        Transition {
-            to: "open"
-            ScriptAction { script: forceActiveFocus() }
-        }
-    ]
-
-    onFocusChanged:
-        if(activeFocus == false)
-            state = "closed"
-
     Item {
         id: blade
         x: -width + visibleWidth
@@ -89,8 +78,9 @@ FocusScope {
             anchors.right: blade.right
             anchors.fill:  parent
         }
-        FocusScope {
+        Item {
             id: content
+            focus: true
             anchors { right: blade.right; rightMargin: bladeRightMargin }
             width: blade.width; height: blade.height
         }
