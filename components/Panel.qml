@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 
-FocusScope {
+Item {
     id: root
     property alias decorateFrame: frame.visible
     property alias decorateTitleBar: titlebar.visible
@@ -30,8 +30,6 @@ FocusScope {
 
     width: frame.border.left + frame.border.right + contentItem.childrenRect.width
     height: frame.border.top + frame.border.bottom + contentItem.childrenRect.height
-
-    focus: true
 
     BorderImage {
         id: frame
