@@ -19,12 +19,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 
-Item {
+FocusScope {
     id: root
 
     property alias title : titleBarText.text
     default property alias content : content.children
 
+    signal opened()
     signal closed()
 
     x: confluence.width
@@ -35,6 +36,7 @@ Item {
 
     function open() {
         x = confluence.width - width
+        root.opened()
     }
 
     function close() {
@@ -97,5 +99,7 @@ Item {
             onClicked: root.close();
         }
     }
+
+    Keys.onEscapePressed: root.close()
 }
 

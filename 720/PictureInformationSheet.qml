@@ -78,6 +78,7 @@ Sheet {
         id: listView
         anchors.fill: parent
         model : listModel
+        focus: true
 
         delegate: ConfluenceTwoColumnDelegate {
             column1Text: model.key

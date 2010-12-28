@@ -36,7 +36,7 @@ Item {
             anchors.fill: parent;
             treeModel: engineModel
             clip: true
-            focus: true;
+            focus: true
             onClicked: {
                 if (currentItem.itemdata.type == "AddNewSource")
                     confluence.showModal(addMediaSourceDialog)
@@ -56,8 +56,8 @@ Item {
                     }
                 } else if (itemType == "File") {
                     if (event.key == Qt.Key_I && informationSheet) {
-                        var sheet =  confluence.showModal(informationSheet)
-                        sheet.currentItem = sourcesListView.currentItem // this is not a binding for lazy loading
+                        confluence.showModal(informationSheet)
+                        informationSheet.currentItem = sourcesListView.currentItem
                         event.accepted = true
                     }
                 }
