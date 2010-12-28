@@ -18,101 +18,98 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import "fontmetrics.js" as FontMetrics
 
-Column {
+ListView {
     id: root
-    property alias actionModel: repeater.model
     signal activated(variant index)
-    width: 400 // ## Requires explicit width to be set for now
     property bool hideItemBackground: false
-    property int currentIndex: 0
 
-    Repeater {
-        id: repeater
+    property int itemHeight
+    property int itemWidth
 
-        Keys.onEnterPressed:
-            root.activated(root.currentItem)
-
-        delegate: Item {
-            id: delegate
-            property variant modeldata: model
-            width: root.width
-            height: delegateText.height + 20
-            clip: true
-
-            Image {
-                id: delegateBackground
-                source: themeResourcePath + "/media/button-nofocus.png"
-                anchors.fill: parent
-                visible: !root.hideItemBackground
-            }
-
-            Image {
-                id: delegateImage
-                source: themeResourcePath + "/media/button-focus.png"
-                anchors.centerIn: parent
-                width: parent.width-4
-                height: parent.height
-                opacity: 0
-            }
-
-            Text {
-                id: delegateText
-                font.pointSize: 16
-                color: model.modelData.enabled ? "white" : "gray"
-                text: model.modelData.text
-                horizontalAlignment: Text.AlignRight
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: delegateImage.left
-                anchors.leftMargin: 15
-            }
-
-            Text {
-                id: delegateValue
-                font.pointSize: 16
-                color: model.modelData.enabled ? "white" : "gray"
-                text: model.modelData.currentOption()
-                horizontalAlignment: Text.AlignRight
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: delegateImage.right
-                anchors.rightMargin: 10
-            }
-
-            states:  [
-                State {
-                    name: "selected"
-                    when: root.currentIndex == index
-                    PropertyChanges {
-                        target: delegateImage
-                        opacity: 1
-                    }
+    Component.onCompleted: {
+        var fm = new FontMetrics.FontMetrics({pointSize: 16})
+        var w = 0, h = 0, ow = 0
+        for (var i = 0; i < model.length; i++) {
+            w = Math.max(w, fm.width(model[i].text))
+            if (model[i].options) {
+                for (var j = 0; j < model[i].options.length; j++) {
+                    ow = Math.max(ow, fm.width(model[i].options[j]))
                 }
-            ]
-
-            transitions: [
-                Transition {
-                    NumberAnimation { target: delegateImage; property: "opacity"; duration: 100 }
-                }
-            ]
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                enabled: model.modelData.enabled
-
-                onEntered: {
-                    root.currentIndex = index
-                    repeater.forceActiveFocus()
-                }
-
-                onClicked: {
-                    // ## Order is important for ContextMenu
-                    root.activated(root.currentIndex)
-                    model.modelData.activateNextOption()
-                           }
             }
+            h = Math.max(h, fm.height(model[i].text))
         }
+        itemHeight = h + 20
+        itemWidth = w + 15 + (ow ? ow + 20 : 0)
+        width = itemWidth
+        height = itemHeight * model.length
+    }
+
+    delegate: Item {
+        id: delegateItem
+        property variant modeldata: model
+        width: root.width
+        height: itemHeight
+        clip: true
+
+        function trigger() {
+            // ## Order is important for ContextMenu
+            root.activated(root.currentIndex)
+            model.modelData.activateNextOption()
+        }
+
+        Image {
+            id: delegateBackground
+            source: themeResourcePath + "/media/button-nofocus.png"
+            anchors.fill: parent
+            visible: !root.hideItemBackground
+        }
+
+        Image {
+            id: delegateImage
+            source: themeResourcePath + "/media/button-focus.png"
+            anchors.centerIn: parent
+            width: parent.width-4
+            height: parent.height
+            opacity: delegateItem.activeFocus ? 1 : 0
+        }
+
+        Text {
+            id: delegateText
+            font.pointSize: 16
+            color: model.modelData.enabled ? "white" : "gray"
+            text: model.modelData.text
+            horizontalAlignment: Text.AlignRight
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: delegateImage.left
+            anchors.leftMargin: 15
+        }
+
+        Text {
+            id: delegateValue
+            font.pointSize: 16
+            color: model.modelData.enabled ? "white" : "gray"
+            text: model.modelData.currentOption()
+            horizontalAlignment: Text.AlignRight
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: delegateImage.right
+            anchors.rightMargin: 10
+        }
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            enabled: model.modelData.enabled
+
+            onEntered: root.currentIndex = index
+
+            onClicked: delegateItem.trigger()
+        }
+
+        Keys.onReturnPressed: trigger()
+        Keys.onEnterPressed: trigger()
     }
 }
 

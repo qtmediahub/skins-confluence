@@ -435,13 +435,9 @@ FocusScope {
     }
 
     function showContextMenu(item, x, y) {
-        mouseGrabber.opacity = 0.9
-        item.closed.connect(function() { mouseGrabber.opacity = 0 })
-        item.parent = confluence // ## restore parent?
-        item.z = background.z + 2
+        showModal(item)
         item.x = x
         item.y = y
-        item.opacity = 1
     }
 
     function showModal(item) {
@@ -451,7 +447,7 @@ FocusScope {
         item.parent = confluence // ## restore parent?
         item.z = background.z + 2
         item.open()
-        item.focus = true
+        item.forceActiveFocus()
     }
 
     function showFullScreen(item) {

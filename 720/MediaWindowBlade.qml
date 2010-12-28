@@ -32,7 +32,7 @@ Blade {
             id: listView
             width: parent.width
             height: parent.height - banner.height
-            actionModel: pictureOptions.actionList
+            model: pictureOptions.actionList
         }
     }
 }

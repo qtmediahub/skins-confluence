@@ -1,13 +1,13 @@
 import QtQuick 1.0
 
-Item {
+FocusScope {
     id: root
     width: actionListView.width
     height: glassTitleBar.height + actionListView.height + 10
 
-    property alias actionModel: actionListView.actionModel
-
+    property alias model: actionListView.model
     property alias title : titleBarText.text
+    signal opened
     signal closed
 
     opacity: 0
@@ -19,6 +19,7 @@ Item {
 
     function open() {
         opacity = 1;
+        root.opened()
     }
 
     Behavior on opacity {
@@ -34,6 +35,7 @@ Item {
 
     ActionListView {
         id: actionListView
+        focus: true
         hideItemBackground: true
         anchors.top: glassTitleBar.bottom
         anchors.left: panel.left
@@ -71,5 +73,7 @@ Item {
             onClicked: root.close();
         }
     }
+
+    Keys.onEscapePressed: root.close()
 }
 

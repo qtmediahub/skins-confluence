@@ -21,7 +21,7 @@ Item {
                            enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" } 
         ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
 
-        actionModel: [rootAction, removeAction, rescanAction, addSourceAction]
+        model: [rootAction, removeAction, rescanAction, addSourceAction]
     }
 
     Panel {
