@@ -280,6 +280,14 @@ FocusScope {
             backend.log(remoteAppLoader.errorString())
         }
 
+        var systemInfoLoader = Qt.createComponent("SystemInfoWindow.qml");
+        if (systemInfoLoader.status == Component.Ready) {
+            var systemInfoWindow = systemInfoLoader.createObject(confluence)
+            systemInfoWindow.z = background.z + 2
+        } else if (systemInfoLoader.status == Component.Error) {
+            backend.log(systemInfoLoader.errorString())
+        }
+
         confluence.show(mainBlade)
     }
 
