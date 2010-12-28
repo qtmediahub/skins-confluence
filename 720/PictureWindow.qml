@@ -110,6 +110,7 @@ Window {
 
     Loader {
         id: viewLoader
+        focus: true
     }
 
     Component.onCompleted: {

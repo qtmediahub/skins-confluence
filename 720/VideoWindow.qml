@@ -93,6 +93,7 @@ Window {
 
     Loader {
         id: viewLoader
+        focus: true
         anchors.fill: parent
         onStatusChanged: {
             if (viewLoader.status == Loader.Error)
