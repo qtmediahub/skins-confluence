@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 
-FocusScope {
+Item {
     id: root
     signal accepted()
     signal rejected()
@@ -34,6 +34,8 @@ FocusScope {
 
     width: row.width
     height: row.height
+
+    onFocusChanged: okButton.focus = true
 
     Row {
         id: row
@@ -56,7 +58,6 @@ FocusScope {
             id: cancelButton
             text: qsTr("Cancel")
             onClicked: root.reject()
-            Keys.onTabPressed: { okButton.focus = true; event.accepted = false } // When tabbed out, reset focus because FocusScope remembers focus item
             KeyNavigation.left: okButton
             KeyNavigation.backtab: okButton
         }

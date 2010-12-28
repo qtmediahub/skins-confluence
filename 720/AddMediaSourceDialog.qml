@@ -26,6 +26,8 @@ Dialog {
 
     property variant engineModel
 
+    onOpened: fileSystemView.focus = true
+
     Column {
         spacing: 5
         width: 620

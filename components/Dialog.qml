@@ -30,6 +30,7 @@ FocusScope {
     default property alias content : contentItem.children
     signal accepted
     signal rejected
+    signal opened
     signal closed
 
     opacity: 0
@@ -50,7 +51,8 @@ FocusScope {
     }
 
     function open() {
-        opacity = 1;
+        opacity = 1
+        root.opened()
     }
 
     Behavior on opacity {
