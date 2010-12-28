@@ -31,7 +31,7 @@ Window {
     bladeComponent: MediaWindowBlade {
         id: videoWindowBlade
         parent: root
-        visible: root.scale == 1.0
+        visible: true
         z: 1
         actionList: [viewAction, sortByAction]
 
