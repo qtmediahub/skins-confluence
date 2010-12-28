@@ -429,7 +429,6 @@ FocusScope {
     }
 
     Window {
-        //windowWindow
         id: transparentVideoOverlay
         onFocusChanged:
             activeFocus ? videoPlayer.forceActiveFocus() : undefined
@@ -459,10 +458,5 @@ FocusScope {
         item.opacity = 1
         item.forceActiveFocus()
     }
-
-    /*Test {
-          id: componentTest
-          Engine { name: qsTr("Components"); role: "components-test"; visualElement: componentTest; }
-      }*/
 }
 
