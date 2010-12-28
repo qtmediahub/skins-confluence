@@ -90,9 +90,8 @@ FocusScope {
         source: themeResourcePath + "/media/Confluence_Logo.png"
     }
 
-    Component {
-        id: exitDialogComponent
-        ExitDialog { }
+    ExitDialog {
+        id: exitDialog
     }
 
     Row {
@@ -124,7 +123,7 @@ FocusScope {
             id: powerButton
             basePixmap: "home-power";
             focusedPixmap: "home-power-FO";
-            onClicked: confluence.showModal(exitDialogComponent)
+            onClicked: confluence.showModal(exitDialog)
             KeyNavigation.left: favouritesButton
             KeyNavigation.backtab: favouritesButton
         }

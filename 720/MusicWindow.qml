@@ -24,9 +24,8 @@ import "../components/"
 Window {
     id: root
 
-    Component {
+    MusicInformationSheet {
         id: musicInformationSheet
-        MusicInformationSheet { }
     }
 
     MediaScanInfo {
@@ -98,7 +97,7 @@ Window {
         viewLoader.sourceComponent = listView
         viewLoader.item.engineName = musicEngine.name
         viewLoader.item.engineModel = musicEngine.pluginProperties.musicModel
-        viewLoader.item.informationSheetComponent = musicInformationSheet
+        viewLoader.item.informationSheet = musicInformationSheet
     }
 }
 

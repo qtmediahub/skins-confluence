@@ -24,10 +24,7 @@ import "../components/"
 Window {
     id: root
 
-    Component {
-        id: pictureInformationSheet
-        PictureInformationSheet { }
-    }
+    PictureInformationSheet { id: pictureInformationSheet }
 
     PictureSlideShow {
         id: slideShow
@@ -98,7 +95,7 @@ Window {
         MediaThumbnailView {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
-            informationSheetComponent: pictureInformationSheet
+            informationSheet: pictureInformationSheet
         }
     }
 
@@ -107,7 +104,7 @@ Window {
         MediaListView {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
-            informationSheetComponent: pictureInformationSheet
+            informationSheet: pictureInformationSheet
         }
     }
 
@@ -123,7 +120,7 @@ Window {
         viewLoader.sourceComponent = listView
         viewLoader.item.engineName = pictureEngine.name
         viewLoader.item.engineModel = pictureEngine.pluginProperties.pictureModel
-        viewLoader.item.informationSheetComponent = pictureInformationSheet
+        viewLoader.item.informationSheet = pictureInformationSheet
     }
 }
 

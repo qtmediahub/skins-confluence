@@ -5,7 +5,7 @@ Item {
     id: root
     property variant engineName
     property variant engineModel
-    property variant informationSheetComponent
+    property variant informationSheet
     property bool hidePreview: false
     property alias rootIndex: sourcesListView.rootIndex
 
@@ -55,8 +55,8 @@ Item {
                         event.accepted = true
                     }
                 } else if (itemType == "File") {
-                    if (event.key == Qt.Key_I && informationSheetComponent) {
-                        var sheet =  confluence.showModal(informationSheetComponent)
+                    if (event.key == Qt.Key_I && informationSheet) {
+                        var sheet =  confluence.showModal(informationSheet)
                         sheet.currentItem = sourcesListView.currentItem // this is not a binding for lazy loading
                         event.accepted = true
                     }
@@ -85,15 +85,13 @@ Item {
         }
     }
 
-    Component {
+    AddMediaSourceDialog {
         id: addMediaSourceDialog
-        AddMediaSourceDialog {
-            engineModel: root.engineModel
-            title: qsTr("Add %1 source").arg(root.engineName)
-            opacity: 0
+        engineModel: root.engineModel
+        title: qsTr("Add %1 source").arg(root.engineName)
+        opacity: 0
 
-            onClosed: sourcesListView.forceActiveFocus()
-        }
+        onClosed: sourcesListView.forceActiveFocus()
     }
 }
 

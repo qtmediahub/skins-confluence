@@ -176,7 +176,7 @@ FocusScope {
         } else if(event.key == Qt.Key_F12)
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
         else if(event.key == Qt.Key_F11) {
-            showModal(aboutDialogComponent)
+            showModal(aboutDialog)
         }
     }
 
@@ -407,10 +407,7 @@ FocusScope {
         }
     }
 
-    Component {
-        id: aboutDialogComponent
-        AboutDialog { }
-    }
+    AboutDialog { id: aboutDialog }
 
     Rectangle {
         id: mouseGrabber
@@ -445,13 +442,13 @@ FocusScope {
         item.opacity = 1
     }
 
-    function showModal(component) {
-        var item = component.createObject(mouseGrabber)
+    function showModal(item) {
         mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
-        item.closed.connect(function() { mouseGrabber.opacity = 0; delete item })
+        item.closed.connect(function() { mouseGrabber.opacity = 0 })
+        item.parent = confluence // ## restore parent?
+        item.z = background.z + 2
         item.open()
         item.focus = true
-        return item
     }
 
     function showFullScreen(item) {

@@ -32,6 +32,8 @@ FocusScope {
     signal rejected
     signal closed
 
+    opacity: 0
+
     function accept() {
         root.accepted()
         close()
