@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import QtMobility.systeminfo 1.1
 import confluence.components 1.0
+import QMLFileWrapper 1.0
 
 Window {
     id: root
@@ -29,17 +30,38 @@ Window {
         mode: NetworkInfo.EthernetMode
     }
 
+    QMLFileWrapper {
+        id: fileProbe
+    }
+
     Panel {
         anchors.centerIn: parent;
 
-        Flow {
-            flow: Flow.TopToBottom
-            ConfluenceText { id: heading; text: "System Information"; horizontalAlignment: Qt.AlignHCenter; width: parent.width; font.weight: Font.Bold }
-            Item { width: heading.width; height: heading.height }
-            ConfluenceText { text: "Mac address: " + networkInfo.macAddress }
-            ConfluenceText { text: "Network status: " + networkInfo.networkStatus }
-            ConfluenceText { text: "Network name: " + networkInfo.networkName }
-            ConfluenceText { text: "Network signal strength: " + networkInfo.networkSignalStrength }
+        Flickable {
+            flickableDirection: Flickable.VerticalFlick
+            contentWidth: textFlow.width
+            contentHeight: textFlow.height
+            width: textFlow.width
+            height: confluence.height - 200
+            Flow {
+                id: textFlow
+                flow: Flow.TopToBottom
+                ConfluenceText { id: heading; font.pointSize: 26; text: "System Information"; horizontalAlignment: Qt.AlignHCenter; width: parent.width; font.weight: Font.Bold }
+                Item { width: heading.width; height: heading.height }
+                ConfluenceText { text: "Network Information"; horizontalAlignment: Qt.AlignHCenter; width: parent.width; font.weight: Font.Bold }
+                ConfluenceText { text: "Mac address: " + networkInfo.macAddress }
+                ConfluenceText { text: "Network status: " + networkInfo.networkStatus }
+                ConfluenceText { text: "Network name: " + networkInfo.networkName }
+                ConfluenceText { text: "Network signal strength: " + networkInfo.networkSignalStrength }
+                //ConfluenceText { text: "cpu: " + fileProbe.readAll("/proc/cpuinfo") }
+                Item { width: heading.width; height: heading.height }
+                ConfluenceText { text: "CPU Information"; horizontalAlignment: Qt.AlignHCenter; width: parent.width; font.weight: Font.Bold }
+
+                Repeater {
+                    model: fileProbe.readAll("/proc/cpuinfo")
+                    ConfluenceText { font.pointSize: 12; text: modelData; wrapMode: Text.WordWrap; width: textFlow.width }
+                }
+            }
         }
     }
 }
