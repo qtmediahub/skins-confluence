@@ -170,6 +170,8 @@ FocusScope {
         if(event.key == Qt.Key_Escape) {
             if(selectedElement && selectedElement.maximized)
                 selectedElement.maximized = false
+            else if(confluence.state == "showingRootBlade" && videoPlayer.video.playing)
+                show(transparentVideoOverlay)
             else if(confluence.state == "showingRootBlade" && !!selectedElement)
                 show(selectedElement)
             else
