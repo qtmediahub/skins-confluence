@@ -104,7 +104,6 @@ FocusScope {
                     NumberAnimation { property: "scale"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
                 }
                 ScriptAction { script: onVisibleTransitionComplete() }
-                ScriptAction { script: root.forceActiveFocus() }
             }
         },
         Transition {
