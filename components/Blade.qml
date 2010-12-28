@@ -26,10 +26,13 @@ FocusScope {
 
     clip: true
 
-    signal clicked
     property bool hoverEnabled: false
     signal entered
     signal exited
+    signal clicked
+    signal opened
+    signal closed
+    signal hidden
 
     property int closedBladePeek: 30
 
@@ -50,6 +53,7 @@ FocusScope {
                 target: blade
                 visibleWidth: root.closedBladePeek
             }
+            StateChangeScript { script: root.closed() }
         },
         State {
             name: "hidden"
@@ -57,6 +61,7 @@ FocusScope {
                 target: blade
                 visibleWidth: 0
             }
+            StateChangeScript { script: root.hidden() }
         },
         State {
             name: "open"
@@ -64,6 +69,7 @@ FocusScope {
                 target: blade
                 visibleWidth: width
             }
+            StateChangeScript { script: root.opened() }
         }
     ]
 
