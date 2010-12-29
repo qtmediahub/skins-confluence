@@ -29,13 +29,22 @@ FocusScope {
 
     anchors.fill: parent
 
-    Keys.onEscapePressed: {
-        if (controlOSD.state != "visible") {
-            showOSD();
-            event.accepted = true;
-        } else {
-            //Have to explicitly not accept in order to propagate
-            event.accepted = false
+    Keys.onPressed: {
+        if (event.key == Qt.Key_Escape)
+        {
+            if (controlOSD.state != "visible") {
+                showOSD();
+                event.accepted = true;
+            } else {
+                //Have to explicitly not accept in order to propagate
+                event.accepted = false
+            }
+        } else if (event.key == Qt.Key_Plus) {
+            videoItem.volume = (videoItem.volume + 0.02 > 1) ? 1.0 : videoItem.volume + 0.02
+            showVolumeOSD();
+        } else if (event.key == Qt.Key_Minus) {
+            videoItem.volume = (videoItem.volume - 0.02 < 0) ? 0.0 : videoItem.volume - 0.02
+            showVolumeOSD();
         }
     }
 
@@ -56,10 +65,52 @@ FocusScope {
         onTriggered: controlOSD.state = ""
     }
 
+    Timer {
+        id: volumeOSDTimer
+        interval: 800
+        running: volumeOSD.state == "visible"
+
+        repeat: false
+        onTriggered: volumeOSD.state = ""
+    }
+
     Rectangle {
         id: backgroundFiller
         anchors.fill: parent
         color: "black"
+    }
+
+    Row {
+        id: volumeOSD
+
+        states:
+            State {
+                name: "visible"
+                PropertyChanges {
+                    target: volumeOSD.anchors
+                    topMargin: 0
+                }
+            }
+
+        transitions:
+            Transition {
+                NumberAnimation { property: "topMargin"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+            }
+
+        z: background.z + 2
+
+        anchors { right: parent.right; rightMargin: 80; top: parent.top; topMargin: -volumeOSD.height; }
+
+        Image {
+            id: volumeImage
+            source: themeResourcePath + "/media/VolumeIcon.png"
+        }
+
+        ProgressBar {
+            anchors.verticalCenter: volumeImage.verticalCenter
+            width: confluence.width/10
+            mProgress: videoItem.volume
+        }
     }
 
     Video {
@@ -235,6 +286,13 @@ FocusScope {
     function showOSD() {
         if (root.state == "maximized") {
             controlOSD.state = "visible";
+        }
+    }
+
+    function showVolumeOSD() {
+        if (root.state == "maximized") {
+            volumeOSD.state = "visible";
+            volumeOSDTimer.restart()
         }
     }
 
