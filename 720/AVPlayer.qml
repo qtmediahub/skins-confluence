@@ -39,12 +39,6 @@ FocusScope {
                 //Have to explicitly not accept in order to propagate
                 event.accepted = false
             }
-        } else if (event.key == Qt.Key_Plus) {
-            videoItem.volume = (videoItem.volume + 0.02 > 1) ? 1.0 : videoItem.volume + 0.02
-            showVolumeOSD();
-        } else if (event.key == Qt.Key_Minus) {
-            videoItem.volume = (videoItem.volume - 0.02 < 0) ? 0.0 : videoItem.volume - 0.02
-            showVolumeOSD();
         }
     }
 
@@ -88,7 +82,7 @@ FocusScope {
                 name: "visible"
                 PropertyChanges {
                     target: volumeOSD.anchors
-                    topMargin: 0
+                    topMargin: 50
                 }
             }
 
@@ -290,10 +284,8 @@ FocusScope {
     }
 
     function showVolumeOSD() {
-        if (root.state == "maximized") {
-            volumeOSD.state = "visible";
-            volumeOSDTimer.restart()
-        }
+        volumeOSD.state = "visible";
+        volumeOSDTimer.restart();
     }
 
     function play(item) {
@@ -315,5 +307,15 @@ FocusScope {
     function playBackground(item) {
         root.state = "background";
         root.play(item);
+    }
+
+    function increaseVolume() {
+        videoItem.volume = (videoItem.volume + 0.02 > 1) ? 1.0 : videoItem.volume + 0.02
+        showVolumeOSD();
+    }
+
+    function decreaseVolume() {
+        videoItem.volume = (avPlayer.video.volume - 0.02 < 0) ? 0.0 : videoItem.volume - 0.02
+        showVolumeOSD();
     }
 }

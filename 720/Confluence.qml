@@ -182,6 +182,10 @@ FocusScope {
             showModal(aboutDialog)
         } else if(event.key == Qt.Key_F10) {
             show(systemInfoWindow)
+        } else if (event.key == Qt.Key_Plus) {
+            avPlayer.increaseVolume();
+        } else if (event.key == Qt.Key_Minus) {
+            avPlayer.decreaseVolume();
         }
     }
 
