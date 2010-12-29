@@ -17,11 +17,20 @@ Item {
         ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onActivated: sourcesListView.rootIndex = undefined; }
         ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: engineModel.removeSearchPath(sourcesListView.currentIndex)
                            enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" } 
+        ConfluenceAction { id: informationAction; text: qsTr("Show Information"); onActivated: root.showInformationSheet()
+                           enabled: sourcesListView.currentItem.itemdata.type == "File" } 
         ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onActivated: engineModel.rescan(sourcesListView.currentIndex)
                            enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" } 
         ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
 
-        model: [rootAction, removeAction, rescanAction, addSourceAction]
+        model: [rootAction, removeAction, informationAction, rescanAction, addSourceAction]
+    }
+
+    function showInformationSheet() {
+        if (!informationSheet)
+            return
+        confluence.showModal(informationSheet)
+        informationSheet.currentItem = sourcesListView.currentItem
     }
 
     Panel {
@@ -52,12 +61,6 @@ Item {
                 if (itemType == "SearchPath") {
                     if (event.key == Qt.Key_Delete) {
                         treeModel.removeSearchPath(currentIndex)
-                        event.accepted = true
-                    }
-                } else if (itemType == "File") {
-                    if (event.key == Qt.Key_I && informationSheet) {
-                        var sheet =  confluence.showModal(informationSheet)
-                        sheet.currentItem = sourcesListView.currentItem // this is not a binding for lazy loading
                         event.accepted = true
                     }
                 }
