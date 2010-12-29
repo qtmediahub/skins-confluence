@@ -93,7 +93,7 @@ Item {
             },
             State {
                 name: 'triggered'
-                PropertyChanges { target: entry; rightMargin: -20 }
+                PropertyChanges { target: entry; anchors.rightMargin: -20 }
             },
             State {
                 name: 'non-triggered'
