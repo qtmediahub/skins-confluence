@@ -51,6 +51,11 @@ FocusScope {
         onClicked: confluence.state = "showingRootBlade" // # FIXME: Don't miss with another component's state!
     }
 
+    function openBlade() {
+        blade.state = "open"
+        blade.forceActiveFocus()
+    }
+
     Loader {
         id: bladeLoader
         sourceComponent: bladeComponent

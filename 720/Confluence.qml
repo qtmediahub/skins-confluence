@@ -452,13 +452,6 @@ FocusScope {
         item.forceActiveFocus()
     }
 
-    function showBlade(blade) {
-        var currentFocusedItem = frontend.focusItem()
-        blade.closed.connect(function() { if (currentFocusedItem) currentFocusedItem.forceActiveFocus() })
-        blade.state = "open"
-        blade.forceActiveFocus()
-    }
-
     function showFullScreen(item) {
         item.z = background.z + 2
         item.parent = confluence

@@ -62,6 +62,8 @@ Window {
                 viewLoader.sourceComponent = posterView
             }
         }
+
+        onClosed: if (root.visible) viewLoader.forceActiveFocus()
     }
 
     Component {
@@ -111,6 +113,6 @@ Window {
         viewLoader.item.engineModel = videoEngine.pluginProperties.videoModel
     }
 
-    Keys.onRightPressed: confluence.showBlade(blade)
+    Keys.onRightPressed: openBlade()
 }
 

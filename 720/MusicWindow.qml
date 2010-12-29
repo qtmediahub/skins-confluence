@@ -65,6 +65,8 @@ Window {
                 viewLoader.item.hidePreview = viewType == "BIG LIST"
             }
         }
+
+        onClosed: if (root.visible) viewLoader.forceActiveFocus()
     }
 
     Component {
@@ -101,6 +103,6 @@ Window {
         viewLoader.item.informationSheet = musicInformationSheet
     }
 
-    Keys.onRightPressed: confluence.showBlade(blade)
+    Keys.onRightPressed: openBlade()
 }
 

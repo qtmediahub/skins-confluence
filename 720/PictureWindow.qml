@@ -88,6 +88,8 @@ Window {
             slideShow.restart()
             confluence.showFullScreen(slideShow)
         }
+
+        onClosed: if (root.visible) viewLoader.forceActiveFocus()
     }
 
     Component {
@@ -124,6 +126,6 @@ Window {
         viewLoader.item.informationSheet = pictureInformationSheet
     }
 
-    Keys.onRightPressed: confluence.showBlade(blade)
+    Keys.onRightPressed: openBlade()
 }
 
