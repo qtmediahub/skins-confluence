@@ -38,5 +38,6 @@ Blade {
     }
 
     Keys.onEscapePressed: state = "closed"
+    Keys.onLeftPressed: state = "closed"
 }
 
