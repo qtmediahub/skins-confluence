@@ -23,6 +23,8 @@ import "../components"
 Window {
     id: root
 
+    anchors.fill: parent
+
     property string city: "Munich"
 
     function fahrenheit2celsius(f) {
@@ -77,10 +79,12 @@ Window {
         spacing: 60
 
         Panel {
+            width: root.width/2.0 - weather.spacing*2
+            height: root.height/1.3
+
             Item {
                 id: currentWeather
-                width: 440
-                height: 600
+                anchors.fill: parent
 
                 Column {
                     anchors.fill: parent
@@ -163,11 +167,11 @@ Window {
         }
 
         Panel {
+            width: root.width/2.0 - weather.spacing*2
+            height: root.height/1.3
+
             Column {
-                anchors.centerIn: parent
-                width: 440
-                height: 600
-                anchors.margins: 50
+                anchors.fill: parent
                 spacing: 40
 
                 ConfluenceText {
@@ -260,8 +264,8 @@ Window {
 
     Panel {
         id: cityListView
-        width: 360
-        height: 600
+        width: root.width/2.0
+        height: root.height/1.3
         x: (root.width-width)/2
         y: (root.height-height)/2
         z: 1
