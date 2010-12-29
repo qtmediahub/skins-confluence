@@ -57,7 +57,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP"), qsTr("POSTER")]
                 onActivated: pictureWindowBlade.viewChanged()
             },
             ConfluenceAction {
@@ -80,6 +80,8 @@ Window {
             } else if (viewType == "LIST" || viewType == "BIG LIST") {
                 viewLoader.sourceComponent = listView
                 viewLoader.item.hidePreview = viewType == "BIG LIST"
+            } else if (viewType == "POSTER") {
+                viewLoader.sourceComponent = posterView
             }
         }
 
@@ -107,6 +109,14 @@ Window {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
             informationSheet: pictureInformationSheet
+        }
+    }
+
+    Component {
+        id: posterView
+        MediaPosterView {
+            engineName: pictureEngine.name
+            engineModel: pictureEngine.pluginProperties.pictureModel
         }
     }
 

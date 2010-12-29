@@ -94,7 +94,7 @@ Item {
 
         VisualDataModel {
             id: visualDataModel
-            model: videoEngine.pluginProperties.videoModel
+            model: engineModel
 
             delegate : Item {
                 property variant itemdata : model

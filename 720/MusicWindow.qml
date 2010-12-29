@@ -45,7 +45,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP"), qsTr("POSTER")]
                 onActivated: musicWindowBlade.viewChanged()
             },
             ConfluenceAction {
@@ -63,6 +63,8 @@ Window {
             } else if (viewType == "LIST" || viewType == "BIG LIST") {
                 viewLoader.sourceComponent = listView
                 viewLoader.item.hidePreview = viewType == "BIG LIST"
+            } else if (viewType == "POSTER") {
+                viewLoader.sourceComponent = posterView
             }
         }
 
@@ -84,6 +86,14 @@ Window {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
             onItemTriggered: avPlayer.playForeground(itemData)
+        }
+    }
+
+    Component {
+        id: posterView
+        MediaPosterView {
+            engineName: musicEngine.name
+            engineModel: musicEngine.pluginProperties.musicModel
         }
     }
 
