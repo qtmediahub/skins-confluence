@@ -34,12 +34,14 @@ FocusScope {
     signal openSubMenu
 
     Component.onCompleted: {
-        var clickComponent = Qt.createComponent("../components/QMHAudio.qml");
-        if(clickComponent.status == Component.Ready) {
-            menuSoundEffect = clickComponent.createObject(parent)
-            menuSoundEffect.source = themeResourcePath + "/sounds/click.wav"
-        } else if (clickComponent.status == Component.Error) {
-            backend.log(clickComponent.errorString())
+        if (config.isEnabled("menu-sound-effects", false)) {
+            var menuSoundEffectLoader = Qt.createComponent("../components/QMHAudio.qml");
+            if (menuSoundEffectLoader.status == Component.Ready) {
+                menuSoundEffect = menuSoundEffectLoader.createObject(parent)
+                menuSoundEffect.source = themeResourcePath + "/sounds/click.wav"
+            } else if (menuSoundEffectLoader.status == Component.Error) {
+                backend.log(menuSoundEffectLoader.errorString())
+            }
         }
     }
 
@@ -68,9 +70,7 @@ FocusScope {
 
         onCurrentIndexChanged: {
             background.role = currentItem.role
-            if(menuSoundEffect != undefined) {
-                menuSoundEffect.play()
-            }
+            !!menuSoundEffect ? menuSoundEffect.play() : undefined
         }
 
         Keys.onEnterPressed:
