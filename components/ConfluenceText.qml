@@ -24,7 +24,7 @@ Text {
     color: "white"
     //Disable on transitions
     smooth: true
-    font.pointSize: 20
+    font.pixelSize: confluence.width/60 //20
     font.weight: Font.Light
 
     Behavior on text {
