@@ -37,6 +37,7 @@ Rectangle {
 
         property real setting1 : Math.random()
         property real setting2 : Math.random()
+        property real setting3 : Math.random()
 
         PropertyAnimation {
             target: part3
@@ -55,7 +56,7 @@ Rectangle {
         PropertyAnimation {
             target: part3
             property: "scale"
-            to: anim.setting1*anim.setting2
+            to: anim.setting3
             duration: 4000
             easing.type: Easing.InOutBack
         }
@@ -64,6 +65,7 @@ Rectangle {
             if (root.running) {
                 anim.setting1 = Math.random()
                 anim.setting2 = Math.random()
+                anim.setting3 = Math.random()
                 anim.start()
             }
         }
