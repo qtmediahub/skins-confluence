@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import DirModel 1.0
 import "../components/"
+import "util.js" as Util
 
 Item {
     id: root
@@ -38,123 +39,19 @@ Item {
         border.right: 5; border.bottom: 5
     }
 
-    PathView {
+    PosterView {
         id: pathView
-        property alias rootIndex : visualDataModel.rootIndex
-        property int delegateWidth : 200
-        property int delegateHeight : 200
-        property string currentSelectedName : ""
-        property string currentSelectedPath : ""
-        property int currentSelectedSize : -1
-
-        signal clicked(string filePath)
-        signal rootIndexChanged() // this should be automatic, but doesn't trigger :/
-
-        function currentModelIndex() {
-            //console.log(currentItem.itemdata.filePath);
-            return visualDataModel.modelIndex(currentIndex);
-        }
-
         width: parent.width
         height: 300
         anchors.top: parent.top
         anchors.topMargin: 100
         anchors.horizontalCenter: parent.horizontalCenter
         clip: true
-        focus: true;
-        model : visualDataModel
-        pathItemCount: (width+2*delegateWidth)/delegateWidth
-        preferredHighlightBegin : 0.5
-        preferredHighlightEnd : 0.5
+        focus: true
+        posterModel: engineModel
 
         onClicked: {
-            avPlayer.play(filePath)
-        }
-
-        path: Path {
-            startX: -pathView.delegateWidth; startY: pathView.height/2.0
-            PathAttribute { name: "scale"; value: 1 }
-            PathAttribute { name: "z"; value: 1 }
-            PathAttribute { name: "opacity"; value: 0.2 }
-            PathLine { x: pathView.width/2.5; y: pathView.height/2.0 }
-            PathAttribute { name: "scale"; value: 1.0 }
-            PathLine { x: pathView.width/2.0; y: pathView.height/2.0 }
-            PathAttribute { name: "scale"; value: 1.5 }
-            PathAttribute { name: "z"; value: 2 }
-            PathAttribute { name: "opacity"; value: 1.0 }
-            PathLine { x: pathView.width/1.5; y: pathView.height/2.0 }
-            PathAttribute { name: "scale"; value: 1.0 }
-            PathLine { x: pathView.width+pathView.delegateWidth; y: pathView.height/2.0 }
-            PathAttribute { name: "scale"; value: 1 }
-            PathAttribute { name: "z"; value: 1 }
-            PathAttribute { name: "opacity"; value: 0.2 }
-        }
-        Keys.onRightPressed: { pathView.incrementCurrentIndex(); }
-        Keys.onLeftPressed: { pathView.decrementCurrentIndex(); }
-
-        VisualDataModel {
-            id: visualDataModel
-            model: engineModel
-
-            delegate : Item {
-                property variant itemdata : model
-                width: pathView.delegateWidth
-                height: pathView.delegateHeight
-                clip: true
-                scale: PathView.scale
-                opacity : PathView.opacity
-                z: PathView.z
-
-                // this needs to be fixed but I have no clue how to access current selected item from outside the delegate
-                property variant foo : PathView.isCurrentItem ? bar() : undefined
-
-                function bar() {
-                    pathView.currentSelectedName = display;
-                    pathView.currentSelectedPath = filePath;
-                    pathView.currentSelectedSize = (type == "File") ? fileSize : -1;
-                }
-
-                BorderImage {
-                    id: border
-                    anchors.fill: parent
-                    source: themeResourcePath + "/media/" + "ThumbBorder.png"
-                    border.left: 10; border.top: 10
-                    border.right: 10; border.bottom: 10
-
-                    Image {
-                        id: backgroundImage
-                        anchors.fill: parent
-                        source: model.previewUrl
-                        anchors.margins: 6
-
-                        Image {
-                            id: glassOverlay
-                            anchors.left: parent.left
-                            anchors.top: parent.top
-                            width: parent.width*0.7
-                            height: parent.height*0.6
-                            source: themeResourcePath + "/media/" + "GlassOverlay.png"
-                        }
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent;
-
-                    onClicked: {
-                        if (model.hasModelChildren) {
-                            visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-                            pathView.rootIndexChanged();
-                        } else if (model.type == "DotDot") { // FIXME: Make this MediaModel.DotDot when we put the model code in a library
-                            visualDataModel.rootIndex = visualDataModel.parentModelIndex();
-                            pathView.rootIndexChanged();
-                        } else {
-                            pathView.currentIndex = index;
-                            pathView.clicked(filePath)
-                        }
-                    }
-                }
-            }
+            avPlayer.play(pathView.currentItem.itemdata.filePath) // ## FIXME
         }
     }
 
@@ -162,7 +59,7 @@ Item {
         anchors.top:  pathView.bottom
         anchors.topMargin: 30
         anchors.horizontalCenter: parent.horizontalCenter
-        text: pathView.currentSelectedName
+        text: pathView.currentItem ? pathView.currentItem.itemdata.display : ""
     }
 
     ConfluenceText {
@@ -172,11 +69,6 @@ Item {
         font.pointSize: 15
         font.bold: false
         color: "steelblue"
-        text: pathView.currentSelectedSize < 0 ? "" : (pathView.currentSelectedSize/1000000).toFixed(2) + " MB"
-    }
-
-    Component.onCompleted: {
-        visualDataModel.rootIndex = visualDataModel.modelIndex(0)
-        pathView.rootIndexChanged();
+        text: pathView.currentItem && pathView.currentItem.itemdata.type == "File" ? Util.toHumanReadableBytes(pathView.currentItem.itemdata.fileSize) : ""
     }
 }
