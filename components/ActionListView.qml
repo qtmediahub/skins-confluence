@@ -108,8 +108,8 @@ ListView {
             onClicked: delegateItem.trigger()
         }
 
-        Keys.onReturnPressed: trigger()
-        Keys.onEnterPressed: trigger()
+        Keys.onReturnPressed: if (model.modelData.enabled) trigger()
+        Keys.onEnterPressed: if (model.modelData.enabled) trigger()
     }
 }
 
