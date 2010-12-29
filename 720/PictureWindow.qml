@@ -126,6 +126,6 @@ Window {
         viewLoader.item.informationSheet = pictureInformationSheet
     }
 
-    Keys.onRightPressed: openBlade()
+    Keys.onRightPressed: { blade.open(); blade.forceActiveFocus() }
 }
 

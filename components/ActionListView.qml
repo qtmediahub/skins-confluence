@@ -72,7 +72,7 @@ ListView {
             anchors.centerIn: parent
             width: parent.width-4
             height: parent.height
-            opacity: delegateItem.activeFocus ? 1 : 0
+            opacity: delegateItem.focus ? 1 : 0
         }
 
         Text {
@@ -105,7 +105,7 @@ ListView {
 
             onEntered: root.currentIndex = index
 
-            onClicked: delegateItem.trigger()
+            onClicked: { root.currentIndex = index; delegateItem.trigger() }
         }
 
         Keys.onReturnPressed: if (model.modelData.enabled) trigger()

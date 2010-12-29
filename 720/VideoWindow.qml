@@ -113,6 +113,6 @@ Window {
         viewLoader.item.engineModel = videoEngine.pluginProperties.videoModel
     }
 
-    Keys.onRightPressed: openBlade()
+    Keys.onRightPressed: { blade.open(); blade.forceActiveFocus() }
 }
 

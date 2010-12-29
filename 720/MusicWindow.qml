@@ -103,6 +103,6 @@ Window {
         viewLoader.item.informationSheet = musicInformationSheet
     }
 
-    Keys.onRightPressed: openBlade()
+    Keys.onRightPressed: { blade.open(); blade.forceActiveFocus() }
 }
 

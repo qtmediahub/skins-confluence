@@ -13,8 +13,8 @@ Blade {
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
     hoverEnabled: true
-    onEntered: state = "open"
-    onExited: state = "closed"
+    onEntered: { open(); forceActiveFocus() }
+    onExited: close()
 
     content: Column {
         anchors.fill: parent

@@ -44,6 +44,16 @@ FocusScope {
     //pixmap specific offset (pixmap alpha!)
     property int bladeRightMargin: 30
 
+    function open() {
+        state = "open"
+    }
+    function close() {
+        state = "closed"
+    }
+    function hide() {
+        state = "hidden"
+    }
+
     state:  "closed"
 
     states: [
@@ -84,21 +94,26 @@ FocusScope {
             anchors.right: blade.right
             anchors.fill:  parent
         }
-        Item {
-            id: content
-            focus: true
-            anchors { right: blade.right; rightMargin: bladeRightMargin }
-            width: blade.width; height: blade.height
-        }
         MouseArea {
             hoverEnabled: root.hoverEnabled
             anchors.fill: parent
-            onPressed: { root.clicked(); mouse.accepted = false } // propagate the mouse to the child content
+            onPressed: root.clicked()
             onEntered: root.entered()
             onExited: root.exited()
+
+            // The content has to be a child of the enclosing MouseArea. This is required
+            // because if it were a sibling then the enclosing MouseArea would receive a 
+            // exited when it enters the content's MouseArea
+            Item {
+                id: content
+                focus: true
+                anchors { right: parent.right; rightMargin: bladeRightMargin }
+                width: parent.width; height: parent.height
+            }
         }
         Behavior on x {
             NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
         }
     }
 }
+
