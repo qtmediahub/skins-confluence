@@ -32,7 +32,7 @@ Blade {
     property alias subMenu : subMenu
     property alias rootMenu: rootMenu
 
-    bladeWidth: 400
+    bladeWidth: confluence.width/3.5
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
     content: RootMenu {
