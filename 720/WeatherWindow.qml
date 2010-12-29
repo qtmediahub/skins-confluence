@@ -46,13 +46,13 @@ Window {
 
     function fullWeekDay(name) {
         var map = {
-            "Mon" : "MONDAY",
-            "Tue" : "TUESDAY",
-            "Wed" : "WEDNESDAY",
-            "Thu" : "THURSDAY",
-            "Fri" : "FRIDAY",
-            "Sat" : "SATURDAY",
-            "Sun" : "SUNDAY",
+            "Mon" : qsTr("MONDAY"),
+            "Tue" : qsTr("TUESDAY"),
+            "Wed" : qsTr("WEDNESDAY"),
+            "Thu" : qsTr("THURSDAY"),
+            "Fri" : qsTr("FRIDAY"),
+            "Sat" : qsTr("SATURDAY"),
+            "Sun" : qsTr("SUNDAY"),
         };
         return map[name];
     }
@@ -93,7 +93,7 @@ Window {
 
                     ConfluenceText {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "CURRENT TEMP"
+                        text: qsTr("CURRENT TEMP")
                     }
 
                     ConfluenceText {
@@ -125,7 +125,7 @@ Window {
                         }
 
                         ConfluenceText {
-                            text: "°C"
+                            text: qsTr("°C")
                             anchors.verticalCenter: weatherDegree.top
                             anchors.left: weatherDegree.right; anchors.leftMargin: 10
                         }
@@ -176,7 +176,7 @@ Window {
 
                 ConfluenceText {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "WEATHER FORECAST"
+                    text: qsTr("WEATHER FORECAST")
                 }
 
                 ListView {
@@ -212,7 +212,7 @@ Window {
                             smooth: true
                             font.pointSize: 20
                             color: "grey"
-                            text: "High: "
+                            text: qsTr("High: ")
                         }
                         ConfluenceText {
                             id: hightempvalue
@@ -229,7 +229,7 @@ Window {
                             smooth: true
                             font.pointSize: 20
                             color: "grey"
-                            text: "Low: "
+                            text: qsTr("Low: ")
                         }
                         ConfluenceText {
                             anchors.left: lowtemptext.right;
