@@ -113,6 +113,7 @@ Window {
     Loader {
         id: viewLoader
         focus: true
+        anchors.fill: parent
     }
 
     Component.onCompleted: {

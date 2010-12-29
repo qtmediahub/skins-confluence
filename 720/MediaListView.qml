@@ -54,10 +54,10 @@ Item {
 
     Panel {
         id: sourcesPanel
-        x: 60
-        y: 80
-        width: root.hidePreview ? 950 : 700
-        height: 550
+        x: root.width*0.1
+        y: root.height*0.05
+        width: root.hidePreview ? root.width*0.8 : root.width*0.5
+        height: root.height*0.9
 
         TreeView {
             id: sourcesListView
