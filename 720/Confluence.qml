@@ -25,6 +25,8 @@ import "../components/"
 FocusScope {
     id: confluence
 
+    property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
+
     property string generalResourcePath: backend.resourcePath
     property string themeResourcePath: backend.skinPath + "/confluence/3rdparty/skin.confluence"
 

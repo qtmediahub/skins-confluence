@@ -51,7 +51,7 @@ FocusScope {
         signal itemSelected
 
         //Oversized fonts being downscaled
-        spacing: 30
+        spacing: confluence.width/40 //30
         focus: true
         keyNavigationWraps: true
 

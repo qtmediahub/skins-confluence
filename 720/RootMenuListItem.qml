@@ -81,7 +81,7 @@ Item {
         opacity: 0.5
         scale: 0.5
 
-        font.pixelSize: 60
+        font.pixelSize: confluence.width/24 //60
         text: model.modelData.name
         horizontalAlignment: Text.AlignRight
         font.weight: Font.Bold
@@ -130,6 +130,7 @@ Item {
         Image {
             id: symbol
             opacity: 0
+            //width: sourceSize.width*confluence.scalingCorrection; height: sourceSize.height*confluence.scalingCorrection
             anchors { right: subIndicator.right; bottom: subIndicator.bottom; bottomMargin: 0; rightMargin: -5 }
             source: themeResourcePath + "/media/HomeHasSub.png"
 

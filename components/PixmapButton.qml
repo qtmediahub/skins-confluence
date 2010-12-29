@@ -22,8 +22,7 @@ import QtQuick 1.0
 Item {
     id: button
     //property real pixmapCorrectionRatio: pixmap.sourceSize.width/pixmap.sourceSize.height
-    property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
-    width: pixmap.sourceSize.width * scalingCorrection; height: pixmap.sourceSize.width * scalingCorrection
+    width: pixmap.sourceSize.width * confluence.scalingCorrection; height: pixmap.sourceSize.width * confluence.scalingCorrection
 
     property string basePixmap
     property string focusedPixmap
