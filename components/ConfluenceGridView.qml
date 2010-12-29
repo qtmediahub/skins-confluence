@@ -38,7 +38,6 @@ GridView {
     }
 
     model : visualDataModel
-    keyNavigationWraps: true
     clip: true
 
     cellWidth: 154; cellHeight: 154

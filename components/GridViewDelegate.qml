@@ -3,13 +3,20 @@ import QtQuick 1.0
 Item {
     id: delegateItem
     property variant itemdata : model
-    width: sourceImg.width
-    height: sourceImg.height
+    width: GridView.view.cellWidth
+    height: GridView.view.cellHeight
+
+    Image {
+        id: backgroundImage
+        anchors.fill: parent
+        source: themeResourcePath + "/media/" + (delegateItem.activeFocus ? "folder-focus.png" : "button-nofocus.png")
+    }
 
     Image {
         id: sourceImg
         width: 142
         height: 142
+        anchors.centerIn: parent
         fillMode: Image.PreserveAspectFit
         anchors.verticalCenter: parent.verticalCenter
         z: 1 // ensure it is above the background
