@@ -34,7 +34,7 @@ FocusScope {
 
     property variant selectedEngine
     property variant selectedElement
-    property variant videoPlayer
+    property variant avPlayer
     property variant videoWindow
     property variant qtcube
     property variant browserWindow
@@ -64,7 +64,7 @@ FocusScope {
                 state: "visible"
             }
             PropertyChanges {
-                target: videoPlayer
+                target: avPlayer
                 state: "background"
             }
             PropertyChanges {
@@ -110,7 +110,7 @@ FocusScope {
                 state: "visible"
             }
             PropertyChanges {
-                target: videoPlayer
+                target: avPlayer
                 state: "background"
             }
             StateChangeScript { script: selectedElement.forceActiveFocus() }
@@ -127,7 +127,7 @@ FocusScope {
                 state: "maximized"
             }
             PropertyChanges {
-                target: videoPlayer
+                target: avPlayer
                 state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden"
             }
             PropertyChanges {
@@ -170,7 +170,7 @@ FocusScope {
         if(event.key == Qt.Key_Escape) {
             if(selectedElement && selectedElement.maximized)
                 selectedElement.maximized = false
-            else if(confluence.state == "showingRootBlade" && videoPlayer.video.playing)
+            else if(confluence.state == "showingRootBlade" && avPlayer.video.playing)
                 show(transparentVideoOverlay)
             else if(confluence.state == "showingRootBlade" && !!selectedElement)
                 show(selectedElement)
@@ -219,14 +219,14 @@ FocusScope {
         } else if (pictureWindowLoader.status == Component.Error)
             backend.log(pictureWindowLoader.errorString())
 
-        var videoPlayerComponent = Qt.createComponent("VideoPlayer.qml");
-        if (videoPlayerComponent.status == Component.Ready) {
-            videoPlayer = videoPlayerComponent.createObject(confluence)
+        var avPlayerComponent = Qt.createComponent("AVPlayer.qml");
+        if (avPlayerComponent.status == Component.Ready) {
+            avPlayer = avPlayerComponent.createObject(confluence)
             // FIXME: nothing to get video-path during runtime, yet
-            videoPlayer.state = "hidden"
-        } else if (videoPlayerComponent.status == Component.Error) {
-            backend.log(videoPlayerComponent.errorString())
-            videoPlayer = dummyItem
+            avPlayer.state = "hidden"
+        } else if (avPlayerComponent.status == Component.Error) {
+            backend.log(avPlayerComponent.errorString())
+            avPlayer = dummyItem
         }
 
         var dashboardLoader = Qt.createComponent("DashboardWindow.qml");
@@ -322,8 +322,8 @@ FocusScope {
     {
         if (element == mainBlade) {
             state = "showingRootBlade"
-        } else if(element == videoPlayer) {
-            if(videoPlayer.video.source == "") {
+        } else if(element == avPlayer) {
+            if(avPlayer.video.source == "") {
                 show(videoWindow)
             } else {
                 show(transparentVideoOverlay)
@@ -331,7 +331,7 @@ FocusScope {
         } else if (element == transparentVideoOverlay) {
             selectedElement = transparentVideoOverlay
             state = "showingSelectedElementMaximized"
-            videoPlayer.play()
+            avPlayer.play()
         } else {
             selectedElement = element
             state = "showingSelectedElement"
@@ -348,7 +348,7 @@ FocusScope {
         id: background
         anchors.fill: parent;
         z: 1
-        visible: !(!!videoPlayer.video && videoPlayer.video.playing)
+        visible: !(!!avPlayer.video && avPlayer.video.playing)
     }
 
     MainBlade { 
@@ -433,7 +433,7 @@ FocusScope {
     Window {
         id: transparentVideoOverlay
         onFocusChanged:
-            activeFocus ? videoPlayer.forceActiveFocus() : undefined
+            activeFocus ? avPlayer.forceActiveFocus() : undefined
     }
 
     function showContextMenu(item, x, y) {

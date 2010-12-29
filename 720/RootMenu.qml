@@ -104,7 +104,7 @@ FocusScope {
             id: playMediaButton
             basePixmap: "home-playmedia"
             focusedPixmap: "home-playmedia-FO"
-            onClicked: confluence.show(videoPlayer)
+            onClicked: confluence.show(avPlayer)
             KeyNavigation.left: rootMenuList
             KeyNavigation.backtab: rootMenuList
             KeyNavigation.right: favouritesButton

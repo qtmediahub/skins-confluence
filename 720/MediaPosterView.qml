@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import DirModel 1.0
 import "../components/"
 
 Item {
@@ -67,7 +68,7 @@ Item {
         preferredHighlightEnd : 0.5
 
         onClicked: {
-            videoPlayer.play(filePath)
+            avPlayer.play(filePath)
         }
 
         path: Path {
@@ -93,7 +94,7 @@ Item {
 
         VisualDataModel {
             id: visualDataModel
-            model: engineModel
+            model: videoEngine.pluginProperties.videoModel
 
             delegate : Item {
                 property variant itemdata : model
@@ -172,5 +173,10 @@ Item {
         font.bold: false
         color: "steelblue"
         text: pathView.currentSelectedSize < 0 ? "" : (pathView.currentSelectedSize/1000000).toFixed(2) + " MB"
+    }
+
+    Component.onCompleted: {
+        visualDataModel.rootIndex = visualDataModel.modelIndex(0)
+        pathView.rootIndexChanged();
     }
 }

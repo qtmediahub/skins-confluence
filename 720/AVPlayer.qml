@@ -147,7 +147,7 @@ FocusScope {
         running: visible && !videoItem.paused
     }
 
-    VideoPlayerControlOSD {
+    AVPlayerControlOSD {
         id: controlOSD
         video: videoItem
 
@@ -155,7 +155,7 @@ FocusScope {
         onShowMusicMenu: musicListDialog.open()
     }
 
-    VideoPlayerInfoOSD {
+    AVPlayerInfoOSD {
         id: infoOSD
         video: videoItem
         state: videoItem.hasVideo && (videoItem.paused || videoItem.playbackRate != 1) && root.state == "maximized" ? "visible" : ""
