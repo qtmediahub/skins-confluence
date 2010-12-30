@@ -138,7 +138,7 @@ FocusScope {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
         visible: !videoItem.hasVideo
-        running: visible && !videoItem.paused
+        running: visible && !videoItem.paused && videoItem.playing
     }
 
     AVPlayerControlOSD {
