@@ -40,7 +40,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("POSTER"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP")]
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
                 onActivated: videoWindowBlade.viewChanged()
             },
             ConfluenceAction {

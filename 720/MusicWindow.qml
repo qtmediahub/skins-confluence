@@ -45,7 +45,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("IMAGE WRAP"), qsTr("POSTER")]
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
                 onActivated: musicWindowBlade.viewChanged()
             },
             ConfluenceAction {
