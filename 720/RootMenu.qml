@@ -114,6 +114,7 @@ FocusScope {
             id: favouritesButton
             basePixmap: "home-favourites"
             focusedPixmap: "home-favourites-FO" 
+            onClicked: confluence.showModal(aboutDialog)
             KeyNavigation.left: playMediaButton
             KeyNavigation.backtab: playMediaButton
             KeyNavigation.right: powerButton
