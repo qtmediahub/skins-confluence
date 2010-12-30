@@ -59,7 +59,6 @@ Item {
         var visualDataModel = GridView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-            GridView.view.rootIndexChanged();
         } else {
             GridView.view.currentIndex = index;
             GridView.view.clicked()
