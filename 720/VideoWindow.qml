@@ -93,6 +93,7 @@ Window {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
             onItemTriggered: avPlayer.playForeground(itemData)
+            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
         }
     }
 

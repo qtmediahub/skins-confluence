@@ -100,6 +100,7 @@ Window {
             engineModel: musicEngine.pluginProperties.musicModel
             informationSheet: musicInformationSheet
             onItemTriggered: avPlayer.playForeground(itemData)
+            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
         }
     }
 

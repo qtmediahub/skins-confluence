@@ -120,6 +120,7 @@ Window {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
             informationSheet: pictureInformationSheet
+            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
         }
     }
 
