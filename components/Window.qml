@@ -51,11 +51,6 @@ FocusScope {
         onClicked: confluence.state = "showingRootBlade" // # FIXME: Don't miss with another component's state!
     }
 
-    Loader {
-        id: bladeLoader
-        sourceComponent: bladeComponent
-    }
-
     onMaximizedChanged:
         confluence.state = root.maximized ? "showingSelectedElementMaximized" : "showingSelectedElement"
 
@@ -118,6 +113,19 @@ FocusScope {
     }
     function onVisibleTransitionComplete() {
         //Any other way of extending generalized states/transitions?
+    }
+
+    Keys.onPressed:
+        if((event.key == Qt.Key_Right) && (event.modifier == Qt.ShiftModifier)) {
+            bladeLoader.item.clicked()
+            event.accepted = true
+        } else {
+            event.accepted = false
+        }
+
+    Loader {
+        id: bladeLoader
+        sourceComponent: bladeComponent
     }
 
     Behavior on width {
