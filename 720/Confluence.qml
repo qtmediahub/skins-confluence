@@ -453,7 +453,7 @@ FocusScope {
         var currentFocusedItem = frontend.focusItem();
         item.closed.connect(function() { mouseGrabber.opacity = 0; if (currentFocusedItem) currentFocusedItem.forceActiveFocus() })
         item.parent = confluence // ## restore parent?
-        item.z = background.z + 2
+        item.z = mouseGrabber.z + 2
         item.open()
         item.forceActiveFocus()
     }
