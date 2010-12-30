@@ -23,6 +23,8 @@ Item {
     id: imageCrossFader
     property string source
     property int animationDelay
+    property variant currentItem : primary
+    property variant nextItem : secondary
 
     Image {
         id: primary
@@ -40,12 +42,15 @@ Item {
 
     Timer {
         id: staggeredTimer
-        interval: primary.source == "" ? 0 : imageCrossFader.animationDelay; 
+        interval: primary.source == "" ? 0 : imageCrossFader.animationDelay;
         running: false; repeat: false
         onTriggered: SequentialAnimation {
-            // This is not a PropertyAction because of QTBUG-16146
-            ScriptAction { script: { secondary.source = primary.source; primary.source = imageCrossFader.source } }
-            PropertyAnimation { target: secondary; properties: "opacity"; from: 1; to: 0; duration:500; easing.type: confluenceEasingCurve }
+            ScriptAction { script: { nextItem.source = imageCrossFader.source } }
+            ParallelAnimation {
+                PropertyAnimation { target: currentItem; properties: "opacity"; from: 1; to: 0; duration:500; easing.type: confluenceEasingCurve }
+                PropertyAnimation { target: nextItem; properties: "opacity"; from: 0; to: 1; duration:500; easing.type: confluenceEasingCurve }
+            }
+            ScriptAction { script: { var tmp = currentItem; currentItem = nextItem; nextItem = tmp} }
         }
     }
 
