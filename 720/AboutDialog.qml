@@ -30,13 +30,14 @@ Dialog {
 
     ConfluenceFlipable {
         id: flipable
+        focus: true
         anchors.centerIn: parent
         width: startupQmlLoader.item.width
         height: startupQmlLoader.item.height
 
         MouseArea {
             anchors.fill: parent
-            onClicked: flipable.flipped = !flipable.flipped;
+            onClicked: flipable.flipped = !flipable.flipped
         }
 
         front: Loader {

@@ -22,23 +22,20 @@ import QtQuick 1.0
 Flipable {
     id: root
 
-    property bool flipped: false
+    property int angle
 
     transform: Rotation {
         id: rotation
         origin.x: root.width/2; origin.y: root.height/2
         axis.x: 0; axis.y: 1; axis.z: 0     // rotate depends on non-NOTIFYable propertiesaround y-axis
-        angle: 0
+        angle: root.angle
 
         Behavior on angle {
             NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
         }
     }
 
-    states: State {
-        name: "back"
-        when: root.flipped == true
-        PropertyChanges { target: rotation; angle: 180; }
-    }
+    Keys.onRightPressed: angle += 180
+    Keys.onLeftPressed: angle -= 180
 }
 
