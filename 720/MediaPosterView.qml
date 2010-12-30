@@ -51,7 +51,10 @@ Item {
         posterModel: engineModel
 
         onClicked: {
-            root.itemTriggered(pathView.currentItem.itemdata)
+            if (currentItem.itemdata.type == "AddNewSource")
+                confluence.showModal(addMediaSourceDialog)
+            else
+                root.itemTriggered(currentItem.itemdata)
         }
     }
 
@@ -70,5 +73,14 @@ Item {
         font.bold: false
         color: "steelblue"
         text: pathView.currentItem && pathView.currentItem.itemdata.type == "File" ? Util.toHumanReadableBytes(pathView.currentItem.itemdata.fileSize) : ""
+    }
+
+    AddMediaSourceDialog {
+        id: addMediaSourceDialog
+        engineModel: root.engineModel
+        title: qsTr("Add %1 source").arg(root.engineName)
+        opacity: 0
+
+        onClosed: pathView.forceActiveFocus()
     }
 }
