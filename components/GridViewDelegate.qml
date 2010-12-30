@@ -59,6 +59,7 @@ Item {
         var visualDataModel = GridView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
+            GridView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
         } else {
             GridView.view.currentIndex = index;
             GridView.view.clicked()

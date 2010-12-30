@@ -44,6 +44,7 @@ Item {
         var visualDataModel = ListView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
+            ListView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
         } else {
             ListView.view.currentIndex = index;
             ListView.view.clicked()

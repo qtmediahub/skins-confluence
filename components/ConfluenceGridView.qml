@@ -25,6 +25,7 @@ GridView {
     property alias rootIndex : visualDataModel.rootIndex
     signal clicked()
     signal rightClicked(int mouseX, int mouseY)
+    signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
 
     function currentModelIndex() {
         return visualDataModel.modelIndex(currentIndex);
