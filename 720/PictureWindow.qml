@@ -117,6 +117,7 @@ Window {
         MediaPosterView {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
+            informationSheet: pictureInformationSheet
         }
     }
 

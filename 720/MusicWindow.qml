@@ -76,6 +76,7 @@ Window {
         MediaThumbnailView {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
+            informationSheet: musicInformationSheet
             onItemTriggered: avPlayer.playForeground(itemData)
         }
     }
@@ -85,6 +86,7 @@ Window {
         MediaListView {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
+            informationSheet: musicInformationSheet
             onItemTriggered: avPlayer.playForeground(itemData)
         }
     }
@@ -94,6 +96,8 @@ Window {
         MediaPosterView {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
+            informationSheet: musicInformationSheet
+            onItemTriggered: avPlayer.playForeground(itemData)
         }
     }
 

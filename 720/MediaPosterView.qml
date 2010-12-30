@@ -28,6 +28,7 @@ Item {
 
     property variant engineName
     property variant engineModel
+    property variant informationSheet
 
     signal itemTriggered(variant itemData)
 
@@ -37,6 +38,28 @@ Item {
         anchors.fill: parent
         border.left: 5; border.top: 5
         border.right: 5; border.bottom: 5
+    }
+
+    ContextMenu {
+        id: contextMenu
+        title: qsTr("Actions")
+        ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onActivated: pathView.rootIndex = undefined; }
+        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: engineModel.removeSearchPath(pathView.currentIndex)
+                           enabled: pathView.currentItem.itemdata.type == "SearchPath" }
+        ConfluenceAction { id: informationAction; text: qsTr("Show Information"); onActivated: root.showInformationSheet()
+                           enabled: pathView.currentItem.itemdata.type == "File" } 
+        ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onActivated: engineModel.rescan(pathView.currentIndex)
+                           enabled: pathView.currentItem.itemdata.type == "SearchPath" } 
+        ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
+
+        model: [rootAction, removeAction, informationAction, rescanAction, addSourceAction]
+    }
+
+    function showInformationSheet() {
+        if (!informationSheet)
+            return
+        confluence.showModal(informationSheet)
+        informationSheet.currentItem = pathView.currentItem
     }
 
     PosterView {
@@ -55,6 +78,19 @@ Item {
                 confluence.showModal(addMediaSourceDialog)
             else
                 root.itemTriggered(currentItem.itemdata)
+        }
+        onRightClicked: {
+            var scenePos = pathView.mapToItem(null, mouseX, mouseY)
+            confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
+        }
+        Keys.onPressed: {
+            var itemType = pathView.currentItem.itemdata.type
+            if (itemType == "SearchPath") {
+                if (event.key == Qt.Key_Delete) {
+                    posterModel.removeSearchPath(currentIndex)
+                    event.accepted = true
+                }
+            }
         }
     }
 
@@ -84,3 +120,4 @@ Item {
         onClosed: pathView.forceActiveFocus()
     }
 }
+

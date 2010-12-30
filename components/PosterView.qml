@@ -7,6 +7,7 @@ PathView {
     property int delegateWidth : 200
     property int delegateHeight : 200
     property variant currentItem // QTBUG-16347
+    signal rightClicked(int mouseX, int mouseY)
 
     signal clicked(string filePath)
 

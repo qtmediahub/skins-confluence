@@ -15,20 +15,6 @@ Item {
             PathView.view.currentItem = delegateItem
     }
 
-    Keys.onReturnPressed: delegateItem.trigger()
-
-    function trigger()
-    {
-        var visualDataModel = PathView.view.model
-        if (model.hasModelChildren) {
-            visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-            visualDataModel.model.layoutChanged() // Workaround for QTBUG-16366
-        } else {
-            PathView.view.currentIndex = index;
-            PathView.view.clicked(filePath)
-        }
-    }
-
     BorderImage {
         id: border
         anchors.fill: parent
@@ -53,11 +39,31 @@ Item {
         }
     }
 
+    function trigger()
+    {
+        var visualDataModel = PathView.view.model
+        if (model.hasModelChildren) {
+            visualDataModel.rootIndex = visualDataModel.modelIndex(index)
+            visualDataModel.model.layoutChanged() // Workaround for QTBUG-16366
+        } else {
+            PathView.view.currentIndex = index;
+            PathView.view.clicked(filePath)
+        }
+    }
+
     MouseArea {
         anchors.fill: parent;
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onClicked:
-            delegateItem.trigger()
+            if (mouse.button == Qt.LeftButton)
+                delegateItem.trigger()
+            else {
+                PathView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
+            }
     }
+
+    Keys.onReturnPressed: delegateItem.trigger()
+    Keys.onMenuPressed: PathView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
 }
 
