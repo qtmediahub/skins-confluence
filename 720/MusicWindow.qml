@@ -39,6 +39,7 @@ Window {
         visible: true
         z: 1
         actionList: [viewAction, sortByAction]
+        property alias viewAction: viewAction
 
         resources: [
             // standard actions shared by all views
@@ -46,7 +47,7 @@ Window {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
-                onActivated: musicWindowBlade.viewChanged()
+                onActivated: root.setCurrentView(currentOption)
             },
             ConfluenceAction {
                 id: sortByAction
@@ -55,20 +56,21 @@ Window {
                 onActivated: musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, currentOption())
             }]
 
-        function viewChanged() {
-            var viewType = viewAction.currentOption()
-            if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
-                viewLoader.sourceComponent = thumbnailView
-                viewLoader.item.hidePreview = viewType == "PIC THUMBS"
-            } else if (viewType == "LIST" || viewType == "BIG LIST") {
-                viewLoader.sourceComponent = listView
-                viewLoader.item.hidePreview = viewType == "BIG LIST"
-            } else if (viewType == "POSTER") {
-                viewLoader.sourceComponent = posterView
-            }
-        }
-
         onClosed: if (root.visible) viewLoader.forceActiveFocus()
+    }
+
+    function setCurrentView(viewType) {
+        if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
+            viewLoader.sourceComponent = thumbnailView
+            viewLoader.item.hidePreview = viewType == "PIC THUMBS"
+        } else if (viewType == "LIST" || viewType == "BIG LIST") {
+            viewLoader.sourceComponent = listView
+            viewLoader.item.hidePreview = viewType == "BIG LIST"
+        } else if (viewType == "POSTER") {
+            viewLoader.sourceComponent = posterView
+        }
+        blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
+        config.setValue("musicwindow-currentview", viewType)
     }
 
     Component {
@@ -110,12 +112,7 @@ Window {
     Component.onCompleted: {
         musicEngine.visualElement = root;
         musicEngine.pluginProperties.musicModel.setThemeResourcePath(themeResourcePath);
-
-        // FIXME: restore from settings
-        viewLoader.sourceComponent = listView
-        viewLoader.item.engineName = musicEngine.name
-        viewLoader.item.engineModel = musicEngine.pluginProperties.musicModel
-        viewLoader.item.informationSheet = musicInformationSheet
+        setCurrentView(config.value("musicwindow-currentview", "LIST"))
     }
 
     Keys.onRightPressed: { blade.open(); blade.forceActiveFocus() }

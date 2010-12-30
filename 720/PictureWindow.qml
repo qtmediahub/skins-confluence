@@ -51,6 +51,7 @@ Window {
         visible: true
         z: 1
         actionList: [viewAction, sortByAction, slideShowAction]
+        property alias viewAction: viewAction
 
         resources: [
             // standard actions shared by all views
@@ -58,7 +59,7 @@ Window {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
-                onActivated: pictureWindowBlade.viewChanged()
+                onActivated: root.setCurrentView(currentOption)
             },
             ConfluenceAction {
                 id: sortByAction
@@ -72,19 +73,6 @@ Window {
                 onActivated: pictureWindowBlade.startSlideShow()
             }]
 
-        function viewChanged() {
-            var viewType = viewAction.currentOption()
-            if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
-                viewLoader.sourceComponent = thumbnailView
-                viewLoader.item.hidePreview = viewType == "PIC THUMBS"
-            } else if (viewType == "LIST" || viewType == "BIG LIST") {
-                viewLoader.sourceComponent = listView
-                viewLoader.item.hidePreview = viewType == "BIG LIST"
-            } else if (viewType == "POSTER") {
-                viewLoader.sourceComponent = posterView
-            }
-        }
-
         function startSlideShow() {
             slideShow.rootIndex = viewLoader.item.rootIndex
             slideShow.restart()
@@ -92,6 +80,20 @@ Window {
         }
 
         onClosed: if (root.visible) viewLoader.forceActiveFocus()
+    }
+
+    function setCurrentView(viewType) {
+        if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
+            viewLoader.sourceComponent = thumbnailView
+            viewLoader.item.hidePreview = viewType == "PIC THUMBS"
+        } else if (viewType == "LIST" || viewType == "BIG LIST") {
+            viewLoader.sourceComponent = listView
+            viewLoader.item.hidePreview = viewType == "BIG LIST"
+        } else if (viewType == "POSTER") {
+            viewLoader.sourceComponent = posterView
+        }
+        blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
+        config.setValue("picturewindow-currentview", viewType)
     }
 
     Component {
@@ -130,12 +132,7 @@ Window {
     Component.onCompleted: {
         pictureEngine.visualElement = root;
         pictureEngine.pluginProperties.pictureModel.setThemeResourcePath(themeResourcePath);
-
-        // FIXME: restore from settings
-        viewLoader.sourceComponent = listView
-        viewLoader.item.engineName = pictureEngine.name
-        viewLoader.item.engineModel = pictureEngine.pluginProperties.pictureModel
-        viewLoader.item.informationSheet = pictureInformationSheet
+        setCurrentView(config.value("picturewindow-currentview", "LIST"))
     }
 
     Keys.onRightPressed: { blade.open(); blade.forceActiveFocus() }

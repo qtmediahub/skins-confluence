@@ -90,7 +90,7 @@ ListView {
             id: delegateValue
             font.pointSize: 16
             color: model.modelData.enabled ? "white" : "gray"
-            text: model.modelData.currentOption()
+            text: model.modelData.currentOption
             horizontalAlignment: Text.AlignRight
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: delegateImage.right
