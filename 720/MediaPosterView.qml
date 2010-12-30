@@ -51,7 +51,7 @@ Item {
         posterModel: engineModel
 
         onClicked: {
-            avPlayer.play(pathView.currentItem.itemdata.filePath) // ## FIXME
+            root.itemTriggered(pathView.currentItem.itemdata)
         }
     }
 

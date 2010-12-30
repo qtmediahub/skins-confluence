@@ -90,6 +90,7 @@ Window {
         MediaPosterView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
+            onItemTriggered: avPlayer.playForeground(itemData)
         }
     }
 
