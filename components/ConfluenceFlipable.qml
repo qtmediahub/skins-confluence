@@ -27,7 +27,7 @@ Flipable {
     transform: Rotation {
         id: rotation
         origin.x: root.width/2; origin.y: root.height/2
-        axis.x: 0; axis.y: 1; axis.z: 0     // rotate depends on non-NOTIFYable propertiesaround y-axis
+        axis { x: 0; y: 1; z: 0 }
         angle: root.angle
 
         Behavior on angle {
