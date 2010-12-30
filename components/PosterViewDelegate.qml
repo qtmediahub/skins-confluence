@@ -44,6 +44,7 @@ Item {
         var visualDataModel = PathView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
+            PathView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
             visualDataModel.model.layoutChanged() // Workaround for QTBUG-16366
         } else {
             PathView.view.currentIndex = index;

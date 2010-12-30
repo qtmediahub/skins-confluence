@@ -4,12 +4,12 @@ PathView {
     id: pathView
     property variant posterModel // Not an alias because of QTBUG-16357
     property alias rootIndex : visualDataModel.rootIndex
+    signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
     property int delegateWidth : 200
     property int delegateHeight : 200
     property variant currentItem // QTBUG-16347
-    signal rightClicked(int mouseX, int mouseY)
-
     signal clicked(string filePath)
+    signal rightClicked(int mouseX, int mouseY)
 
     function currentModelIndex() {
         return visualDataModel.modelIndex(currentIndex);
