@@ -15,6 +15,20 @@ Item {
             PathView.view.currentItem = delegateItem
     }
 
+    Keys.onReturnPressed: delegateItem.trigger()
+
+    function trigger()
+    {
+        var visualDataModel = PathView.view.model
+        if (model.hasModelChildren) {
+            visualDataModel.rootIndex = visualDataModel.modelIndex(index)
+            visualDataModel.model.layoutChanged() // Workaround for QTBUG-16366
+        } else {
+            PathView.view.currentIndex = index;
+            PathView.view.clicked(filePath)
+        }
+    }
+
     BorderImage {
         id: border
         anchors.fill: parent
@@ -42,16 +56,8 @@ Item {
     MouseArea {
         anchors.fill: parent;
 
-        onClicked: {
-            var visualDataModel = PathView.view.model
-            if (model.hasModelChildren) {
-                visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-                visualDataModel.model.layoutChanged() // Workaround for QTBUG-16366
-            } else {
-                PathView.view.currentIndex = index;
-                PathView.view.clicked(filePath)
-            }
-        }
+        onClicked:
+            delegateItem.trigger()
     }
 }
 
