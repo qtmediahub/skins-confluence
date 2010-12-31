@@ -256,7 +256,7 @@ FocusScope {
         var weatherLoader = Qt.createComponent("WeatherWindow.qml");
         if (weatherLoader.status == Component.Ready) {
             weatherWindow = weatherLoader.createObject(confluence)
-            weatherWindow.z = background.z = 2
+            weatherWindow.z = background.z + 2
         } else if (weatherLoader.status == Component.Error) {
             backend.log(weatherLoader.errorString())
         }
