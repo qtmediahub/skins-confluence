@@ -65,9 +65,9 @@ Item {
     PosterView {
         id: posterView
         width: parent.width
-        height: 300
+        height: confluence.height/2.4
         anchors.top: parent.top
-        anchors.topMargin: 100
+        anchors.topMargin: confluence.height/7.2
         anchors.horizontalCenter: parent.horizontalCenter
         clip: true
         focus: true
@@ -96,14 +96,14 @@ Item {
 
     ConfluenceText {
         anchors.top:  posterView.bottom
-        anchors.topMargin: 30
+        anchors.topMargin: confluence.height/24
         anchors.horizontalCenter: parent.horizontalCenter
         text: posterView.currentItem ? posterView.currentItem.itemdata.display : ""
     }
 
     ConfluenceText {
         anchors.top:  posterView.bottom
-        anchors.topMargin: 60
+        anchors.topMargin: confluence.height/12
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 15
         font.bold: false

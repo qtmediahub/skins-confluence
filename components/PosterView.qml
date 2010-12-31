@@ -5,8 +5,8 @@ PathView {
     property variant posterModel // Not an alias because of QTBUG-16357
     property alias rootIndex : visualDataModel.rootIndex
     signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
-    property int delegateWidth : 200
-    property int delegateHeight : 200
+    property int delegateWidth : confluence.width/6.4
+    property int delegateHeight : confluence.width/6.4
     property variant currentItem // QTBUG-16347
     signal clicked(string filePath)
     signal rightClicked(int mouseX, int mouseY)
