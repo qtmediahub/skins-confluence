@@ -28,7 +28,7 @@ Item {
     property bool hidePreview: false
     property alias rootIndex: sourcesListView.rootIndex
 
-    signal itemTriggered(variant itemData)
+    signal itemActivated(variant itemData)
 
     ContextMenu {
         id: contextMenu
@@ -69,7 +69,7 @@ Item {
                 if (currentItem.itemdata.type == "AddNewSource")
                     confluence.showModal(addMediaSourceDialog)
                 else
-                    root.itemTriggered(currentItem.itemdata)
+                    root.itemActivated(currentItem.itemdata)
             }
             onRightClicked: {
                 var scenePos = sourcesPanel.mapToItem(null, mouseX, mouseY)

@@ -73,7 +73,7 @@ Window {
         MediaThumbnailView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemTriggered: avPlayer.playForeground(itemData)
+            onItemActivated: avPlayer.playForeground(itemData)
         }
     }
 
@@ -82,7 +82,7 @@ Window {
         MediaListView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemTriggered: avPlayer.playForeground(itemData)
+            onItemActivated: avPlayer.playForeground(itemData)
         }
     }
 
@@ -92,7 +92,7 @@ Window {
         MediaPosterView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemTriggered: avPlayer.playForeground(itemData)
+            onItemActivated: avPlayer.playForeground(itemData)
             Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
         }
     }

@@ -79,7 +79,7 @@ Window {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
             informationSheet: musicInformationSheet
-            onItemTriggered: avPlayer.playForeground(itemData)
+            onItemActivated: avPlayer.playForeground(itemData)
         }
     }
 
@@ -89,7 +89,7 @@ Window {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
             informationSheet: musicInformationSheet
-            onItemTriggered: avPlayer.playForeground(itemData)
+            onItemActivated: avPlayer.playForeground(itemData)
         }
     }
 
@@ -99,7 +99,7 @@ Window {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
             informationSheet: musicInformationSheet
-            onItemTriggered: avPlayer.playForeground(itemData)
+            onItemActivated: avPlayer.playForeground(itemData)
             Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
         }
     }

@@ -30,7 +30,7 @@ Item {
     property variant engineModel
     property variant informationSheet
 
-    signal itemTriggered(variant itemData)
+    signal itemActivated(variant itemData)
 
     BorderImage {
         id: background
@@ -77,7 +77,7 @@ Item {
             if (currentItem.itemdata.type == "AddNewSource")
                 confluence.showModal(addMediaSourceDialog)
             else
-                root.itemTriggered(currentItem.itemdata)
+                root.itemActivated(currentItem.itemdata)
         }
         onRightClicked: {
             var scenePos = posterView.mapToItem(null, mouseX, mouseY)
