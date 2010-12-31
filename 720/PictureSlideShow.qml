@@ -24,6 +24,7 @@ import "../components/"
 Item {
     id: root
     property bool running : false
+    property bool autoPlay : true
     property variant pictureModel
     property variant rootIndex
     property int fromRow : 0
@@ -38,6 +39,12 @@ Item {
         rootIndex = ri
         fromRow = from
         restart()
+    }
+
+    function next() {
+        root.running = modelIndexIterator.next()
+        if (root.running)
+            image.source = modelIndexIterator.data
     }
 
     Image {
@@ -59,14 +66,13 @@ Item {
         Timer {
             id: timer
             running: root.running
-            repeat: true
+            repeat: root.autoPlay
             interval: 3000
             triggeredOnStart: true
-            onTriggered:  {
-                root.running = modelIndexIterator.next()
-                image.source = root.running ? modelIndexIterator.data : ""
-            }
+            onTriggered:  root.next()
         }
     }
+
+    Keys.onRightPressed: root.next()
 }
 

@@ -41,8 +41,9 @@ Window {
 
     }
 
-    function startSlideShow() {
+    function startSlideShow(autoPlay) {
         slideShow.start(viewLoader.item.rootIndex, viewLoader.item.currentIndex)
+        slideShow.autoPlay = !!autoPlay
         confluence.showFullScreen(slideShow)
     }
 
@@ -76,7 +77,7 @@ Window {
             ConfluenceAction {
                 id: slideShowAction
                 text: qsTr("SLIDESHOW")
-                onTriggered: root.startSlideShow()
+                onTriggered: root.startSlideShow(true /*autoPlay */)
             }]
 
         onClosed: if (root.visible) viewLoader.forceActiveFocus()
@@ -111,7 +112,7 @@ Window {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
             informationSheet: pictureInformationSheet
-            onItemActivated: root.startSlideShow()
+            onItemActivated: root.startSlideShow(false /* autoPlay */)
         }
     }
 
