@@ -47,6 +47,11 @@ Item {
             image.source = modelIndexIterator.data
     }
 
+    function previous() {
+        if (modelIndexIterator.previous())
+            image.source = modelIndexIterator.data
+    }
+
     Image {
         id: image
         anchors.fill: parent
@@ -58,8 +63,10 @@ Item {
             model: root.pictureModel
             rootIndex: root.rootIndex
             fromRow: root.fromRow
-            filterRole: "type"
-            filterValue: "File"
+            childFilterRole: "type"
+            childFilterValue: "File"
+            parentFilterRole: "type"
+            parentFilterValue: "Directory"
             dataRole: "fileUrl"
         }
 
@@ -73,6 +80,7 @@ Item {
         }
     }
 
+    Keys.onLeftPressed: root.previous()
     Keys.onRightPressed: root.next()
 }
 
