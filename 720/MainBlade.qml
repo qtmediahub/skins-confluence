@@ -19,10 +19,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.components 1.0
+import "../components/uiconstants.js" as UIConstants
 
 Blade {
     id: root
     clip: false
+    z: UIConstants.screenZValues.mainBlade
 
     property int visibleWidth: root.bladeVisibleWidth
                                + subMenu.bladeVisibleWidth

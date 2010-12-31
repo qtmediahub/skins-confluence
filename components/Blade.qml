@@ -18,11 +18,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import "uiconstants.js" as UIConstants
 
 FocusScope {
     id: root
     width: blade.width + blade.x
     height: parent.height
+    z: UIConstants.windowZValues.blade
 
     clip: true
 

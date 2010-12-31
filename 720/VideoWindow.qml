@@ -32,7 +32,6 @@ Window {
         id: videoWindowBlade
         parent: root
         visible: true
-        z: 1
         actionList: [viewAction, sortByAction]
         property alias viewAction: viewAction
 

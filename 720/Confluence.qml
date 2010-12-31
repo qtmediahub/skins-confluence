@@ -20,7 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.components 1.0
 import "../components/"
-//import "testing"
+import "../components/uiconstants.js" as UIConstants
 
 FocusScope {
     id: confluence
@@ -204,7 +204,6 @@ FocusScope {
         var musicWindowLoader = Qt.createComponent("MusicWindow.qml")
         if (musicWindowLoader.status == Component.Ready) {
             var musicWindow = musicWindowLoader.createObject(confluence)
-            musicWindow.z = background.z + 2
         } else if (musicWindowLoader.status == Component.Error)
             backend.log(musicWindowLoader.errorString())
 
@@ -213,7 +212,6 @@ FocusScope {
         var videoWindowLoader = Qt.createComponent("VideoWindow.qml")
         if (videoWindowLoader.status == Component.Ready) {
             videoWindow = videoWindowLoader.createObject(confluence)
-            videoWindow.z = background.z + 2
         } else if (videoWindowLoader.status == Component.Error)
             backend.log(videoWindowLoader.errorString())
 
@@ -221,7 +219,6 @@ FocusScope {
         var pictureWindowLoader = Qt.createComponent("PictureWindow.qml")
         if (pictureWindowLoader.status == Component.Ready) {
             var pictureWindow = pictureWindowLoader.createObject(confluence)
-            pictureWindow.z = background.z + 2
         } else if (pictureWindowLoader.status == Component.Error)
             backend.log(pictureWindowLoader.errorString())
 
@@ -238,7 +235,6 @@ FocusScope {
         var dashboardLoader = Qt.createComponent("DashboardWindow.qml");
         if (dashboardLoader.status == Component.Ready) {
             var dashboard = dashboardLoader.createObject(confluence)
-            dashboard.z = background.z + 2
         } else if (dashboardLoader.status == Component.Error) {
             backend.log(dashboardLoader.errorString())
         }
@@ -247,7 +243,6 @@ FocusScope {
         var webLoader = Qt.createComponent("WebWindow.qml");
         if (webLoader.status == Component.Ready) {
             browserWindow = webLoader.createObject(confluence)
-            browserWindow.z = background.z + 2
         } else if (webLoader.status == Component.Error) {
             backend.log(webLoader.errorString())
         }
@@ -256,7 +251,6 @@ FocusScope {
         var weatherLoader = Qt.createComponent("WeatherWindow.qml");
         if (weatherLoader.status == Component.Ready) {
             weatherWindow = weatherLoader.createObject(confluence)
-            weatherWindow.z = background.z + 2
         } else if (weatherLoader.status == Component.Error) {
             backend.log(weatherLoader.errorString())
         }
@@ -266,7 +260,7 @@ FocusScope {
             ticker = tickerLoader.createObject(confluence)
             ticker.anchors.top = confluence.bottom
             ticker.anchors.topMargin = 0
-            ticker.z = background.z + 1
+            ticker.z = UIConstants.screenZValues.header
             ticker.anchors.right = confluence.right
         } else if (tickerLoader.status == Component.Error) {
             backend.log(tickerLoader.errorString())
@@ -278,7 +272,7 @@ FocusScope {
         if (qtCubeLoader.status == Component.Ready) {
             qtcube = qtCubeLoader.createObject(confluence)
             qtcube.anchors.top = confluence.top
-            qtcube.z = background.z + 1
+            qtcube.z = UIConstants.screenZValues.header
             qtcube.visible = false
         } else if (qtCubeLoader.status == Component.Error) {
             backend.log(qtCubeLoader.errorString())
@@ -288,7 +282,6 @@ FocusScope {
         var remoteAppLoader = Qt.createComponent("RemoteAppWindow.qml");
         if (remoteAppLoader.status == Component.Ready) {
             var remoteAppWindow = remoteAppLoader.createObject(confluence)
-            remoteAppWindow.z = background.z + 2
         } else if (remoteAppLoader.status == Component.Error) {
             backend.log(remoteAppLoader.errorString())
         }
@@ -296,7 +289,6 @@ FocusScope {
         var systemInfoLoader = Qt.createComponent("SystemInfoWindow.qml");
         if (systemInfoLoader.status == Component.Ready) {
             systemInfoWindow = systemInfoLoader.createObject(confluence)
-            systemInfoWindow.z = background.z + 2
         } else if (systemInfoLoader.status == Component.Error) {
             backend.log(systemInfoLoader.errorString())
         }
@@ -353,13 +345,11 @@ FocusScope {
     Background {
         id: background
         anchors.fill: parent;
-        z: 1
         visible: !(!!avPlayer.video && avPlayer.video.playing)
     }
 
     MainBlade { 
         id: mainBlade; 
-        z: background.z + 1
     }
 
     Header {
@@ -385,7 +375,6 @@ FocusScope {
 
         width: contextText.width + 50
         anchors { top: homeHeader.top; left: homeHeader.right; leftMargin: -25 }
-        z: background.z + 1
         opacity: 0
         Text { 
             x: 25
@@ -397,14 +386,12 @@ FocusScope {
 
     DateTimeHeader {
         id: dateTimeHeader
-        z: weatherHeader.z + 1
         x: confluence.width
         anchors.top: confluence.top
     }
 
     WeatherHeader {
         id: weatherHeader
-        z: background.z + 1
         x: confluence.width
         anchors.top: confluence.top
         anchors.right: dateTimeHeader.left
@@ -423,7 +410,7 @@ FocusScope {
         id: mouseGrabber
         color: "black"
         anchors.fill: parent;
-        z: mainBlade.z + 1
+        z: UIConstants.screenZValues.mouseGrabber
         opacity: 0
 
         Behavior on opacity {

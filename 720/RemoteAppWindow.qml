@@ -22,7 +22,6 @@ import "../components"
 
 Window {
     id: root
-    z: 100
 
     Loader {
         id: loader;

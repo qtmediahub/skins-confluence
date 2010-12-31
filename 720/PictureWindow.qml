@@ -56,7 +56,6 @@ Window {
         id: pictureWindowBlade
         parent: root
         visible: true
-        z: 1
         actionList: [viewAction, sortByAction, slideShowAction]
         property alias viewAction: viewAction
 

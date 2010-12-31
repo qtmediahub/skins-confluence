@@ -18,9 +18,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import "uiconstants.js" as UIConstants
 
 Item {
     height: 32
+    z: UIConstants.screenZValues.header
     property int leftBorder: 0
     property int rightBorder : 200
 
