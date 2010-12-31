@@ -27,6 +27,8 @@ Item {
     property variant informationSheet
     property bool hidePreview: false
     property alias rootIndex: sourcesListView.rootIndex
+    property alias currentItem: sourcesListView.currentItem
+    property alias currentIndex: sourcesListView.currentIndex
 
     signal itemActivated(variant itemData)
 
@@ -68,8 +70,9 @@ Item {
             onActivated: {
                 if (currentItem.itemdata.type == "AddNewSource")
                     confluence.showModal(addMediaSourceDialog)
-                else
+                else {
                     root.itemActivated(currentItem.itemdata)
+                }
             }
             onRightClicked: {
                 var scenePos = sourcesPanel.mapToItem(null, mouseX, mouseY)

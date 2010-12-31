@@ -26,11 +26,18 @@ Item {
     property bool running : false
     property variant pictureModel
     property variant rootIndex
+    property int fromRow : 0
     anchors.fill: parent
 
     function restart() {
         modelIndexIterator.restart()
         running = true
+    }
+
+    function start(ri, from) {
+        rootIndex = ri
+        fromRow = from
+        restart()
     }
 
     Image {
@@ -43,6 +50,7 @@ Item {
             id: modelIndexIterator
             model: root.pictureModel
             rootIndex: root.rootIndex
+            fromRow: root.fromRow
             filterRole: "type"
             filterValue: "File"
             dataRole: "fileUrl"

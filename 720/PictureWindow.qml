@@ -38,6 +38,12 @@ Window {
                 running = false
                 event.accepted = true
             }
+
+    }
+
+    function startSlideShow() {
+        slideShow.start(viewLoader.item.rootIndex, viewLoader.item.currentIndex)
+        confluence.showFullScreen(slideShow)
     }
 
     MediaScanInfo {
@@ -70,14 +76,8 @@ Window {
             ConfluenceAction {
                 id: slideShowAction
                 text: qsTr("SLIDESHOW")
-                onTriggered: pictureWindowBlade.startSlideShow()
+                onTriggered: root.startSlideShow()
             }]
-
-        function startSlideShow() {
-            slideShow.rootIndex = viewLoader.item.rootIndex
-            slideShow.restart()
-            confluence.showFullScreen(slideShow)
-        }
 
         onClosed: if (root.visible) viewLoader.forceActiveFocus()
     }
@@ -111,6 +111,7 @@ Window {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
             informationSheet: pictureInformationSheet
+            onItemActivated: root.startSlideShow()
         }
     }
 
