@@ -26,17 +26,17 @@ QtObject {
     property bool enabled: true
     property string currentOption : options ? options[currentOptionIndex] : ""
 
-    signal activated
+    signal triggered()
     
-    function activate() {
+    function trigger() {
         if (enabled)
-            activated()
+            triggered()
     }
 
     function activateNextOption() {
         if (options)
             currentOptionIndex = (currentOptionIndex+1)%options.length
-        activate()
+        trigger()
     }
 }
 

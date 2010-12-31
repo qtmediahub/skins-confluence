@@ -22,7 +22,8 @@ import "fontmetrics.js" as FontMetrics
 
 ListView {
     id: root
-    signal activated(variant index)
+    signal clicked()
+    signal activated()
     property bool hideItemBackground: false
 
     property int itemHeight
@@ -53,9 +54,9 @@ ListView {
         height: itemHeight
         clip: true
 
-        function trigger() {
+        function activate() {
             // ## Order is important for ContextMenu
-            root.activated(root.currentIndex)
+            root.activated()
             model.modelData.activateNextOption()
         }
 
@@ -105,11 +106,15 @@ ListView {
 
             onEntered: root.currentIndex = index
 
-            onClicked: { root.currentIndex = index; delegateItem.trigger() }
+            onClicked: { 
+                root.currentIndex = index
+                root.clicked()
+                delegateItem.activate() 
+            }
         }
 
-        Keys.onReturnPressed: if (model.modelData.enabled) trigger()
-        Keys.onEnterPressed: if (model.modelData.enabled) trigger()
+        Keys.onReturnPressed: if (model.modelData.enabled) delegateItem.activate()
+        Keys.onEnterPressed: if (model.modelData.enabled) delegateItem.activate()
     }
 }
 

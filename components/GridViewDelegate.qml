@@ -55,14 +55,14 @@ Item {
         visible: model.type != "File"
     }
 
-    function trigger() {
+    function activate() {
         var visualDataModel = GridView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
             GridView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
         } else {
             GridView.view.currentIndex = index;
-            GridView.view.clicked()
+            GridView.view.activated()
         }
     }
 
@@ -75,15 +75,17 @@ Item {
             currentItem.focus = true
         }
         onClicked: {
-            if (mouse.button == Qt.LeftButton)
-                delegateItem.trigger()
-            else {
+            if (mouse.button == Qt.LeftButton) {
+                GridView.view.clicked()
+                delegateItem.activate()
+            } else {
                 GridView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
             }
         }
     }
 
-    Keys.onReturnPressed: delegateItem.trigger()
+    Keys.onReturnPressed: delegateItem.activate()
+    Keys.onEnterPressed: delegateItem.activate()
     Keys.onMenuPressed: GridView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
 }
 

@@ -39,7 +39,7 @@ Item {
         }
     }
 
-    function trigger()
+    function activate()
     {
         var visualDataModel = PathView.view.model
         if (model.hasModelChildren) {
@@ -48,7 +48,7 @@ Item {
             visualDataModel.model.layoutChanged() // Workaround for QTBUG-16366
         } else {
             PathView.view.currentIndex = index;
-            PathView.view.clicked(filePath)
+            PathView.view.activated()
         }
     }
 
@@ -57,14 +57,16 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onClicked:
-            if (mouse.button == Qt.LeftButton)
-                delegateItem.trigger()
-            else {
+            if (mouse.button == Qt.LeftButton) {
+                PathView.view.clicked()
+                delegateItem.activate()
+            } else {
                 PathView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
             }
     }
 
-    Keys.onReturnPressed: delegateItem.trigger()
+    Keys.onReturnPressed: delegateItem.activate()
+    Keys.onEnterPressed: delegateItem.activate()
     Keys.onMenuPressed: PathView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
 }
 

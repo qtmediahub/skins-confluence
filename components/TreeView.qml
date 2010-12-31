@@ -25,6 +25,7 @@ ConfluenceListView {
     property alias rootIndex : visualDataModel.rootIndex
     signal clicked()
     signal rightClicked(int mouseX, int mouseY)
+    signal activated()
     signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
 
     function currentModelIndex() {

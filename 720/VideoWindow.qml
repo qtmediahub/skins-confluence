@@ -42,13 +42,13 @@ Window {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
-                onActivated: root.setCurrentView(currentOption)
+                onTriggered: root.setCurrentView(currentOption)
             },
             ConfluenceAction {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onActivated: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption())
+                onTriggered: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption())
             }]
 
         onClosed: if (root.visible) viewLoader.forceActiveFocus()

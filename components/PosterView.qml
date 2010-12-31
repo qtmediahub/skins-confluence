@@ -8,7 +8,8 @@ PathView {
     property int delegateWidth : confluence.width/6.4
     property int delegateHeight : confluence.width/6.4
     property variant currentItem // QTBUG-16347
-    signal clicked(string filePath)
+    signal clicked()
+    signal activated()
     signal rightClicked(int mouseX, int mouseY)
 
     function currentModelIndex() {

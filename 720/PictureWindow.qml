@@ -59,18 +59,18 @@ Window {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
-                onActivated: root.setCurrentView(currentOption)
+                onTriggered: root.setCurrentView(currentOption)
             },
             ConfluenceAction {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onActivated: pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, currentOption())
+                onTriggered: pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, currentOption())
             },
             ConfluenceAction {
                 id: slideShowAction
                 text: qsTr("SLIDESHOW")
-                onActivated: pictureWindowBlade.startSlideShow()
+                onTriggered: pictureWindowBlade.startSlideShow()
             }]
 
         function startSlideShow() {

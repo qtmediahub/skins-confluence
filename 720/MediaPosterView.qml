@@ -43,14 +43,14 @@ Item {
     ContextMenu {
         id: contextMenu
         title: qsTr("Actions")
-        ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onActivated: posterView.rootIndex = undefined; }
-        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: engineModel.removeSearchPath(posterView.currentIndex)
+        ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onTriggered: posterView.rootIndex = undefined; }
+        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onTriggered: engineModel.removeSearchPath(posterView.currentIndex)
                            enabled: posterView.currentItem.itemdata.type == "SearchPath" }
-        ConfluenceAction { id: informationAction; text: qsTr("Show Information"); onActivated: root.showInformationSheet()
+        ConfluenceAction { id: informationAction; text: qsTr("Show Information"); onTriggered: root.showInformationSheet()
                            enabled: posterView.currentItem.itemdata.type == "File" } 
-        ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onActivated: engineModel.rescan(posterView.currentIndex)
+        ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onTriggered: engineModel.rescan(posterView.currentIndex)
                            enabled: posterView.currentItem.itemdata.type == "SearchPath" } 
-        ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
+        ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onTriggered: confluence.showModal(addMediaSourceDialog) }
 
         model: [rootAction, removeAction, informationAction, rescanAction, addSourceAction]
     }
@@ -73,7 +73,7 @@ Item {
         focus: true
         posterModel: engineModel
 
-        onClicked: {
+        onActivated: {
             if (currentItem.itemdata.type == "AddNewSource")
                 confluence.showModal(addMediaSourceDialog)
             else

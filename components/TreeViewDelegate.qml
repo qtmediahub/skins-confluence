@@ -40,14 +40,14 @@ Item {
         color: "white"
     }
 
-    function trigger() {
+    function activate() {
         var visualDataModel = ListView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
             ListView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
         } else {
             ListView.view.currentIndex = index;
-            ListView.view.clicked()
+            ListView.view.activated()
         }
     }
 
@@ -60,15 +60,17 @@ Item {
             currentItem.focus = true
         }
         onClicked: {
-            if (mouse.button == Qt.LeftButton)
-                delegateItem.trigger()
-            else {
+            if (mouse.button == Qt.LeftButton) {
+                ListView.view.clicked()
+                delegateItem.activate()
+            } else {
                 ListView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
             }
         }
     }
 
-    Keys.onReturnPressed: delegateItem.trigger()
+    Keys.onReturnPressed: delegateItem.activate()
+    Keys.onEnterPressed: delegateItem.activate()
     Keys.onMenuPressed: ListView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
 }
 

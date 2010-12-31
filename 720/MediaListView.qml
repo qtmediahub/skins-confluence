@@ -33,14 +33,14 @@ Item {
     ContextMenu {
         id: contextMenu
         title: qsTr("Actions")
-        ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onActivated: sourcesListView.rootIndex = undefined; }
-        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onActivated: engineModel.removeSearchPath(sourcesListView.currentIndex)
+        ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onTriggered: sourcesListView.rootIndex = undefined; }
+        ConfluenceAction { id: removeAction; text: qsTr("Remove"); onTriggered: engineModel.removeSearchPath(sourcesListView.currentIndex)
                            enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" }
-        ConfluenceAction { id: informationAction; text: qsTr("Show Information"); onActivated: root.showInformationSheet()
+        ConfluenceAction { id: informationAction; text: qsTr("Show Information"); onTriggered: root.showInformationSheet()
                            enabled: sourcesListView.currentItem.itemdata.type == "File" } 
-        ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onActivated: engineModel.rescan(sourcesListView.currentIndex)
+        ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onTriggered: engineModel.rescan(sourcesListView.currentIndex)
                            enabled: sourcesListView.currentItem.itemdata.type == "SearchPath" } 
-        ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onActivated: confluence.showModal(addMediaSourceDialog) }
+        ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onTriggered: confluence.showModal(addMediaSourceDialog) }
 
         model: [rootAction, removeAction, informationAction, rescanAction, addSourceAction]
     }
@@ -65,7 +65,7 @@ Item {
             treeModel: engineModel
             clip: true
             focus: true
-            onClicked: {
+            onActivated: {
                 if (currentItem.itemdata.type == "AddNewSource")
                     confluence.showModal(addMediaSourceDialog)
                 else
