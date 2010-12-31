@@ -451,7 +451,13 @@ FocusScope {
     function showModal(item) {
         mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
         var currentFocusedItem = frontend.focusItem();
-        item.closed.connect(function() { mouseGrabber.opacity = 0; if (currentFocusedItem) currentFocusedItem.forceActiveFocus() })
+        var onClosedHandler = function() { 
+            mouseGrabber.opacity = 0; 
+            if (currentFocusedItem) 
+                currentFocusedItem.forceActiveFocus() 
+            item.closed.disconnect(onClosedHandler)
+        }
+        item.closed.connect(onClosedHandler)
         item.parent = confluence // ## restore parent?
         item.z = mouseGrabber.z + 2
         item.open()
