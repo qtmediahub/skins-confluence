@@ -40,6 +40,7 @@ Flow {
 
     function adjustIndex(delta)
     {
+        activity()
         var exceededLower = false
         var exceededUpper = false
 

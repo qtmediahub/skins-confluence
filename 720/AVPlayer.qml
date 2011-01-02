@@ -144,6 +144,9 @@ FocusScope {
     AVPlayerControlOSD {
         id: controlOSD
         video: videoItem
+        onActivity:
+            osdTimer.restart();
+            
 
         onShowVideoMenu: videoListDialog.open()
         onShowMusicMenu: musicListDialog.open()

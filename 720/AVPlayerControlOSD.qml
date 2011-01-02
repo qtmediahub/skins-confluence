@@ -49,6 +49,9 @@ FocusScope {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 5
 
+            onActivity:
+                root.activity()
+
             PixmapButton { basePixmap: "OSDBookmarksNF"; focusedPixmap: "OSDBookmarksFO" }
             PixmapButton { basePixmap: "OSDAudioNF"; focusedPixmap: "OSDAudioFO"; onClicked: root.showMusicMenu(); }
             PixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
