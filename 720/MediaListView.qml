@@ -32,6 +32,8 @@ Item {
 
     signal itemActivated(variant itemData)
 
+    anchors.fill: parent
+
     ContextMenu {
         id: contextMenu
         title: qsTr("Actions")

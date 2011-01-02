@@ -24,13 +24,13 @@ import "util.js" as Util
 
 Item {
     id: root
-    anchors.fill: parent
-
     property variant engineName
     property variant engineModel
     property variant informationSheet
 
     signal itemActivated(variant itemData)
+
+    anchors.fill: parent
 
     BorderImage {
         id: background
