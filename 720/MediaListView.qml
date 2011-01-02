@@ -100,24 +100,16 @@ Item {
         }
     }
 
-    Item {
-        id: sourceArtWindow
-        anchors.left: sourcesPanel.right;
-        anchors.leftMargin: 65;
-        anchors.bottom: sourcesPanel.bottom;
+    ImageCrossFader {
+        id: sourcesArt
+        anchors.left: sourcesPanel.right
+        anchors.leftMargin: 65
+        anchors.right: parent.right
+        anchors.rightMargin: 30
+        anchors.bottom: sourcesPanel.bottom
         opacity: root.hidePreview ? 0 : 1
 
-        width: sourcesArt.width
-        height: sourcesArt.height
-
-        ImageCrossFader {
-            id: sourcesArt
-            anchors.fill: parent;
-
-            width: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewWidth : 0
-            height: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewHeight : 0
-            source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
-        }
+        source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
     }
 
     AddMediaSourceDialog {

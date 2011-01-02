@@ -26,16 +26,20 @@ Item {
 
     Image {
         id: primary
-        anchors.fill: parent;
-        fillMode: Image.PreserveAspectCrop
         z: 0
+        fillMode: Image.PreserveAspectFit
+        width: parent.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
     }
 
     Image {
         id: secondary
-        anchors.fill: parent;
-        fillMode: Image.PreserveAspectCrop
         z: 1
+        fillMode: Image.PreserveAspectFit
+        width: parent.width
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
     }
 
     Timer {
