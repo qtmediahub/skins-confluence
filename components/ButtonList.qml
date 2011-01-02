@@ -56,7 +56,10 @@ Flow {
             //upperBoundExceeded()
             exceededUpper = true
         }
-        children[focusedIndex].forceActiveFocus()
+        //Propagate beyond spacers
+        children[focusedIndex].children.length == 0 && !exceededUpper && !exceededLower
+            ? adjustIndex(delta)
+            : children[focusedIndex].forceActiveFocus() 
 
         if(exceededLower)
             lowerBoundExceeded()
