@@ -56,6 +56,14 @@ Item {
         informationSheet.currentItem = sourcesListView.currentItem
     }
 
+    Image {
+        id: reflectionImage
+        source: themeResourcePath + "/media/ContentPanel4.png"
+        width: parent.width
+        anchors.bottom: parent.bottom
+        sourceSize.height: 0.2 * parent.height
+    }
+
     Panel {
         id: sourcesPanel
         x: root.width*0.1

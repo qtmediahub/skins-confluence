@@ -128,6 +128,7 @@ FocusScope {
         sourceComponent: bladeComponent
     }
 
+
     Image {
         anchors.fill: parent
         source: themeResourcePath + "/media/black-back.png"
