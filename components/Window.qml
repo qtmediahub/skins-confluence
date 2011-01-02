@@ -128,6 +128,12 @@ FocusScope {
         sourceComponent: bladeComponent
     }
 
+    Image {
+        anchors.fill: parent
+        source: themeResourcePath + "/media/black-back.png"
+        fillMode: Image.Tile
+    }
+
     Behavior on width {
         NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
     }
