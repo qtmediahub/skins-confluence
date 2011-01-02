@@ -27,6 +27,7 @@ FocusScope {
 
     signal showMusicMenu()
     signal showVideoMenu()
+    signal activity()
 
     width: parent.width
     height: content.height
@@ -42,6 +43,7 @@ FocusScope {
 
         ButtonList {
             id: buttonList
+            wrapping: true
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 20
             anchors.horizontalCenter: parent.horizontalCenter

@@ -23,8 +23,10 @@ Flow {
     id: root
     property int upperThreshold: children.length - 1
 
+    property bool wrapping: false
     property int focusedIndex: 0
 
+    signal activity
     signal lowerBoundExceeded
     signal upperBoundExceeded
 
@@ -42,19 +44,19 @@ Flow {
         var exceededUpper = false
 
         focusedIndex += delta
+        
         //FIXME: surely I can queue these?!
         if(focusedIndex < 0) {
-            focusedIndex = 0
+            focusedIndex = wrapping ? upperThreshold : 0
             //lowerBoundExceeded()
             exceededLower = true
         }
         if(focusedIndex > upperThreshold) {
-            focusedIndex = upperThreshold
+            focusedIndex = wrapping ? 0 : upperThreshold
             //upperBoundExceeded()
             exceededUpper = true
         }
         children[focusedIndex].forceActiveFocus()
-        //.focus = true
 
         if(exceededLower)
             lowerBoundExceeded()
