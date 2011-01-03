@@ -30,6 +30,7 @@ FocusScope {
     opacity: 0; visible: false
     scale: 0
 
+    property alias windowBackground: background.source
     property alias blade: bladeLoader.item
 
     property bool maximized: false
@@ -130,6 +131,7 @@ FocusScope {
 
 
     Image {
+        id: background
         anchors.fill: parent
         source: themeResourcePath + "/media/black-back.png"
         fillMode: Image.Tile

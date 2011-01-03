@@ -303,8 +303,8 @@ FocusScope {
     }
 
     function playForeground(item) {
-        root.state = "maximized";
         root.play(item);
+        confluence.show(this)
     }
 
     function playBackground(item) {
