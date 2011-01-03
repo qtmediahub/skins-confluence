@@ -27,19 +27,19 @@ Item {
     Image {
         id: primary
         z: 0
-        fillMode: Image.PreserveAspectFit
+        //fillMode: Image.PreserveAspectFit
+        fillMode: Image.PreserveAspectCrop
         width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
     }
 
     Image {
         id: secondary
         z: 1
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.PreserveAspectCrop
+        //fillMode: Image.PreserveAspectFit
         width: parent.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
+        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
     }
 
     Timer {
