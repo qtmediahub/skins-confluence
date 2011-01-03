@@ -141,12 +141,13 @@ Window {
             id: flippable
             width: urlBar.width; height: urlBar.height
 
-
-            //flipped: googleBar.activeFocus
-
             front:
                 Panel {
                 id: urlBar
+
+                onFocusChanged: {
+                    urlBar.focus ? urlEntry.forceActiveFocus() : undefined
+                }
 
                 ConfluenceText {
                     id: inputLabel
@@ -161,8 +162,7 @@ Window {
                     hint: "url"
                     leftIconSource: generalResourcePath + "/mx-images/edit-find.png"
                     onLeftIconClicked: {
-                        flippable.flip()
-                        googleBar.forceActiveFocus()
+                        flippable.show(googleBar)
                     }
                     rightIconSource: generalResourcePath + "/mx-images/edit-clear.png"
                     onRightIconClicked: text=defaultText
@@ -180,17 +180,21 @@ Window {
             back: Panel {
                 id: googleBar
                 anchors.fill: parent
+
+                onFocusChanged:
+                    googleBar.focus ? googleEntry.forceActiveFocus() : undefined
+
                 ConfluenceText {
                     id: googleLabel
                     text: "google:"
                 }
                 MxComponents.Entry {
+                    id: googleEntry
                     anchors { left: googleLabel.right; verticalCenter: googleLabel.verticalCenter; right: parent.right }
                     hint: "Search..."
                     leftIconSource: generalResourcePath + "/mx-images/edit-clear.png"
                     onLeftIconClicked: {
-                        flippable.flip()
-                        urlBar.forceActiveFocus()
+                        flippable.show(urlBar)
                     }
                     rightIconSource: generalResourcePath + "/mx-images/edit-clear.png"
                     onRightIconClicked: text=""

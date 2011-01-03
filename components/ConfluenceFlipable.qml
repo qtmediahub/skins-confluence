@@ -24,6 +24,11 @@ Flipable {
 
     property int angle
 
+    function show(face) {
+        face == back ? angle = 180 : angle = 0
+        !!face ? face.forceActiveFocus() : undefined
+    }
+
     function flip() {
         angle = (angle + 180) % 360
     }
