@@ -44,7 +44,7 @@ Window {
 
     Keys.onPressed: {
         if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier)) {
-            webviewPopup.forceActiveFocus()
+            urlBar.forceActiveFocus()
         } else if(event.key == Qt.Key_Escape) {
             if(webviewPopup.activeFocus) {
                 webView.forceActiveFocus()
@@ -122,7 +122,7 @@ Window {
 
         states: State {
             name: "visible"
-            when: urlBar.activeFocus || googleBar.activeFocus
+            when: webviewPopup.activeFocus
             PropertyChanges {
                 target: webviewPopup
                 y: 0
@@ -161,7 +161,7 @@ Window {
                     hint: "url"
                     leftIconSource: generalResourcePath + "/mx-images/edit-find.png"
                     onLeftIconClicked: {
-                        flippable.flipped = !flippable.flipped
+                        flippable.flip()
                         googleBar.forceActiveFocus()
                     }
                     rightIconSource: generalResourcePath + "/mx-images/edit-clear.png"
@@ -189,7 +189,7 @@ Window {
                     hint: "Search..."
                     leftIconSource: generalResourcePath + "/mx-images/edit-clear.png"
                     onLeftIconClicked: {
-                        flippable.flipped = !flippable.flipped
+                        flippable.flip()
                         urlBar.forceActiveFocus()
                     }
                     rightIconSource: generalResourcePath + "/mx-images/edit-clear.png"

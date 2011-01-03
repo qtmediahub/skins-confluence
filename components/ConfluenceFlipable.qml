@@ -24,6 +24,10 @@ Flipable {
 
     property int angle
 
+    function flip() {
+        angle = (angle + 180) % 360
+    }
+
     transform: Rotation {
         id: rotation
         origin.x: root.width/2; origin.y: root.height/2
