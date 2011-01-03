@@ -107,8 +107,6 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 30
         anchors.bottom: sourcesPanel.bottom
-        //FIXME: layouting kludge
-        anchors.bottomMargin: 250
         opacity: root.hidePreview ? 0 : 1
 
         source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
