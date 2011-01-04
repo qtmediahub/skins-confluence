@@ -145,12 +145,20 @@ FocusScope {
         Transition {
             from: "*"
             to: "showingSelectedElement"
-            NumberAnimation { target: qtcube; properties: "x,y"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration }
-            PropertyAction { target: homeHeader; property: "opacity"; value: 1 }
             SequentialAnimation {
-                NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
-                PropertyAction { target: dateTimeHeader; property: "showDate"; value: false }
-                NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
+                // Move things out
+                ParallelAnimation {
+                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration }
+                    NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
+                }
+                // Move things in
+                ParallelAnimation {
+                    PropertyAction { target: selectedElement; property: "state"; value: "visible" }
+                    PropertyAction { target: dateTimeHeader; property: "showDate"; value: false }
+                    NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
+                    NumberAnimation { target: homeHeader; properties: "opacity"; duration: confluenceAnimationDuration/2 }
+                    NumberAnimation { target: currentContextHeader; properties: "opacity"; duration: confluenceAnimationDuration/2 }
+                }
             }
         }
     ]
