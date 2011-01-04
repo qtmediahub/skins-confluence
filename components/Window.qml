@@ -138,12 +138,5 @@ FocusScope {
         source: themeResourcePath + "/media/black-back.png"
         fillMode: Image.Tile
     }
-
-    Behavior on width {
-        NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
-    }
-
-    Behavior on height {
-        NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
-    }
 }
+
