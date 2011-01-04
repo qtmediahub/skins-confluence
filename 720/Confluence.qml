@@ -79,14 +79,10 @@ FocusScope {
             name: "showingSelectedElement"
             PropertyChanges {
                 target: mainBlade
-                state: "closed"
-                x: 0
+                state: "hidden"
             }
             PropertyChanges {
                 target: qtcube
-                //FIXME: Gross, use of createComponent prevents
-                //x: from tracking confluence.width
-                //I wish I had a choice
                 x: confluence.width
                 visible: true
             }
@@ -121,10 +117,6 @@ FocusScope {
             name: "showingSelectedElementMaximized"
             extend: "showingSelectedElement"
             PropertyChanges {
-                target: mainBlade
-                state: "hidden"
-            }
-            PropertyChanges {
                 target: selectedElement
                 state: "maximized"
             }
@@ -156,10 +148,7 @@ FocusScope {
             from: "*"
             to: "showingSelectedElement"
             NumberAnimation { target: qtcube; properties: "x,y"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration }
-            SequentialAnimation {
-                NumberAnimation { target: mainBlade; properties: "x"; to: -mainBlade.width - mainBlade.closedBladePeek; duration: confluenceAnimationDuration/2; easing.type: confluenceEasingCurve }
-                PropertyAction { target: homeHeader; property: "opacity"; value: 1 }
-            }
+            PropertyAction { target: homeHeader; property: "opacity"; value: 1 }
             SequentialAnimation {
                 NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
                 PropertyAction { target: dateTimeHeader; property: "showDate"; value: false }
