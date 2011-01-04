@@ -111,7 +111,6 @@ FocusScope {
                 target: avPlayer
                 state: "background"
             }
-            StateChangeScript { script: selectedElement.forceActiveFocus() }
         },
         State {
             name: "showingSelectedElementMaximized"
@@ -128,7 +127,6 @@ FocusScope {
                 target: dateTimeHeader
                 opacity: 0
             }
-            StateChangeScript { script: selectedElement.forceActiveFocus() }
         }
     ]
 

@@ -67,6 +67,7 @@ FocusScope {
                 opacity: 1
                 scale: 1
             }
+            StateChangeScript { name: "forceActiveFocus"; script: root.forceActiveFocus() }
         },
         State {
             name: "maximized"
@@ -84,7 +85,6 @@ FocusScope {
         Transition {
             to: ""
             SequentialAnimation {
-                ScriptAction { script: onHideTransitionStarted() }
                 ParallelAnimation {
                     NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluenceEasingCurve }
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluenceEasingCurve }
@@ -102,7 +102,7 @@ FocusScope {
                     NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluenceEasingCurve }
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluenceEasingCurve }
                 }
-                ScriptAction { script: onVisibleTransitionComplete() }
+                ScriptAction { scriptName: "forceActiveFocus" }
             }
         },
         Transition {
@@ -111,13 +111,6 @@ FocusScope {
             to: "maximized"
         }
     ]
-
-    function onHideTransitionStarted() {
-        //Any other way of extending generalized states/transitions?
-    }
-    function onVisibleTransitionComplete() {
-        //Any other way of extending generalized states/transitions?
-    }
 
     Keys.onPressed:
         if((event.key == Qt.Key_Right) && (event.modifier == Qt.ShiftModifier)) {

@@ -31,10 +31,6 @@ Window {
     property string initialUrl: defaultUrl
     property string defaultUrl: "http://www.google.com"
 
-    function onVisibleTransitionComplete() {
-        webView.forceActiveFocus()
-    }
-
     function loadPage(url) {
         webView.url = url
         webViewport.contentY = 0
@@ -70,7 +66,7 @@ Window {
             WebView {
                 id: webView
                 url: defaultUrl
-
+                focus: true
                 settings.javaEnabled: config.isEnabled("wk-java", false)
                 settings.javascriptCanAccessClipboard: config.isEnabled("wk-js-clipboard", false)
                 settings.javascriptCanOpenWindows: config.isEnabled("wk-js-windows", false)
