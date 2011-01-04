@@ -34,6 +34,8 @@ FocusScope {
     property bool overlay: false
     property alias blade: bladeLoader.item
 
+    property int transitionDuration: confluenceAnimationDuration
+
     property bool maximized: false
     property bool maximizable: false
 
@@ -84,8 +86,8 @@ FocusScope {
             SequentialAnimation {
                 ScriptAction { script: onHideTransitionStarted() }
                 ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
-                    NumberAnimation { property: "scale"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluenceEasingCurve }
+                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluenceEasingCurve }
                 }
                 PropertyAction { target: root; property: "visible"; value: false }
             }
@@ -97,8 +99,8 @@ FocusScope {
                 PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
                 PropertyAction { target: root; property: "visible"; value: true }
                 ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
-                    NumberAnimation { property: "scale"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluenceEasingCurve }
+                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluenceEasingCurve }
                 }
                 ScriptAction { script: onVisibleTransitionComplete() }
             }
