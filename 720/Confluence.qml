@@ -31,8 +31,8 @@ FocusScope {
     property string themeResourcePath: backend.skinPath + "/confluence/3rdparty/skin.confluence"
 
     //FIXME: QML const equivalent?
-    property variant confluenceEasingCurve: Easing.InQuad
-    property variant confluenceAnimationDuration: 350
+    property int confluenceEasingCurve: Easing.InQuad
+    property int confluenceAnimationDuration: 350
 
     property variant selectedEngine
     property variant selectedElement
