@@ -33,7 +33,6 @@ ConfluenceListView {
     }
 
     model : visualDataModel
-    keyNavigationWraps: true
     clip: true
 
     VisualDataModel {

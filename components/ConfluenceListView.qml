@@ -22,9 +22,27 @@ import QtQuick 1.0
 ListView {
     id: listView
 
+    keyNavigationWraps: true
+
     ScrollBar {
         id: verticalScrollBar
         flickable: listView
+    }
+
+    Keys.onPressed: {
+        if (event.key == Qt.Key_PageDown) {
+            var newIdx = listView.indexAt(contentX, contentY + height)
+            if (newIdx != -1) {
+                positionViewAtIndex(newIdx+1, ListView.Beginning)
+                currentIndex = newIdx+1
+            }
+            event.accepted = true
+        } else if (event.key == Qt.Key_PageUp) {
+            var newIdx = Math.max(0, listView.indexAt(contentX, contentY)-1)
+            positionViewAtIndex(newIdx, ListView.End)
+            currentIndex = newIdx
+            event.accepted = true
+        }
     }
 }
 
