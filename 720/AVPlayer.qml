@@ -148,8 +148,8 @@ FocusScope {
             osdTimer.restart();
             
 
-        onShowVideoMenu: videoListDialog.open()
-        onShowMusicMenu: musicListDialog.open()
+        onShowVideoMenu: showDialog(videoListDialog)
+        onShowMusicMenu: showDialog(musicListDialog)
     }
 
     AVPlayerInfoOSD {
@@ -320,5 +320,15 @@ FocusScope {
     function decreaseVolume() {
         videoItem.volume = (avPlayer.video.volume - 0.02 < 0) ? 0.0 : videoItem.volume - 0.02
         showVolumeOSD();
+    }
+
+    function showDialog(item) {
+        var onClosedHandler = function() {
+            videoItem.forceActiveFocus()
+            item.closed.disconnect(onClosedHandler)
+        }
+        item.closed.connect(onClosedHandler)
+        item.open()
+        item.forceActiveFocus()
     }
 }
