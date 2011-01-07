@@ -115,6 +115,12 @@ Window {
         setCurrentView(config.value("musicwindow-currentview", "LIST"))
     }
 
-    Keys.onRightPressed: { blade.open(); blade.forceActiveFocus() }
+    Keys.onPressed: {
+        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
+            blade.open();
+            blade.forceActiveFocus()
+            event.accepted = true
+        }
+    }
 }
 
