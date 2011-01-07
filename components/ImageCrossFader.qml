@@ -20,37 +20,49 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 
 Item {
-    id: imageCrossFader
+    id: root
     property string source
     property int animationDelay
+    property variant currentItem : primary
 
     Image {
         id: primary
-        z: 0
         fillMode: Image.PreserveAspectFit
         width: parent.width
+        asynchronous: true
+        opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+
+        Behavior on opacity {
+            NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+        }
     }
 
     Image {
         id: secondary
-        z: 1
         fillMode: Image.PreserveAspectFit
         width: parent.width
+        asynchronous: true
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+        opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0
+
+        Behavior on opacity {
+            NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+        }
     }
 
     Timer {
         id: staggeredTimer
-        interval: primary.source == "" ? 0 : imageCrossFader.animationDelay; 
+        interval: primary.source == "" ? 0 : 500;
         running: false; repeat: false
         onTriggered: SequentialAnimation {
             // This is not a PropertyAction because of QTBUG-16146
-            ScriptAction { script: { secondary.source = primary.source; primary.source = imageCrossFader.source } }
-            PropertyAnimation { target: secondary; properties: "opacity"; from: 1; to: 0; duration:500; easing.type: confluenceEasingCurve }
+            ScriptAction { script: {
+                    currentItem = currentItem == primary ? secondary : primary;
+                    currentItem.source = root.source;
+                } }
         }
     }
-
     onSourceChanged: staggeredTimer.start();
 }
 
