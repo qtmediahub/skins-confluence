@@ -105,8 +105,9 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 50
         anchors.bottom: sourcesPanel.bottom
+        anchors.top: sourcesPanel.top
+        clip:  true
         opacity: root.hidePreview ? 0 : 1
-
         source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
     }
 
