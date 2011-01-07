@@ -38,7 +38,7 @@ Item {
         treeModel: engineModel
         clip: true
         focus: true;
-        onClicked: {
+        onActivated: {
             if (currentItem.itemdata.type == "AddNewSource")
                 confluence.showModal(addMediaSourceDialog)
             else {
