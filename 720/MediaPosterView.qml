@@ -27,6 +27,8 @@ Item {
     property variant engineName
     property variant engineModel
     property variant informationSheet
+    property alias rootIndex: posterView.rootIndex
+    property alias currentIndex: posterView.currentIndex
 
     signal itemActivated(variant itemData)
 

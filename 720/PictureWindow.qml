@@ -102,6 +102,7 @@ Window {
             engineName: pictureEngine.name
             engineModel: pictureEngine.pluginProperties.pictureModel
             informationSheet: pictureInformationSheet
+            onItemActivated: root.startSlideShow(false /* autoPlay */)
         }
     }
 
@@ -122,6 +123,7 @@ Window {
             engineModel: pictureEngine.pluginProperties.pictureModel
             informationSheet: pictureInformationSheet
             Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
+            onItemActivated: root.startSlideShow(false /* autoPlay */)
         }
     }
 

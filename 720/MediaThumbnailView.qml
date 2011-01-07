@@ -27,6 +27,7 @@ Item {
     property variant informationSheet
     property bool hidePreview: false
     property alias rootIndex: sourcesListView.rootIndex
+    property alias currentIndex: sourcesListView.currentIndex
 
     signal itemActivated(variant itemData)
 
