@@ -105,7 +105,7 @@ Window {
     Component.onCompleted: {
         videoEngine.visualElement = root;
         videoEngine.pluginProperties.videoModel.setThemeResourcePath(themeResourcePath);
-        setCurrentView(config.value("videowindow-currentview", "LIST"))
+        setCurrentView(config.value("videowindow-currentview", "POSTER"))
     }
 
     Keys.onPressed: {

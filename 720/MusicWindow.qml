@@ -111,7 +111,7 @@ Window {
     Component.onCompleted: {
         musicEngine.visualElement = root;
         musicEngine.pluginProperties.musicModel.setThemeResourcePath(themeResourcePath);
-        setCurrentView(config.value("musicwindow-currentview", "LIST"))
+        setCurrentView(config.value("musicwindow-currentview", "POSTER"))
     }
 
     Keys.onPressed: {

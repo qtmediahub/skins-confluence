@@ -136,7 +136,7 @@ Window {
     Component.onCompleted: {
         pictureEngine.visualElement = root;
         pictureEngine.pluginProperties.pictureModel.setThemeResourcePath(themeResourcePath);
-        setCurrentView(config.value("picturewindow-currentview", "LIST"))
+        setCurrentView(config.value("picturewindow-currentview", "POSTER"))
     }
 
     Keys.onPressed: {
