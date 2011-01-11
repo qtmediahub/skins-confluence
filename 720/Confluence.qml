@@ -287,6 +287,13 @@ FocusScope {
             backend.log(systemInfoLoader.errorString())
         }
 
+        var mapsLoader = Qt.createComponent("MapsWindow.qml");
+        if (mapsLoader.status == Component.Ready) {
+            var maps = mapsLoader.createObject(confluence)
+        } else if (mapsLoader.status == Component.Error) {
+            backend.log(mapsLoader.errorString())
+        }
+
         //Why would you ever want to do this from QML!
         //One property API FTW
         var screensaverLoader = Qt.createComponent("ScreenSaver.qml");
