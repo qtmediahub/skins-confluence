@@ -398,12 +398,6 @@ FocusScope {
         }
     }
 
-    DateTimeHeader {
-        id: dateTimeHeader
-        x: confluence.width
-        anchors.top: confluence.top
-    }
-
     WeatherHeader {
         id: weatherHeader
         x: confluence.width
@@ -417,6 +411,13 @@ FocusScope {
             onClicked: confluence.show(weatherWindow)
         }
     }
+
+    DateTimeHeader {
+        id: dateTimeHeader
+        x: confluence.width
+        anchors.top: confluence.top
+    }
+
 
     AboutWindow { id: aboutWindow }
 
