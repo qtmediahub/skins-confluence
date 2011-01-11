@@ -1,5 +1,5 @@
 import QtQuick 1.0
-import "../components/"
+import confluence.components 1.0
 
 Header {
     id: root
