@@ -58,7 +58,7 @@ Window {
             clip: true
             boundsBehavior: Flickable.StopAtBounds
             flickableDirection:  Flickable.VerticalFlick
-            property int webviewMargin: 200
+            property int webviewMargin: 100
             width: root.maximized ? confluence.width : confluence.width - webviewMargin
             height: root.maximized ? confluence.height : confluence.height - webviewMargin
             contentWidth: webView.width; 

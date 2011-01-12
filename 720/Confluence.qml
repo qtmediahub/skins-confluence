@@ -175,7 +175,7 @@ FocusScope {
         } else if(event.key == Qt.Key_F12) {
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
         } else if(event.key == Qt.Key_F11) {
-            showModal(aboutDialog)
+            show(aboutWindow)
         } else if(event.key == Qt.Key_F10) {
             show(systemInfoWindow)
         } else if (event.key == Qt.Key_Plus) {
@@ -405,7 +405,7 @@ FocusScope {
         }
     }
 
-    AboutDialog { id: aboutDialog }
+    AboutWindow { id: aboutWindow }
 
     Rectangle {
         id: mouseGrabber

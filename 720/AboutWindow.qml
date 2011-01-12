@@ -20,33 +20,58 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.components 1.0
 
-Dialog {
+Window {
     id: root
 
-    property variant startupAnimationComponent
-    property variant startupAnimation
+    property Item animationItem
 
-    title: qsTr("About QtMediaHub")
+    onVisibleChanged:
+        !visible && animationItem && animationItem.destroy()
 
-    ConfluenceFlipable {
+    Timer {
+        id: rotTimer
+        interval: 10
+        running: root.state == "visible"
+
+        repeat: true
+        onTriggered: rotation.angle += 10
+    }
+
+    Flipable {
         id: flipable
-        focus: true
         anchors.centerIn: parent
-        width: startupQmlLoader.item.width
-        height: startupQmlLoader.item.height
+        width: backPanel.width; height: backPanel.height
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: flipable.flipped = !flipable.flipped
+        transform: Rotation {
+            id: rotation
+            origin.x: flipable.width/2; origin.y: flipable.height/2
+            axis { x: 0; y: 1; z: 0 }
+
+            Behavior on angle {
+                NumberAnimation {}
+            }
         }
 
-        front: Loader {
-            id: startupQmlLoader
-            source: generalResourcePath + "/qml-startup/startup.qml"
-        }
+        onSideChanged:
+            if(flipable.side == Flipable.Back && !animationItem)
+            {
+                var component = Qt.createComponent(generalResourcePath + "/qml-startup/startup.qml");
+                if (component.status == Component.Ready) {
+                    animationItem = component.createObject(placeHolder);
+                }
+            }
 
-        back: Item { 
+        back: Panel {
             id: backPanel
+            Item {
+                id: placeHolder
+                width: 800; height: 480
+            }
+            //anchors.centerInparent
+        }
+
+        front: Panel {
+            id: frontPanel
             anchors.fill: parent
             Flow {
                 flow:  Flow.TopToBottom
