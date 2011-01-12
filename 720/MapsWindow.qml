@@ -28,46 +28,103 @@ Window {
 
     Panel {
         id: panel
-        anchors.centerIn: parent;
         decorateFrame: !root.maximized
         anchors.fill: parent
+        focus: true
 
-        Map {
-            id: map
-            anchors.fill: parent
-            plugin : Plugin {
-                name : "nokia"
-            }
-            mapType: Map.StreetMap
-            //mapType: Map.SatelliteMapDay
-
+        Button {
+            text: qsTr("Zoom In")
+            anchors.right: viewTypeButton.left
+            anchors.top: parent.top
+            onClicked: map.zoomLevel = map.zoomLevel + 1
         }
 
-        MouseArea {
-            anchors.fill: parent
+        Button {
+            id: viewTypeButton
+            text: map.mapType == Map.StreetMap ? qsTr("Sattelite View") : qsTr("Street View")
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
 
-            property bool mouseDown : false
-            property int lastX : -1
-            property int lastY : -1
-
-            onPressed : {
-                mouseDown = true
-                lastX = mouse.x
-                lastY = mouse.y
+            onClicked: {
+                if (map.mapType == Map.StreetMap)
+                    map.mapType = Map.SatelliteMapDay
+                else
+                    map.mapType = Map.StreetMap
             }
-            onReleased : {
-                mouseDown = false
+        }
+
+        Button {
+            text: qsTr("Zoom Out")
+            anchors.left: viewTypeButton.right
+            anchors.top: parent.top
+            onClicked: map.zoomLevel = map.zoomLevel - 1
+        }
+
+        Item {
+            anchors.top: viewTypeButton.bottom
+            anchors.topMargin: 20
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            Map {
+                id: map
+                anchors.fill: parent
+
+                plugin : Plugin {
+                    name : "nokia"
+                }
+                mapType: Map.StreetMap
             }
 
+            MouseArea {
+                anchors.fill: parent
 
-            onPositionChanged: {
-                if (mouseDown) {
-                    var dx = mouse.x - lastX
-                    var dy = mouse.y - lastY
-                    map.pan(-dx, -dy)
+                property bool mouseDown : false
+                property int lastX : -1
+                property int lastY : -1
+
+                onPressed : {
+                    mouseDown = true
                     lastX = mouse.x
                     lastY = mouse.y
                 }
+                onReleased : {
+                    mouseDown = false
+                }
+
+
+                onPositionChanged: {
+                    if (mouseDown) {
+                        var dx = mouse.x - lastX
+                        var dy = mouse.y - lastY
+                        map.pan(-dx, -dy)
+                        lastX = mouse.x
+                        lastY = mouse.y
+                    }
+                }
+            }
+        }
+
+        Keys.onPressed: {
+            if (event.key == Qt.Key_Right) {
+                map.pan(100, 0)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Left) {
+                map.pan(-100, 0)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Up) {
+                map.pan(0, -100)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Down) {
+                map.pan(0, 100)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Minus) {
+                map.zoomLevel = map.zoomLevel - 1
+                event.accepted = true
+            } else if (event.key == Qt.Key_Plus) {
+                map.zoomLevel = map.zoomLevel + 1
+                event.accepted = true
             }
         }
     }
