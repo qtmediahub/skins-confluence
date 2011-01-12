@@ -20,14 +20,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.components 1.0
 
-BorderImage {
+Header {
     id: root
-    border.left: 100
-    anchors.topMargin: 0
-    anchors.top:  parent.bottom
 
-    source: themeResourcePath + "/media/Rss_Back.png"
-
+    atTop: false
     width: parent.width/1.5;
 
     property string currentFeed: "rss.news.yahoo.com/rss/topstories"
@@ -87,25 +83,5 @@ BorderImage {
             repeat: true
             onTriggered: list.contentX = list.contentX + 2
         }
-    }
-
-    BorderImage {
-        source: themeResourcePath + "/media/Rss_Back_Overlay.png"
-        border.left: 100
-    }
-
-    states: [
-        State {
-            name: "visible"
-            PropertyChanges {
-                target: root.anchors
-                topMargin: -root.height
-            }
-        }
-    ]
-
-    transitions: Transition {
-        reversible: true
-        NumberAnimation { target: anchors; properties: "topMargin"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
     }
 }

@@ -26,7 +26,16 @@ Item {
     property int leftBorder: 0
     property int rightBorder : 200
 
-    property bool flip : true
+    property bool atTop   : true
+    property bool atRight : true
+    property bool expanded : true
+
+    anchors.top: atTop ? confluence.top : undefined
+    anchors.bottom: atTop ? undefined : confluence.bottom
+
+    x: expanded ? (atRight ? confluence.width - width : 0) : (atRight ? confluence.width : -width)
+
+    Behavior on x { PropertyAnimation { easing.type: standardEasingCurve; duration: standardAnimationDuration } }
 
     BorderImage {
         anchors.fill: parent
@@ -35,8 +44,11 @@ Item {
         border.right: rightBorder
         smooth: true
         transform: Rotation {
-            angle: flip ? 180 : 0
-            axis { x: 0; y: 1; z: 0 }
+            // if it's not top and left I need to rotate it around different axis
+            angle: (!atTop || atRight) ? 180 : 0
+            axis { x: ((!atTop && !atRight) ? 1 : 0);
+                   y: (( atTop &&  atRight) ? 1 : 0);
+                   z: ((!atTop &&  atRight) ? 1 : 0) }
             origin { x: width/2; y: height/2 }
         }
     }
