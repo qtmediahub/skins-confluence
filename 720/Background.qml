@@ -26,6 +26,7 @@ Item {
     z: UIConstants.screenZValues.background
 
     ImageCrossFader {
+        fillMode: Image.PreserveAspectCrop
         property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
         animationDelay: 500
         anchors.fill: parent;

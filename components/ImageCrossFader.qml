@@ -21,13 +21,14 @@ import QtQuick 1.0
 
 Item {
     id: root
+    property int fillMode: Image.PreserveAspectFit
     property string source
     property int animationDelay
     property variant currentItem : primary
 
     Image {
         id: primary
-        fillMode: Image.PreserveAspectFit
+        fillMode: root.fillMode
         width: parent.width
         asynchronous: true
         opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
@@ -40,7 +41,7 @@ Item {
 
     Image {
         id: secondary
-        fillMode: Image.PreserveAspectFit
+        fillMode: root.fillMode
         width: parent.width
         asynchronous: true
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
