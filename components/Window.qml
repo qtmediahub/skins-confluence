@@ -54,8 +54,6 @@ FocusScope {
         z: 1
         onClicked:
             blade.open()
-        onOpened:
-            confluence.state = "showingRootBlade" // # FIXME: Don't miss with another component's state!
     }
 
     onMaximizedChanged:

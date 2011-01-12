@@ -47,8 +47,12 @@ FocusScope {
     property int bladeRightMargin: 30
 
     function open() {
-        state = "open"
-        content.children.length > 0 ? root.forceActiveFocus() : 0
+        if (content.children.length > 0) {
+            root.state = "open"
+            root.forceActiveFocus()
+        } else {
+            confluence.state = "showingRootBlade"
+        }
     }
     function close() {
         state = "closed"
