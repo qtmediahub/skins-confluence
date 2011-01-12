@@ -48,7 +48,7 @@ FocusScope {
 
     function open() {
         state = "open"
-        root.forceActiveFocus()
+        content.children.length > 0 ? root.forceActiveFocus() : 0
     }
     function close() {
         state = "closed"
