@@ -67,7 +67,6 @@ Window {
                 id: placeHolder
                 width: 800; height: 480
             }
-            //anchors.centerInparent
         }
 
         front: Panel {
