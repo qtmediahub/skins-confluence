@@ -110,7 +110,7 @@ FocusScope {
         Transition {
             from: "*"
             to: "showingRootBlade"
-            NumberAnimation { targets: [qtcube]; properties: "x,y"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
+            NumberAnimation { targets: [qtcube]; properties: "x,y"; easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
         },
         Transition {
             from: "*"
@@ -118,7 +118,7 @@ FocusScope {
             SequentialAnimation {
                 // Move things out
                 ParallelAnimation {
-                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
+                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
                 }
                 // Move things in
                 ParallelAnimation {

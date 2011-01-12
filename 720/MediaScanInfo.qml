@@ -45,7 +45,7 @@ BorderImage {
     
     transitions:
         Transition {
-            NumberAnimation { target: root; property: "y"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { target: root; property: "y"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
 
     Column {

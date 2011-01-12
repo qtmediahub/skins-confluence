@@ -57,8 +57,8 @@ FocusScope {
 
         anchors { left: parent.left; right: parent.right; top: banner.bottom; bottom: buttonGrid.top }
         preferredHighlightBegin: banner.height; preferredHighlightEnd: height - buttonGrid.height
-        highlightRangeMode: standardHighlightRangeMode
-        highlightMoveDuration: standardItemViewMoveDuration
+        highlightRangeMode: confluence.standardHighlightRangeMode
+        highlightMoveDuration: confluence.standardItemViewMoveDuration
 
         highlight: Image {
             source:  themeResourcePath + "/media/black-back2.png"

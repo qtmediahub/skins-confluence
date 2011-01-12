@@ -40,7 +40,7 @@ Flipable {
         angle: root.angle
 
         Behavior on angle {
-            NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     }
 

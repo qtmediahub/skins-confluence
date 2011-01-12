@@ -60,7 +60,7 @@ Window {
         property alias viewAction: viewAction
 
         resources: [
-            // standard actions shared by all views
+            // Standard actions shared by all views
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")

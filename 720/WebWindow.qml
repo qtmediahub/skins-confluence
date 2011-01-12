@@ -100,11 +100,11 @@ Window {
             }
 
             Behavior on width {
-                NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+                NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             }
 
             Behavior on height {
-                NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+                NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             }
         }
 

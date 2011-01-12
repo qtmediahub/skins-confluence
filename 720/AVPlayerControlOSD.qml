@@ -91,7 +91,7 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "topMargin"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { property: "topMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     ]
 
