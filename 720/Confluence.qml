@@ -319,11 +319,14 @@ FocusScope {
 
     function setActiveEngine(engine)
     {
-        selectedEngine = engine
-        selectedElement = engine.visualElement
-        var elementProperties = engine.visualElementProperties
-        for(var i = 0; i + 2 <= elementProperties.length; i += 2)
-            selectedElement[elementProperties[i]] = elementProperties[i+1]
+        if(selectedEngine != engine)
+        {
+            selectedEngine = engine
+            selectedElement = engine.visualElement
+            var elementProperties = engine.visualElementProperties
+            for(var i = 0; i + 2 <= elementProperties.length; i += 2)
+                selectedElement[elementProperties[i]] = elementProperties[i+1]
+        }
         show(selectedElement)
     }
 

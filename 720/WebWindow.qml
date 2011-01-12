@@ -22,6 +22,10 @@ import QtWebKit 1.0
 import confluence.components 1.0
 import Qt.labs.Mx 1.0 as MxComponents
 
+//TODO:
+//Suspend loading of page until animation is complete
+//Deactive page (flash) when no longer visible
+
 Window {
     id: root
 
@@ -205,8 +209,12 @@ Window {
         }
     }
 
+    //FIXME: need to explicitly disable when background
+    //Or web content continues to play in background
+    //onVisibleChanged:
+    //    webView.url = visible ? initialUrl : ""
     onVisibleChanged:
-        webView.url = visible ? initialUrl : ""
+        webView.url != initialUrl ? webView.url = initialUrl : undefined
 
     Component.onCompleted:
         //Conditional on plugins (read flash) being enabled
