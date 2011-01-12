@@ -63,12 +63,16 @@ Blade {
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
         Keys.onLeftPressed: {
-            state = "closed"
+            submenu.close()
             rootMenu.forceActiveFocus()
         }
 
         SubBladeMenu {
             id: subMenuList
         }
+    }
+
+    function close() {
+        confluence.handleBackout()
     }
 }

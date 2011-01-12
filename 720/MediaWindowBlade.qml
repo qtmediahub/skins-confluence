@@ -32,7 +32,7 @@ Blade {
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
     hoverEnabled: true
-    onEntered: { open(); forceActiveFocus() }
+    onEntered: open();
     onExited: close()
 
     content: Column {
@@ -55,9 +55,5 @@ Blade {
             model: pictureOptions.actionList
         }
     }
-
-    Keys.onEscapePressed: state = "closed"
-    Keys.onLeftPressed: state = "closed"
-    Keys.onRightPressed: state = "closed"
 }
 

@@ -167,14 +167,7 @@ FocusScope {
 
     Keys.onPressed: {
         if(event.key == Qt.Key_Escape) {
-            if(selectedElement && selectedElement.maximized)
-                selectedElement.maximized = false
-            else if(confluence.state == "showingRootBlade" && avPlayer.video.playing)
-                show(transparentVideoOverlay)
-            else if(confluence.state == "showingRootBlade" && !!selectedElement)
-                show(selectedElement)
-            else
-                show(mainBlade)
+            handleBackout()
         } else if(event.key == Qt.Key_F12) {
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
         } else if(event.key == Qt.Key_F11) {
@@ -185,6 +178,8 @@ FocusScope {
             avPlayer.increaseVolume();
         } else if (event.key == Qt.Key_Minus) {
             avPlayer.decreaseVolume();
+        } else if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
+            confluence.show(mainBlade)
         }
     }
 
@@ -308,6 +303,18 @@ FocusScope {
         }
 
         confluence.show(mainBlade)
+    }
+
+    function handleBackout()
+    {
+        if(selectedElement && selectedElement.maximized)
+            selectedElement.maximized = false
+        else if(confluence.state == "showingRootBlade" && avPlayer.video.playing)
+            show(transparentVideoOverlay)
+        else if(confluence.state == "showingRootBlade" && !!selectedElement)
+            show(selectedElement)
+        else
+            show(mainBlade)
     }
 
     function setActiveEngine(engine)

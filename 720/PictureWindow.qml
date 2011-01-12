@@ -138,13 +138,5 @@ Window {
         pictureEngine.pluginProperties.pictureModel.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value("picturewindow-currentview", "POSTER"))
     }
-
-    Keys.onPressed: {
-        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
-            blade.open();
-            blade.forceActiveFocus()
-            event.accepted = true
-        }
-    }
 }
 

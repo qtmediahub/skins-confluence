@@ -52,7 +52,10 @@ FocusScope {
         parent: root
         visible: (root.scale == 1.0) && !maximized
         z: 1
-        onClicked: confluence.state = "showingRootBlade" // # FIXME: Don't miss with another component's state!
+        onClicked:
+            blade.open()
+        onOpened:
+            confluence.state = "showingRootBlade" // # FIXME: Don't miss with another component's state!
     }
 
     onMaximizedChanged:
@@ -112,13 +115,12 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed:
-        if((event.key == Qt.Key_Right) && (event.modifier == Qt.ShiftModifier)) {
-            bladeLoader.item.clicked()
+    Keys.onPressed: {
+        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
+            blade.open();
             event.accepted = true
-        } else {
-            event.accepted = false
         }
+    }
 
     Loader {
         id: bladeLoader

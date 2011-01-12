@@ -48,6 +48,7 @@ FocusScope {
 
     function open() {
         state = "open"
+        root.forceActiveFocus()
     }
     function close() {
         state = "closed"
@@ -84,6 +85,10 @@ FocusScope {
             StateChangeScript { script: root.opened() }
         }
     ]
+
+    Keys.onEscapePressed: root.close()
+    Keys.onLeftPressed: root.close()
+    Keys.onRightPressed: root.close()
 
     Item {
         id: blade

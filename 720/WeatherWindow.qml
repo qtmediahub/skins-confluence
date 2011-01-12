@@ -38,12 +38,6 @@ Window {
         root.forceActiveFocus();
     }
 
-    function showList() {
-        cityListView.state = "";
-        weather.opacity=0.5;
-        listView.forceActiveFocus();
-    }
-
     function fullWeekDay(name) {
         var map = {
             "Mon" : qsTr("MONDAY"),
@@ -53,7 +47,7 @@ Window {
             "Fri" : qsTr("FRIDAY"),
             "Sat" : qsTr("SATURDAY"),
             "Sun" : qsTr("SUNDAY"),
-        };
+    };
         return map[name];
     }
 
@@ -67,11 +61,67 @@ Window {
         return (string.substr(0, string.length-5))
     }
 
+    /*bladeComponent: Blade {
+        //bladeWidth: banner.x + banner.width + 50
+        visible: true
+        bladeWidth: 600
+        bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
-    Keys.onSpacePressed: {
-        showList()
-        event.accepted = true
-    }
+        hoverEnabled: true
+        onEntered: open();
+        onExited: close()
+
+        content: Column {
+            anchors.fill: parent
+            anchors.topMargin: 50
+            anchors.leftMargin: closedBladePeek + 5
+            anchors.rightMargin: 5
+
+            Image {
+                id: banner
+                source: themeResourcePath + "/media/Confluence_Logo.png"
+                anchors.bottomMargin: 10
+            }
+
+            ListView {
+                id: listView
+                //anchors.margins: 30
+                //anchors.fill: parent
+                keyNavigationWraps: true
+                //focus: true
+                //clip: true
+                model: cityList
+                delegate: Item {
+                    id: delegate
+                    width: listView.width
+                    height: thistext.height + 8
+                    Image {
+                        anchors.fill: parent;
+                        source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+                    }
+                    Text {
+                        id: thistext
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: "white"
+                        font.pointSize: 16
+                        text: name
+                    }
+                    MouseArea {
+                        anchors.fill: parent;
+                        hoverEnabled: true
+                        onEntered:
+                            ListView.view.currentIndex = index
+                        onClicked:
+                            showCast(name)
+                    }
+                    Keys.onReturnPressed: {
+                        showCast(name)
+                        event.accepted = true
+                    }
+                }
+            }
+        }
+    }*/
 
     Row {
         id: weather
@@ -157,12 +207,6 @@ Window {
                         text: weatherMeasurements.count > 0 ? weatherMeasurements.get(0).wind_condition : ""
                     }
                 }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked:
-                        showList()
-                }
             }
         }
 
@@ -185,7 +229,8 @@ Window {
                     width: parent.width
                     clip: true
                     model: weatherForecast
-                    delegate: Item {
+                    delegate:
+                        Item {
                         height: 120
                         width: forecastListView.width
 
@@ -260,73 +305,6 @@ Window {
         }
 
         Behavior on opacity { PropertyAnimation { duration: 500 } }
-    }
-
-    Panel {
-        id: cityListView
-        width: root.width/2.0
-        height: root.height/1.3
-        x: (root.width-width)/2
-        y: (root.height-height)/2
-        z: 1
-        state: "hide"
-
-        ListView {
-            id: listView
-            anchors.margins: 30
-            anchors.fill: parent
-            keyNavigationWraps: true
-            focus: true
-            clip: true
-            model: cityList
-            delegate: Item {
-                id: delegate
-                width: listView.width
-                height: thistext.height + 8
-                Image {
-                    anchors.fill: parent;
-                    source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
-                }
-                Text {
-                    id: thistext
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: "white"
-                    font.pointSize: 16
-                    text: name
-                }
-                MouseArea {
-                    anchors.fill: parent;
-                    hoverEnabled: true
-                    onEntered:
-                        ListView.view.currentIndex = index
-                    onClicked:
-                        showCast(name)
-                }
-                Keys.onReturnPressed: {
-                    showCast(name)
-                    event.accepted = true
-                }
-            }
-        }
-
-        Keys.onEscapePressed:
-            if(state == "") {  // poor focus scope workaround
-                weather.opacity=1.0;
-                cityListView.state = "hide";
-                root.forceActiveFocus();
-                event.accepted = true;
-            } else {
-                event.accepted = false;
-            }
-
-        states: State {
-             name: "hide"
-             PropertyChanges { target: cityListView; x:-cityListView.width; opacity: 0 }
-        }
-
-        transitions: Transition {
-            PropertyAnimation { properties: "x,opacity"; duration: 1000; easing.type: Easing.OutBack }
-        }
     }
 
     XmlListModel {
