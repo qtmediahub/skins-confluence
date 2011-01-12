@@ -128,6 +128,8 @@ FocusScope {
             onClicked: confluence.showModal(exitDialog)
             KeyNavigation.left: favouritesButton
             KeyNavigation.backtab: favouritesButton
+            KeyNavigation.right: rootMenuList
+            KeyNavigation.tab: rootMenuList
         }
     }
 }
