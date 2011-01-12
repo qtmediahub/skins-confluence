@@ -55,7 +55,7 @@ FocusScope {
         focus: true
         keyNavigationWraps: true
 
-        anchors.fill: parent
+        anchors { left: parent.left; right: parent.right; top: banner.bottom; bottom: buttonGrid.top }
         preferredHighlightBegin: banner.height; preferredHighlightEnd: height - buttonGrid.height
         highlightRangeMode: standardHighlightRangeMode
         highlightMoveDuration: standardItemViewMoveDuration
