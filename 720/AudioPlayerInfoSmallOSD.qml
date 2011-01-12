@@ -114,7 +114,7 @@ Item {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "bottomMargin"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+            NumberAnimation { property: "bottomMargin"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
         }
     ]
 }

@@ -34,7 +34,7 @@ Item {
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
         Behavior on opacity {
-            NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+            NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
         }
     }
 
@@ -47,7 +47,7 @@ Item {
         opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0
 
         Behavior on opacity {
-            NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+            NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
         }
     }
 

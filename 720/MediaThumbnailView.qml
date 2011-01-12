@@ -72,6 +72,7 @@ Item {
 
         ConfluenceGridView {
             id: sourcesListView
+
             anchors.fill: parent;
             treeModel: engineModel
             clip: true

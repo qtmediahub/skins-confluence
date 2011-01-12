@@ -114,7 +114,7 @@ FocusScope {
             }
         }
         Behavior on x {
-            NumberAnimation { duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+            NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
         }
     }
 }

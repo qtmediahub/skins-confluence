@@ -30,8 +30,11 @@ FocusScope {
     property string themeResourcePath: backend.skinPath + "/confluence/3rdparty/skin.confluence"
 
     //FIXME: QML const equivalent?
-    property int confluenceEasingCurve: Easing.InQuad
-    property int confluenceAnimationDuration: 350
+    property int standardEasingCurve: Easing.InQuad
+    property int standardAnimationDuration: 350
+
+    property int standardHighlightRangeMode: ListView.StrictlyEnforceRange
+    property int standardItemViewMoveDuration: 400
 
     property variant selectedEngine
     property variant selectedElement
@@ -133,11 +136,11 @@ FocusScope {
         Transition {
             from: "*"
             to: "showingRootBlade"
-            NumberAnimation { targets: [qtcube, dateTimeHeader]; properties: "x,y"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration }
+            NumberAnimation { targets: [qtcube, dateTimeHeader]; properties: "x,y"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
             SequentialAnimation {
-                NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
+                NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
                 PropertyAction { target: dateTimeHeader; property: "showDate"; value: true }
-                NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
+                NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
                 PropertyAction { target: weatherHeader; property: "opacity"; value: 1 }
             }
         },
@@ -147,16 +150,16 @@ FocusScope {
             SequentialAnimation {
                 // Move things out
                 ParallelAnimation {
-                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration }
-                    NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
+                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
+                    NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
                 }
                 // Move things in
                 ParallelAnimation {
                     PropertyAction { target: selectedElement; property: "state"; value: "visible" }
                     PropertyAction { target: dateTimeHeader; property: "showDate"; value: false }
-                    NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration/2 }
-                    NumberAnimation { target: homeHeader; properties: "opacity"; duration: confluenceAnimationDuration/2 }
-                    NumberAnimation { target: currentContextHeader; properties: "opacity"; duration: confluenceAnimationDuration/2 }
+                    NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
+                    NumberAnimation { target: homeHeader; properties: "opacity"; duration: standardAnimationDuration/2 }
+                    NumberAnimation { target: currentContextHeader; properties: "opacity"; duration: standardAnimationDuration/2 }
                 }
             }
         }

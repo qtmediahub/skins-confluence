@@ -57,8 +57,8 @@ FocusScope {
 
         anchors.fill: parent
         preferredHighlightBegin: banner.height; preferredHighlightEnd: height - buttonGrid.height
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        highlightMoveDuration: 400
+        highlightRangeMode: standardHighlightRangeMode
+        highlightMoveDuration: standardItemViewMoveDuration
 
         highlight: Image {
             source:  themeResourcePath + "/media/black-back2.png"

@@ -115,6 +115,6 @@ FocusScope {
     }
 
     Behavior on opacity {
-        NumberAnimation { easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration }
+        NumberAnimation { easing.type: standardEasingCurve; duration: standardAnimationDuration }
     }
 }

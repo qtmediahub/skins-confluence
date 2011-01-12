@@ -24,6 +24,9 @@ ListView {
 
     keyNavigationWraps: true
 
+    highlightRangeMode: confluence.standardHighlightRangeMode
+    highlightMoveDuration: confluence.standardItemViewMoveDuration
+
     ScrollBar {
         id: verticalScrollBar
         flickable: listView

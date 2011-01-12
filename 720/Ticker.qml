@@ -106,6 +106,6 @@ BorderImage {
 
     transitions: Transition {
         reversible: true
-        NumberAnimation { target: anchors; properties: "topMargin"; easing.type: confluenceEasingCurve; duration: confluenceAnimationDuration }
+        NumberAnimation { target: anchors; properties: "topMargin"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
     }
 }

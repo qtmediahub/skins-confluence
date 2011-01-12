@@ -73,6 +73,10 @@ Item {
 
         TreeView {
             id: sourcesListView
+
+            highlightRangeMode: confluence.standardHighlightRangeMode
+            highlightMoveDuration: confluence.standardItemViewMoveDuration
+
             anchors.fill: parent;
             treeModel: engineModel
             clip: true
