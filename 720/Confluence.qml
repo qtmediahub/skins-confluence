@@ -33,7 +33,7 @@ FocusScope {
     property int standardEasingCurve: Easing.InQuad
     property int standardAnimationDuration: 350
 
-    property int standardHighlightRangeMode: ListView.StrictlyEnforceRange
+    property int standardHighlightRangeMode: ListView.ApplyRange
     property int standardItemViewMoveDuration: 400
 
     property variant selectedEngine
