@@ -71,6 +71,10 @@ FocusScope {
             model: menuModel
             spacing:  30
 
+            highlightRangeMode: confluence.standardHighlightRangeMode
+            highlightMoveDuration: confluence.standardItemViewMoveDuration
+            keyNavigationWraps: confluence.standardItemViewWraps
+
             delegate : Item {
                 id: delegateItem
 

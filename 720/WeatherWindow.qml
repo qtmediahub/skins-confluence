@@ -87,7 +87,10 @@ Window {
                 id: listView
                 //anchors.margins: 30
                 //anchors.fill: parent
-                keyNavigationWraps: true
+                highlightRangeMode: confluence.standardHighlightRangeMode
+                highlightMoveDuration: confluence.standardItemViewMoveDuration
+                keyNavigationWraps: confluence.standardItemViewWraps
+
                 //focus: true
                 //clip: true
                 model: cityList

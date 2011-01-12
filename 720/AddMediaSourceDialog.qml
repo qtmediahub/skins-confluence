@@ -42,9 +42,6 @@ Dialog {
         TreeView {
             id: fileSystemView
 
-            highlightRangeMode: confluence.standardHighlightRangeMode
-            highlightMoveDuration: confluence.standardItemViewMoveDuration
-
             width: parent.width
             height: 350
             treeModel : DirModel { }

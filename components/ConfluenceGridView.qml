@@ -30,6 +30,7 @@ GridView {
 
     highlightRangeMode: confluence.standardHighlightRangeMode
     highlightMoveDuration: confluence.standardItemViewMoveDuration
+    keyNavigationWraps: confluence.standardItemViewWraps
 
     function currentModelIndex() {
         return visualDataModel.modelIndex(currentIndex);

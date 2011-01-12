@@ -36,6 +36,8 @@ FocusScope {
     property int standardHighlightRangeMode: ListView.ApplyRange
     property int standardItemViewMoveDuration: 400
 
+    property bool standardItemViewWraps: false
+
     property variant selectedEngine
     property variant selectedElement
     property variant avPlayer

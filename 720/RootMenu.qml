@@ -53,12 +53,12 @@ FocusScope {
         //Oversized fonts being downscaled
         spacing: confluence.width/40 //30
         focus: true
-        keyNavigationWraps: true
 
         anchors { left: parent.left; right: parent.right; top: banner.bottom; bottom: buttonGrid.top }
         preferredHighlightBegin: banner.height; preferredHighlightEnd: height - buttonGrid.height
         highlightRangeMode: confluence.standardHighlightRangeMode
         highlightMoveDuration: confluence.standardItemViewMoveDuration
+        keyNavigationWraps: confluence.standardItemViewWraps
 
         highlight: Image {
             source:  themeResourcePath + "/media/black-back2.png"
