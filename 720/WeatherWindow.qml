@@ -61,10 +61,11 @@ Window {
         return (string.substr(0, string.length-5))
     }
 
-    /*bladeComponent: Blade {
+    bladeComponent: Blade {
         //bladeWidth: banner.x + banner.width + 50
-        visible: true
-        bladeWidth: 600
+        parent: root
+        bladeWidth: banner.x + banner.width + 50
+
         bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
         hoverEnabled: true
@@ -85,14 +86,16 @@ Window {
 
             ListView {
                 id: listView
+                //anchors.fill: parent
+                anchors { top: banner.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
                 //anchors.margins: 30
                 //anchors.fill: parent
                 highlightRangeMode: confluence.standardHighlightRangeMode
                 highlightMoveDuration: confluence.standardItemViewMoveDuration
                 keyNavigationWraps: confluence.standardItemViewWraps
 
-                //focus: true
-                //clip: true
+                focus: true
+                clip: true
                 model: cityList
                 delegate: Item {
                     id: delegate
@@ -124,7 +127,7 @@ Window {
                 }
             }
         }
-    }*/
+    }
 
     Row {
         id: weather
