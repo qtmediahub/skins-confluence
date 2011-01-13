@@ -38,7 +38,7 @@ Item {
     Image {
         id: pixmap
         anchors.fill: parent
-        source: themeResourcePath + "/media/" + (button.activefocus ? focusedPixmap : basePixmap) + ".png"
+        source: themeResourcePath + "/media/" + (button.activeFocus ? focusedPixmap : basePixmap) + ".png"
     }
 
     MouseArea {
