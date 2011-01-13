@@ -272,7 +272,7 @@ FocusScope {
     {
         if(selectedElement && selectedElement.maximized)
             selectedElement.maximized = false
-        else if(confluence.state == "showingRootBlade" && avPlayer.video.playing)
+        else if(confluence.state == "showingRootBlade" && avPlayer.media.playing)
             show(transparentVideoOverlay)
         else if(confluence.state == "showingRootBlade" && !!selectedElement)
             show(selectedElement)
@@ -298,7 +298,7 @@ FocusScope {
         if (element == mainBlade) {
             state = "showingRootBlade"
         } else if(element == avPlayer) {
-            if(avPlayer.video.source == "") {
+            if(avPlayer.media.source == "") {
                 show(videoWindow)
             } else {
                 show(transparentVideoOverlay)
@@ -322,7 +322,7 @@ FocusScope {
     Background {
         id: background
         anchors.fill: parent;
-        visible: !(!!avPlayer.video && avPlayer.video.playing)
+        visible: !(!!avPlayer.media && avPlayer.media.playing)
     }
 
     MainBlade { 

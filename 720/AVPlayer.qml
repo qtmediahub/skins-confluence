@@ -25,7 +25,7 @@ import confluence.components 1.0
 FocusScope {
     id: root
 
-    property alias video : videoItem
+    property alias media: mediaItem
 
     anchors.fill: parent
 
@@ -47,7 +47,7 @@ FocusScope {
         hoverEnabled: true
 
         onPositionChanged: showOSD();
-        onClicked: root.state == "maximized" ? videoItem.togglePlayPause() : undefined;
+        onClicked: root.state == "maximized" ? mediaItem.togglePlayPause() : undefined;
     }
 
     Timer {
@@ -103,12 +103,12 @@ FocusScope {
         ProgressBar {
             anchors.verticalCenter: volumeImage.verticalCenter
             width: confluence.width/10
-            mProgress: videoItem.volume
+            mProgress: mediaItem.volume
         }
     }
 
     Video {
-        id: videoItem
+        id: mediaItem
 
         property variant currentItem
 
@@ -119,16 +119,16 @@ FocusScope {
         }
 
         function togglePlayPause() {
-            if (Math.abs(videoItem.playbackRate) != 1) {
-                videoItem.play()
-                videoItem.playbackRate = 1
+            if (Math.abs(mediaItem.playbackRate) != 1) {
+                mediaItem.play()
+                mediaItem.playbackRate = 1
             } else {
-                if (!videoItem.playing || videoItem.paused) {
-                    videoItem.play()
-                    videoItem.playbackRate = 1
+                if (!mediaItem.playing || mediaItem.paused) {
+                    mediaItem.play()
+                    mediaItem.playbackRate = 1
                 } else {
-                    videoItem.pause()
-                    videoItem.playbackRate = 1
+                    mediaItem.pause()
+                    mediaItem.playbackRate = 1
                 }
             }
         }
@@ -137,13 +137,13 @@ FocusScope {
     AudioVisualisation {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
-        visible: !videoItem.hasVideo
-        running: visible && !videoItem.paused && videoItem.playing
+        visible: !mediaItem.hasVideo
+        running: visible && !mediaItem.paused && mediaItem.playing
     }
 
     AVPlayerControlOSD {
         id: controlOSD
-        video: videoItem
+        media: mediaItem
         onActivity:
             osdTimer.restart();
             
@@ -154,20 +154,20 @@ FocusScope {
 
     AVPlayerInfoOSD {
         id: infoOSD
-        video: videoItem
-        state: videoItem.hasVideo && (videoItem.paused || videoItem.playbackRate != 1) && root.state == "maximized" ? "visible" : ""
+        media: mediaItem
+        state: mediaItem.hasVideo && (mediaItem.paused || mediaItem.playbackRate != 1) && root.state == "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoSmallOSD {
         id: audioInfoSmallOSD
-        video: videoItem
-        state: !videoItem.hasVideo && videoItem.playing && root.state != "maximized" ? "visible" : ""
+        media: mediaItem
+        state: !mediaItem.hasVideo && mediaItem.playing && root.state != "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoBigOSD {
         id: audioInfoBigOSD
-        video: videoItem
-        state: !videoItem.hasVideo && videoItem.playing && root.state == "maximized" ? "visible" : ""
+        media: mediaItem
+        state: !mediaItem.hasVideo && mediaItem.playing && root.state == "maximized" ? "visible" : ""
     }
 
     Image {
@@ -293,12 +293,12 @@ FocusScope {
 
     function play(item) {
         if(item == null) {
-            video.play()
+            media.play()
         } else {
-            video.stop();
-            video.source = item.filePath
-            video.currentItem = item
-            video.play();
+            media.stop();
+            media.source = item.filePath
+            media.currentItem = item
+            media.play();
         }
     }
 
@@ -313,18 +313,18 @@ FocusScope {
     }
 
     function increaseVolume() {
-        videoItem.volume = (videoItem.volume + 0.02 > 1) ? 1.0 : videoItem.volume + 0.02
+        mediaItem.volume = (mediaItem.volume + 0.02 > 1) ? 1.0 : mediaItem.volume + 0.02
         showVolumeOSD();
     }
 
     function decreaseVolume() {
-        videoItem.volume = (avPlayer.video.volume - 0.02 < 0) ? 0.0 : videoItem.volume - 0.02
+        mediaItem.volume = (avPlayer.media.volume - 0.02 < 0) ? 0.0 : mediaItem.volume - 0.02
         showVolumeOSD();
     }
 
     function showDialog(item) {
         var onClosedHandler = function() {
-            videoItem.forceActiveFocus()
+            mediaItem.forceActiveFocus()
             item.closed.disconnect(onClosedHandler)
         }
         item.closed.connect(onClosedHandler)

@@ -24,7 +24,7 @@ import "util.js" as Util
 Item {
     id: root
 
-    property variant video
+    property variant media
 
     width: childrenRect.width
     height: childrenRect.height
@@ -42,34 +42,34 @@ Item {
 
             // TODO should all use real MetaData from our database
             Text {
-                text: video.playbackRate == 0 ? qsTr("Now Paused") : qsTr("Now Playing")
+                text: media.playbackRate == 0 ? qsTr("Now Paused") : qsTr("Now Playing")
                 color: "steelblue"
                 font.bold: true
                 font.pointSize: 16
                 anchors.right: parent.right
             }
             Text {
-                text: video.metaData.albumArtist ? video.metaData.albumArtist : qsTr("Unknown Artist")
+                text: media.metaData.albumArtist ? media.metaData.albumArtist : qsTr("Unknown Artist")
                 color: "white"
                 font.bold: true
                 font.pointSize: 18
                 anchors.right: parent.right
             }
             Text {
-                text: video.metaData.albumTitle ? video.metaData.albumTitle : qsTr("Unknown Album")
+                text: media.metaData.albumTitle ? media.metaData.albumTitle : qsTr("Unknown Album")
                 color: "white"
                 font.pointSize: 16
                 anchors.right: parent.right
             }
             Text {
-                text: video.metaData.title ? video.metaData.title : qsTr("Unknown Title")
+                text: media.metaData.title ? media.metaData.title : qsTr("Unknown Title")
                 color: "white"
                 font.bold: true
                 font.pointSize: 20
                 anchors.right: parent.right
             }
             Text {
-                text: Util.ms2string(video.position) + " / " + Util.ms2string(video.duration)
+                text: Util.ms2string(media.position) + " / " + Util.ms2string(media.duration)
                 color: "white"
                 font.pointSize: 16
                 anchors.right: parent.right
@@ -86,7 +86,7 @@ Item {
 
             Image {
                 id: thumbnail
-                source: video.currentItem ? video.currentItem.previewUrl : themeResourcePath + "/media/DefaultAlbumCover.png"
+                source: media.currentItem ? media.currentItem.previewUrl : themeResourcePath + "/media/DefaultAlbumCover.png"
                 anchors.fill: parent
                 anchors.margins: 6
 
