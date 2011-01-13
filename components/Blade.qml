@@ -94,6 +94,8 @@ FocusScope {
     Keys.onLeftPressed: root.close()
     Keys.onRightPressed: root.close()
 
+    onClosed: if (root.parent.visible) root.parent.forceActiveFocus()
+
     Item {
         id: blade
         x: -width + visibleWidth

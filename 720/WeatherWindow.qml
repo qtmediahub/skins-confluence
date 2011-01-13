@@ -34,8 +34,6 @@ Window {
     function showCast(name) {
         city=name;
         weather.opacity=1.0;
-        cityListView.state = "hide";
-        root.forceActiveFocus();
     }
 
     function fullWeekDay(name) {
@@ -62,10 +60,8 @@ Window {
     }
 
     bladeComponent: Blade {
-        //bladeWidth: banner.x + banner.width + 50
         parent: root
         bladeWidth: banner.x + banner.width + 50
-
         bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
         hoverEnabled: true

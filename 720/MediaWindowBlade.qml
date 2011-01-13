@@ -32,7 +32,7 @@ Blade {
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
     hoverEnabled: true
-    onEntered: open();
+    onEntered: open()
     onExited: close()
 
     content: Column {

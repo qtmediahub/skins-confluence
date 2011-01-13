@@ -114,7 +114,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
+        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right) {
             blade.open();
             event.accepted = true
         }
