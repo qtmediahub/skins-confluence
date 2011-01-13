@@ -22,12 +22,15 @@ import QtQuick 1.0
 ListView {
     id: listView
 
+    property bool scrollbar: true
+
     highlightRangeMode: confluence.standardHighlightRangeMode
     highlightMoveDuration: confluence.standardItemViewMoveDuration
     keyNavigationWraps: confluence.standardItemViewWraps
 
     ScrollBar {
         id: verticalScrollBar
+        visible: scrollbar
         flickable: listView
     }
 

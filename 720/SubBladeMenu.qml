@@ -27,13 +27,9 @@ FocusScope {
 
     anchors.fill: parent
 
-    ListView {
+    ConfluenceListView {
         id: list
         anchors.fill: parent
-
-        highlightRangeMode: confluence.standardHighlightRangeMode
-        highlightMoveDuration: confluence.standardItemViewMoveDuration
-        keyNavigationWraps: confluence.standardItemViewWraps
 
         Keys.onEnterPressed:
             currentItem.trigger()

@@ -84,15 +84,9 @@ Window {
                 anchors.bottomMargin: 10
             }
 
-            ListView {
+            ConfluenceListView {
                 id: listView
-                //anchors.fill: parent
                 anchors { top: banner.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
-                //anchors.margins: 30
-                //anchors.fill: parent
-                highlightRangeMode: confluence.standardHighlightRangeMode
-                highlightMoveDuration: confluence.standardItemViewMoveDuration
-                keyNavigationWraps: confluence.standardItemViewWraps
 
                 focus: true
                 clip: true

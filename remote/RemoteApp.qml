@@ -63,17 +63,13 @@ FocusScope {
         visible: true
         opacity: visible ? 1 : 0
 
-        ListView {
+        ConfluenceListView {
             id: listView
             anchors.fill: parent;
             clip: true
             focus: true
             model: menuModel
             spacing:  30
-
-            highlightRangeMode: confluence.standardHighlightRangeMode
-            highlightMoveDuration: confluence.standardItemViewMoveDuration
-            keyNavigationWraps: confluence.standardItemViewWraps
 
             delegate : Item {
                 id: delegateItem
