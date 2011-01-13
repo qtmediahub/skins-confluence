@@ -25,7 +25,8 @@ import confluence.components 1.0
 FocusScope {
     id: root
 
-    property alias media: mediaItem
+    property bool hasMedia: !!mediaItem && mediaItem.source != ""
+    property bool playing: hasMedia && mediaItem.playing
 
     anchors.fill: parent
 
@@ -146,7 +147,6 @@ FocusScope {
         media: mediaItem
         onActivity:
             osdTimer.restart();
-            
 
         onShowVideoMenu: showDialog(videoListDialog)
         onShowMusicMenu: showDialog(musicListDialog)
@@ -293,12 +293,12 @@ FocusScope {
 
     function play(item) {
         if(item == null) {
-            media.play()
+            mediaItem.play()
         } else {
-            media.stop();
-            media.source = item.filePath
-            media.currentItem = item
-            media.play();
+            mediaItem.stop();
+            mediaItem.source = item.filePath
+            mediaItem.currentItem = item
+            mediaItem.play();
         }
     }
 
@@ -318,8 +318,12 @@ FocusScope {
     }
 
     function decreaseVolume() {
-        mediaItem.volume = (avPlayer.media.volume - 0.02 < 0) ? 0.0 : mediaItem.volume - 0.02
+        mediaItem.volume = (mediaItem.volume - 0.02 < 0) ? 0.0 : mediaItem.volume - 0.02
         showVolumeOSD();
+    }
+
+    function togglePlayPause() {
+        mediaItem.togglePlayPause()
     }
 
     function showDialog(item) {

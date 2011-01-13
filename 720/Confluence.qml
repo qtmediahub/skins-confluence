@@ -140,9 +140,11 @@ FocusScope {
         } else if(event.key == Qt.Key_F10) {
             show(systemInfoWindow)
         } else if (event.key == Qt.Key_Plus) {
-            avPlayer.increaseVolume();
+            avPlayer.increaseVolume()
         } else if (event.key == Qt.Key_Minus) {
-            avPlayer.decreaseVolume();
+            avPlayer.decreaseVolume()
+        } else if (event.key == Qt.Key_Space) {
+            avPlayer.togglePlayPause()
         } else if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
             confluence.show(mainBlade)
         }
@@ -272,7 +274,7 @@ FocusScope {
     {
         if(selectedElement && selectedElement.maximized)
             selectedElement.maximized = false
-        else if(confluence.state == "showingRootBlade" && avPlayer.media.playing)
+        else if(confluence.state == "showingRootBlade" && avPlayer.playing)
             show(transparentVideoOverlay)
         else if(confluence.state == "showingRootBlade" && !!selectedElement)
             show(selectedElement)
@@ -298,7 +300,7 @@ FocusScope {
         if (element == mainBlade) {
             state = "showingRootBlade"
         } else if(element == avPlayer) {
-            if(avPlayer.media.source == "") {
+            if(!avPlayer.hasMedia) {
                 show(videoWindow)
             } else {
                 show(transparentVideoOverlay)
@@ -306,7 +308,6 @@ FocusScope {
         } else if (element == transparentVideoOverlay) {
             selectedElement = transparentVideoOverlay
             state = "showingSelectedElementMaximized"
-            avPlayer.play()
         } else {
             selectedElement = element
             state = "showingSelectedElement"
@@ -322,7 +323,7 @@ FocusScope {
     Background {
         id: background
         anchors.fill: parent;
-        visible: !(!!avPlayer.media && avPlayer.media.playing)
+        visible: !avPlayer.playing
     }
 
     MainBlade { 
