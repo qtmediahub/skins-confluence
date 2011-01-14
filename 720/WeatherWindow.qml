@@ -23,6 +23,8 @@ import confluence.components 1.0
 Window {
     id: root
 
+    focalWidget: forecastPanel
+
     anchors.fill: parent
 
     property string city: "Munich"
@@ -207,6 +209,7 @@ Window {
         }
 
         Panel {
+            id: forecastPanel
             width: root.width/2.0 - weather.spacing*2
             height: root.height/1.3
 

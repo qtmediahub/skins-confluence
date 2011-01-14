@@ -31,6 +31,8 @@ FocusScope {
     opacity: 0; visible: false
     scale: 0
 
+    property Item focalWidget: root
+
     property bool overlay: false
     property alias blade: bladeLoader.item
 
@@ -114,7 +116,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right) {
+        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
             blade.open();
             event.accepted = true
         }

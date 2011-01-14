@@ -22,6 +22,7 @@ import confluence.components 1.0
 
 Item {
     id: root
+
     property variant engineName
     property variant engineModel
     property variant informationSheet
@@ -116,12 +117,12 @@ Item {
     }
 
     AddMediaSourceDialog {
+        focalWidget: sourcesListView
+
         id: addMediaSourceDialog
         engineModel: root.engineModel
         title: qsTr("Add %1 source").arg(root.engineName)
         opacity: 0
-
-        onClosed: sourcesListView.forceActiveFocus()
     }
 }
 

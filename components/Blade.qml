@@ -94,7 +94,7 @@ FocusScope {
     Keys.onLeftPressed: root.close()
     Keys.onRightPressed: root.close()
 
-    onClosed: if (root.parent.visible) root.parent.forceActiveFocus()
+    onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
 
     Item {
         id: blade

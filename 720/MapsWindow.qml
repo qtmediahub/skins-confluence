@@ -25,6 +25,7 @@ Window {
     id: root
     anchors.fill: parent
     maximizable: true
+    focalWidget: panel
 
     resources: [
         // standard actions
@@ -132,7 +133,6 @@ Window {
         parent: root
         visible: true
         actionList: [viewAction, zoomInAction, zoomOutAction]
-        onClosed: if (root.visible) panel.forceActiveFocus()
     }
 
     function setCurrentView(viewType) {

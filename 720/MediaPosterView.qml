@@ -115,11 +115,10 @@ Item {
 
     AddMediaSourceDialog {
         id: addMediaSourceDialog
+        focalWidget: posterView
         engineModel: root.engineModel
         title: qsTr("Add %1 source").arg(root.engineName)
         opacity: 0
-
-        onClosed: posterView.forceActiveFocus()
     }
 }
 

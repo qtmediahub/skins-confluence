@@ -19,10 +19,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.components 1.0
-import confluence.components 1.0
 
 Window {
     id: root
+
+    focalWidget: viewLoader
 
     PictureInformationSheet { id: pictureInformationSheet }
 
@@ -78,8 +79,6 @@ Window {
                 text: qsTr("SLIDESHOW")
                 onTriggered: root.startSlideShow(true /*autoPlay */)
             }]
-
-        onClosed: if (root.visible) viewLoader.forceActiveFocus()
     }
 
     function setCurrentView(viewType) {

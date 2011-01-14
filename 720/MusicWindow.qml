@@ -22,6 +22,7 @@ import confluence.components 1.0
 
 Window {
     id: root
+    focalWidget: viewLoader
 
     MusicInformationSheet {
         id: musicInformationSheet
@@ -53,8 +54,6 @@ Window {
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
                 onTriggered: musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, currentOption())
             }]
-
-        onClosed: if (root.visible) viewLoader.forceActiveFocus()
     }
 
     function setCurrentView(viewType) {
