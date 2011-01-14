@@ -103,11 +103,7 @@ Item {
 
         transitions: Transition {
             SequentialAnimation {
-<<<<<<< HEAD
-                NumberAnimation { properties: "scale, opacity, angle"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
-=======
                 NumberAnimation { properties: "scale, opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
->>>>>>> a1ca615120c23c35c74fe67b07c9f0e539997be1
             }
         }
     }
