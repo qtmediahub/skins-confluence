@@ -27,6 +27,8 @@ FocusScope {
 
     signal showMusicMenu()
     signal showVideoMenu()
+    signal playNext()
+    signal playPrevious()
     signal activity()
 
     width: parent.width
@@ -56,7 +58,7 @@ FocusScope {
             PixmapButton { basePixmap: "OSDAudioNF"; focusedPixmap: "OSDAudioFO"; onClicked: root.showMusicMenu(); }
             PixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
             Item { width: 100; height: 1; }
-            PixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO" }
+            PixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: root.playPrevious(); }
             PixmapButton { basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.decreasePlaybackRate() }
             PixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: media.stop();}
             PixmapButton {
@@ -66,7 +68,7 @@ FocusScope {
                 onClicked: media.togglePlayPause()
             }
             PixmapButton { basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.increasePlaybackRate() }
-            PixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO" }
+            PixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
             PixmapButton { basePixmap: "OSDDvdNF"; focusedPixmap: "OSDDvdFO" }

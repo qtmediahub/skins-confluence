@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import QtMultimediaKit 1.1
 import confluence.components 1.0
+import Playlist 1.0
 
 //This serves to isolate import failures if QtMultimedia is not present
 FocusScope {
@@ -111,7 +112,7 @@ FocusScope {
     Video {
         id: mediaItem
 
-        property variant currentItem
+        property variant currentIndex
 
         anchors.fill: parent
 
@@ -150,6 +151,8 @@ FocusScope {
 
         onShowVideoMenu: showDialog(videoListDialog)
         onShowMusicMenu: showDialog(musicListDialog)
+        onPlayNext: playIndex(playlist.playNextIndex(mediaItem.currentIndex));
+        onPlayPrevious: playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
     }
 
     AVPlayerInfoOSD {
@@ -295,9 +298,9 @@ FocusScope {
         if(item == null) {
             mediaItem.play()
         } else {
+            mediaItem.currentIndex = playlist.add(item.mediaInfo)
             mediaItem.stop();
             mediaItem.source = item.filePath
-            mediaItem.currentItem = item
             mediaItem.play();
         }
     }
@@ -310,6 +313,13 @@ FocusScope {
     function playBackground(item) {
         root.state = "background";
         root.play(item);
+    }
+
+    function playIndex(idx) {
+        mediaItem.stop();
+        mediaItem.currentIndex = idx
+        mediaItem.source = playlist.data(idx, Playlist.FilePathRole)
+        mediaItem.play();
     }
 
     function increaseVolume() {
