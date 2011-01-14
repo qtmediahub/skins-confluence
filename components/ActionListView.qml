@@ -29,20 +29,21 @@ ListView {
     property int itemHeight
     property int itemWidth
 
-    Component.onCompleted: {
+    onModelChanged: {
         var fm = new FontMetrics.FontMetrics({pointSize: 16})
         var w = 0, h = 0, ow = 0
         for (var i = 0; i < model.length; i++) {
-            w = Math.max(w, fm.width(model[i].text))
             if (model[i].options) {
                 for (var j = 0; j < model[i].options.length; j++) {
                     ow = Math.max(ow, fm.width(model[i].options[j]))
                 }
+                itemWidth = Math.max(itemWidth, fm.width(model[i].text) + 15 + (ow ? ow + 20 : 0))
+            } else {
+                itemWidth = Math.max(itemWidth, fm.width(model[i].text) + 15)
             }
             h = Math.max(h, fm.height(model[i].text))
         }
         itemHeight = h + 20
-        itemWidth = w + 15 + (ow ? ow + 20 : 0)
         width = itemWidth
         height = itemHeight * model.length
     }

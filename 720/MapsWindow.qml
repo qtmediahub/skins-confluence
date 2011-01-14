@@ -25,26 +25,53 @@ Window {
     id: root
     anchors.fill: parent
     maximizable: true
+    focalWidget: panel
+
+    resources: [
+        // standard actions
+        ConfluenceAction {
+            id: viewAction
+            text: qsTr("VIEW")
+            options: [qsTr("Street View"), qsTr("Satellite View")]
+            onTriggered: root.setCurrentView(currentOption)
+        },
+        ConfluenceAction {
+            id: zoomInAction
+            text: qsTr("ZOOM IN")
+            onTriggered: map.zoomLevel = map.zoomLevel + 1
+        },
+        ConfluenceAction {
+            id: zoomOutAction
+            text: qsTr("ZOOM OUT")
+            onTriggered: map.zoomLevel = map.zoomLevel - 1
+        }]
 
     Panel {
         id: panel
-        anchors.centerIn: parent;
         decorateFrame: !root.maximized
         anchors.fill: parent
+        anchors.margins: 50
+        focus: true
 
         Map {
             id: map
             anchors.fill: parent
+
             plugin : Plugin {
                 name : "nokia"
             }
             mapType: Map.StreetMap
-            //mapType: Map.SatelliteMapDay
 
+            ContextMenu {
+                id: contextMenu
+                title: qsTr("Actions")
+                model: [viewAction, zoomInAction, zoomOutAction]
+            }
         }
 
         MouseArea {
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
 
             property bool mouseDown : false
             property int lastX : -1
@@ -58,8 +85,6 @@ Window {
             onReleased : {
                 mouseDown = false
             }
-
-
             onPositionChanged: {
                 if (mouseDown) {
                     var dx = mouse.x - lastX
@@ -69,7 +94,58 @@ Window {
                     lastY = mouse.y
                 }
             }
+            onClicked: {
+                if (mouse.button == Qt.RightButton) {
+                    var scenePos = panel.mapToItem(null, mouseX, mouseY)
+                    confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
+                }
+            }
         }
+
+        Keys.onPressed: {
+            if (event.key == Qt.Key_Right) {
+                map.pan(100, 0)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Left) {
+                map.pan(-100, 0)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Up) {
+                map.pan(0, -100)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Down) {
+                map.pan(0, 100)
+                event.accepted = true
+            } else if (event.key == Qt.Key_Minus) {
+                map.zoomLevel = map.zoomLevel - 1
+                event.accepted = true
+            } else if (event.key == Qt.Key_Plus) {
+                map.zoomLevel = map.zoomLevel + 1
+                event.accepted = true
+            } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
+                root.blade.open()
+                event.accepted = true
+            }
+        }
+    }
+
+    bladeComponent: MediaWindowBlade {
+        id: mapsWindowBlade
+        parent: root
+        visible: true
+        actionList: [viewAction, zoomInAction, zoomOutAction]
+    }
+
+    function setCurrentView(viewType) {
+        if (viewType == qsTr("Satellite View")) {
+            map.mapType = Map.SatelliteMapDay
+        } else if (viewType == qsTr("Street View")) {
+            map.mapType = Map.StreetMap
+        }
+        config.setValue("mapwindow-currentview", viewType)
+    }
+
+    Component.onCompleted: {
+        setCurrentView(config.value("mapwindow-currentview", qsTr("Street View")))
     }
 
     Engine { name: qsTr("Ovi Maps"); role: "maps"; visualElement: root; visualElementProperties: [] }

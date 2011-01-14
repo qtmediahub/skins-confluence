@@ -31,10 +31,12 @@ FocusScope {
     opacity: 0; visible: false
     scale: 0
 
+    property Item focalWidget: root
+
     property bool overlay: false
     property alias blade: bladeLoader.item
 
-    property int transitionDuration: standardAnimationDuration
+    property int transitionDuration: confluence.standardAnimationDuration
 
     property bool maximized: false
     property bool maximizable: false
@@ -54,8 +56,6 @@ FocusScope {
         z: 1
         onClicked:
             blade.open()
-        onOpened:
-            confluence.state = "showingRootBlade" // # FIXME: Don't miss with another component's state!
     }
 
     onMaximizedChanged:
@@ -89,8 +89,8 @@ FocusScope {
             to: ""
             SequentialAnimation {
                 ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: standardEasingCurve }
-                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: standardEasingCurve }
+                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
                 PropertyAction { target: root; property: "visible"; value: false }
             }
@@ -102,8 +102,8 @@ FocusScope {
                 PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
                 PropertyAction { target: root; property: "visible"; value: true }
                 ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: standardEasingCurve }
-                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: standardEasingCurve }
+                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
                 ScriptAction { scriptName: "forceActiveFocus" }
             }

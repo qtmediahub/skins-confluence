@@ -63,7 +63,7 @@ Blade {
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
         Keys.onLeftPressed: {
-            submenu.close()
+            subMenu.close()
             rootMenu.forceActiveFocus()
         }
 

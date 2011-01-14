@@ -25,7 +25,8 @@ import confluence.components 1.0
 FocusScope {
     id: root
 
-    property alias video : videoItem
+    property bool hasMedia: !!mediaItem && mediaItem.source != ""
+    property bool playing: hasMedia && mediaItem.playing
 
     anchors.fill: parent
 
@@ -47,7 +48,7 @@ FocusScope {
         hoverEnabled: true
 
         onPositionChanged: showOSD();
-        onClicked: root.state == "maximized" ? videoItem.togglePlayPause() : undefined;
+        onClicked: root.state == "maximized" ? mediaItem.togglePlayPause() : undefined;
     }
 
     Timer {
@@ -88,7 +89,7 @@ FocusScope {
 
         transitions:
             Transition {
-                NumberAnimation { property: "topMargin"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+                NumberAnimation { property: "topMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             }
 
         z: background.z + 2
@@ -103,12 +104,12 @@ FocusScope {
         ProgressBar {
             anchors.verticalCenter: volumeImage.verticalCenter
             width: confluence.width/10
-            mProgress: videoItem.volume
+            mProgress: mediaItem.volume
         }
     }
 
     Video {
-        id: videoItem
+        id: mediaItem
 
         property variant currentItem
 
@@ -119,16 +120,16 @@ FocusScope {
         }
 
         function togglePlayPause() {
-            if (Math.abs(videoItem.playbackRate) != 1) {
-                videoItem.play()
-                videoItem.playbackRate = 1
+            if (Math.abs(mediaItem.playbackRate) != 1) {
+                mediaItem.play()
+                mediaItem.playbackRate = 1
             } else {
-                if (!videoItem.playing || videoItem.paused) {
-                    videoItem.play()
-                    videoItem.playbackRate = 1
+                if (!mediaItem.playing || mediaItem.paused) {
+                    mediaItem.play()
+                    mediaItem.playbackRate = 1
                 } else {
-                    videoItem.pause()
-                    videoItem.playbackRate = 1
+                    mediaItem.pause()
+                    mediaItem.playbackRate = 1
                 }
             }
         }
@@ -137,16 +138,15 @@ FocusScope {
     AudioVisualisation {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
-        visible: !videoItem.hasVideo
-        running: visible && !videoItem.paused && videoItem.playing
+        visible: !mediaItem.hasVideo
+        running: visible && !mediaItem.paused && mediaItem.playing
     }
 
     AVPlayerControlOSD {
         id: controlOSD
-        video: videoItem
+        media: mediaItem
         onActivity:
             osdTimer.restart();
-            
 
         onShowVideoMenu: showDialog(videoListDialog)
         onShowMusicMenu: showDialog(musicListDialog)
@@ -154,20 +154,20 @@ FocusScope {
 
     AVPlayerInfoOSD {
         id: infoOSD
-        video: videoItem
-        state: videoItem.hasVideo && (videoItem.paused || videoItem.playbackRate != 1) && root.state == "maximized" ? "visible" : ""
+        media: mediaItem
+        state: mediaItem.hasVideo && (mediaItem.paused || mediaItem.playbackRate != 1) && root.state == "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoSmallOSD {
         id: audioInfoSmallOSD
-        video: videoItem
-        state: !videoItem.hasVideo && videoItem.playing && root.state != "maximized" ? "visible" : ""
+        media: mediaItem
+        state: !mediaItem.hasVideo && mediaItem.playing && root.state != "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoBigOSD {
         id: audioInfoBigOSD
-        video: videoItem
-        state: !videoItem.hasVideo && videoItem.playing && root.state == "maximized" ? "visible" : ""
+        media: mediaItem
+        state: !mediaItem.hasVideo && mediaItem.playing && root.state == "maximized" ? "visible" : ""
     }
 
     Image {
@@ -190,7 +190,7 @@ FocusScope {
 
         transitions: [
             Transition {
-                NumberAnimation { property: "margins"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+                NumberAnimation { property: "margins"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             }
         ]
 
@@ -274,7 +274,7 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "opacity"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { property: "opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             PropertyAnimation { target: controlOSD; property: "state"; to: "" }
             PropertyAnimation { target: infoOSD; property: "state"; to: "" }
         }
@@ -293,12 +293,12 @@ FocusScope {
 
     function play(item) {
         if(item == null) {
-            video.play()
+            mediaItem.play()
         } else {
-            video.stop();
-            video.source = item.filePath
-            video.currentItem = item
-            video.play();
+            mediaItem.stop();
+            mediaItem.source = item.filePath
+            mediaItem.currentItem = item
+            mediaItem.play();
         }
     }
 
@@ -313,18 +313,22 @@ FocusScope {
     }
 
     function increaseVolume() {
-        videoItem.volume = (videoItem.volume + 0.02 > 1) ? 1.0 : videoItem.volume + 0.02
+        mediaItem.volume = (mediaItem.volume + 0.02 > 1) ? 1.0 : mediaItem.volume + 0.02
         showVolumeOSD();
     }
 
     function decreaseVolume() {
-        videoItem.volume = (avPlayer.video.volume - 0.02 < 0) ? 0.0 : videoItem.volume - 0.02
+        mediaItem.volume = (mediaItem.volume - 0.02 < 0) ? 0.0 : mediaItem.volume - 0.02
         showVolumeOSD();
+    }
+
+    function togglePlayPause() {
+        mediaItem.togglePlayPause()
     }
 
     function showDialog(item) {
         var onClosedHandler = function() {
-            videoItem.forceActiveFocus()
+            mediaItem.forceActiveFocus()
             item.closed.disconnect(onClosedHandler)
         }
         item.closed.connect(onClosedHandler)

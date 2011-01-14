@@ -21,33 +21,34 @@ import QtQuick 1.0
 
 Item {
     id: root
+    property int fillMode: Image.PreserveAspectFit
     property string source
     property int animationDelay
     property variant currentItem : primary
 
     Image {
         id: primary
-        fillMode: Image.PreserveAspectFit
+        fillMode: root.fillMode
         width: parent.width
         asynchronous: true
         opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
         Behavior on opacity {
-            NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     }
 
     Image {
         id: secondary
-        fillMode: Image.PreserveAspectFit
+        fillMode: root.fillMode
         width: parent.width
         asynchronous: true
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
         opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0
 
         Behavior on opacity {
-            NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     }
 

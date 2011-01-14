@@ -28,6 +28,7 @@ import Qt.labs.Mx 1.0 as MxComponents
 
 Window {
     id: root
+    focalWidget: webView
 
     maximizable: true
 
@@ -71,6 +72,7 @@ Window {
                 id: webView
                 url: defaultUrl
                 focus: true
+                settings.sansSerifFontFamily : "DejaVu Sans"
                 settings.javaEnabled: config.isEnabled("wk-java", false)
                 settings.javascriptCanAccessClipboard: config.isEnabled("wk-js-clipboard", false)
                 settings.javascriptCanOpenWindows: config.isEnabled("wk-js-windows", false)
@@ -100,11 +102,11 @@ Window {
             }
 
             Behavior on width {
-                NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+                NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             }
 
             Behavior on height {
-                NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+                NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             }
         }
 

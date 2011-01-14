@@ -23,6 +23,8 @@ import confluence.components 1.0
 Window {
     id: root
 
+    focalWidget: forecastPanel
+
     anchors.fill: parent
 
     property string city: "Munich"
@@ -34,8 +36,6 @@ Window {
     function showCast(name) {
         city=name;
         weather.opacity=1.0;
-        cityListView.state = "hide";
-        root.forceActiveFocus();
     }
 
     function fullWeekDay(name) {
@@ -61,10 +61,9 @@ Window {
         return (string.substr(0, string.length-5))
     }
 
-    /*bladeComponent: Blade {
-        //bladeWidth: banner.x + banner.width + 50
-        visible: true
-        bladeWidth: 600
+    bladeComponent: Blade {
+        parent: root
+        bladeWidth: banner.x + banner.width + 50
         bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
         hoverEnabled: true
@@ -83,13 +82,12 @@ Window {
                 anchors.bottomMargin: 10
             }
 
-            ListView {
+            ConfluenceListView {
                 id: listView
-                //anchors.margins: 30
-                //anchors.fill: parent
-                keyNavigationWraps: true
-                //focus: true
-                //clip: true
+                anchors { top: banner.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+
+                focus: true
+                clip: true
                 model: cityList
                 delegate: Item {
                     id: delegate
@@ -121,7 +119,7 @@ Window {
                 }
             }
         }
-    }*/
+    }
 
     Row {
         id: weather
@@ -211,6 +209,7 @@ Window {
         }
 
         Panel {
+            id: forecastPanel
             width: root.width/2.0 - weather.spacing*2
             height: root.height/1.3
 

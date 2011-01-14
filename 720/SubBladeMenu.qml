@@ -27,10 +27,9 @@ FocusScope {
 
     anchors.fill: parent
 
-    ListView {
+    ConfluenceListView {
         id: list
         anchors.fill: parent
-        keyNavigationWraps: true
 
         Keys.onEnterPressed:
             currentItem.trigger()

@@ -45,20 +45,18 @@ FocusScope {
         }
     }
 
-    ListView {
+    ConfluenceListView {
         id: rootMenuList
 
         signal itemSelected
 
+        scrollbar: false
         //Oversized fonts being downscaled
         spacing: confluence.width/40 //30
         focus: true
-        keyNavigationWraps: true
 
-        anchors.fill: parent
+        anchors { left: parent.left; right: parent.right; top: banner.bottom; bottom: buttonGrid.top }
         preferredHighlightBegin: banner.height; preferredHighlightEnd: height - buttonGrid.height
-        highlightRangeMode: standardHighlightRangeMode
-        highlightMoveDuration: standardItemViewMoveDuration
 
         highlight: Image {
             source:  themeResourcePath + "/media/black-back2.png"
@@ -128,6 +126,8 @@ FocusScope {
             onClicked: confluence.showModal(exitDialog)
             KeyNavigation.left: favouritesButton
             KeyNavigation.backtab: favouritesButton
+            KeyNavigation.right: rootMenuList
+            KeyNavigation.tab: rootMenuList
         }
     }
 }

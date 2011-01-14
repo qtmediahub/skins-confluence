@@ -47,8 +47,12 @@ FocusScope {
     property int bladeRightMargin: 30
 
     function open() {
-        state = "open"
-        root.forceActiveFocus()
+        if (content.children.length > 0) {
+            root.state = "open"
+            root.forceActiveFocus()
+        } else {
+            confluence.state = "showingRootBlade"
+        }
     }
     function close() {
         state = "closed"
@@ -90,6 +94,8 @@ FocusScope {
     Keys.onLeftPressed: root.close()
     Keys.onRightPressed: root.close()
 
+    onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
+
     Item {
         id: blade
         x: -width + visibleWidth
@@ -119,7 +125,7 @@ FocusScope {
             }
         }
         Behavior on x {
-            NumberAnimation { duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     }
 }

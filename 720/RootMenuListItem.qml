@@ -103,7 +103,11 @@ Item {
 
         transitions: Transition {
             SequentialAnimation {
+<<<<<<< HEAD
                 NumberAnimation { properties: "scale, opacity, angle"; duration: confluenceAnimationDuration; easing.type: confluenceEasingCurve }
+=======
+                NumberAnimation { properties: "scale, opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+>>>>>>> a1ca615120c23c35c74fe67b07c9f0e539997be1
             }
         }
     }
@@ -121,8 +125,8 @@ Item {
             Behavior on opacity {
                 SequentialAnimation {
                     // let the indicator flare up
-                    NumberAnimation { duration: standardAnimationDuration / 4; easing.type: standardEasingCurve }
-                    NumberAnimation { to: 0.0; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+                    NumberAnimation { duration: confluence.standardAnimationDuration / 4; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { to: 0.0; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
                 }
             }
         }
@@ -137,7 +141,7 @@ Item {
             /* the behaviour prevents the symbol from vanishing completely again.
             Behavior on opacity {
                 SequentialAnimation {
-                    NumberAnimation { duration: standardAnimationDuration * 2; easing.type: standardEasingCurve }
+                    NumberAnimation { duration: confluence.standardAnimationDuration * 2; easing.type: confluence.standardEasingCurve }
                 }
             }
             */

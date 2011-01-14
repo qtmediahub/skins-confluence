@@ -33,8 +33,10 @@ FocusScope {
     property int standardEasingCurve: Easing.InQuad
     property int standardAnimationDuration: 350
 
-    property int standardHighlightRangeMode: ListView.StrictlyEnforceRange
+    property int standardHighlightRangeMode: ListView.ApplyRange
     property int standardItemViewMoveDuration: 400
+
+    property bool standardItemViewWraps: false
 
     property variant selectedEngine
     property variant selectedElement
@@ -63,19 +65,9 @@ FocusScope {
                 visible: true
                 x: confluence.width - qtcube.width
             }
-            PropertyChanges {
-                target: ticker
-                state: "visible"
-            }
-            PropertyChanges {
-                target: avPlayer
-                state: "background"
-            }
-            PropertyChanges {
-                target: dateTimeHeader
-                x: confluence.width - dateTimeHeader.width
-                showDate: true
-            }
+            PropertyChanges { target: ticker; expanded: true }
+            PropertyChanges { target: avPlayer; state: "background" }
+            PropertyChanges { target: dateTimeHeader; expanded: true; showDate: true }
         },
         State {
             name: "showingSelectedElement"
@@ -88,23 +80,10 @@ FocusScope {
                 x: confluence.width
                 visible: true
             }
-            PropertyChanges {
-                target: dateTimeHeader
-                x: confluence.width - dateTimeHeader.width
-                showDate: false
-            }
-            PropertyChanges {
-                target: weatherHeader
-                opacity: 0
-            }
-            PropertyChanges {
-                target: homeHeader
-                opacity: 1
-            }
-            PropertyChanges {
-                target: currentContextHeader
-                opacity: 1
-            }
+            PropertyChanges { target: dateTimeHeader; expanded: true; showDate: false }
+            PropertyChanges { target: weatherHeader; expanded: false }
+            PropertyChanges { target: homeHeader; expanded: true }
+            PropertyChanges { target: currentContextHeader; expanded: true }
             PropertyChanges {
                 target: selectedElement
                 state: "visible"
@@ -125,10 +104,7 @@ FocusScope {
                 target: avPlayer
                 state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden"
             }
-            PropertyChanges {
-                target: dateTimeHeader
-                opacity: 0
-            }
+            PropertyChanges { target: dateTimeHeader; expanded: false; showDate: false }
         }
     ]
 
@@ -136,13 +112,7 @@ FocusScope {
         Transition {
             from: "*"
             to: "showingRootBlade"
-            NumberAnimation { targets: [qtcube, dateTimeHeader]; properties: "x,y"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
-            SequentialAnimation {
-                NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
-                PropertyAction { target: dateTimeHeader; property: "showDate"; value: true }
-                NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
-                PropertyAction { target: weatherHeader; property: "opacity"; value: 1 }
-            }
+            NumberAnimation { targets: [qtcube]; properties: "x,y"; easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
         },
         Transition {
             from: "*"
@@ -150,16 +120,11 @@ FocusScope {
             SequentialAnimation {
                 // Move things out
                 ParallelAnimation {
-                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
-                    NumberAnimation { target: dateTimeHeader; properties: "x"; to: confluence.width; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
+                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
                 }
                 // Move things in
                 ParallelAnimation {
                     PropertyAction { target: selectedElement; property: "state"; value: "visible" }
-                    PropertyAction { target: dateTimeHeader; property: "showDate"; value: false }
-                    NumberAnimation { target: dateTimeHeader; properties: "x"; easing.type: standardEasingCurve; duration: standardAnimationDuration/2 }
-                    NumberAnimation { target: homeHeader; properties: "opacity"; duration: standardAnimationDuration/2 }
-                    NumberAnimation { target: currentContextHeader; properties: "opacity"; duration: standardAnimationDuration/2 }
                 }
             }
         }
@@ -175,11 +140,11 @@ FocusScope {
         } else if(event.key == Qt.Key_F10) {
             show(systemInfoWindow)
         } else if (event.key == Qt.Key_Plus) {
-            avPlayer.increaseVolume();
+            avPlayer.increaseVolume()
         } else if (event.key == Qt.Key_Minus) {
-            avPlayer.decreaseVolume();
-        } else if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
-            confluence.show(mainBlade)
+            avPlayer.decreaseVolume()
+        } else if (event.key == Qt.Key_Space) {
+            avPlayer.togglePlayPause()
         }
     }
 
@@ -250,10 +215,8 @@ FocusScope {
         var tickerLoader = Qt.createComponent("Ticker.qml");
         if (tickerLoader.status == Component.Ready) {
             ticker = tickerLoader.createObject(confluence)
-            ticker.anchors.top = confluence.bottom
-            ticker.anchors.topMargin = 0
             ticker.z = UIConstants.screenZValues.header
-            ticker.anchors.right = confluence.right
+            ticker.expanded = false;
         } else if (tickerLoader.status == Component.Error) {
             backend.log(tickerLoader.errorString())
             ticker = dummyItem
@@ -309,7 +272,7 @@ FocusScope {
     {
         if(selectedElement && selectedElement.maximized)
             selectedElement.maximized = false
-        else if(confluence.state == "showingRootBlade" && avPlayer.video.playing)
+        else if(confluence.state == "showingRootBlade" && avPlayer.playing)
             show(transparentVideoOverlay)
         else if(confluence.state == "showingRootBlade" && !!selectedElement)
             show(selectedElement)
@@ -335,7 +298,7 @@ FocusScope {
         if (element == mainBlade) {
             state = "showingRootBlade"
         } else if(element == avPlayer) {
-            if(avPlayer.video.source == "") {
+            if(!avPlayer.hasMedia) {
                 show(videoWindow)
             } else {
                 show(transparentVideoOverlay)
@@ -343,7 +306,6 @@ FocusScope {
         } else if (element == transparentVideoOverlay) {
             selectedElement = transparentVideoOverlay
             state = "showingSelectedElementMaximized"
-            avPlayer.play()
         } else {
             selectedElement = element
             state = "showingSelectedElement"
@@ -359,7 +321,7 @@ FocusScope {
     Background {
         id: background
         anchors.fill: parent;
-        visible: !(!!avPlayer.video && avPlayer.video.playing)
+        visible: !avPlayer.playing
     }
 
     MainBlade { 
@@ -368,12 +330,11 @@ FocusScope {
 
     Header {
         id: homeHeader
-        flip : false
+        atRight : false
+        expanded: false
 
-        anchors { top: confluence.top; left: confluence.left }
         z: currentContextHeader.z + 1
         width: homeImage.width + 80
-        opacity: 0
         Image {
             id: homeImage
             x: 40
@@ -385,31 +346,21 @@ FocusScope {
 
     Header {
         id: currentContextHeader
-        flip: false
+        atRight: false
+        expanded: false
 
-        width: contextText.width + 50
-        anchors { top: homeHeader.top; left: homeHeader.right; leftMargin: -25 }
-        opacity: 0
+        width: contextText.width + homeHeader.width + 25
         Text { 
-            x: 25
             id: contextText 
-            anchors.verticalCenter: parent.verticalCenter
+            anchors { right: parent.right; rightMargin: 25; verticalCenter: parent.verticalCenter }
             text: selectedEngine ? selectedEngine.name : ""; color: "white"
         }
     }
 
-    DateTimeHeader {
-        id: dateTimeHeader
-        x: confluence.width
-        anchors.top: confluence.top
-    }
-
     WeatherHeader {
         id: weatherHeader
-        x: confluence.width
-        anchors.top: confluence.top
-        anchors.right: dateTimeHeader.left
-        anchors.rightMargin: -25;
+
+        width: content.width + dateTimeHeader.width + 50
         city: weatherWindow.city
 
         MouseArea {
@@ -417,6 +368,11 @@ FocusScope {
             onClicked: confluence.show(weatherWindow)
         }
     }
+
+    DateTimeHeader {
+        id: dateTimeHeader
+    }
+
 
     AboutWindow { id: aboutWindow }
 

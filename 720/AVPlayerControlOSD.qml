@@ -23,7 +23,7 @@ import confluence.components 1.0
 FocusScope {
     id: root
 
-    property variant video
+    property variant media
 
     signal showMusicMenu()
     signal showVideoMenu()
@@ -58,12 +58,12 @@ FocusScope {
             Item { width: 100; height: 1; }
             PixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO" }
             PixmapButton { basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.decreasePlaybackRate() }
-            PixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: video.stop();}
+            PixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: media.stop();}
             PixmapButton {
                 id: playPauseButton
-                basePixmap: !video.playing || video.paused ? "OSDPlayNF" : "OSDPauseNF"
-                focusedPixmap: !video.playing || video.paused ? "OSDPlayFO" : "OSDPauseFO"
-                onClicked: video.togglePlayPause()
+                basePixmap: !media.playing || media.paused ? "OSDPlayNF" : "OSDPauseNF"
+                focusedPixmap: !media.playing || media.paused ? "OSDPlayFO" : "OSDPauseFO"
+                onClicked: media.togglePlayPause()
             }
             PixmapButton { basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.increasePlaybackRate() }
             PixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO" }
@@ -91,23 +91,23 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "topMargin"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { property: "topMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     ]
 
     function increasePlaybackRate()
     {
-        if (video.playbackRate <= 1)
-            video.playbackRate = 2
-        else if (video.playbackRate != 16)
-            video.playbackRate *= 2
+        if (media.playbackRate <= 1)
+            media.playbackRate = 2
+        else if (media.playbackRate != 16)
+            media.playbackRate *= 2
     }
 
     function decreasePlaybackRate()
     {
-        if (video.playbackRate >= 1)
-            video.playbackRate = -2
-        else if (video.playbackRate != -16)
-            video.playbackRate *= 2
+        if (media.playbackRate >= 1)
+            media.playbackRate = -2
+        else if (media.playbackRate != -16)
+            media.playbackRate *= 2
     }
 }

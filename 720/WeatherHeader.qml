@@ -71,5 +71,7 @@ Header {
 	    }
         }
     }
+
+    property Item content: row;
 }
 

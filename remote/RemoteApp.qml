@@ -63,7 +63,7 @@ FocusScope {
         visible: true
         opacity: visible ? 1 : 0
 
-        ListView {
+        ConfluenceListView {
             id: listView
             anchors.fill: parent;
             clip: true
@@ -115,6 +115,6 @@ FocusScope {
     }
 
     Behavior on opacity {
-        NumberAnimation { easing.type: standardEasingCurve; duration: standardAnimationDuration }
+        NumberAnimation { easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
     }
 }

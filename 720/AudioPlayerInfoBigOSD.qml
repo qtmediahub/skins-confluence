@@ -24,7 +24,7 @@ import "util.js" as Util
 FocusScope {
     id: root
 
-    property variant video
+    property variant media
 
     width: parent.width
     height: 300
@@ -55,7 +55,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: video.currentItem ? video.currentItem.previewUrl : themeResourcePath + "/media/DefaultAlbumCover.png"
+            source: media.currentItem ? media.currentItem.previewUrl : themeResourcePath + "/media/DefaultAlbumCover.png"
             anchors.fill: parent
             anchors.margins: 6
 
@@ -82,8 +82,8 @@ FocusScope {
             height: childrenRect.height
 
             Text {
-                property string artist : video.metaData.albumArtist ? video.metaData.albumArtist : qsTr("Unknown Artist")
-                property string album : video.metaData.albumTitle ? video.metaData.albumTitle : qsTr("Unknown Album")
+                property string artist : media.metaData.albumArtist ? media.metaData.albumArtist : qsTr("Unknown Artist")
+                property string album : media.metaData.albumTitle ? media.metaData.albumTitle : qsTr("Unknown Album")
                 text: artist + "  -  " + album
                 color: "white"
                 font.bold: false
@@ -102,7 +102,7 @@ FocusScope {
         }
 
         Text {
-            text: video.metaData.title ? video.metaData.title : qsTr("Unknown Title")
+            text: media.metaData.title ? media.metaData.title : qsTr("Unknown Title")
             color: "white"
             font.bold: true
             font.pointSize: 20
@@ -143,7 +143,7 @@ FocusScope {
 
         ProgressBar {
             width: parent.width
-            mProgress: video.position/video.duration
+            mProgress: media.position/media.duration
         }
 
         Item {
@@ -151,7 +151,7 @@ FocusScope {
             height: childrenRect.height
 
             Text {
-                text: Util.ms2string(video.position)
+                text: Util.ms2string(media.position)
                 color: "white"
                 font.bold: true
                 font.pointSize: 16
@@ -159,7 +159,7 @@ FocusScope {
             }
 
             Text {
-                text: Util.ms2string(video.duration)
+                text: Util.ms2string(media.duration)
                 color: "white"
                 font.bold: true
                 font.pointSize: 16
@@ -180,7 +180,7 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "bottomMargin"; duration: standardAnimationDuration; easing.type: standardEasingCurve }
+            NumberAnimation { property: "bottomMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     ]
 }

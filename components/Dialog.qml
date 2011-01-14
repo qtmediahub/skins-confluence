@@ -21,6 +21,9 @@ import QtQuick 1.0
 
 FocusScope {
     id: root
+
+    property Item focalWidget: root
+
     width: contentItem.childrenRect.width + contentItem.anchors.leftMargin + contentItem.anchors.rightMargin
     height: glassTitleBar.height + contentItem.childrenRect.height + contentItem.anchors.topMargin + contentItem.anchors.bottomMargin
 
@@ -54,6 +57,8 @@ FocusScope {
         opacity = 1
         root.opened()
     }
+
+    onClose: root.parent.forceActiveFocus()
 
     Behavior on opacity {
         NumberAnimation{}
@@ -111,6 +116,9 @@ FocusScope {
         Keys.onReturnPressed: root.reject()
     }
 
-    Keys.onEscapePressed: root.reject()
+    Keys.onPressed: {
+        event.key == Qt.Key_Escape ? root.reject() : undefined
+        event.accepted = true
+    }
 }
 

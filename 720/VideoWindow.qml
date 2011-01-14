@@ -23,6 +23,8 @@ import confluence.components 1.0
 Window {
     id: root
 
+    focalWidget: viewLoader
+
     MediaScanInfo {
         x: 765
         currentPath: videoEngine.pluginProperties.videoModel.currentScanPath
@@ -36,7 +38,7 @@ Window {
         property alias viewAction: viewAction
 
         resources: [
-            // standard actions shared by all views
+            // Standard actions shared by all views
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
@@ -49,8 +51,6 @@ Window {
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
                 onTriggered: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption())
             }]
-
-        onClosed: if (root.visible) viewLoader.forceActiveFocus()
     }
 
     function setCurrentView(viewType) {
