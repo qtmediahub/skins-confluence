@@ -32,8 +32,7 @@ FocusScope {
     anchors.fill: parent
 
     Keys.onPressed: {
-        if (event.key == Qt.Key_Escape)
-        {
+        if (event.key == Qt.Key_Escape) {
             if (controlOSD.state != "visible") {
                 showOSD();
                 event.accepted = true;
@@ -41,7 +40,12 @@ FocusScope {
                 //Have to explicitly not accept in order to propagate
                 event.accepted = false
             }
+        } else if (event.key == Qt.Key_Up) {
+            playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+        } else if (event.key == Qt.Key_Down) {
+            playIndex(playlist.playNextIndex(mediaItem.currentIndex));
         }
+
     }
 
     MouseArea {
@@ -298,10 +302,8 @@ FocusScope {
         if(item == null) {
             mediaItem.play()
         } else {
-            mediaItem.currentIndex = playlist.add(item.mediaInfo, Playlist.Replace, Playlist.Recursive)
-            mediaItem.stop();
-            mediaItem.source = item.filePath
-            mediaItem.play();
+            mediaItem.currentIndex = playlist.index(playlist.add(item.mediaInfo, Playlist.Replace, Playlist.Recursive))
+            playIndex(mediaItem.currentIndex)
         }
     }
 

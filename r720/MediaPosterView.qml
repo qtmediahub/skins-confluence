@@ -45,6 +45,7 @@ Item {
     ContextMenu {
         id: contextMenu
         title: qsTr("Actions")
+        ConfluenceAction { id: playAction; text: qsTr("Play"); onTriggered: avPlayer.playForeground(posterView.currentItem.itemdata); }
         ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onTriggered: posterView.rootIndex = undefined; }
         ConfluenceAction { id: removeAction; text: qsTr("Remove"); onTriggered: engineModel.removeSearchPath(posterView.currentIndex)
                            enabled: posterView.currentItem.itemdata.type == "SearchPath" }
@@ -54,7 +55,7 @@ Item {
                            enabled: posterView.currentItem.itemdata.type == "SearchPath" } 
         ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onTriggered: confluence.showModal(addMediaSourceDialog) }
 
-        model: [rootAction, removeAction, informationAction, rescanAction, addSourceAction]
+        model: [playAction, rootAction, removeAction, informationAction, rescanAction, addSourceAction]
     }
 
     function showInformationSheet() {
