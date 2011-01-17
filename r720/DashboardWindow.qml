@@ -23,11 +23,11 @@ import QMLModuleDiscovery 1.0
 import confluence.r720.components 1.0
 
 Window {
-    id: dashboardWindow
+    id: root
     QMLModuleDiscovery {
         id: db
         anchors.fill: parent
-        anchors.leftMargin: dashboardWindow.blade.closedBladePeek
+        anchors.leftMargin: root.blade.closedBladePeek
 
         path: generalResourcePath + "/widgets"
 
@@ -53,8 +53,8 @@ Window {
                 else if(widget.status == Component.Error)
                     console.log(widget.errorString())
             }
-            dashboardEngine.visualElement = dashboardWindow
         }
     }
+    Engine { name: qsTr("Dashboard"); role: "dashboard"; visualElement: root; }
 }
 
