@@ -298,7 +298,7 @@ FocusScope {
         if(item == null) {
             mediaItem.play()
         } else {
-            mediaItem.currentIndex = playlist.add(item.mediaInfo)
+            mediaItem.currentIndex = playlist.add(item.mediaInfo, Playlist.Replace, Playlist.Recursive)
             mediaItem.stop();
             mediaItem.source = item.filePath
             mediaItem.play();
