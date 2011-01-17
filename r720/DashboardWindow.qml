@@ -18,18 +18,18 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
-import Dashboard 1.0
+import QMLModuleDiscovery 1.0
 
 import confluence.r720.components 1.0
 
 Window {
     id: dashboardWindow
-    Dashboard {
+    QMLModuleDiscovery {
         id: db
         anchors.fill: parent
         anchors.leftMargin: dashboardWindow.blade.closedBladePeek
 
-        widgetPath: generalResourcePath + "/widgets"
+        path: generalResourcePath + "/widgets"
 
         Flow {
             id: grid
@@ -43,7 +43,7 @@ Window {
         }
 
         Component.onCompleted: {
-            var list  = db.discoverWidgets()
+            var list = db.modules
             for(var i = 0; i < list.length; ++i) {
                 var panel = panelComponent.createObject(grid)
 
