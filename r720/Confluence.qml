@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
-import "../r720/components/uiconstants.js" as UIConstants
+import "./components/uiconstants.js" as UIConstants
 
 FocusScope {
     id: confluence
@@ -417,7 +417,7 @@ FocusScope {
         }
         item.closed.connect(onClosedHandler)
         item.parent = confluence // ## restore parent?
-        item.z = mouseGrabber.z + 2
+        item.z = UIConstants.screenZValues.diplomaticImmunity
         item.open()
         item.forceActiveFocus()
     }

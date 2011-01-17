@@ -19,7 +19,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
-import "../r720/components/uiconstants.js" as UIConstants
+import "./components/uiconstants.js" as UIConstants
+import "./components/bgmap.js" as BGMap
 
 Item {
     property string role
@@ -30,19 +31,6 @@ Item {
         property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
         animationDelay: 500
         anchors.fill: parent;
-        source: themeResourcePath ? (bgmap[role] ? backgroundPath + bgmap[role] : backgroundPath + "media-overlay.png") : ""
-    }
-
-    // FIXME: Ideally get this through the plugin interface
-    QtObject {
-        id: bgmap
-        property string music: "music.jpg"
-        property string video: "videos.jpg"
-        property string scripts: "programs.jpg"
-        property string weather: "weather.jpg"
-        property string picture: "pictures.jpg"
-        property string programs: "programs.jpg"
-        property string system: "system.jpg"
-        property string dashboard: "programs.jpg"
+        source: themeResourcePath ? (BGMap.bgmap[role] ? backgroundPath + BGMap.bgmap[role] : backgroundPath + "media-overlay.png") : ""
     }
 }

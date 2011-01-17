@@ -5,7 +5,8 @@ var screenZValues = {
     window: 2,
     mainBlade: 3,
     header: 4,
-    mouseGrabber: 5
+    mouseGrabber: 5,
+    diplomaticImmunity: 6
 }
 
 var windowZValues = {
