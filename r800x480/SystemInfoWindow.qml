@@ -1,0 +1,1 @@
+../r720/SystemInfoWindow.qml

@@ -1,0 +1,1 @@
+../r720/Ticker.qml
