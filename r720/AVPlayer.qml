@@ -116,6 +116,8 @@ FocusScope {
     Video {
         id: mediaItem
 
+        volume: config.value("media-volume", 0.1)
+
         property variant currentIndex
 
         anchors.fill: parent
@@ -123,6 +125,9 @@ FocusScope {
         onPositionChanged: {
             audioVisualisationPlaceholder.metronomTick()
         }
+
+        onVolumeChanged:
+            config.setValue("media-volume", mediaItem.volume)
 
         function togglePlayPause() {
             if (Math.abs(mediaItem.playbackRate) != 1) {
