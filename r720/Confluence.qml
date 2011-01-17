@@ -298,6 +298,7 @@ FocusScope {
     {
         if (element == mainBlade) {
             state = "showingRootBlade"
+            mainBlade.forceActiveFocus()
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
                 show(videoWindow)
