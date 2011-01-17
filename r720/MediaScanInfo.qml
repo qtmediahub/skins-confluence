@@ -18,6 +18,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import "./components/uiconstants.js" as UIConstants
+
 
 BorderImage {
     id: root
@@ -27,6 +29,7 @@ BorderImage {
     source: themeResourcePath + "/media/InfoMessagePanel.png"
     width: 350
     height: currentPathText.height * 4
+    z: UIConstants.windowZValues.popupWindow
 
     state: "hidden"
 

@@ -10,6 +10,7 @@ var screenZValues = {
 
 var windowZValues = {
     blade: 1,
-    childWindow: 2
+    childWindow: 2,
+    popupWindow: 3
 }
 
