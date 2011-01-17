@@ -70,7 +70,7 @@ FocusScope {
                 opacity: 1
                 scale: 1
             }
-            StateChangeScript { name: "forceActiveFocus"; script: root.forceActiveFocus() }
+            StateChangeScript { name: "forceActiveFocus"; script: { !!focalWidget && root.forceActiveFocus() } }
         },
         State {
             name: "maximized"

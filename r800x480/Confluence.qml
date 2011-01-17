@@ -210,12 +210,12 @@ FocusScope {
 
         //Why would you ever want to do this from QML!
         //One property API FTW
-        var screensaverLoader = Qt.createComponent("ScreenSaver.qml");
-        if (screensaverLoader.status == Component.Ready) {
-            var screensaver = screensaverLoader.createObject(confluence)
-            !!screensaver ? screensaver.screenSaverDelayed = true : undefined
-        } else if (screensaverLoader.status == Component.Error) {
-            backend.log(screensaverLoader.errorString())
+        var sysScreensaverControlLoader = Qt.createComponent("SystemScreensaverControl.qml");
+        if (sysScreensaverControlLoader.status == Component.Ready) {
+            var sysScreensaverControl = sysScreensaverControlLoader.createObject(confluence)
+            !!sysScreensaverControl ? sysScreensaverControl.screensaverDelayed = true : undefined
+        } else if (sysScreensaverControlLoader.status == Component.Error) {
+            backend.log(sysScreensaverControlLoader.errorString())
         }
 
         confluence.show(mainBlade)

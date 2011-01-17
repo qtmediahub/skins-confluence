@@ -257,7 +257,7 @@ FocusScope {
 
         //Why would you ever want to do this from QML!
         //One property API FTW
-        var screensaverLoader = Qt.createComponent("ScreenSaver.qml");
+        var screensaverLoader = Qt.createComponent("SystemScreenSaverControl.qml");
         if (screensaverLoader.status == Component.Ready) {
             var screensaver = screensaverLoader.createObject(confluence)
             !!screensaver ? screensaver.screenSaverDelayed = true : undefined
@@ -400,6 +400,8 @@ FocusScope {
         onFocusChanged:
             activeFocus ? avPlayer.forceActiveFocus() : undefined
     }
+
+    ScreenSaver {}
 
     function showContextMenu(item, x, y) {
         showModal(item)
