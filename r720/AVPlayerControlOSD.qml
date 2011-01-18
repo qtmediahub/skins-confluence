@@ -32,6 +32,9 @@ FocusScope {
     signal playNext()
     signal playPrevious()
     signal activity()
+    signal seekForward()
+    signal seekBackward()
+    signal stop()
 
     width: parent.width
     height: content.height
@@ -53,23 +56,22 @@ FocusScope {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 5
 
-            onActivity:
-                root.activity()
+            onActivity: root.activity()
 
             PixmapButton { basePixmap: "OSDBookmarksNF"; focusedPixmap: "OSDBookmarksFO"; onClicked: root.showPlayList(); }
             PixmapButton { basePixmap: "OSDAudioNF"; focusedPixmap: "OSDAudioFO"; onClicked: root.showMusicMenu(); }
             PixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
             Item { width: 100; height: 1; }
             PixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: root.playPrevious(); }
-            PixmapButton { basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.decreasePlaybackRate() }
-            PixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: media.stop();}
+            PixmapButton { basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.seekBackward() }
+            PixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: root.stop();}
             PixmapButton {
                 id: playPauseButton
                 basePixmap: !media.playing || media.paused ? "OSDPlayNF" : "OSDPauseNF"
                 focusedPixmap: !media.playing || media.paused ? "OSDPlayFO" : "OSDPauseFO"
                 onClicked: media.togglePlayPause()
             }
-            PixmapButton { basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.increasePlaybackRate() }
+            PixmapButton { basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.seekForward() }
             PixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
@@ -102,20 +104,4 @@ FocusScope {
             NumberAnimation { property: "topMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
     ]
-
-    function increasePlaybackRate()
-    {
-        if (media.playbackRate <= 1)
-            media.playbackRate = 2
-        else if (media.playbackRate != 16)
-            media.playbackRate *= 2
-    }
-
-    function decreasePlaybackRate()
-    {
-        if (media.playbackRate >= 1)
-            media.playbackRate = -2
-        else if (media.playbackRate != -16)
-            media.playbackRate *= 2
-    }
 }

@@ -164,11 +164,14 @@ FocusScope {
         onActivity:
             osdTimer.restart();
 
-        onShowPlayList: showDialog(playListDialog)
-        onShowVideoMenu: showDialog(videoListDialog)
-        onShowMusicMenu: showDialog(musicListDialog)
+        onShowPlayList: showDialog(playListDialog);
+        onShowVideoMenu: showDialog(videoListDialog);
+        onShowMusicMenu: showDialog(musicListDialog);
+        onStop: mediaItem.stop();
         onPlayNext: playIndex(playlist.playNextIndex(mediaItem.currentIndex));
         onPlayPrevious: playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+        onSeekBackward: decreasePlaybackRate();
+        onSeekForward: increasePlaybackRate();
     }
 
     AVPlayerInfoOSD {
@@ -376,6 +379,22 @@ FocusScope {
 
     function togglePlayPause() {
         mediaItem.togglePlayPause()
+    }
+
+    function increasePlaybackRate()
+    {
+        if (mediaItem.playbackRate <= 1)
+            mediaItem.playbackRate = 2
+        else if (mediaItem.playbackRate != 16)
+            mediaItem.playbackRate *= 2
+    }
+
+    function decreasePlaybackRate()
+    {
+        if (mediaItem.playbackRate >= 1)
+            mediaItem.playbackRate = -2
+        else if (mediaItem.playbackRate != -16)
+            mediaItem.playbackRate *= 2
     }
 
     function showDialog(item) {
