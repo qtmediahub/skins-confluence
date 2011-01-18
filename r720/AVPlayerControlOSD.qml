@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
+import Playlist 1.0
 
 FocusScope {
     id: root
@@ -71,7 +72,11 @@ FocusScope {
             PixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
-            PixmapButton { basePixmap: "OSDDvdNF"; focusedPixmap: "OSDDvdFO" }
+            PixmapButton {
+                basePixmap: playlist.playMode == Playlist.Normal ? "OSDRandomOffNF" : "OSDRandomOnNF"
+                focusedPixmap: playlist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
+                onClicked: playlist.playMode == Playlist.Normal ? playlist.playMode = Playlist.Shuffle : playlist.playMode = Playlist.Normal;
+            }
             PixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO" }
         }
     }
