@@ -34,7 +34,7 @@ Window {
         anchors.fill: parent
         opacity: 0
         Keys.onPressed:
-            if (event.key == Qt.Key_Escape) {
+            if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)) {
                 opacity = 0
                 running = false
                 event.accepted = true

@@ -32,7 +32,7 @@ FocusScope {
     anchors.fill: parent
 
     Keys.onPressed: {
-        if (event.key == Qt.Key_Escape) {
+        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)) {
             if (controlOSD.state != "visible") {
                 showOSD();
                 event.accepted = true;

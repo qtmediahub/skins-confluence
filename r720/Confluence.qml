@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 import "./components/uiconstants.js" as UIConstants
+import "./components/keymapping.js" as KeyMapping
 
 FocusScope {
     id: confluence
@@ -131,13 +132,13 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if(event.key == Qt.Key_Escape) {
+        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)) {
             handleBackout()
-        } else if(event.key == Qt.Key_F12) {
+        } else if (event.key == Qt.Key_F12) {
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
-        } else if(event.key == Qt.Key_F11) {
+        } else if (event.key == Qt.Key_F11) {
             show(aboutWindow)
-        } else if(event.key == Qt.Key_F10) {
+        } else if (event.key == Qt.Key_F10) {
             show(systemInfoWindow)
         } else if (event.key == Qt.Key_Plus) {
             avPlayer.increaseVolume()

@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
-
+import "./components/keymapping.js" as KeyMapping
 
 FocusScope {
     id: rootMenu
@@ -72,14 +72,16 @@ FocusScope {
             !!menuSoundEffect ? menuSoundEffect.play() : undefined
         }
 
-        Keys.onEnterPressed:
-            currentItem.trigger()
-        Keys.onReturnPressed:
-            currentItem.trigger()
-        Keys.onRightPressed:
-            rootMenu.openSubMenu()
-        KeyNavigation.left: playMediaButton
-        KeyNavigation.tab: playMediaButton
+        Keys.onPressed: {
+            if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.forward, event.key))
+                currentItem.trigger()
+            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event.key))
+                rootMenu.openSubMenu()
+            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event.key))
+                playMediaButton.forceActiveFocus()
+            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event.key))
+                playMediaButton.forceActiveFocus()
+        }
     }
 
     Image {
