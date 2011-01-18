@@ -278,7 +278,6 @@ FocusScope {
             engineModel: playlist
 
             onItemTriggered: {
-                console.log(itemData.mediaInfo + "-" + itemData.filePath)
                 root.playIndex(playlist.indexFromMediaInfo(itemData.mediaInfo))
                 playListDialog.close()
             }
