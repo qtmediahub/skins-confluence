@@ -66,10 +66,10 @@ Item {
 
     Panel {
         id: sourcesPanel
-        x: 60
-        y: 80
-        width: root.hidePreview ? 950 : 700
-        height: 550
+        x: root.width*0.1
+        y: root.height*0.05
+        width: root.hidePreview ? root.width*0.8 : root.width*0.5
+        height: root.height*0.9
 
         ConfluenceGridView {
             id: sourcesListView
@@ -105,8 +105,9 @@ Item {
         anchors.left: sourcesPanel.right
         anchors.leftMargin: 65
         anchors.right: parent.right
-        anchors.rightMargin: 50
+        anchors.rightMargin: 30
         anchors.bottom: sourcesPanel.bottom
+        anchors.bottomMargin: confluence.height/6
         anchors.top: sourcesPanel.top
         clip:  true
         opacity: root.hidePreview ? 0 : 1
