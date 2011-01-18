@@ -52,7 +52,7 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, currentOption())
+                onTriggered: musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, currentOption)
             }]
     }
 

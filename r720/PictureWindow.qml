@@ -72,7 +72,7 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, currentOption())
+                onTriggered: pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, currentOption)
             },
             ConfluenceAction {
                 id: slideShowAction

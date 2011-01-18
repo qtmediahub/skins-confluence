@@ -49,7 +49,7 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption())
+                onTriggered: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption)
             }]
     }
 
