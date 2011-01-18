@@ -116,9 +116,7 @@ FocusScope {
         Keys.onReturnPressed: root.reject()
     }
 
-    Keys.onPressed: {
-        event.key == Qt.Key_Escape ? root.reject() : undefined
-        event.accepted = true
-    }
+    Keys.onPressed:
+        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key) ? root.reject() : undefined
 }
 

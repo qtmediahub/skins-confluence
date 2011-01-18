@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import "uiconstants.js" as UIConstants
+import "keymapping.js" as KeyMapping
 
 FocusScope {
     id: root
@@ -90,9 +91,12 @@ FocusScope {
         }
     ]
 
-    Keys.onEscapePressed: root.close()
-    Keys.onLeftPressed: root.close()
-    Keys.onRightPressed: root.close()
+    Keys.onPressed:
+        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)
+        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event.key)
+        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event.key)
+        ? root.close()
+        : undefined
 
     onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
 

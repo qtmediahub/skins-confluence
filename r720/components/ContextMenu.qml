@@ -93,6 +93,7 @@ FocusScope {
         }
     }
 
-    Keys.onEscapePressed: root.close()
+    Keys.onPressed:
+        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key) ? root.close() : undefined
 }
 
