@@ -21,6 +21,7 @@ import QtQuick 1.0
 import QtMultimediaKit 1.1
 import confluence.r720.components 1.0
 import Playlist 1.0
+import "./components/keymapping.js" as KeyMapping
 
 //This serves to isolate import failures if QtMultimedia is not present
 FocusScope {
@@ -41,9 +42,9 @@ FocusScope {
                 event.accepted = false
             }
         } else if (event.key == Qt.Key_Up) {
-            playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+            playPrevious();
         } else if (event.key == Qt.Key_Down) {
-            playIndex(playlist.playNextIndex(mediaItem.currentIndex));
+            playNext();
         }
 
     }
@@ -143,6 +144,11 @@ FocusScope {
                 }
             }
         }
+
+        onStatusChanged: {
+            if (status == Video.EndOfMedia)
+                playNext();
+        }
     }
 
     AudioVisualisation {
@@ -158,6 +164,7 @@ FocusScope {
         onActivity:
             osdTimer.restart();
 
+        onShowPlayList: showDialog(playListDialog)
         onShowVideoMenu: showDialog(videoListDialog)
         onShowMusicMenu: showDialog(musicListDialog)
         onPlayNext: playIndex(playlist.playNextIndex(mediaItem.currentIndex));
@@ -257,6 +264,27 @@ FocusScope {
         }
     }
 
+    Dialog {
+        id: playListDialog
+        width: parent.width/1.5
+        height: parent.height/1.5
+        title: qsTr("Playlist")
+        opacity: 0
+
+        MediaSimpleListView {
+            id: playListPanel
+            anchors.fill: parent
+            engineName: qsTr("Playlist")
+            engineModel: playlist
+
+            onItemTriggered: {
+                console.log(itemData.mediaInfo + "-" + itemData.filePath)
+                root.playIndex(playlist.indexFromMediaInfo(itemData.mediaInfo))
+                playListDialog.close()
+            }
+        }
+    }
+
     states: [
         State {
             name: "background"
@@ -320,6 +348,14 @@ FocusScope {
     function playBackground(item) {
         root.state = "background";
         root.play(item);
+    }
+
+    function playNext() {
+        playIndex(playlist.playNextIndex(mediaItem.currentIndex));
+    }
+
+    function playPrevious() {
+        playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
     }
 
     function playIndex(idx) {

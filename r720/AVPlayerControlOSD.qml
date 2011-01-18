@@ -26,6 +26,7 @@ FocusScope {
 
     property variant media
 
+    signal showPlayList()
     signal showMusicMenu()
     signal showVideoMenu()
     signal playNext()
@@ -55,7 +56,7 @@ FocusScope {
             onActivity:
                 root.activity()
 
-            PixmapButton { basePixmap: "OSDBookmarksNF"; focusedPixmap: "OSDBookmarksFO" }
+            PixmapButton { basePixmap: "OSDBookmarksNF"; focusedPixmap: "OSDBookmarksFO"; onClicked: root.showPlayList(); }
             PixmapButton { basePixmap: "OSDAudioNF"; focusedPixmap: "OSDAudioFO"; onClicked: root.showMusicMenu(); }
             PixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
             Item { width: 100; height: 1; }
