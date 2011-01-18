@@ -27,9 +27,9 @@ keyarray[qmhactions.back] = [ 0x01000000 ]
 //keyarray[qmhactions.play] = ['Qt::Key_Space']
 keyarray[qmhactions.play] = [ 0x20 ]
 
-function actionMapsToKey(action, key)
+function actionMapsToKey(action, keyevent)
 {
-    var index = keyarray[action].indexOf(key)
+    var index = keyarray[action].indexOf(keyevent.key)
 
-    return (index != -1)
+    return keyevent.accepted = (index != -1)
 }

@@ -92,9 +92,9 @@ FocusScope {
     ]
 
     Keys.onPressed:
-        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)
-        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event.key)
-        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event.key)
+        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)
+        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event)
+        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event)
         ? root.close()
         : undefined
 

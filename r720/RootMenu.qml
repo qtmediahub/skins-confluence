@@ -73,13 +73,13 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.forward, event.key))
+            if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.forward, event))
                 currentItem.trigger()
-            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event.key))
+            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event))
                 rootMenu.openSubMenu()
-            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event.key))
+            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event))
                 playMediaButton.forceActiveFocus()
-            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event.key))
+            else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event))
                 playMediaButton.forceActiveFocus()
         }
     }

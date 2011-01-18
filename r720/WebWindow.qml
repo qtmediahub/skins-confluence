@@ -47,7 +47,7 @@ Window {
     Keys.onPressed: {
         if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier)) {
             urlBar.forceActiveFocus()
-        } else if(KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)) {
+        } else if(KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
             if(webviewPopup.activeFocus) {
                 webView.forceActiveFocus()
                 event.accepted = true

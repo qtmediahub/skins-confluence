@@ -132,7 +132,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)) {
+        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
             handleBackout()
         } else if (event.key == Qt.Key_F12) {
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);

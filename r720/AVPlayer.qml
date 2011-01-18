@@ -32,7 +32,7 @@ FocusScope {
     anchors.fill: parent
 
     Keys.onPressed: {
-        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)) {
+        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
             if (controlOSD.state != "visible") {
                 showOSD();
                 event.accepted = true;

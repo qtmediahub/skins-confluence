@@ -34,7 +34,7 @@ Window {
         anchors.fill: parent
         opacity: 0
         Keys.onPressed:
-            if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key)) {
+            if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
                 opacity = 0
                 running = false
                 event.accepted = true

@@ -117,6 +117,6 @@ FocusScope {
     }
 
     Keys.onPressed:
-        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event.key) ? root.reject() : undefined
+        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event) ? root.reject() : undefined
 }
 
