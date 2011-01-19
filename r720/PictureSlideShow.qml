@@ -137,7 +137,13 @@ FocusScope {
     MouseArea {
         id: consumer
         anchors.fill: parent
-        onClicked: root.next()
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+            if (mouse.button == Qt.LeftButton)
+                root.next()
+            else
+                root.previous()
+        }
     }
 }
 

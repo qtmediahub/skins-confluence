@@ -28,8 +28,12 @@ Item {
     property variant informationSheet
     property bool hidePreview: false
     property alias rootIndex: sourcesListView.rootIndex
-    property alias currentItem: sourcesListView.currentItem
     property alias currentIndex: sourcesListView.currentIndex
+    property alias currentItem: sourcesListView.currentItem
+    property variant currentThumbnailRect : [   sourcesArt.currentItem ? root.x + sourcesArt.x + sourcesArt.currentItem.x : 0,
+                                                sourcesArt.currentItem ? root.y + sourcesArt.y + sourcesArt.currentItem.y : 0,
+                                                sourcesArt.currentItem ? sourcesArt.currentItem.width : 0,
+                                                sourcesArt.currentItem ? sourcesArt.currentItem.height : 0 ]
 
     signal itemActivated(variant itemData)
 
