@@ -29,23 +29,20 @@ Window {
 
     PictureSlideShow {
         id: slideShow
-        running: false
-        pictureModel: pictureEngine.pluginProperties.pictureModel
-        anchors.fill: parent
         opacity: 0
-        Keys.onPressed:
-            if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
-                opacity = 0
-                running = false
-                event.accepted = true
-            }
-
+        z: parent.z + 1
     }
 
     function startSlideShow(autoPlay) {
-        slideShow.start(viewLoader.item.rootIndex, viewLoader.item.currentIndex)
-        slideShow.autoPlay = !!autoPlay
-        confluence.showFullScreen(slideShow)
+        slideShow.showItem(viewLoader.item.currentItem.itemdata.mediaInfo)
+
+        slideShow.x = viewLoader.item.currentThumbnailRect[0]
+        slideShow.y = viewLoader.item.currentThumbnailRect[1]
+        slideShow.width = viewLoader.item.currentThumbnailRect[2]
+        slideShow.height = viewLoader.item.currentThumbnailRect[3]
+
+        slideShow.state = "visible"
+        slideShow.forceActiveFocus()
     }
 
     MediaScanInfo {

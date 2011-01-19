@@ -20,67 +20,124 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import ModelIndexIterator 1.0
 import confluence.r720.components 1.0
+import "./components/keymapping.js" as KeyMapping
+import Playlist 1.0
 
-Item {
+FocusScope {
     id: root
     property bool running : false
-    property bool autoPlay : true
-    property variant pictureModel
-    property variant rootIndex
-    property int fromRow : 0
-    anchors.fill: parent
+    property variant currentIndex : 0
+    property int interval : 3000
 
-    function restart() {
-        modelIndexIterator.restart()
-        running = true
+    x: parent.width
+    y: parent.height
+    width: 0
+    height: 0
+    visible: false
+    opacity: 0
+
+    function showItem(item) {
+        showIndex(imagePlayList.index(imagePlayList.add(item, Playlist.Replace, Playlist.Flat)))
     }
 
-    function start(ri, from) {
-        rootIndex = ri
-        fromRow = from
-        restart()
+    function showIndex(idx) {
+        root.currentIndex = idx
+        image.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
     }
 
     function next() {
-        root.running = modelIndexIterator.next()
-        if (root.running)
-            image.source = modelIndexIterator.data
+        showIndex(imagePlayList.playNextIndex(root.currentIndex));
     }
 
     function previous() {
-        if (modelIndexIterator.previous())
-            image.source = modelIndexIterator.data
+        showIndex(imagePlayList.playPreviousIndex(root.currentIndex));
+    }
+
+    Playlist {
+        id: imagePlayList
+        playMode: Playlist.Normal
+    }
+
+    Rectangle {
+        id: blackout
+        color: "black"
+        anchors.fill: parent
     }
 
     Image {
         id: image
         anchors.fill: parent
-
-        fillMode: Image.PreserveAspectCrop
-
-        ModelIndexIterator {
-            id: modelIndexIterator
-            model: root.pictureModel
-            rootIndex: root.rootIndex
-            fromRow: root.fromRow
-            childFilterRole: "type"
-            childFilterValue: "File"
-            parentFilterRole: "type"
-            parentFilterValue: "Directory"
-            dataRole: "fileUrl"
-        }
+        fillMode: Image.PreserveAspectFit
 
         Timer {
             id: timer
             running: root.running
-            repeat: root.autoPlay
-            interval: 3000
+            repeat: true
+            interval: root.interval
             triggeredOnStart: true
-            onTriggered:  root.next()
+            onTriggered: root.next()
         }
     }
 
-    Keys.onLeftPressed: root.previous()
-    Keys.onRightPressed: root.next()
+    states: [
+        State {
+            name: "visible"
+            PropertyChanges {
+                target: root
+                visible: true
+                opacity: 1
+                x: 0
+                y: 0
+                width: parent.width
+                height: parent.height
+            }
+            StateChangeScript { name: "forceActiveFocus"; script: { parent.forceActiveFocus() } }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: ""
+            SequentialAnimation {
+                ParallelAnimation {
+                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { properties: "x,y,width,height"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                }
+                PropertyAction { target: root; property: "visible"; value: false }
+            }
+        },
+        Transition {
+            from: ""
+            to: "visible"
+            SequentialAnimation {
+                PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
+                PropertyAction { target: root; property: "visible"; value: true }
+                ParallelAnimation {
+                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { properties: "x,y,width,height"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                }
+                ScriptAction { scriptName: "forceActiveFocus" }
+            }
+        }
+    ]
+
+    Keys.onPressed: {
+        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
+            state = ""
+            event.accepted = true
+        } else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event)) {
+            root.previous()
+            event.accepted = true
+        } else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event)) {
+            root.next()
+            event.accepted = true
+        }
+    }
+
+    MouseArea {
+        id: consumer
+        anchors.fill: parent
+        onClicked: root.next()
+    }
 }
 
