@@ -94,11 +94,13 @@ Item {
                 confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
             }
             Keys.onPressed: {
-                var itemType = sourcesListView.currentItem.itemdata.type
-                if (itemType == "SearchPath") {
-                    if (event.key == Qt.Key_Delete) {
-                        treeModel.removeSearchPath(currentIndex)
-                        event.accepted = true
+                if (sourcesListView.currentItem) {
+                    var itemType = sourcesListView.currentItem.itemdata.type
+                    if (itemType == "SearchPath") {
+                        if (event.key == Qt.Key_Delete) {
+                            treeModel.removeSearchPath(currentIndex)
+                            event.accepted = true
+                        }
                     }
                 }
             }
