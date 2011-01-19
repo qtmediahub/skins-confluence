@@ -30,7 +30,8 @@ ListView {
     property int itemWidth
 
     onModelChanged: {
-        var fm = new FontMetrics.FontMetrics({pointSize: 16})
+        // synchronize calculation with ConfluenceText
+        var fm = new FontMetrics.FontMetrics({pixelSize: confluence.width/60, weight: Font.Light })
         var w = 0, h = 0, ow = 0
         for (var i = 0; i < model.length; i++) {
             if (model[i].options) {
@@ -44,6 +45,8 @@ ListView {
             h = Math.max(h, fm.height(model[i].text))
         }
         itemHeight = h + 20
+        if (itemWidth <= 200)
+            itemWidth = 250
         width = itemWidth
         height = itemHeight * model.length
     }
@@ -77,9 +80,8 @@ ListView {
             opacity: delegateItem.focus ? 1 : 0
         }
 
-        Text {
+        ConfluenceText {
             id: delegateText
-            font.pointSize: 16
             color: model.modelData.enabled ? "white" : "gray"
             text: model.modelData.text
             horizontalAlignment: Text.AlignRight
@@ -88,9 +90,8 @@ ListView {
             anchors.leftMargin: 15
         }
 
-        Text {
+        ConfluenceText {
             id: delegateValue
-            font.pointSize: 16
             color: model.modelData.enabled ? "white" : "gray"
             text: model.modelData.currentOption
             horizontalAlignment: Text.AlignRight
