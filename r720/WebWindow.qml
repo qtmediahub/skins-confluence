@@ -45,10 +45,14 @@ Window {
     }
 
     Keys.onPressed:
-        if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier))
-            urlBar.forceActiveFocus()
-        else if(KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event))
+        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.up, event))
+            webViewport.contentY = Math.max(0, webViewport.contentY - 10)
+        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.down, event))
+            webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
+        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event))
             webviewPopup.activeFocus ? webView.forceActiveFocus() : event.accepted = false
+        else if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier))
+            urlBar.forceActiveFocus()
 
     Panel {
         id: panel

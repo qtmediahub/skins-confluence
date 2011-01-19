@@ -30,6 +30,5 @@ keyarray[qmhactions.play] = [ 0x20 ]
 function actionMapsToKey(action, keyevent)
 {
     var index = keyarray[action].indexOf(keyevent.key)
-
-    return keyevent.accepted = (index != -1)
+    return keyevent.accepted = ((index != -1) && keyevent.modifiers == 0)
 }
