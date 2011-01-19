@@ -44,16 +44,11 @@ Window {
         confluence.show(root)
     }
 
-    Keys.onPressed: {
-        if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier)) {
+    Keys.onPressed:
+        if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier))
             urlBar.forceActiveFocus()
-        } else if(KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
-            if(webviewPopup.activeFocus) {
-                webView.forceActiveFocus()
-                event.accepted = true
-            }
-        }
-    }
+        else if(KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event))
+            webviewPopup.activeFocus ? webView.forceActiveFocus() : event.accepted = false
 
     Panel {
         id: panel
