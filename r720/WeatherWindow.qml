@@ -71,7 +71,6 @@ Window {
         onExited: close()
 
         content: Column {
-            anchors.fill: parent
             anchors.topMargin: 50
             anchors.leftMargin: closedBladePeek + 5
             anchors.rightMargin: 5
