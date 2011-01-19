@@ -33,20 +33,12 @@ FocusScope {
     anchors.fill: parent
 
     Keys.onPressed: {
-        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
-            if (controlOSD.state != "visible") {
-                showOSD();
-                event.accepted = true;
-            } else {
-                //Have to explicitly not accept in order to propagate
-                event.accepted = false
-            }
-        } else if (event.key == Qt.Key_Up) {
+        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event))
+            controlOSD.state == "visible" ? event.accepted = false : showOSD()
+        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.up, event))
             playPrevious();
-        } else if (event.key == Qt.Key_Down) {
+        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.down, event))
             playNext();
-        }
-
     }
 
     MouseArea {
