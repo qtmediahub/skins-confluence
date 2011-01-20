@@ -21,7 +21,7 @@ import QtQuick 1.0
 import QtMultimediaKit 1.1
 import confluence.r720.components 1.0
 import Playlist 1.0
-import "./components/keymapping.js" as KeyMapping
+import ActionMapper 1.0
 
 //This serves to isolate import failures if QtMultimedia is not present
 FocusScope {
@@ -33,11 +33,11 @@ FocusScope {
     anchors.fill: parent
 
     Keys.onPressed: {
-        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event))
+        if (actionmap.eventMatch(event, ActionMapper.Back))
             controlOSD.state == "visible" ? event.accepted = false : showOSD()
-        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.up, event))
+        else if (actionmap.eventMatch(event, ActionMapper.Up))
             playPrevious();
-        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.down, event))
+        else if (actionmap.eventMatch(event, ActionMapper.Down))
             playNext();
     }
 

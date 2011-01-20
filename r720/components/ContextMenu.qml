@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
-import "keymapping.js" as KeyMapping
 
 FocusScope {
     id: root
@@ -95,6 +94,6 @@ FocusScope {
     }
 
     Keys.onPressed:
-        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event) ? root.close() : undefined
+        actionmap.eventMatch(event, ActionMapper.Back) ? root.close() : undefined
 }
 

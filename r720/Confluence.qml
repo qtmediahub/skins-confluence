@@ -20,7 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 import "./components/uiconstants.js" as UIConstants
-import "./components/keymapping.js" as KeyMapping
+import ActionMapper 1.0
 
 FocusScope {
     id: confluence
@@ -132,7 +132,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
+        if (actionmap.eventMatch(event, ActionMapper.Back)) {
             handleBackout()
         } else if (event.key == Qt.Key_F12) {
             selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
@@ -312,6 +312,10 @@ FocusScope {
             selectedElement = element
             state = "showingSelectedElement"
         }
+    }
+
+    ActionMapper {
+        id: actionmap
     }
 
     // dummyItem useful to avoid error ouput on component loader failures

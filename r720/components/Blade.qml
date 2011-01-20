@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import "uiconstants.js" as UIConstants
-import "keymapping.js" as KeyMapping
+import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -92,9 +92,9 @@ FocusScope {
     ]
 
     Keys.onPressed:
-        KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)
-        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event)
-        || KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event)
+        actionmap.eventMatch(event, ActionMapper.Back)
+        || actionmap.eventMatch(event, ActionMapper.Left)
+        || actionmap.eventMatch(event, ActionMapper.Right)
         ? root.close()
         : undefined
 

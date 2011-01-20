@@ -20,8 +20,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import ModelIndexIterator 1.0
 import confluence.r720.components 1.0
-import "./components/keymapping.js" as KeyMapping
 import Playlist 1.0
+import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -122,13 +122,13 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event)) {
+        if (actionmap.eventMatch(event, ActionMapper.back)) {
             state = ""
             event.accepted = true
-        } else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.left, event)) {
+        } else if (actionmap.eventMatch(event, ActionMapper.left)) {
             root.previous()
             event.accepted = true
-        } else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.right, event)) {
+        } else if (actionmap.eventMatch(event, ActionMapper.right)) {
             root.next()
             event.accepted = true
         }

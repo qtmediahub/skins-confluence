@@ -20,7 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import QtWebKit 1.0
 import confluence.r720.components 1.0
-import "./components/keymapping.js" as KeyMapping
+import ActionMapper 1.0
 import Qt.labs.Mx 1.0 as MxComponents
 
 //TODO:
@@ -45,11 +45,11 @@ Window {
     }
 
     Keys.onPressed:
-        if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.up, event))
+        if (actionmap.eventMatch(event, ActionMapper.Up))
             webViewport.contentY = Math.max(0, webViewport.contentY - 10)
-        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.down, event))
+        else if (actionmap.eventMatch(event, ActionMapper.Down))
             webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
-        else if (KeyMapping.actionMapsToKey(KeyMapping.qmhactions.back, event))
+        else if (actionmap.eventMatch(event, ActionMapper.Back))
             webviewPopup.activeFocus ? webView.forceActiveFocus() : event.accepted = false
         else if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier))
             urlBar.forceActiveFocus()
