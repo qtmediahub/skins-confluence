@@ -29,6 +29,11 @@ Item {
     property variant informationSheet
     property alias rootIndex: posterView.rootIndex
     property alias currentIndex: posterView.currentIndex
+    property alias currentItem: posterView.currentItem
+    property variant currentThumbnailRect : [   posterView.currentItem ? root.x + posterView.x + posterView.currentItem.x : 0,
+                                                posterView.currentItem ? root.y + posterView.y + posterView.currentItem.y : 0,
+                                                posterView.currentItem.width,
+                                                posterView.currentItem.height ]
 
     signal itemActivated(variant itemData)
 

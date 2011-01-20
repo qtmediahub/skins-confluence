@@ -35,22 +35,20 @@ FocusScope {
     height: 0
     visible: false
     opacity: 0
+    focus: true
 
-    function showItem(item) {
-        showIndex(imagePlayList.index(imagePlayList.add(item, Playlist.Replace, Playlist.Flat)))
-    }
+    MouseArea {
+        id: consumer
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+            if (mouse.button == Qt.LeftButton)
+                root.next()
+            else
+                root.previous()
 
-    function showIndex(idx) {
-        root.currentIndex = idx
-        image.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
-    }
-
-    function next() {
-        showIndex(imagePlayList.playNextIndex(root.currentIndex));
-    }
-
-    function previous() {
-        showIndex(imagePlayList.playPreviousIndex(root.currentIndex));
+            mouse.accepted = true;
+        }
     }
 
     Playlist {
@@ -76,6 +74,42 @@ FocusScope {
             interval: root.interval
             triggeredOnStart: true
             onTriggered: root.next()
+        }
+    }
+
+    Image {
+        id: backToViewButton
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.margins: -backToViewButton.width
+        state: root.visible ? "visible" : ""
+        source: themeResourcePath + "/media/" + (mr.containsMouse ? "HomeIcon-Focus" : "HomeIcon") + ".png"
+
+        states: [
+            State {
+                name: "visible"
+                PropertyChanges {
+                    target: backToViewButton.anchors
+                    margins: 20
+                }
+            }
+        ]
+
+        transitions: [
+            Transition {
+                NumberAnimation { property: "margins"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            }
+        ]
+
+        MouseArea {
+            id: mr
+            hoverEnabled: true
+            anchors.fill: parent
+
+            onClicked: {
+                root.close();
+                mouse.accepted = true;
+            }
         }
     }
 
@@ -123,7 +157,7 @@ FocusScope {
 
     Keys.onPressed: {
         if (actionmap.eventMatch(event, ActionMapper.back)) {
-            state = ""
+            root.close();
             event.accepted = true
         } else if (actionmap.eventMatch(event, ActionMapper.left)) {
             root.previous()
@@ -134,16 +168,25 @@ FocusScope {
         }
     }
 
-    MouseArea {
-        id: consumer
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: {
-            if (mouse.button == Qt.LeftButton)
-                root.next()
-            else
-                root.previous()
-        }
+    function showItem(item) {
+        showIndex(imagePlayList.add(item, Playlist.Replace, Playlist.Flat))
+    }
+
+    function showIndex(idx) {
+        root.currentIndex = idx
+        image.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
+    }
+
+    function next() {
+        showIndex(imagePlayList.playNextIndex(root.currentIndex));
+    }
+
+    function previous() {
+        showIndex(imagePlayList.playPreviousIndex(root.currentIndex));
+    }
+
+    function close() {
+        root.state = "";
     }
 }
 
