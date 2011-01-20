@@ -42,14 +42,14 @@ Rectangle {
         PropertyAnimation {
             target: part3
             property: "x"
-            to: audioVisualisationPlaceholder.width*anim.setting1
+            to: root.width*anim.setting1
             duration: 3000
             easing.type: Easing.InOutBack
         }
         PropertyAnimation {
             target: part3
             property: "y"
-            to: audioVisualisationPlaceholder.height*anim.setting2
+            to: root.height*anim.setting2
             duration: 3000
             easing.type: Easing.InOutBack
         }
