@@ -43,7 +43,6 @@ Item {
             name: 'selected'
             when: mainBlade.subMenu.state == "open" || !rootMenuList.activeFocus
             PropertyChanges { target: entry; state: ListView.isCurrentItem ? "" : "non-selected" }
-            PropertyChanges { target: subIndicator; state: ListView.isCurrentItem ? "selected" : "non-selected" }
         }
     ]
 
@@ -143,12 +142,6 @@ Item {
                 name: 'highlighted'
                 PropertyChanges { target: symbol; opacity: 0.6 }
                 PropertyChanges { target: glare; opacity: 0.8 }
-            },
-            State {
-                name: 'selected'
-            },
-            State {
-                name: 'non-selected'
             }
         ]
 
