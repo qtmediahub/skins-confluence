@@ -27,7 +27,7 @@ Header {
     width: parent.width/1.5;
 
     property string currentFeed: "rss.news.yahoo.com/rss/topstories"
-    property bool active: confluence.state == "showingRootBlade"
+    property bool active: confluence.state == ""
 
     signal linkClicked (string link);
 

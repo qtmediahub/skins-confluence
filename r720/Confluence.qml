@@ -55,22 +55,6 @@ FocusScope {
 
     states: [
         State {
-            name: "showingRootBlade"
-            PropertyChanges {
-                target: mainBlade
-                state: "open"
-                focus: true
-            }
-            PropertyChanges {
-                target: qtcube
-                visible: true
-                x: confluence.width - qtcube.width
-            }
-            PropertyChanges { target: ticker; expanded: true }
-            PropertyChanges { target: avPlayer; state: "background" }
-            PropertyChanges { target: dateTimeHeader; expanded: true; showDate: true }
-        },
-        State {
             name: "showingSelectedElement"
             PropertyChanges {
                 target: mainBlade
@@ -81,6 +65,8 @@ FocusScope {
                 x: confluence.width
                 visible: true
             }
+            PropertyChanges { target: avPlayer; state: "hidden" }
+            PropertyChanges { target: ticker; expanded: false }
             PropertyChanges { target: dateTimeHeader; expanded: true; showDate: false }
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
@@ -97,14 +83,8 @@ FocusScope {
         State {
             name: "showingSelectedElementMaximized"
             extend: "showingSelectedElement"
-            PropertyChanges {
-                target: selectedElement
-                state: "maximized"
-            }
-            PropertyChanges {
-                target: avPlayer
-                state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden"
-            }
+            PropertyChanges { target: selectedElement; state: "maximized" }
+            PropertyChanges { target: avPlayer; state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden" }
             PropertyChanges { target: dateTimeHeader; expanded: false; showDate: false }
         }
     ]
@@ -112,7 +92,7 @@ FocusScope {
     transitions: [
         Transition {
             from: "*"
-            to: "showingRootBlade"
+            to: ""
             NumberAnimation { targets: [qtcube]; properties: "x,y"; easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
         },
         Transition {
@@ -184,7 +164,7 @@ FocusScope {
         if (avPlayerComponent.status == Component.Ready) {
             avPlayer = avPlayerComponent.createObject(confluence)
             // FIXME: nothing to get video-path during runtime, yet
-            avPlayer.state = "hidden"
+            avPlayer.state = "background"
         } else if (avPlayerComponent.status == Component.Error) {
             backend.log(avPlayerComponent.errorString())
             avPlayer = dummyItem
@@ -217,7 +197,7 @@ FocusScope {
         if (tickerLoader.status == Component.Ready) {
             ticker = tickerLoader.createObject(confluence)
             ticker.z = UIConstants.screenZValues.header
-            ticker.expanded = false;
+            ticker.expanded = true;
         } else if (tickerLoader.status == Component.Error) {
             backend.log(tickerLoader.errorString())
             ticker = dummyItem
@@ -229,7 +209,8 @@ FocusScope {
             qtcube = qtCubeLoader.createObject(confluence)
             qtcube.anchors.top = confluence.top
             qtcube.z = UIConstants.screenZValues.header
-            qtcube.visible = false
+            qtcube.visible = true
+            Qt.createQmlObject("import QtQuick 1.0; Binding { target: qtcube; property: 'x'; value: confluence.width - qtcube.width }", qtcube)
         } else if (qtCubeLoader.status == Component.Error) {
             backend.log(qtCubeLoader.errorString())
             qtcube = dummyItem
@@ -273,9 +254,9 @@ FocusScope {
     {
         if(selectedElement && selectedElement.maximized)
             selectedElement.maximized = false
-        else if(confluence.state == "showingRootBlade" && avPlayer.playing)
+        else if(confluence.state == "" && avPlayer.playing)
             show(transparentVideoOverlay)
-        else if(confluence.state == "showingRootBlade" && !!selectedElement)
+        else if(confluence.state == "" && !!selectedElement)
             show(selectedElement)
         else
             show(mainBlade)
@@ -297,7 +278,7 @@ FocusScope {
     function show(element)
     {
         if (element == mainBlade) {
-            state = "showingRootBlade"
+            state = ""
             mainBlade.forceActiveFocus()
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
@@ -331,7 +312,9 @@ FocusScope {
     }
 
     MainBlade { 
-        id: mainBlade; 
+        id: mainBlade;
+        state: "open"
+        focus: true
     }
 
     Header {
@@ -346,7 +329,7 @@ FocusScope {
             x: 40
             sourceSize { width: height; height: homeHeader.height-4; }
             source: themeResourcePath + "/media/HomeIcon.png"
-            MouseArea { anchors.fill: parent; onClicked: confluence.state = "showingRootBlade" }
+            MouseArea { anchors.fill: parent; onClicked: confluence.state = "" }
         }
     }
 
@@ -377,6 +360,8 @@ FocusScope {
 
     DateTimeHeader {
         id: dateTimeHeader
+        expanded: true
+        showDate: true
     }
 
 

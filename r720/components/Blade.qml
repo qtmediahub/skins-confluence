@@ -52,7 +52,7 @@ FocusScope {
             root.state = "open"
             root.forceActiveFocus()
         } else {
-            confluence.state = "showingRootBlade"
+            confluence.state = ""
         }
     }
     function close() {
