@@ -246,8 +246,6 @@ FocusScope {
         } else if (screensaverLoader.status == Component.Error) {
             backend.log(screensaverLoader.errorString())
         }
-
-        confluence.show(mainBlade)
     }
 
     function handleBackout()
@@ -279,7 +277,6 @@ FocusScope {
     {
         if (element == mainBlade) {
             state = ""
-            mainBlade.forceActiveFocus()
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
                 show(videoWindow)

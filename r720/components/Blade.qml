@@ -50,7 +50,6 @@ FocusScope {
     function open() {
         if (content.children.length > 0) {
             root.state = "open"
-            root.forceActiveFocus()
         } else {
             confluence.state = ""
         }
@@ -98,6 +97,7 @@ FocusScope {
         ? root.close()
         : undefined
 
+    onOpened: root.forceActiveFocus()
     onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
 
     Item {
