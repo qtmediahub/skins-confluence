@@ -30,3 +30,4 @@ Panel 1.0 Panel.qml
 Cursor 1.0 Cursor.qml
 ConfluenceAction 1.0 ConfluenceAction.qml
 VideoPreview 1.0 VideoPreview.qml
+ViewLoader 1.0 ViewLoader.qml

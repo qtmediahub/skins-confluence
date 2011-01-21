@@ -80,10 +80,10 @@ Window {
 
     function setCurrentView(viewType) {
         if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
-            viewLoader.sourceComponent = thumbnailView
+            viewLoader.changeView(thumbnailView)
             viewLoader.item.hidePreview = viewType == "PIC THUMBS"
         } else if (viewType == "LIST" || viewType == "BIG LIST") {
-            viewLoader.sourceComponent = listView
+            viewLoader.changeView(listView)
             viewLoader.item.hidePreview = viewType == "BIG LIST"
         } else if (viewType == "POSTER") {
             viewLoader.sourceComponent = posterView
@@ -123,7 +123,7 @@ Window {
         }
     }
 
-    Loader {
+    ViewLoader {
         id: viewLoader
         focus: true
         anchors.fill: parent
