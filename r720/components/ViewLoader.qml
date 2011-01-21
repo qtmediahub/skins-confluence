@@ -35,11 +35,13 @@ FocusScope {
     // changeView forces a switch even, components are the same
     function changeView(component) {
         loader.state = ""
+        loader.focus = false
         loader = loader == viewLoader1 ? viewLoader2 : viewLoader1
         internalSourceComponent = component
         sourceComponent = internalSourceComponent
         loader.sourceComponent = internalSourceComponent
         loader.state = "visible"
+        loader.focus = true
     }
 
     Loader {
