@@ -48,8 +48,6 @@ FocusScope {
     ConfluenceListView {
         id: rootMenuList
 
-        signal itemSelected
-
         scrollbar: false
         //Oversized fonts being downscaled
         spacing: confluence.width/40 //30

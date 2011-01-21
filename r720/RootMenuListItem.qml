@@ -32,23 +32,18 @@ Item {
     anchors.right: parent.right
     states: [
         State {
+            name: 'highlighted'
+            when: rootMenuList.activeFocus
+                  && ListView.isCurrentItem
+                  && mainBlade.subMenu.state == "closed"
+            PropertyChanges { target: entry; state: "highlighted" }
+            PropertyChanges { target: subIndicator; state: "highlighted" }
+        },
+        State {
             name: 'selected'
-            when: activeFocus && ListView.isCurrentItem && mainBlade.subMenu.state == "closed"
-            StateChangeScript { script: rootMenuList.itemSelected() }
-            PropertyChanges { target: entry; state: "selected" }
-            PropertyChanges { target: subIndicator; state: "selected" }
-        },
-        State {
-            name: 'triggered'
-            when: ListView.isCurrentItem && mainBlade.subMenu.state == "open"
-            PropertyChanges { target: entry; state: "triggered" }
-            PropertyChanges { target: subIndicator; state: "triggered" }
-        },
-        State {
-            name: 'non-triggered'
-            when: !ListView.isCurrentItem && mainBlade.subMenu.state == "open"
-            PropertyChanges { target: entry; state: "non-triggered" }
-            PropertyChanges { target: subIndicator; state: "non-triggered" }
+            when: mainBlade.subMenu.state == "open" || !rootMenuList.activeFocus
+            PropertyChanges { target: entry; state: ListView.isCurrentItem ? "" : "non-selected" }
+            PropertyChanges { target: subIndicator; state: ListView.isCurrentItem ? "selected" : "non-selected" }
         }
     ]
 
@@ -88,15 +83,11 @@ Item {
 
         states: [
             State {
-                name: 'selected'
+                name: 'highlighted'
                 PropertyChanges { target: entry; scale: 1; opacity: 1; angle: 360 }
             },
             State {
-                name: 'triggered'
-                PropertyChanges { target: entry; anchors.rightMargin: -20 }
-            },
-            State {
-                name: 'non-triggered'
+                name: 'non-selected'
                 PropertyChanges { target: entry; opacity: 0 }
             }
         ]
@@ -149,15 +140,15 @@ Item {
 
         states: [
             State {
-                name: 'selected'
+                name: 'highlighted'
                 PropertyChanges { target: symbol; opacity: 0.6 }
                 PropertyChanges { target: glare; opacity: 0.8 }
             },
             State {
-                name: 'triggered'
+                name: 'selected'
             },
             State {
-                name: 'non-triggered'
+                name: 'non-selected'
             }
         ]
 
