@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import QtMobility.location 1.1
 import confluence.r720.components 1.0
+import ActionMapper 1.0
 
 Window {
     id: root
@@ -103,25 +104,25 @@ Window {
         }
 
         Keys.onPressed: {
-            if (event.key == Qt.Key_Right) {
+            if (actionmap.eventMatch(event, ActionMapper.Right)) {
                 map.pan(100, 0)
                 event.accepted = true
-            } else if (event.key == Qt.Key_Left) {
+            } else if (actionmap.eventMatch(event, ActionMapper.Left)) {
                 map.pan(-100, 0)
                 event.accepted = true
-            } else if (event.key == Qt.Key_Up) {
+            } else if (actionmap.eventMatch(event, ActionMapper.Up)) {
                 map.pan(0, -100)
                 event.accepted = true
-            } else if (event.key == Qt.Key_Down) {
+            } else if (actionmap.eventMatch(event, ActionMapper.Down)) {
                 map.pan(0, 100)
                 event.accepted = true
-            } else if (event.key == Qt.Key_Minus) {
+            } else if (actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
                 map.zoomLevel = map.zoomLevel - 1
                 event.accepted = true
-            } else if (event.key == Qt.Key_Plus) {
+            } else if (actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
                 map.zoomLevel = map.zoomLevel + 1
                 event.accepted = true
-            } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
+            } else if (actionmap.eventMatch(event, ActionMapper.Forward)) {
                 root.blade.open()
                 event.accepted = true
             }
