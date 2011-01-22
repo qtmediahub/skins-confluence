@@ -108,15 +108,6 @@ Item {
         clip:  true
         opacity: root.hidePreview ? 0 : 1
         source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
-
-        // needs to be loaded to work without MulitmediaKit
-        VideoPreview {
-            property variant item : sourcesListView.currentItem
-            property variant model : sourcesListView.treeModel
-
-            // TODO don't rely on MediaModel::MediaType enum order
-            url: (model.mediaType == 2) && (item.itemdata.type == "File") ? item.itemdata.filePath : ""
-        }
     }
 
     AddMediaSourceDialog {
