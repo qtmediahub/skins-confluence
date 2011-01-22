@@ -28,7 +28,7 @@ ContextMenu {
 
     title: qsTr("Actions")
     ConfluenceAction { id: playAction; text: qsTr("Play");
-        onTriggered: avPlayer.playForeground(view.currentItem.itemdata, (view.currentItem.itemdata.type == "File") ? Playlist.Flat : Playlist.Recursive);
+        onTriggered: avPlayer.playForeground(view.currentItem.itemdata, Playlist.Replace, (view.currentItem.itemdata.type == "File") ? Playlist.Flat : Playlist.Recursive);
         enabled: view.model.mediaType != 1;
     }
     ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onTriggered: view.rootIndex = undefined; }

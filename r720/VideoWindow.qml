@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
+import Playlist 1.0
 
 Window {
     id: root
@@ -72,7 +73,7 @@ Window {
         MediaThumbnailView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemActivated: avPlayer.playForeground(itemData)
+            onItemActivated: root.itemActivated(itemData)
         }
     }
 
@@ -81,17 +82,16 @@ Window {
         MediaListView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemActivated: avPlayer.playForeground(itemData)
+            onItemActivated: root.itemActivated(itemData)
         }
     }
-
 
     Component {
         id: posterView
         MediaPosterView {
             engineName: videoEngine.name
             engineModel: videoEngine.pluginProperties.videoModel
-            onItemActivated: avPlayer.playForeground(itemData)
+            onItemActivated: root.itemActivated(itemData)
             Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
         }
     }
@@ -106,6 +106,10 @@ Window {
         videoEngine.visualElement = root;
         videoEngine.pluginProperties.videoModel.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value("videowindow-currentview", "POSTER"))
+    }
+
+    function itemActivated(item) {
+        avPlayer.playForeground(item, Playlist.Replace, Playlist.Flat);
     }
 }
 

@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
+import Playlist 1.0
 
 Window {
     id: root
@@ -76,7 +77,7 @@ Window {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
             informationSheet: musicInformationSheet
-            onItemActivated: avPlayer.playForeground(itemData)
+            onItemActivated: root.itemActivated(itemData)
         }
     }
 
@@ -86,7 +87,7 @@ Window {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
             informationSheet: musicInformationSheet
-            onItemActivated: avPlayer.playForeground(itemData)
+            onItemActivated: root.itemActivated(itemData)
         }
     }
 
@@ -96,7 +97,7 @@ Window {
             engineName: musicEngine.name
             engineModel: musicEngine.pluginProperties.musicModel
             informationSheet: musicInformationSheet
-            onItemActivated: avPlayer.playForeground(itemData)
+            onItemActivated: root.itemActivated(itemData)
             Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
         }
     }
@@ -111,6 +112,10 @@ Window {
         musicEngine.visualElement = root;
         musicEngine.pluginProperties.musicModel.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value("musicwindow-currentview", "POSTER"))
+    }
+
+    function itemActivated(item) {
+        avPlayer.playForeground(item, Playlist.Replace, Playlist.Flat);
     }
 }
 

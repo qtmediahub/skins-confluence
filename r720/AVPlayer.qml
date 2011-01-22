@@ -325,23 +325,24 @@ FocusScope {
         volumeOSDTimer.restart();
     }
 
-    function play(item) {
+    function play(item, role, depth) {
         if(item == null) {
             mediaItem.play()
         } else {
-            mediaItem.currentIndex = playlist.index(playlist.add(item.mediaInfo, Playlist.Replace, Playlist.Recursive))
+            console.log(role + "  " + depth)
+            mediaItem.currentIndex = playlist.index(playlist.add(item.mediaInfo, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive))
             playIndex(mediaItem.currentIndex)
         }
     }
 
-    function playForeground(item) {
-        root.play(item);
+    function playForeground(item, role, depth) {
+        root.play(item, role, depth);
         confluence.show(this)
     }
 
-    function playBackground(item) {
+    function playBackground(item, role, depth) {
         root.state = "background";
-        root.play(item);
+        root.play(item, role, depth);
     }
 
     function playNext() {
