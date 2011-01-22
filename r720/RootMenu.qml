@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 import ActionMapper 1.0
+import Qt.labs.particles 1.0
 
 FocusScope {
     id: rootMenu
@@ -59,6 +60,22 @@ FocusScope {
         highlight: Image {
             source:  themeResourcePath + "/media/black-back2.png"
             opacity:  0.5
+
+            Particles {
+                id: part
+                x: 0
+                y: parent.height/2.0
+                width: 1
+                height: 1
+                source: themeResourcePath + "/particle.png"
+                lifeSpan: 500
+                count: 500
+                scale: 0.5
+                opacity:  1.0
+                angleDeviation: 360
+                velocity: 250
+                velocityDeviation: 250
+            }
         }
 
         model: backend.engines //menuList
