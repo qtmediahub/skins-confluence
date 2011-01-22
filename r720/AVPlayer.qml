@@ -233,9 +233,16 @@ FocusScope {
             engineModel: videoEngine.pluginProperties.videoModel
 
             onItemTriggered: {
-                root.play(itemData)
+                root.play(itemData, Playlist.Replace, Playlist.Flat)
                 videoListDialog.close()
             }
+        }
+
+        Keys.onPressed: {
+            if (actionmap.eventMatch(event, ActionMapper.Back))
+                videoListDialog.close()
+            else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
+                event.accepted = true
         }
     }
 
@@ -253,9 +260,16 @@ FocusScope {
             engineModel: musicEngine.pluginProperties.musicModel
 
             onItemTriggered: {
-                root.play(itemData)
+                root.play(itemData, Playlist.Replace, Playlist.Flat)
                 musicListDialog.close()
             }
+        }
+
+        Keys.onPressed: {
+            if (actionmap.eventMatch(event, ActionMapper.Back))
+                musicListDialog.close()
+            else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
+                event.accepted = true
         }
     }
 
@@ -275,6 +289,13 @@ FocusScope {
             onItemTriggered: {
                 root.playIndex(playlist.indexFromMediaInfo(itemData.mediaInfo))
                 playListDialog.close()
+            }
+
+            Keys.onPressed: {
+                if (actionmap.eventMatch(event, ActionMapper.Back))
+                    playListDialog.close()
+                else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
+                    event.accepted = true
             }
         }
     }
