@@ -50,8 +50,6 @@ FocusScope {
     function open() {
         if (content.children.length > 0) {
             root.state = "open"
-        } else {
-            confluence.state = ""
         }
     }
     function close() {
