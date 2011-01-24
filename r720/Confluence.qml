@@ -292,11 +292,6 @@ FocusScope {
         }
     }
 
-    ActionMapper {
-        id: actionmap
-        map: "extkeyboard"
-    }
-
     // dummyItem useful to avoid error ouput on component loader failures
     Item {
         id: dummyItem
