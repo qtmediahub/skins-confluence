@@ -64,6 +64,10 @@ FocusScope {
 
     states: [
         State {
+            name: ""
+            StateChangeScript { name: "hideBackground"; script: { background.opacity = 0 } }
+        },
+        State {
             name: "visible"
             PropertyChanges {
                 target: root
@@ -72,6 +76,7 @@ FocusScope {
                 scale: 1
             }
             StateChangeScript { name: "forceActiveFocus"; script: { !!focalWidget && root.forceActiveFocus() } }
+            StateChangeScript { name: "showBackground"; script: { background.opacity = 0.5 } }
         },
         State {
             name: "maximized"
@@ -94,6 +99,7 @@ FocusScope {
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
                 PropertyAction { target: root; property: "visible"; value: false }
+                ScriptAction { scriptName: "hideBackground" }
             }
         },
         Transition {
@@ -107,6 +113,7 @@ FocusScope {
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
                 ScriptAction { scriptName: "forceActiveFocus" }
+                ScriptAction { scriptName: "showBackground" }
             }
         },
         Transition {
@@ -131,12 +138,15 @@ FocusScope {
     }
 
 
-    Image {
+    Rectangle {
         id: background
         anchors.fill: parent
-        visible: !root.overlay
-        source: themeResourcePath + "/media/black-back.png"
-        fillMode: Image.Tile
+        color: "black"
+        opacity: 0
+
+        Behavior on opacity {
+            NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+        }
     }
 }
 
