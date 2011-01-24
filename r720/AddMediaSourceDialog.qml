@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 import DirModel 1.0
+import ActionMapper 1.0
 
 Dialog {
     id: root
@@ -49,7 +50,8 @@ Dialog {
             focus: true
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
-            KeyNavigation.tab: sourceNameInput
+            Keys.onPressed:
+                actionmap.eventMatch(event, ActionMapper.Left) ? sourceNameInput.focus = true : undefined
         }
         Text {
             id: sourceNameLabel
@@ -70,8 +72,11 @@ Dialog {
                 text: qsTr("Home")
                 color: "white"
 
-                KeyNavigation.tab: buttonBox
-                KeyNavigation.backtab: fileSystemView
+                Keys.onPressed:
+                    if (actionmap.eventMatch(event, ActionMapper.Left))
+                        buttonBox.focus = true
+                    else if (actionmap.eventMatch(event, ActionMapper.Right))
+                        fileSystemView.focus = true
             }
 
             MouseArea {
@@ -91,8 +96,12 @@ Dialog {
             onRejected: {
                 root.reject()
             }
-            KeyNavigation.tab: fileSystemView
-            KeyNavigation.backtab: sourceNameInput
+
+            Keys.onPressed:
+                if (actionmap.eventMatch(event, ActionMapper.Left))
+                    fileSystemView.focus = true
+                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                    sourceNameInput.focus = true
         }
     }
 }

@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import ActionMapper 1.0
 
 Item {
     id: root
@@ -44,8 +45,9 @@ Item {
             text: qsTr("OK")
             focus: true
             onClicked: root.accept()
-            KeyNavigation.right: cancelButton
-            KeyNavigation.tab: cancelButton
+
+            Keys.onPressed:
+                actionmap.eventMatch(event, ActionMapper.Right) ? cancelButton.focus = true : 0
         }
 
         Item {
@@ -58,8 +60,8 @@ Item {
             id: cancelButton
             text: qsTr("Cancel")
             onClicked: root.reject()
-            KeyNavigation.left: okButton
-            KeyNavigation.backtab: okButton
+            Keys.onPressed:
+                actionmap.eventMatch(event, ActionMapper.Left) ? okButton.focus = true : 0
         }
     }
 }

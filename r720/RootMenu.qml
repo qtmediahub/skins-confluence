@@ -104,30 +104,36 @@ FocusScope {
             basePixmap: "home-playmedia"
             focusedPixmap: "home-playmedia-FO"
             onClicked: confluence.show(avPlayer)
-            KeyNavigation.left: rootMenuList
-            KeyNavigation.backtab: rootMenuList
-            KeyNavigation.right: favouritesButton
-            KeyNavigation.tab: favouritesButton
+
+            Keys.onPressed:
+                if (actionmap.eventMatch(event, ActionMapper.Left))
+                    rootMenuList.focus = true
+                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                    favouritesButton.focus = true
         }
         PixmapButton {
             id: favouritesButton
             basePixmap: "home-favourites"
-            focusedPixmap: "home-favourites-FO" 
+            focusedPixmap: "home-favourites-FO"
             onClicked: confluence.show(aboutWindow)
-            KeyNavigation.left: playMediaButton
-            KeyNavigation.backtab: playMediaButton
-            KeyNavigation.right: powerButton
-            KeyNavigation.tab: powerButton
+
+            Keys.onPressed:
+                if (actionmap.eventMatch(event, ActionMapper.Left))
+                    playMediaButton.focus = true
+                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                    powerButton.focus = true
         }
         PixmapButton {
             id: powerButton
             basePixmap: "home-power";
             focusedPixmap: "home-power-FO";
             onClicked: confluence.showModal(exitDialog)
-            KeyNavigation.left: favouritesButton
-            KeyNavigation.backtab: favouritesButton
-            KeyNavigation.right: rootMenuList
-            KeyNavigation.tab: rootMenuList
+
+            Keys.onPressed:
+                if (actionmap.eventMatch(event, ActionMapper.Left))
+                    favouritesButton.focus = true
+                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                    rootMenuList.focus = true
         }
     }
 }

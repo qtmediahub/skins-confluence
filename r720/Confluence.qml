@@ -120,9 +120,9 @@ FocusScope {
             show(aboutWindow)
         } else if (event.key == Qt.Key_F10) {
             show(systemInfoWindow)
-        } else if (event.key == Qt.Key_Plus) {
+        } else if (actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
             avPlayer.increaseVolume()
-        } else if (event.key == Qt.Key_Minus) {
+        } else if (actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
             avPlayer.decreaseVolume()
         } else if (event.key == Qt.Key_Space) {
             avPlayer.togglePlayPause()

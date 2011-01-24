@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
+import ActionMapper 1.0
 
 Item {
     id: root
@@ -54,7 +55,7 @@ Item {
                     event.accepted = true
                 }
             } else if (itemType == "File") {
-                if (event.key == Qt.Key_Return) {
+                if (actionmap.eventMatch(event, ActionMapper.Forward)) {
                     root.itemTriggered(currentItem.itemdata)
                     event.accepted = true
                 }

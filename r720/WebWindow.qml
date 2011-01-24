@@ -51,7 +51,7 @@ Window {
             webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
         else if (actionmap.eventMatch(event, ActionMapper.Back))
             webviewPopup.activeFocus ? webView.forceActiveFocus() : event.accepted = false
-        else if ((event.key == Qt.Key_Down) && (event.modifiers & Qt.ShiftModifier))
+        else if (actionmap.eventMatch(event, ActionMapper.Context))
             urlBar.forceActiveFocus()
 
     Panel {
