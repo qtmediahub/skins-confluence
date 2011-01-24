@@ -39,6 +39,10 @@ FocusScope {
             playPrevious();
         else if (actionmap.eventMatch(event, ActionMapper.Down))
             playNext();
+        else if (actionmap.eventMatch(event, ActionMapper.Right))
+            increasePlaybackRate();
+        else if (actionmap.eventMatch(event, ActionMapper.Left))
+            decreasePlaybackRate();
     }
 
     MouseArea {
@@ -351,7 +355,7 @@ FocusScope {
             mediaItem.play()
         } else {
             console.log(role + "  " + depth)
-            mediaItem.currentIndex = playlist.index(playlist.add(item.mediaInfo, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive))
+            mediaItem.currentIndex = playlist.add(item.mediaInfo, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
             playIndex(mediaItem.currentIndex)
         }
     }
