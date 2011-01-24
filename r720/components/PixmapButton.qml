@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import ActionMapper 1.0
 
 Item {
     id: button
@@ -29,11 +30,8 @@ Item {
 
     signal clicked
 
-    Keys.onEnterPressed:
-        button.clicked()
-
-    Keys.onReturnPressed:
-        button.clicked()
+    Keys.onPressed:
+        actionmap.eventMatch(event, ActionMapper.Forward) ? button.clicked() : undefined
 
     Image {
         id: pixmap

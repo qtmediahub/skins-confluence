@@ -170,10 +170,12 @@ Window {
                     }
                     rightIconSource: generalResourcePath + "/mx-images/edit-clear.png"
                     onRightIconClicked: text=defaultText
-                    onEnterPressed: {
-                        webView.url = text
-                        webView.forceActiveFocus()
-                    }
+
+                    Keys.onPressed:
+                        if (actionmap.eventMatch(event, ActionMapper.Forward)) {
+                            webView.url = text
+                            webView.forceActiveFocus()
+                        }
                     Connections {
                         target: webView
                         onLoadFinished:
@@ -202,7 +204,8 @@ Window {
                     }
                     rightIconSource: generalResourcePath + "/mx-images/edit-clear.png"
                     onRightIconClicked: text=""
-                    onEnterPressed: {
+                    Keys.onPressed:
+                        if (actionmap.eventMatch(event, ActionMapper.Forward)) {
                         webView.url = "http://www.google.com/search?q=" + text
                         webView.forceActiveFocus()
                     }

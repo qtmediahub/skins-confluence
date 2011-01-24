@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import ActionMapper 1.0
 
 Image {
     id: root
@@ -37,8 +38,8 @@ Image {
         onClicked: root.clicked()
     }
 
-    Keys.onEnterPressed: root.clicked()
-    Keys.onReturnPressed: root.clicked()
+    Keys.onPressed:
+        actionmap.eventMatch(event, ActionMapper.Forward) ? root.clicked() : undefined
 
     ConfluenceText {
         id: textLabel

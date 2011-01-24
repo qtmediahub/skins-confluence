@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import ActionMapper 1.0
 
 Item {
     id: delegateItem
@@ -84,8 +85,10 @@ Item {
         }
     }
 
-    Keys.onReturnPressed: delegateItem.activate()
-    Keys.onEnterPressed: delegateItem.activate()
-    Keys.onMenuPressed: GridView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
+    Keys.onPressed:
+        if (actionmap.eventMatch(event, ActionMapper.Forward))
+            delegateItem.activate()
+        else if (actionmap.eventMatch(event, ActionMapper.Context))
+            GridView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
 }
 

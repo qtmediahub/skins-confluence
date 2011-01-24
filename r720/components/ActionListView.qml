@@ -115,8 +115,8 @@ ListView {
             }
         }
 
-        Keys.onReturnPressed: if (model.modelData.enabled) delegateItem.activate()
-        Keys.onEnterPressed: if (model.modelData.enabled) delegateItem.activate()
+        Keys.onPressed:
+            actionmap.eventMatch(event, ActionMapper.Forward) ? model.modelData.enabled && delegateItem.activate() : undefined
     }
 }
 
