@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import ActionMapper 1.0
 
 PathView {
     id: pathView
@@ -70,7 +71,10 @@ PathView {
         }
     }
 
-    Keys.onRightPressed: pathView.incrementCurrentIndex()
-    Keys.onLeftPressed: pathView.decrementCurrentIndex()
+    Keys.onPressed:
+        if (actionmap.eventMatch(event, ActionMapper.Right))
+            pathView.incrementCurrentIndex()
+        else if (actionmap.eventMatch(event, ActionMapper.Left))
+            pathView.decrementCurrentIndex()
 }
 

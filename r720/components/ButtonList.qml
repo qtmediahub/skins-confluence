@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import ActionMapper 1.0
 
 Flow {
     id: root
@@ -30,13 +31,11 @@ Flow {
     signal lowerBoundExceeded
     signal upperBoundExceeded
 
-    Keys.onRightPressed:
-        if(flow == Flow.LeftToRight)
-            adjustIndex(+1)
-
-    Keys.onLeftPressed:
-        if(flow == Flow.LeftToRight)
-            adjustIndex(-1)
+    Keys.onPressed:
+        if (actionmap.eventMatch(event, ActionMapper.Right))
+            flow == Flow.LeftToRight ? adjustIndex(+1) : undefined
+        else if (actionmap.eventMatch(event, ActionMapper.Left))
+            flow == Flow.LeftToRight ? adjustIndex(-1) : undefined
 
     function adjustIndex(delta)
     {

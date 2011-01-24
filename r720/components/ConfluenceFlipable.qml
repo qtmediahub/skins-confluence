@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
+import ActionMapper 1.0
 
 Flipable {
     id: root
@@ -44,7 +45,10 @@ Flipable {
         }
     }
 
-    Keys.onRightPressed: angle += 180
-    Keys.onLeftPressed: angle -= 180
+    Keys.onPressed:
+        if (actionmap.eventMatch(event, ActionMapper.Right))
+            angle += 180
+        else if (actionmap.eventMatch(event, ActionMapper.Left))
+            angle -= 180
 }
 
