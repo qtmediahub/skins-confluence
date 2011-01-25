@@ -39,15 +39,13 @@ PathView {
         return visualDataModel.modelIndex(currentIndex);
     }
 
-    function setPathStyle(path) {
-        pathView.preferredHighlightBegin = pathHash[path].highlightPos
-        pathView.path = pathHash[path]
+    function setPathStyle(style) {
+        pathView.preferredHighlightBegin = paths[style].highlightPos
+        pathView.pathItemCount = paths[style].pathItemCount
+        pathView.path = paths[style]
     }
 
     model: visualDataModel
-    //Fixme: were we deliberately constraining this?
-    //pathItemCount: (width+2*delegateWidth)/delegateWidth
-    //pathItemCount: 20
     preferredHighlightEnd: pathView.preferredHighlightBegin
 
     VisualDataModel {
@@ -71,9 +69,8 @@ PathView {
             pathView.decrementCurrentIndex()
 
     QtObject {
-        id: pathHash
-        property Path linearZoom: Path {
-            property double highlightPos: 0.5
+        id: paths
+        property PosterPath linearZoom: PosterPath {
             startX: -pathView.delegateWidth; startY: pathView.height/2.0
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
@@ -91,9 +88,8 @@ PathView {
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.2 }
         }
-        property Path amphitheatreZoom: Path {
+        property PosterPath amphitheatreZoom: PosterPath {
             id: amphitheatreZoom
-            property double highlightPos: 0.5
             startX: 0; startY: pathView.height/2
             PathAttribute { name: "rotation"; value: 90 }
             PathAttribute { name: "scale"; value: 0.2 }
@@ -103,9 +99,9 @@ PathView {
             PathAttribute { name: "rotation"; value: -90 }
             PathAttribute { name: "scale"; value: 0.2 }
         }
-        property Path carousel: Path {
+        property PosterPath carousel: PosterPath {
             id: carousel
-            property double highlightPos: 0.75
+            highlightPos: 0.75
 
             property double horizCenter: pathView.width/2
             property double vertCenter: pathView.height/2 - offsetHeight
@@ -118,10 +114,6 @@ PathView {
             property double vertHypot: offsetHeight/Math.sqrt(2)
 
             startX: carousel.horizCenter - offsetWidth; startY: carousel.vertCenter
-            //(0, midpoint)
-            //(midpoint, end)
-            //(end, midpoint)
-            //(midpoint, 0)
 
             PathAttribute { name: "z"; value: 5 }
             PathAttribute { name: "scale"; value: 0.6 }
