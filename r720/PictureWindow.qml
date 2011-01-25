@@ -79,13 +79,13 @@ Window {
     }
 
     function setCurrentView(viewType) {
-        if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
+        if (viewType == qsTr("THUMBNAIL") || viewType == qsTr("PIC THUMBS")) {
             viewLoader.changeView(thumbnailView)
-            viewLoader.item.hidePreview = viewType == "PIC THUMBS"
-        } else if (viewType == "LIST" || viewType == "BIG LIST") {
+            viewLoader.item.hidePreview = viewType == qsTr("PIC THUMBS")
+        } else if (viewType == qsTr("LIST") || viewType == qsTr("BIG LIST")) {
             viewLoader.changeView(listView)
-            viewLoader.item.hidePreview = viewType == "BIG LIST"
-        } else if (viewType == "POSTER") {
+            viewLoader.item.hidePreview = viewType == qsTr("BIG LIST")
+        } else if (viewType == qsTr("POSTER")) {
             viewLoader.sourceComponent = posterView
         }
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)

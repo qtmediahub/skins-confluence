@@ -22,6 +22,9 @@ import ActionMapper 1.0
 
 PathView {
     id: pathView
+
+    anchors.fill: parent
+
     property variant posterModel // Not an alias because of QTBUG-16357
     property alias rootIndex : visualDataModel.rootIndex
     signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
@@ -36,29 +39,16 @@ PathView {
         return visualDataModel.modelIndex(currentIndex);
     }
 
-    model : visualDataModel
-    pathItemCount: (width+2*delegateWidth)/delegateWidth
-    preferredHighlightBegin : 0.5
-    preferredHighlightEnd : 0.5
-
-    path: Path {
-        startX: -pathView.delegateWidth; startY: pathView.height/2.0
-        PathAttribute { name: "scale"; value: 1 }
-        PathAttribute { name: "z"; value: 1 }
-        PathAttribute { name: "opacity"; value: 0.2 }
-        PathLine { x: pathView.width/2.5; y: pathView.height/2.0 }
-        PathAttribute { name: "scale"; value: 1.0 }
-        PathLine { x: pathView.width/2.0; y: pathView.height/2.0 }
-        PathAttribute { name: "scale"; value: 1.5 }
-        PathAttribute { name: "z"; value: 2 }
-        PathAttribute { name: "opacity"; value: 1.0 }
-        PathLine { x: pathView.width/1.5; y: pathView.height/2.0 }
-        PathAttribute { name: "scale"; value: 1.0 }
-        PathLine { x: pathView.width+pathView.delegateWidth; y: pathView.height/2.0 }
-        PathAttribute { name: "scale"; value: 1 }
-        PathAttribute { name: "z"; value: 1 }
-        PathAttribute { name: "opacity"; value: 0.2 }
+    function setPathStyle(path) {
+        pathView.preferredHighlightBegin = pathHash[path].highlightPos
+        pathView.path = pathHash[path]
     }
+
+    model: visualDataModel
+    //Fixme: were we deliberately constraining this?
+    //pathItemCount: (width+2*delegateWidth)/delegateWidth
+    //pathItemCount: 20
+    preferredHighlightEnd: pathView.preferredHighlightBegin
 
     VisualDataModel {
         id: visualDataModel
@@ -71,10 +61,82 @@ PathView {
         }
     }
 
+    Component.onCompleted:
+        setPathStyle("linearZoom")
+
     Keys.onPressed:
         if (actionmap.eventMatch(event, ActionMapper.Right))
             pathView.incrementCurrentIndex()
         else if (actionmap.eventMatch(event, ActionMapper.Left))
             pathView.decrementCurrentIndex()
+
+    QtObject {
+        id: pathHash
+        property Path linearZoom: Path {
+            property double highlightPos: 0.5
+            startX: -pathView.delegateWidth; startY: pathView.height/2.0
+            PathAttribute { name: "scale"; value: 1 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "opacity"; value: 0.2 }
+            PathLine { x: pathView.width/2.5; y: pathView.height/2.0 }
+            PathAttribute { name: "scale"; value: 1.0 }
+            PathLine { x: pathView.width/2.0; y: pathView.height/2.0 }
+            PathAttribute { name: "scale"; value: 1.5 }
+            PathAttribute { name: "z"; value: 2 }
+            PathAttribute { name: "opacity"; value: 1.0 }
+            PathLine { x: pathView.width/1.5; y: pathView.height/2.0 }
+            PathAttribute { name: "scale"; value: 1.0 }
+            PathLine { x: pathView.width+pathView.delegateWidth; y: pathView.height/2.0 }
+            PathAttribute { name: "scale"; value: 1 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "opacity"; value: 0.2 }
+        }
+        property Path amphitheatreZoom: Path {
+            id: amphitheatreZoom
+            property double highlightPos: 0.5
+            startX: 0; startY: pathView.height/2
+            PathAttribute { name: "rotation"; value: 90 }
+            PathAttribute { name: "scale"; value: 0.2 }
+            PathQuad { x: pathView.width/2; y: amphitheatreZoom.startY/2; controlX: pathView.width/4.0; controlY: amphitheatreZoom.startY/2 }
+            PathAttribute { name: "scale"; value: 1.0 }
+            PathQuad { x: pathView.width; y: amphitheatreZoom.startY; controlX: pathView.width*3.0/4.0; controlY: amphitheatreZoom.startY/2 }
+            PathAttribute { name: "rotation"; value: -90 }
+            PathAttribute { name: "scale"; value: 0.2 }
+        }
+        property Path carousel: Path {
+            id: carousel
+            property double highlightPos: 0.75
+
+            property double horizCenter: pathView.width/2
+            property double vertCenter: pathView.height/2 - offsetHeight
+
+            property double perspectiveFlatteningFactor: 1.6
+            property double offsetWidth: pathView.delegateWidth * 2
+            property double offsetHeight: pathView.delegateHeight/perspectiveFlatteningFactor
+
+            property double horizHypot: offsetWidth/Math.sqrt(2)
+            property double vertHypot: offsetHeight/Math.sqrt(2)
+
+            startX: carousel.horizCenter - offsetWidth; startY: carousel.vertCenter
+            //(0, midpoint)
+            //(midpoint, end)
+            //(end, midpoint)
+            //(midpoint, 0)
+
+            PathAttribute { name: "z"; value: 5 }
+            PathAttribute { name: "scale"; value: 0.6 }
+            PathQuad { x: carousel.horizCenter; y: carousel.vertCenter - carousel.offsetHeight; controlX: carousel.horizCenter - carousel.horizHypot; controlY: carousel.vertCenter - carousel.vertHypot }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "scale"; value: 0.2 }
+            PathQuad { x: carousel.horizCenter + carousel.offsetWidth; y: carousel.vertCenter; controlX: carousel.horizCenter + carousel.horizHypot; controlY: carousel.vertCenter - carousel.vertHypot }
+            PathAttribute { name: "z"; value: 5 }
+            PathAttribute { name: "scale"; value: 0.6 }
+            PathQuad { x: carousel.horizCenter; y: carousel.vertCenter + carousel.offsetHeight; controlX: carousel.horizCenter + carousel.horizHypot; controlY: carousel.vertCenter + carousel.vertHypot }
+            PathAttribute { name: "z"; value: 10 }
+            PathAttribute { name: "scale"; value: 2.0 }
+            //Origin
+            PathQuad { x: carousel.startX; y: carousel.startY; controlX: carousel.horizCenter - carousel.horizHypot; controlY: carousel.vertCenter + carousel.vertHypot }
+        }
+    }
 }
 

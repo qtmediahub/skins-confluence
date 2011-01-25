@@ -11,6 +11,11 @@ Item {
     opacity : PathView.opacity
     z: PathView.z
 
+    transform: Rotation {
+        axis { x: 0; y: 1; z: 0 }
+        angle: PathView.rotation;
+    }
+
     PathView.onIsCurrentItemChanged: { // QTBUG-16347
         if (PathView.isCurrentItem)
             PathView.view.currentItem = delegateItem
