@@ -21,98 +21,12 @@ import QtQuick 1.0
 import confluence.r720.components 1.0
 import Playlist 1.0
 
-Window {
+MediaWindow {
     id: root
-    focalWidget: viewLoader
 
-    MusicInformationSheet {
-        id: musicInformationSheet
-    }
-
-    MediaScanInfo {
-        x: 765
-        currentPath: musicEngine.pluginProperties.model.currentScanPath
-    }
-
-    bladeComponent: MediaWindowBlade {
-        id: musicWindowBlade
-        parent: root
-        visible: true
-        actionList: [viewAction, sortByAction]
-        property alias viewAction: viewAction
-
-        resources: [
-            // Standard actions shared by all views
-            ConfluenceAction {
-                id: viewAction
-                text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
-                onTriggered: root.setCurrentView(currentOption)
-            },
-            ConfluenceAction {
-                id: sortByAction
-                text: qsTr("SORT BY")
-                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: musicEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
-            }]
-    }
-
-    function setCurrentView(viewType) {
-        if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
-            viewLoader.changeView(thumbnailView)
-            viewLoader.item.hidePreview = viewType == "PIC THUMBS"
-        } else if (viewType == "LIST" || viewType == "BIG LIST") {
-            viewLoader.changeView(listView)
-            viewLoader.item.hidePreview = viewType == "BIG LIST"
-        } else if (viewType == "POSTER") {
-            viewLoader.sourceComponent = posterView
-        }
-        blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
-        config.setValue("musicwindow-currentview", viewType)
-    }
-
-    Component {
-        id: thumbnailView
-        MediaThumbnailView {
-            engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.model
-            informationSheet: musicInformationSheet
-            onItemActivated: root.itemActivated(itemData)
-        }
-    }
-
-    Component {
-        id: listView
-        MediaListView {
-            engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.model
-            informationSheet: musicInformationSheet
-            onItemActivated: root.itemActivated(itemData)
-        }
-    }
-
-    Component {
-        id: posterView
-        MediaPosterView {
-            engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.model
-            informationSheet: musicInformationSheet
-            onItemActivated: root.itemActivated(itemData)
-            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
-        }
-    }
-
-    ViewLoader {
-        id: viewLoader
-        focus: true
-        anchors.fill: parent
-    }
-
-    Component.onCompleted: {
-        musicEngine.visualElement = root;
-        musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
-        setCurrentView(config.value("musicwindow-currentview", "POSTER"))
-    }
+    informationSheet: MusicInformationSheet { id: musicInformationSheet }
+    mediaEngine: musicEngine
+    mediaWindowName: "musicwindow"
 
     function itemActivated(item) {
         avPlayer.playForeground(item, Playlist.Replace, Playlist.Flat);

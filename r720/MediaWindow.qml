@@ -25,26 +25,34 @@ Window {
 
     focalWidget: viewLoader
     property Engine mediaEngine
-    property string mediaWindowName: genericMediaWindow
+    property Item informationSheet
+    property string mediaWindowName: "genericMediaWindow"
     property alias mediaScanPath: mediaScanInfo.currentPath
 
     MediaScanInfo {
         id: mediaScanInfo
         x: 765
+        currentPath:
+            mediaEngine.pluginProperties.model.currentScanPath
     }
 
     bladeComponent: MediaWindowBlade {
         parent: root
         visible: true
-        actionList: [viewAction, sortByAction, slideShowAction]
         property alias viewAction: viewAction
 
-        resources: [
+        actionList: [
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
                 onTriggered: root.setCurrentView(currentOption)
+            },
+            ConfluenceAction {
+                id: sortByAction
+                text: qsTr("SORT BY")
+                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
+                onTriggered: mediaEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
             } ]
     }
 
@@ -62,36 +70,39 @@ Window {
         config.setValue(root.mediaWindowName + "-currentview", viewType)
     }
 
-//    Component {
-//        id: thumbnailView
-//        MediaThumbnailView {
-//            engineName: pictureEngine.name
-//            engineModel: pictureEngine.pluginProperties.model
-//            informationSheet: pictureInformationSheet
-//            onItemActivated: root.startSlideShow(false /* autoPlay */)
-//        }
-//    }
+    function itemActivated(item) {
+        console.log("Activated: " + item)
+    }
 
-//    Component {
-//        id: listView
-//        MediaListView {
-//            engineName: pictureEngine.name
-//            engineModel: pictureEngine.pluginProperties.model
-//            informationSheet: pictureInformationSheet
-//            onItemActivated: root.startSlideShow(false /* autoPlay */)
-//        }
-//    }
+    Component {
+        id: thumbnailView
+        MediaThumbnailView {
+            engineName: mediaEngine.name
+            engineModel: mediaEngine.pluginProperties.model
+            informationSheet: root.informationSheet
+            onItemActivated: root.itemActivated(itemData)
+        }
+    }
 
-//    Component {
-//        id: posterView
-//        MediaPosterView {
-//            engineName: pictureEngine.name
-//            engineModel: pictureEngine.pluginProperties.model
-//            informationSheet: pictureInformationSheet
-//            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
-//            onItemActivated: root.startSlideShow(false /* autoPlay */)
-//        }
-//    }
+    Component {
+        id: listView
+        MediaListView {
+            engineName: mediaEngine.name
+            engineModel: mediaEngine.pluginProperties.model
+            informationSheet: root.informationSheet
+            onItemActivated: root.itemActivated(itemData)
+        }
+    }
+
+    Component {
+        id: posterView
+        MediaPosterView {
+            engineName: mediaEngine.name
+            engineModel: mediaEngine.pluginProperties.model
+            informationSheet: root.informationSheet
+            onItemActivated: root.itemActivated(itemData)
+        }
+    }
 
     ViewLoader {
         id: viewLoader

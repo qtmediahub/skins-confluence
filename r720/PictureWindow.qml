@@ -20,18 +20,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 
-Window {
+MediaWindow {
     id: root
 
-    focalWidget: viewLoader
-
-    PictureInformationSheet { id: pictureInformationSheet }
-
-    PictureSlideShow {
-        id: slideShow
-        opacity: 0
-        z: parent.z + 1
-    }
+    mediaWindowName: "picture"
+    informationSheet: PictureInformationSheet { id: pictureInformationSheet }
+    mediaEngine: pictureEngine
 
     function startSlideShow(autoPlay) {
         slideShow.showItem(viewLoader.item.currentItem.itemdata.mediaInfo)
@@ -45,94 +39,28 @@ Window {
         slideShow.forceActiveFocus()
     }
 
-    MediaScanInfo {
-        x: 765
-        currentPath: pictureEngine.pluginProperties.model.currentScanPath
+    function itemActivated(item) {
+        root.startSlideShow(false /* autoPlay */)
     }
 
-    bladeComponent: MediaWindowBlade {
-        id: pictureWindowBlade
-        parent: root
-        visible: true
-        actionList: [viewAction, sortByAction, slideShowAction]
-        property alias viewAction: viewAction
-
-        resources: [
-            // Standard actions shared by all views
-            ConfluenceAction {
-                id: viewAction
-                text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
-                onTriggered: root.setCurrentView(currentOption)
-            },
-            ConfluenceAction {
-                id: sortByAction
-                text: qsTr("SORT BY")
-                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: pictureEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
-            },
-            ConfluenceAction {
-                id: slideShowAction
-                text: qsTr("SLIDESHOW")
-                onTriggered: root.startSlideShow(true /*autoPlay */)
-            }]
+    PictureSlideShow {
+        id: slideShow
+        opacity: 0
+        z: parent.z + 1
     }
 
-    function setCurrentView(viewType) {
-        if (viewType == qsTr("THUMBNAIL") || viewType == qsTr("PIC THUMBS")) {
-            viewLoader.changeView(thumbnailView)
-            viewLoader.item.hidePreview = viewType == qsTr("PIC THUMBS")
-        } else if (viewType == qsTr("LIST") || viewType == qsTr("BIG LIST")) {
-            viewLoader.changeView(listView)
-            viewLoader.item.hidePreview = viewType == qsTr("BIG LIST")
-        } else if (viewType == qsTr("POSTER")) {
-            viewLoader.sourceComponent = posterView
-        }
-        blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
-        config.setValue("picturewindow-currentview", viewType)
-    }
+    //FIXME: only outstanding item is to add actions at will!
+//        blade.addAction(
+//            Qt.createQmlObject('import QtQuick 1.0;\
+//                                import confluence.r720.components 1.0; \
+//                                ConfluenceAction { \
+//                                text: qsTr("SLIDESHOW"); \
+//                                onTriggered: root.startSlideShow(true /*autoPlay */) }'
+//                               , blade, ""))
+        //            ConfluenceAction {
+        //                id: slideShowAction
+        //                text: qsTr("SLIDESHOW")
+        //                onTriggered: root.startSlideShow(true /*autoPlay */)
+        //            }]
 
-    Component {
-        id: thumbnailView
-        MediaThumbnailView {
-            engineName: pictureEngine.name
-            engineModel: pictureEngine.pluginProperties.model
-            informationSheet: pictureInformationSheet
-            onItemActivated: root.startSlideShow(false /* autoPlay */)
-        }
-    }
-
-    Component {
-        id: listView
-        MediaListView {
-            engineName: pictureEngine.name
-            engineModel: pictureEngine.pluginProperties.model
-            informationSheet: pictureInformationSheet
-            onItemActivated: root.startSlideShow(false /* autoPlay */)
-        }
-    }
-
-    Component {
-        id: posterView
-        MediaPosterView {
-            engineName: pictureEngine.name
-            engineModel: pictureEngine.pluginProperties.model
-            informationSheet: pictureInformationSheet
-            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
-            onItemActivated: root.startSlideShow(false /* autoPlay */)
-        }
-    }
-
-    ViewLoader {
-        id: viewLoader
-        focus: true
-        anchors.fill: parent
-    }
-
-    Component.onCompleted: {
-        pictureEngine.visualElement = root;
-        pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
-        setCurrentView(config.value("picturewindow-currentview", "POSTER"))
-    }
 }
-

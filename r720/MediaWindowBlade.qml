@@ -21,7 +21,7 @@ import QtQuick 1.0
 import confluence.r720.components 1.0
 
 Blade {
-    id: pictureOptions
+    id: root
     clip: false
 
     // ## Need to check why list<ConfluenceAction> does not work, but it works
@@ -52,8 +52,13 @@ Blade {
             focus: true
             width: parent.width
             height: parent.height - banner.height
-            model: pictureOptions.actionList
+            model: root.actionList
         }
     }
-}
 
+    //FIXME: only outstanding item is to add actions at will!
+//    function addAction(ActionItem)
+//    {
+//        root.actionList.append(ActionItem)
+//    }
+}

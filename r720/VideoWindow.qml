@@ -24,50 +24,8 @@ import Playlist 1.0
 MediaWindow {
     id: root
 
-    mediaScanPath: videoEngine.pluginProperties.model.currentScanPath
+    mediaEngine: videoEngine
     mediaWindowName: "videowindow"
-
-    bladeComponent:
-//            ConfluenceAction {
-//                id: sortByAction
-//                text: qsTr("SORT BY")
-//                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-//                onTriggered: videoEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
-//            }]
-
-//    Component {
-//        id: thumbnailView
-//        MediaThumbnailView {
-//            engineName: videoEngine.name
-//            engineModel: videoEngine.pluginProperties.model
-//            onItemActivated: root.itemActivated(itemData)
-//        }
-//    }
-
-//    Component {
-//        id: listView
-//        MediaListView {
-//            engineName: videoEngine.name
-//            engineModel: videoEngine.pluginProperties.model
-//            onItemActivated: root.itemActivated(itemData)
-//        }
-//    }
-
-//    Component {
-//        id: posterView
-//        MediaPosterView {
-//            engineName: videoEngine.name
-//            engineModel: videoEngine.pluginProperties.model
-//            onItemActivated: root.itemActivated(itemData)
-//            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
-//        }
-//    }
-
-    Component.onCompleted: {
-        videoEngine.visualElement = root;
-        videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
-        setCurrentView(config.value("videowindow-currentview", "POSTER"))
-    }
 
     function itemActivated(item) {
         avPlayer.playForeground(item, Playlist.Replace, Playlist.Flat);
