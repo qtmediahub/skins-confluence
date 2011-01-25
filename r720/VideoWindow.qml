@@ -21,86 +21,47 @@ import QtQuick 1.0
 import confluence.r720.components 1.0
 import Playlist 1.0
 
-Window {
+MediaWindow {
     id: root
 
-    focalWidget: viewLoader
+    mediaScanPath: videoEngine.pluginProperties.videoModel.currentScanPath
+    mediaWindowName: "videowindow"
 
-    MediaScanInfo {
-        x: 765
-        currentPath: videoEngine.pluginProperties.videoModel.currentScanPath
-    }
+    bladeComponent:
+//            ConfluenceAction {
+//                id: sortByAction
+//                text: qsTr("SORT BY")
+//                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
+//                onTriggered: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption)
+//            }]
 
-    bladeComponent: MediaWindowBlade {
-        id: videoWindowBlade
-        parent: root
-        visible: true
-        actionList: [viewAction, sortByAction]
-        property alias viewAction: viewAction
+//    Component {
+//        id: thumbnailView
+//        MediaThumbnailView {
+//            engineName: videoEngine.name
+//            engineModel: videoEngine.pluginProperties.videoModel
+//            onItemActivated: root.itemActivated(itemData)
+//        }
+//    }
 
-        resources: [
-            // Standard actions shared by all views
-            ConfluenceAction {
-                id: viewAction
-                text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER")]
-                onTriggered: root.setCurrentView(currentOption)
-            },
-            ConfluenceAction {
-                id: sortByAction
-                text: qsTr("SORT BY")
-                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption)
-            }]
-    }
+//    Component {
+//        id: listView
+//        MediaListView {
+//            engineName: videoEngine.name
+//            engineModel: videoEngine.pluginProperties.videoModel
+//            onItemActivated: root.itemActivated(itemData)
+//        }
+//    }
 
-    function setCurrentView(viewType) {
-        if (viewType == "THUMBNAIL" || viewType == "PIC THUMBS") {
-            viewLoader.changeView(thumbnailView)
-            viewLoader.item.hidePreview = viewType == "PIC THUMBS"
-        } else if (viewType == "LIST" || viewType == "BIG LIST") {
-            viewLoader.changeView(listView)
-            viewLoader.item.hidePreview = viewType == "BIG LIST"
-        } else if (viewType == "POSTER") {
-            viewLoader.sourceComponent = posterView
-        }
-        blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
-        config.setValue("videowindow-currentview", viewType)
-    }
-
-    Component {
-        id: thumbnailView
-        MediaThumbnailView {
-            engineName: videoEngine.name
-            engineModel: videoEngine.pluginProperties.videoModel
-            onItemActivated: root.itemActivated(itemData)
-        }
-    }
-
-    Component {
-        id: listView
-        MediaListView {
-            engineName: videoEngine.name
-            engineModel: videoEngine.pluginProperties.videoModel
-            onItemActivated: root.itemActivated(itemData)
-        }
-    }
-
-    Component {
-        id: posterView
-        MediaPosterView {
-            engineName: videoEngine.name
-            engineModel: videoEngine.pluginProperties.videoModel
-            onItemActivated: root.itemActivated(itemData)
-            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
-        }
-    }
-
-    ViewLoader {
-        id: viewLoader
-        focus: true
-        anchors.fill: parent
-    }
+//    Component {
+//        id: posterView
+//        MediaPosterView {
+//            engineName: videoEngine.name
+//            engineModel: videoEngine.pluginProperties.videoModel
+//            onItemActivated: root.itemActivated(itemData)
+//            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
+//        }
+//    }
 
     Component.onCompleted: {
         videoEngine.visualElement = root;
