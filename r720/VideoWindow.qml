@@ -24,7 +24,7 @@ import Playlist 1.0
 MediaWindow {
     id: root
 
-    mediaScanPath: videoEngine.pluginProperties.videoModel.currentScanPath
+    mediaScanPath: videoEngine.pluginProperties.model.currentScanPath
     mediaWindowName: "videowindow"
 
     bladeComponent:
@@ -32,14 +32,14 @@ MediaWindow {
 //                id: sortByAction
 //                text: qsTr("SORT BY")
 //                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-//                onTriggered: videoEngine.pluginProperties.videoModel.sort(viewLoader.item.rootIndex, currentOption)
+//                onTriggered: videoEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
 //            }]
 
 //    Component {
 //        id: thumbnailView
 //        MediaThumbnailView {
 //            engineName: videoEngine.name
-//            engineModel: videoEngine.pluginProperties.videoModel
+//            engineModel: videoEngine.pluginProperties.model
 //            onItemActivated: root.itemActivated(itemData)
 //        }
 //    }
@@ -48,7 +48,7 @@ MediaWindow {
 //        id: listView
 //        MediaListView {
 //            engineName: videoEngine.name
-//            engineModel: videoEngine.pluginProperties.videoModel
+//            engineModel: videoEngine.pluginProperties.model
 //            onItemActivated: root.itemActivated(itemData)
 //        }
 //    }
@@ -57,7 +57,7 @@ MediaWindow {
 //        id: posterView
 //        MediaPosterView {
 //            engineName: videoEngine.name
-//            engineModel: videoEngine.pluginProperties.videoModel
+//            engineModel: videoEngine.pluginProperties.model
 //            onItemActivated: root.itemActivated(itemData)
 //            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
 //        }
@@ -65,7 +65,7 @@ MediaWindow {
 
     Component.onCompleted: {
         videoEngine.visualElement = root;
-        videoEngine.pluginProperties.videoModel.setThemeResourcePath(themeResourcePath);
+        videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value("videowindow-currentview", "POSTER"))
     }
 

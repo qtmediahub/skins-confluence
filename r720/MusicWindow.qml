@@ -31,7 +31,7 @@ Window {
 
     MediaScanInfo {
         x: 765
-        currentPath: musicEngine.pluginProperties.musicModel.currentScanPath
+        currentPath: musicEngine.pluginProperties.model.currentScanPath
     }
 
     bladeComponent: MediaWindowBlade {
@@ -53,7 +53,7 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: musicEngine.pluginProperties.musicModel.sort(viewLoader.item.rootIndex, currentOption)
+                onTriggered: musicEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
             }]
     }
 
@@ -75,7 +75,7 @@ Window {
         id: thumbnailView
         MediaThumbnailView {
             engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.musicModel
+            engineModel: musicEngine.pluginProperties.model
             informationSheet: musicInformationSheet
             onItemActivated: root.itemActivated(itemData)
         }
@@ -85,7 +85,7 @@ Window {
         id: listView
         MediaListView {
             engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.musicModel
+            engineModel: musicEngine.pluginProperties.model
             informationSheet: musicInformationSheet
             onItemActivated: root.itemActivated(itemData)
         }
@@ -95,7 +95,7 @@ Window {
         id: posterView
         MediaPosterView {
             engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.musicModel
+            engineModel: musicEngine.pluginProperties.model
             informationSheet: musicInformationSheet
             onItemActivated: root.itemActivated(itemData)
             Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
@@ -110,7 +110,7 @@ Window {
 
     Component.onCompleted: {
         musicEngine.visualElement = root;
-        musicEngine.pluginProperties.musicModel.setThemeResourcePath(themeResourcePath);
+        musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value("musicwindow-currentview", "POSTER"))
     }
 

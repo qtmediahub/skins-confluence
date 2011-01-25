@@ -47,7 +47,7 @@ Window {
 
     MediaScanInfo {
         x: 765
-        currentPath: pictureEngine.pluginProperties.pictureModel.currentScanPath
+        currentPath: pictureEngine.pluginProperties.model.currentScanPath
     }
 
     bladeComponent: MediaWindowBlade {
@@ -69,7 +69,7 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: pictureEngine.pluginProperties.pictureModel.sort(viewLoader.item.rootIndex, currentOption)
+                onTriggered: pictureEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
             },
             ConfluenceAction {
                 id: slideShowAction
@@ -96,7 +96,7 @@ Window {
         id: thumbnailView
         MediaThumbnailView {
             engineName: pictureEngine.name
-            engineModel: pictureEngine.pluginProperties.pictureModel
+            engineModel: pictureEngine.pluginProperties.model
             informationSheet: pictureInformationSheet
             onItemActivated: root.startSlideShow(false /* autoPlay */)
         }
@@ -106,7 +106,7 @@ Window {
         id: listView
         MediaListView {
             engineName: pictureEngine.name
-            engineModel: pictureEngine.pluginProperties.pictureModel
+            engineModel: pictureEngine.pluginProperties.model
             informationSheet: pictureInformationSheet
             onItemActivated: root.startSlideShow(false /* autoPlay */)
         }
@@ -116,7 +116,7 @@ Window {
         id: posterView
         MediaPosterView {
             engineName: pictureEngine.name
-            engineModel: pictureEngine.pluginProperties.pictureModel
+            engineModel: pictureEngine.pluginProperties.model
             informationSheet: pictureInformationSheet
             Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
             onItemActivated: root.startSlideShow(false /* autoPlay */)
@@ -131,7 +131,7 @@ Window {
 
     Component.onCompleted: {
         pictureEngine.visualElement = root;
-        pictureEngine.pluginProperties.pictureModel.setThemeResourcePath(themeResourcePath);
+        pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value("picturewindow-currentview", "POSTER"))
     }
 }

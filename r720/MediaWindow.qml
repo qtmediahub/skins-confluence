@@ -66,7 +66,7 @@ Window {
 //        id: thumbnailView
 //        MediaThumbnailView {
 //            engineName: pictureEngine.name
-//            engineModel: pictureEngine.pluginProperties.pictureModel
+//            engineModel: pictureEngine.pluginProperties.model
 //            informationSheet: pictureInformationSheet
 //            onItemActivated: root.startSlideShow(false /* autoPlay */)
 //        }
@@ -76,7 +76,7 @@ Window {
 //        id: listView
 //        MediaListView {
 //            engineName: pictureEngine.name
-//            engineModel: pictureEngine.pluginProperties.pictureModel
+//            engineModel: pictureEngine.pluginProperties.model
 //            informationSheet: pictureInformationSheet
 //            onItemActivated: root.startSlideShow(false /* autoPlay */)
 //        }
@@ -86,7 +86,7 @@ Window {
 //        id: posterView
 //        MediaPosterView {
 //            engineName: pictureEngine.name
-//            engineModel: pictureEngine.pluginProperties.pictureModel
+//            engineModel: pictureEngine.pluginProperties.model
 //            informationSheet: pictureInformationSheet
 //            Keys.onDownPressed: { blade.open(); blade.forceActiveFocus() }
 //            onItemActivated: root.startSlideShow(false /* autoPlay */)
@@ -101,7 +101,7 @@ Window {
 
     Component.onCompleted: {
         mediaEngine.visualElement = root;
-        mediaEngine.pluginProperties.pictureModel.setThemeResourcePath(themeResourcePath);
+        mediaEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value(root.mediaWindowName + "-currentview", "POSTER"))
     }
 }

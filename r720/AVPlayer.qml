@@ -234,7 +234,7 @@ FocusScope {
             id: videoListPanel
             anchors.fill: parent
             engineName: videoEngine.name
-            engineModel: videoEngine.pluginProperties.videoModel
+            engineModel: videoEngine.pluginProperties.model
 
             onItemTriggered: {
                 root.play(itemData, Playlist.Replace, Playlist.Flat)
@@ -261,7 +261,7 @@ FocusScope {
             id: musicListPanel
             anchors.fill: parent
             engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.musicModel
+            engineModel: musicEngine.pluginProperties.model
 
             onItemTriggered: {
                 root.play(itemData, Playlist.Replace, Playlist.Flat)
