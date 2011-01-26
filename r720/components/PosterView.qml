@@ -60,7 +60,7 @@ PathView {
     }
 
     Component.onCompleted:
-        setPathStyle("linearZoom")
+        setPathStyle("carousel")
 
     Keys.onPressed:
         if (actionmap.eventMatch(event, ActionMapper.Right))
@@ -71,26 +71,27 @@ PathView {
     QtObject {
         id: paths
         property PosterPath linearZoom: PosterPath {
-            startX: -pathView.delegateWidth; startY: pathView.height/2.0
+            id: linearZoom
+            startX: -pathView.delegateWidth; startY: (pathView.height - pathView.delegateHeight)/2.0
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.2 }
-            PathLine { x: pathView.width/2.5; y: pathView.height/2.0 }
+            PathLine { x: pathView.width/2.5; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1.0 }
-            PathLine { x: pathView.width/2.0; y: pathView.height/2.0 }
+            PathLine { x: pathView.width/2.0; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1.5 }
             PathAttribute { name: "z"; value: 2 }
             PathAttribute { name: "opacity"; value: 1.0 }
-            PathLine { x: pathView.width/1.5; y: pathView.height/2.0 }
+            PathLine { x: pathView.width/1.5; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1.0 }
-            PathLine { x: pathView.width+pathView.delegateWidth; y: pathView.height/2.0 }
+            PathLine { x: pathView.width+pathView.delegateWidth; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.2 }
         }
         property PosterPath amphitheatreZoom: PosterPath {
             id: amphitheatreZoom
-            startX: 0; startY: pathView.height/2
+            startX: 0; startY: (pathView.height - pathView.delegateHeight)/2.0
             PathAttribute { name: "rotation"; value: 90 }
             PathAttribute { name: "scale"; value: 0.2 }
             PathQuad { x: pathView.width/2; y: amphitheatreZoom.startY/2; controlX: pathView.width/4.0; controlY: amphitheatreZoom.startY/2 }
@@ -102,9 +103,10 @@ PathView {
         property PosterPath carousel: PosterPath {
             id: carousel
             highlightPos: 0.75
+            pathItemCount: 50
 
             property double horizCenter: pathView.width/2
-            property double vertCenter: pathView.height/2 - offsetHeight
+            property double vertCenter: (pathView.height - pathView.delegateHeight)/2.0
 
             property double perspectiveFlatteningFactor: 1.6
             property double offsetWidth: pathView.delegateWidth * 2
@@ -115,16 +117,16 @@ PathView {
 
             startX: carousel.horizCenter - offsetWidth; startY: carousel.vertCenter
 
-            PathAttribute { name: "z"; value: 5 }
+            PathAttribute { name: "z"; value: 4 }
             PathAttribute { name: "scale"; value: 0.6 }
             PathQuad { x: carousel.horizCenter; y: carousel.vertCenter - carousel.offsetHeight; controlX: carousel.horizCenter - carousel.horizHypot; controlY: carousel.vertCenter - carousel.vertHypot }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "scale"; value: 0.2 }
             PathQuad { x: carousel.horizCenter + carousel.offsetWidth; y: carousel.vertCenter; controlX: carousel.horizCenter + carousel.horizHypot; controlY: carousel.vertCenter - carousel.vertHypot }
-            PathAttribute { name: "z"; value: 5 }
+            PathAttribute { name: "z"; value: 4 }
             PathAttribute { name: "scale"; value: 0.6 }
             PathQuad { x: carousel.horizCenter; y: carousel.vertCenter + carousel.offsetHeight; controlX: carousel.horizCenter + carousel.horizHypot; controlY: carousel.vertCenter + carousel.vertHypot }
-            PathAttribute { name: "z"; value: 10 }
+            PathAttribute { name: "z"; value: 7 }
             PathAttribute { name: "scale"; value: 2.0 }
             //Origin
             PathQuad { x: carousel.startX; y: carousel.startY; controlX: carousel.horizCenter - carousel.horizHypot; controlY: carousel.vertCenter + carousel.vertHypot }
