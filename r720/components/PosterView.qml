@@ -23,8 +23,6 @@ import ActionMapper 1.0
 PathView {
     id: pathView
 
-    anchors.fill: parent
-
     property variant posterModel // Not an alias because of QTBUG-16357
     property alias rootIndex : visualDataModel.rootIndex
     signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089

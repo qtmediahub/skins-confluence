@@ -65,12 +65,13 @@ Item {
 
     PosterView {
         id: posterView
-        width: parent.width
-        height: confluence.height/2.4
-        anchors.top: parent.top
-        anchors.topMargin: confluence.height/7.2
-        anchors.horizontalCenter: parent.horizontalCenter
-        clip: true
+        anchors.fill: parent
+        //width: parent.width
+        //height: confluence.height/2.4
+        //anchors.top: parent.top
+        //anchors.topMargin: confluence.height/7.2
+        //anchors.horizontalCenter: parent.horizontalCenter
+        //clip: true
         focus: true
         posterModel: engineModel
 
