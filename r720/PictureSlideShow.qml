@@ -35,7 +35,6 @@ FocusScope {
     height: 0
     visible: false
     opacity: 0
-    focus: true
 
     MouseArea {
         id: consumer
@@ -49,6 +48,25 @@ FocusScope {
 
             mouse.accepted = true;
         }
+    }
+
+    Keys.onPressed: {
+        if (actionmap.eventMatch(event, ActionMapper.Back))
+            root.close();
+        else if (actionmap.eventMatch(event, ActionMapper.Left))
+            root.previous()
+        else if (actionmap.eventMatch(event, ActionMapper.Right))
+            root.next()
+        event.accepted = true
+    }
+
+    Timer {
+        id: timer
+        running: root.running
+        repeat: true
+        interval: root.interval
+        triggeredOnStart: true
+        onTriggered: root.next()
     }
 
     Playlist {
@@ -66,15 +84,14 @@ FocusScope {
         id: image
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit
+        asynchronous: true
+    }
 
-        Timer {
-            id: timer
-            running: root.running
-            repeat: true
-            interval: root.interval
-            triggeredOnStart: true
-            onTriggered: root.next()
-        }
+    Image {
+        id: imageThumbnail
+        anchors.fill: image
+        fillMode: Image.PreserveAspectFit
+        visible: image.status != Image.Ready
     }
 
     Image {
@@ -125,7 +142,6 @@ FocusScope {
                 width: parent.width
                 height: parent.height
             }
-            StateChangeScript { name: "forceActiveFocus"; script: { parent.forceActiveFocus() } }
         }
     ]
 
@@ -150,23 +166,9 @@ FocusScope {
                     NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                     NumberAnimation { properties: "x,y,width,height"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
-                ScriptAction { scriptName: "forceActiveFocus" }
             }
         }
     ]
-
-    Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.back)) {
-            root.close();
-            event.accepted = true
-        } else if (actionmap.eventMatch(event, ActionMapper.left)) {
-            root.previous()
-            event.accepted = true
-        } else if (actionmap.eventMatch(event, ActionMapper.right)) {
-            root.next()
-            event.accepted = true
-        }
-    }
 
     function showItem(item) {
         showIndex(imagePlayList.add(item, Playlist.Replace, Playlist.Flat))
@@ -174,6 +176,8 @@ FocusScope {
 
     function showIndex(idx) {
         root.currentIndex = idx
+
+        imageThumbnail.source = imagePlayList.data(root.currentIndex, Playlist.PreviewUrlRole)
         image.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
     }
 
@@ -186,7 +190,7 @@ FocusScope {
     }
 
     function close() {
-        root.state = "";
+        root.state = ""
     }
 }
 

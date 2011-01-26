@@ -27,40 +27,25 @@ MediaWindow {
     informationSheet: PictureInformationSheet { id: pictureInformationSheet }
     mediaEngine: pictureEngine
 
-    function startSlideShow(autoPlay) {
-        slideShow.showItem(viewLoader.item.currentItem.itemdata.mediaInfo)
-
-        slideShow.x = viewLoader.item.currentThumbnailRect[0]
-        slideShow.y = viewLoader.item.currentThumbnailRect[1]
-        slideShow.width = viewLoader.item.currentThumbnailRect[2]
-        slideShow.height = viewLoader.item.currentThumbnailRect[3]
-
-        slideShow.state = "visible"
-        slideShow.forceActiveFocus()
-    }
-
-    function itemActivated(item) {
-        root.startSlideShow(false /* autoPlay */)
-    }
-
     PictureSlideShow {
         id: slideShow
         opacity: 0
         z: parent.z + 1
     }
 
-    //FIXME: only outstanding item is to add actions at will!
-//        blade.addAction(
-//            Qt.createQmlObject('import QtQuick 1.0;\
-//                                import confluence.r720.components 1.0; \
-//                                ConfluenceAction { \
-//                                text: qsTr("SLIDESHOW"); \
-//                                onTriggered: root.startSlideShow(true /*autoPlay */) }'
-//                               , blade, ""))
-        //            ConfluenceAction {
-        //                id: slideShowAction
-        //                text: qsTr("SLIDESHOW")
-        //                onTriggered: root.startSlideShow(true /*autoPlay */)
-        //            }]
+    function startSlideShow(autoPlay) {
+        slideShow.showItem(focalWidget.item.currentItem.itemdata.mediaInfo)
 
+        slideShow.x = focalWidget.item.currentThumbnailRect[0]
+        slideShow.y = focalWidget.item.currentThumbnailRect[1]
+        slideShow.width = focalWidget.item.currentThumbnailRect[2]
+        slideShow.height = focalWidget.item.currentThumbnailRect[3]
+
+        slideShow.state = "visible"
+        slideShow.focus = true
+    }
+
+    function itemActivated(item) {
+        root.startSlideShow(false /* autoPlay */)
+    }
 }
