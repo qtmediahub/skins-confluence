@@ -15,7 +15,8 @@ Item {
     Connections {
         target: backend
         onInputIdle: {
-            if (avPlayer.playing)
+            if (avPlayer.playing
+                || !frontend.isActiveWindow)
                 return
             var list = qmlscreensavers.modules
             var index = Math.floor(Math.random() * list.length)
