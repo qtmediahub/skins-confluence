@@ -59,6 +59,10 @@ Item {
         informationSheet.currentItem = posterView.currentItem
     }
 
+    function setPathStyle(style) {
+        posterView.setPathStyle(style)
+    }
+
     PosterView {
         id: posterView
         width: parent.width
