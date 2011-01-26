@@ -39,6 +39,14 @@ FocusScope {
     width: parent.width
     height: content.height
 
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+
+        onPositionChanged: root.activity()
+        onClicked: root.activity()
+    }
+
     BorderImage {
         id: content
         source: themeResourcePath + "/media/MediaInfoBackUpper.png"

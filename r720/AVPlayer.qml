@@ -50,7 +50,7 @@ FocusScope {
         hoverEnabled: true
 
         onPositionChanged: showOSD();
-        onClicked: root.state == "maximized" ? mediaItem.togglePlayPause() : undefined;
+        onClicked: root.state == "maximized" && controlOSD.state != "visible" ? showOSD() : undefined;
     }
 
     Timer {
@@ -157,8 +157,7 @@ FocusScope {
     AVPlayerControlOSD {
         id: controlOSD
         media: mediaItem
-        onActivity:
-            osdTimer.restart();
+        onActivity: osdTimer.restart();
 
         onShowPlayList: showDialog(playListDialog);
         onShowVideoMenu: showDialog(videoListDialog);
