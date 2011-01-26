@@ -57,6 +57,8 @@ Window {
     }
 
     function setCurrentView(viewType) {
+        var rootIndex
+        viewLoader.item ? rootIndex = viewLoader.item.rootIndex : undefined
         if (viewType == qsTr("THUMBNAIL") || viewType == qsTr("PIC THUMBS")) {
             viewLoader.changeView(thumbnailView)
             viewLoader.item.hidePreview = viewType == qsTr("PIC THUMBS")
@@ -78,6 +80,7 @@ Window {
         }
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         config.setValue(root.mediaWindowName + "-currentview", viewType)
+        viewLoader.item.rootIndex = rootIndex
     }
 
     function itemActivated(item) {
