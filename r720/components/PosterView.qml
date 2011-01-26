@@ -100,6 +100,34 @@ PathView {
             PathAttribute { name: "rotation"; value: -90 }
             PathAttribute { name: "scale"; value: 0.2 }
         }
+        property PosterPath coverFlood: PosterPath {
+            id: coverFlood
+            pathItemCount: 50
+            startX: 0; startY: (pathView.height - pathView.delegateHeight)/2.0
+            PathAttribute { name: "rotation"; value: 60 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "scale"; value: 2.0 }
+            PathLine { x: pathView.width/2 - pathView.delegateHeight/2.0 - 1; y: coverFlood.startY }
+            PathAttribute { name: "rotation"; value: 60 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "scale"; value: 2.0 }
+            PathLine { x: pathView.width/2 - pathView.delegateHeight/2.0; y: coverFlood.startY }
+            PathAttribute { name: "rotation"; value: 0 }
+            PathAttribute { name: "z"; value: 40 }
+            PathAttribute { name: "scale"; value: 2.0 }
+            PathLine { x: pathView.width/2; y: coverFlood.startY }
+            PathAttribute { name: "rotation"; value: 0 }
+            PathAttribute { name: "z"; value: 40 }
+            PathAttribute { name: "scale"; value: 2.0 }
+            PathLine { x: pathView.width/2 + pathView.delegateHeight/2.0 + 1; y: coverFlood.startY }
+            PathAttribute { name: "rotation"; value: -60 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "scale"; value: 2.0 }
+            PathLine { x: pathView.width; y: coverFlood.startY }
+            PathAttribute { name: "rotation"; value: -60 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "scale"; value: 2.0 }
+        }
         property PosterPath carousel: PosterPath {
             id: carousel
             highlightPos: 0.75

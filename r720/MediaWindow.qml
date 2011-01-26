@@ -45,7 +45,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER"), qsTr("AMPHITHEATRE"), qsTr("CAROUSEL")]
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER"), qsTr("AMPHITHEATRE"), qsTr("CAROUSEL"), qsTr("COVERFLOOD")]
                 onTriggered: root.setCurrentView(currentOption)
             },
             ConfluenceAction {
@@ -72,6 +72,9 @@ Window {
         } else if (viewType == qsTr("CAROUSEL")) {
             viewLoader.changeView(posterView)
             viewLoader.item.setPathStyle("carousel")
+        } else if (viewType == qsTr("COVERFLOOD")) {
+            viewLoader.changeView(posterView)
+            viewLoader.item.setPathStyle("coverFlood")
         }
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         config.setValue(root.mediaWindowName + "-currentview", viewType)

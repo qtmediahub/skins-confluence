@@ -13,6 +13,7 @@ Item {
 
     transform: Rotation {
         axis { x: 0; y: 1; z: 0 }
+        origin { x: width/2 }
         angle: PathView.rotation;
     }
 
