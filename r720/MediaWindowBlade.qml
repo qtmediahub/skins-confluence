@@ -28,7 +28,7 @@ Blade {
     // in my standalone example.
     property list<QtObject> actionList
 
-    bladeWidth: banner.x + banner.width + 50
+    bladeWidth: banner.x + listView.width + 50
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
     hoverEnabled: true

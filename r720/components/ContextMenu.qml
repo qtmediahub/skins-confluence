@@ -22,7 +22,7 @@ import ActionMapper 1.0
 
 FocusScope {
     id: root
-    width: actionListView.width
+    width: actionListView.width + 20
     height: glassTitleBar.height + actionListView.height + 10
 
     property alias model: actionListView.model
@@ -58,7 +58,7 @@ FocusScope {
         focus: true
         hideItemBackground: true
         anchors.top: glassTitleBar.bottom
-        anchors.left: panel.left
+        anchors.horizontalCenter: panel.horizontalCenter
         anchors.bottomMargin : panel.border.bottom
         onActivated: root.close()
     }

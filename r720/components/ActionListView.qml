@@ -32,19 +32,20 @@ ListView {
 
     onModelChanged: {
         // synchronize calculation with ConfluenceText
-        var fm = new FontMetrics.FontMetrics({pixelSize: confluence.width/60, weight: Font.Light })
+        var pixelSize = confluence.width/60
         var w = 0, h = 0, ow = 0
         for (var i = 0; i < model.length; i++) {
             if (model[i].options) {
                 for (var j = 0; j < model[i].options.length; j++) {
-                    ow = Math.max(ow, fm.width(model[i].options[j]))
+                    ow = Math.max(ow, FontMetrics.calcTextWidth(model[i].options[j], pixelSize, root))
                 }
-                itemWidth = Math.max(itemWidth, fm.width(model[i].text) + 15 + (ow ? ow + 20 : 0))
+                itemWidth = Math.max(itemWidth, FontMetrics.calcTextWidth(model[i].text, pixelSize, root) + 15 + (ow ? ow + 20 : 0))
             } else {
-                itemWidth = Math.max(itemWidth, fm.width(model[i].text) + 15)
+                itemWidth = Math.max(itemWidth, FontMetrics.calcTextWidth(model[i].text, pixelSize, root) + 15)
             }
-            h = Math.max(h, fm.height(model[i].text))
+            h = Math.max(h, FontMetrics.calcTextHeight(model[i].text, pixelSize, root))
         }
+
         itemHeight = h + 20
         if (itemWidth <= 200)
             itemWidth = 250
