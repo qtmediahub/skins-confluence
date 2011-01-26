@@ -37,9 +37,7 @@ FocusScope {
         loader.state = ""
         loader.focus = false
         loader = loader == viewLoader1 ? viewLoader2 : viewLoader1
-        internalSourceComponent = component
-        sourceComponent = internalSourceComponent
-        loader.sourceComponent = internalSourceComponent
+        loader.sourceComponent = internalSourceComponent = sourceComponent = component
         loader.state = "visible"
         loader.focus = true
     }
