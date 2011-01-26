@@ -89,14 +89,18 @@ PathView {
         }
         property PosterPath amphitheatreZoom: PosterPath {
             id: amphitheatreZoom
-            startX: 0; startY: (pathView.height - pathView.delegateHeight)/2.0
+            pathItemCount: 10
+            startX: 0; startY: (pathView.height - pathView.delegateHeight)*6.0/7.0
             PathAttribute { name: "rotation"; value: 90 }
-            PathAttribute { name: "scale"; value: 0.2 }
-            PathQuad { x: pathView.width/2; y: amphitheatreZoom.startY/2; controlX: pathView.width/4.0; controlY: amphitheatreZoom.startY/2 }
-            PathAttribute { name: "scale"; value: 1.0 }
+            PathAttribute { name: "scale"; value: 0.5 }
+            PathAttribute { name: "z"; value: 1 }
+            PathQuad { x: pathView.width/2; y: (pathView.height - pathView.delegateHeight)/2.0; controlX: pathView.width/4.0; controlY: amphitheatreZoom.startY/2 }
+            PathAttribute { name: "scale"; value: 1.4 }
+            PathAttribute { name: "z"; value: 10 }
             PathQuad { x: pathView.width; y: amphitheatreZoom.startY; controlX: pathView.width*3.0/4.0; controlY: amphitheatreZoom.startY/2 }
             PathAttribute { name: "rotation"; value: -90 }
-            PathAttribute { name: "scale"; value: 0.2 }
+            PathAttribute { name: "scale"; value: 0.5 }
+            PathAttribute { name: "z"; value: 1 }
         }
         property PosterPath coverFlood: PosterPath {
             id: coverFlood
