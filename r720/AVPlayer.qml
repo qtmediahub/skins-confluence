@@ -435,10 +435,7 @@ FocusScope {
     }
 
     function play(item, role, depth) {
-        if(item == null) {
-            mediaItem.play()
-        } else {
-            console.log(role + "  " + depth)
+        if(item != null) {
             mediaItem.currentIndex = playlist.add(item.mediaInfo, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
             playIndex(mediaItem.currentIndex)
         }
