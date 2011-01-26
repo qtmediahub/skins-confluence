@@ -7,14 +7,14 @@ Item {
     width: PathView.view.delegateWidth
     height: PathView.view.delegateHeight
     clip: true
-    scale: PathView.scale
-    opacity : PathView.opacity
-    z: PathView.z
+    scale: PathView.scale ? PathView.scale : 1.0
+    opacity : PathView.opacity ? PathView.opacity : 1.0
+    z: PathView.z ? PathView.z : 1
 
     transform: Rotation {
         axis { x: 0; y: 1; z: 0 }
         origin { x: width/2 }
-        angle: PathView.rotation;
+        angle: PathView.rotation ? PathView.rotation : 0
     }
 
     PathView.onIsCurrentItemChanged: { // QTBUG-16347
