@@ -33,9 +33,12 @@ FocusScope {
     anchors.fill: parent
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Back))
-            controlOSD.state == "visible" ? event.accepted = false : showOSD()
-        else if (actionmap.eventMatch(event, ActionMapper.Up))
+        if (actionmap.eventMatch(event, ActionMapper.Back)) {
+            if (root.state == "targets")
+                root.state = "maximized"
+            else
+                controlOSD.state == "visible" ? event.accepted = false : showOSD()
+        } else if (actionmap.eventMatch(event, ActionMapper.Up))
             playPrevious();
         else if (actionmap.eventMatch(event, ActionMapper.Down))
             playNext();
@@ -49,8 +52,18 @@ FocusScope {
         anchors.fill: parent
         hoverEnabled: true
 
-        onPositionChanged: showOSD();
+        property int lastX : 0
+
+        onPositionChanged: {
+            if (root.state == "maximized" && pressed && lastX - mouseX  > 100)
+                root.state = "targets"
+            else if (root.state == "targets" && pressed && mouseX - lastX > 100)
+                root.state = "maximized"
+            else
+                showOSD();
+        }
         onClicked: root.state == "maximized" && controlOSD.state != "visible" ? showOSD() : undefined;
+        onPressed: lastX = mouseX
     }
 
     Timer {
@@ -117,7 +130,10 @@ FocusScope {
 
         property variant currentIndex
 
-        anchors.fill: parent
+        x: 0
+        y: 0
+        width: root.width
+        height: root.height
 
         onPositionChanged: {
             audioVisualisationPlaceholder.metronomTick()
@@ -167,6 +183,7 @@ FocusScope {
         onPlayPrevious: playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
         onSeekBackward: decreasePlaybackRate();
         onSeekForward: increasePlaybackRate();
+        onShowTargets: root.state = "targets"
     }
 
     AVPlayerInfoOSD {
@@ -192,7 +209,7 @@ FocusScope {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.margins: -backToHomeButton.width
-        state: root.state == "maximized" ? "visible" : ""
+        state: root.state == "maximized" || root.state == "targets" ? "visible" : ""
         source:  themeResourcePath + "/media/" + (mr.containsMouse ? "HomeIcon-Focus" : "HomeIcon") + ".png"
 
         states: [
@@ -216,9 +233,7 @@ FocusScope {
             hoverEnabled: true
             anchors.fill: parent
 
-            onClicked: {
-                confluence.show(mainBlade) // # Evil
-            }
+            onClicked: root.state == "targets" ? root.state = "maximized" : confluence.show(mainBlade)
         }
     }
 
@@ -303,6 +318,52 @@ FocusScope {
         }
     }
 
+    ConfluenceText {
+        id: targetsText
+        text: qsTr("Send current Movie to Device")
+        opacity: 0
+        anchors.horizontalCenter: mediaItem.horizontalCenter
+        anchors.bottom: mediaItem.top
+        anchors.bottomMargin: 50
+    }
+
+    ConfluenceListView {
+        id: targetsList
+        width: root.width - mediaItem.width - 50
+        height: root.height-100
+        anchors.centerIn: undefined
+        anchors.left: mediaItem.right
+        anchors.leftMargin: 25
+        anchors.verticalCenter: mediaItem.verticalCenter
+        model: 50
+        opacity: 0
+
+        delegate: Item {
+            width: ListView.view.width
+            height: sourceText.height + 8
+            Image {
+                id: backgroundImage
+                anchors.fill: parent;
+                source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+            }
+            Text {
+                id: sourceText
+                anchors.verticalCenter: parent.verticalCenter
+                z: 1 // ensure it is above the background
+                text: "Device " + index
+                font.pointSize: 16
+                font.weight: Font.Light
+                color: "white"
+            }
+
+            MouseArea {
+                anchors.fill: parent;
+                hoverEnabled: true
+                onEntered: ListView.view.currentIndex = index
+            }
+        }
+    }
+
     states: [
         State {
             name: "background"
@@ -327,12 +388,36 @@ FocusScope {
                 opacity: 1
                 z: 5000
             }
+        },
+        State {
+            name: "targets"
+            PropertyChanges {
+                target: root
+                opacity: 1
+                z: 5000
+            }
+            PropertyChanges {
+                target: targetsList
+                opacity: 1
+            }
+            PropertyChanges {
+                target: targetsText
+                opacity: 1
+            }
+            PropertyChanges {
+                target: mediaItem
+                width: root.width/2.0
+                height: root.height/2.0
+                x: 0
+                y: root.height/2.0 - mediaItem.height/2.0
+            }
         }
     ]
 
     transitions: [
         Transition {
             NumberAnimation { property: "opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            NumberAnimation { properties: "x,y,width,height"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
             PropertyAnimation { target: controlOSD; property: "state"; to: "" }
             PropertyAnimation { target: infoOSD; property: "state"; to: "" }
         }

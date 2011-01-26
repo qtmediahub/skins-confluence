@@ -35,6 +35,7 @@ FocusScope {
     signal seekForward()
     signal seekBackward()
     signal stop()
+    signal showTargets()
 
     width: parent.width
     height: content.height
@@ -88,7 +89,7 @@ FocusScope {
                 focusedPixmap: playlist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
                 onClicked: playlist.playMode == Playlist.Normal ? playlist.playMode = Playlist.Shuffle : playlist.playMode = Playlist.Normal;
             }
-            PixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO" }
+            PixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
         }
     }
 
