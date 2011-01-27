@@ -248,6 +248,10 @@ FocusScope {
         }
     }
 
+    function resetFocus() {
+        mainBlade.rootMenu.forceActiveFocus()
+    }
+
     function handleBackout()
     {
         if(selectedElement && selectedElement.maximized)

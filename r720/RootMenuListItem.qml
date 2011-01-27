@@ -25,7 +25,7 @@ Item {
     width: parent.width; height: entry.height
 
     property string role: model.modelData.role
-    property bool hasSubBlade: false //false for CES since unimplemented //model.modelData.childItems > 0
+    property bool hasSubBlade: model.modelData.childItems.length > 0
     property alias textColor: entry.color
     property alias text: entry.text
 
@@ -46,6 +46,10 @@ Item {
         }
     ]
 
+    function trigger() {
+        confluence.setActiveEngine(model.modelData)
+    }
+
     MouseArea {
         id: mr
         anchors.fill: menuItem
@@ -58,10 +62,6 @@ Item {
         onClicked: {
             trigger()
         }
-    }
-
-    function trigger() {
-        confluence.setActiveEngine(model.modelData)
     }
 
     ConfluenceText {
@@ -144,6 +144,5 @@ Item {
                 PropertyChanges { target: glare; opacity: 0.8 }
             }
         ]
-
     }
 }

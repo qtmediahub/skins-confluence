@@ -30,6 +30,7 @@ FocusScope {
 
     ConfluenceListView {
         id: list
+        focus: true
         anchors.fill: parent
 
         Keys.onPressed:

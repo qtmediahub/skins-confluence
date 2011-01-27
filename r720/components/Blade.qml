@@ -96,7 +96,7 @@ FocusScope {
         : undefined
 
     onOpened: root.forceActiveFocus()
-    onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
+    onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : root.parent.forceActiveFocus()
 
     Item {
         id: blade
