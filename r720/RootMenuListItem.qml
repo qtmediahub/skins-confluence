@@ -35,7 +35,7 @@ Item {
             name: 'highlighted'
             when: rootMenuList.activeFocus
                   && ListView.isCurrentItem
-                  && mainBlade.subMenu.state == "closed"
+                  && mainBlade.subMenu.state != "open"
             PropertyChanges { target: entry; state: "highlighted" }
             PropertyChanges { target: subIndicator; state: "highlighted" }
         },
@@ -57,7 +57,7 @@ Item {
 
         onEntered: {
             rootMenuList.currentIndex = index
-            rootMenuList.focus = true
+            rootMenuList.forceActiveFocus()
         }
         onClicked: {
             trigger()

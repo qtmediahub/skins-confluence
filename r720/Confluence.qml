@@ -55,6 +55,13 @@ FocusScope {
 
     states: [
         State {
+            name:  ""
+            StateChangeScript {
+                name: "focusMainBlade"
+                script: mainBlade.forceActiveFocus()
+            }
+        },
+        State {
             name: "showingSelectedElement"
             PropertyChanges {
                 target: mainBlade

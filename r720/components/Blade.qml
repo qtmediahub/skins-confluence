@@ -50,21 +50,20 @@ FocusScope {
 
     function open() {
         if (content.children.length > 0) {
-            root.state = "open"
+            root.forceActiveFocus()
         }
     }
     function close() {
-        state = "closed"
+        //Won't be able to close unless we have a focal widget!
+        !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
     }
     function hide() {
         state = "hidden"
     }
 
-    state:  "closed"
-
     states: [
         State {
-            name: "closed"
+            name: ""
             PropertyChanges {
                 target: blade
                 visibleWidth: root.closedBladePeek
@@ -81,6 +80,7 @@ FocusScope {
         },
         State {
             name: "open"
+            when: activeFocus
             PropertyChanges {
                 target: blade
                 visibleWidth: width
@@ -95,9 +95,6 @@ FocusScope {
         || actionmap.eventMatch(event, ActionMapper.Right)
         ? root.close()
         : undefined
-
-    onOpened: root.forceActiveFocus()
-    onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
 
     Item {
         id: blade
