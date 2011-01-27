@@ -25,6 +25,7 @@ Blade {
     id: root
     clip: false
     z: UIConstants.screenZValues.mainBlade
+    focalWidget: rootMenu
 
     property int visibleWidth: root.bladeVisibleWidth
                                + subMenu.bladeVisibleWidth

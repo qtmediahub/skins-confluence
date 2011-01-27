@@ -26,6 +26,7 @@ FocusScope {
     width: blade.width + blade.x
     height: parent.height
     z: UIConstants.windowZValues.blade
+    property Item focalWidget: root
 
     clip: true
 
@@ -96,7 +97,7 @@ FocusScope {
         : undefined
 
     onOpened: root.forceActiveFocus()
-    onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : root.parent.forceActiveFocus()
+    onClosed: !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
 
     Item {
         id: blade
