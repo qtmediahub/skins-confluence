@@ -71,9 +71,7 @@ Window {
         onExited: close()
 
         content: Column {
-            anchors.topMargin: 50
-            anchors.leftMargin: closedBladePeek + 5
-            anchors.rightMargin: 5
+            anchors { fill: parent; topMargin: 50; leftMargin: closedBladePeek + 5; rightMargin: 5 }
 
             Image {
                 id: banner
