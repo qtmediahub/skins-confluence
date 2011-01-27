@@ -32,6 +32,7 @@ FocusScope {
         id: list
         focus: true
         anchors.fill: parent
+        scrollbar: false
 
         Keys.onPressed:
             actionmap.eventMatch(event, ActionMapper.Forward) ? currentItem.trigger() : undefined

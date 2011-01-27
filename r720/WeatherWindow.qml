@@ -83,9 +83,11 @@ Window {
                 id: listView
                 anchors { top: banner.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
 
+                scrollbar: false
                 focus: true
                 clip: true
                 model: cityList
+
                 delegate: Item {
                     id: delegate
                     width: listView.width
