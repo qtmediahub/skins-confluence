@@ -97,15 +97,17 @@ Item {
     }
 
     ConfluenceText {
-        anchors.top:  posterView.bottom
-        anchors.topMargin: confluence.height/24
+        id: currentItemName
+        anchors.bottom:  currentItemSize.top
+        anchors.bottomMargin: height/2.0
         anchors.horizontalCenter: parent.horizontalCenter
-        text: posterView.currentItem ? posterView.currentItem.itemdata.display : ""
+        text: posterView.currentItem && posterView.currentItem.itemdata ? posterView.currentItem.itemdata.display : ""
     }
 
     ConfluenceText {
-        anchors.top:  posterView.bottom
-        anchors.topMargin: confluence.height/12
+        id: currentItemSize
+        anchors.bottom:  posterView.bottom
+        anchors.bottomMargin: height/2.0
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 15
         font.bold: false
