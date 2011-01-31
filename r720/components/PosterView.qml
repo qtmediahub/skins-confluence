@@ -104,7 +104,7 @@ PathView {
         }
         property PosterPath coverFlood: PosterPath {
             id: coverFlood
-            pathItemCount: 50
+            pathItemCount: 10
             startX: 0; startY: (pathView.height - pathView.delegateHeight)/2.0
             PathAttribute { name: "rotation"; value: 60 }
             PathAttribute { name: "z"; value: 1 }
@@ -129,7 +129,7 @@ PathView {
         property PosterPath carousel: PosterPath {
             id: carousel
             highlightPos: 0.75
-            pathItemCount: 50
+            pathItemCount: 15
 
             property double horizCenter: pathView.width/2
             property double vertCenter: (pathView.height - pathView.delegateHeight)/2.0
