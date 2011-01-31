@@ -29,7 +29,7 @@ GridView {
     signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
 
     highlightRangeMode: confluence.standardHighlightRangeMode
-    highlightMoveDuration: confluence.standardItemViewMoveDuration
+    highlightMoveDuration: confluence.standardHighlightMoveDuration
     keyNavigationWraps: confluence.standardItemViewWraps
 
     function currentModelIndex() {

@@ -34,7 +34,7 @@ FocusScope {
     property int standardAnimationDuration: 350
 
     property int standardHighlightRangeMode: ListView.ApplyRange
-    property int standardItemViewMoveDuration: 400
+    property int standardHighlightMoveDuration: 400
 
     property bool standardItemViewWraps: false
 
