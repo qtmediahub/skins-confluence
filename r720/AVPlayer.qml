@@ -30,7 +30,149 @@ FocusScope {
     property bool hasMedia: !!mediaItem && mediaItem.source != ""
     property bool playing: hasMedia && mediaItem.playing
 
+    function showOSD() {
+        if (root.state == "maximized") {
+            controlOSD.state = "visible";
+        }
+    }
+
+    function showVolumeOSD() {
+        volumeOSD.state = "visible";
+        volumeOSDTimer.restart();
+    }
+
+    function play(item, role, depth) {
+        if(item != null) {
+            mediaItem.currentIndex = playlist.add(item.mediaInfo, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+            playIndex(mediaItem.currentIndex)
+        }
+    }
+
+    function playForeground(item, role, depth) {
+        root.play(item, role, depth);
+        confluence.show(this)
+    }
+
+    function playBackground(item, role, depth) {
+        root.state = "background";
+        root.play(item, role, depth);
+    }
+
+    function playNext() {
+        playIndex(playlist.playNextIndex(mediaItem.currentIndex));
+    }
+
+    function playPrevious() {
+        playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+    }
+
+    function playIndex(idx) {
+        mediaItem.stop();
+        mediaItem.currentIndex = idx
+        mediaItem.source = playlist.data(idx, Playlist.FilePathRole)
+        mediaItem.play();
+    }
+
+    function increaseVolume() {
+        mediaItem.volume = (mediaItem.volume + 0.02 > 1) ? 1.0 : mediaItem.volume + 0.02
+        showVolumeOSD();
+    }
+
+    function decreaseVolume() {
+        mediaItem.volume = (mediaItem.volume - 0.02 < 0) ? 0.0 : mediaItem.volume - 0.02
+        showVolumeOSD();
+    }
+
+    function togglePlayPause() {
+        mediaItem.togglePlayPause()
+    }
+
+    function increasePlaybackRate()
+    {
+        if (mediaItem.playbackRate <= 1)
+            mediaItem.playbackRate = 2
+        else if (mediaItem.playbackRate != 16)
+            mediaItem.playbackRate *= 2
+    }
+
+    function decreasePlaybackRate()
+    {
+        if (mediaItem.playbackRate >= 1)
+            mediaItem.playbackRate = -2
+        else if (mediaItem.playbackRate != -16)
+            mediaItem.playbackRate *= 2
+    }
+
+    function showDialog(item) {
+        var onClosedHandler = function() {
+            mediaItem.forceActiveFocus()
+            item.closed.disconnect(onClosedHandler)
+        }
+        item.closed.connect(onClosedHandler)
+        item.open()
+        item.forceActiveFocus()
+    }
+
     anchors.fill: parent
+
+    states: [
+        State {
+            name: "background"
+            PropertyChanges {
+                target: root
+                opacity: 1
+                z: 0
+            }
+        },
+        State {
+            name: "hidden"
+            PropertyChanges {
+                target: root
+                opacity: 0
+                z: -1
+            }
+        },
+        State {
+            name: "maximized"
+            PropertyChanges {
+                target: root
+                opacity: 1
+                z: 5000
+            }
+        },
+        State {
+            name: "targets"
+            PropertyChanges {
+                target: root
+                opacity: 1
+                z: 5000
+            }
+            PropertyChanges {
+                target: targetsList
+                opacity: 1
+            }
+            PropertyChanges {
+                target: targetsText
+                opacity: 1
+            }
+            PropertyChanges {
+                target: mediaItem
+                width: root.width/2.0
+                height: root.height/2.0
+                x: 0
+                y: root.height/2.0 - mediaItem.height/2.0
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            NumberAnimation { property: "opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            NumberAnimation { properties: "x,y,width,height"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            PropertyAnimation { target: controlOSD; property: "state"; to: "" }
+            PropertyAnimation { target: infoOSD; property: "state"; to: "" }
+        }
+    ]
 
     Keys.onPressed: {
         if (actionmap.eventMatch(event, ActionMapper.Back)) {
@@ -362,147 +504,5 @@ FocusScope {
                 onEntered: ListView.view.currentIndex = index
             }
         }
-    }
-
-    states: [
-        State {
-            name: "background"
-            PropertyChanges {
-                target: root
-                opacity: 1
-                z: 0
-            }
-        },
-        State {
-            name: "hidden"
-            PropertyChanges {
-                target: root
-                opacity: 0
-                z: -1
-            }
-        },
-        State {
-            name: "maximized"
-            PropertyChanges {
-                target: root
-                opacity: 1
-                z: 5000
-            }
-        },
-        State {
-            name: "targets"
-            PropertyChanges {
-                target: root
-                opacity: 1
-                z: 5000
-            }
-            PropertyChanges {
-                target: targetsList
-                opacity: 1
-            }
-            PropertyChanges {
-                target: targetsText
-                opacity: 1
-            }
-            PropertyChanges {
-                target: mediaItem
-                width: root.width/2.0
-                height: root.height/2.0
-                x: 0
-                y: root.height/2.0 - mediaItem.height/2.0
-            }
-        }
-    ]
-
-    transitions: [
-        Transition {
-            NumberAnimation { property: "opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
-            NumberAnimation { properties: "x,y,width,height"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
-            PropertyAnimation { target: controlOSD; property: "state"; to: "" }
-            PropertyAnimation { target: infoOSD; property: "state"; to: "" }
-        }
-    ]
-
-    function showOSD() {
-        if (root.state == "maximized") {
-            controlOSD.state = "visible";
-        }
-    }
-
-    function showVolumeOSD() {
-        volumeOSD.state = "visible";
-        volumeOSDTimer.restart();
-    }
-
-    function play(item, role, depth) {
-        if(item != null) {
-            mediaItem.currentIndex = playlist.add(item.mediaInfo, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
-            playIndex(mediaItem.currentIndex)
-        }
-    }
-
-    function playForeground(item, role, depth) {
-        root.play(item, role, depth);
-        confluence.show(this)
-    }
-
-    function playBackground(item, role, depth) {
-        root.state = "background";
-        root.play(item, role, depth);
-    }
-
-    function playNext() {
-        playIndex(playlist.playNextIndex(mediaItem.currentIndex));
-    }
-
-    function playPrevious() {
-        playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
-    }
-
-    function playIndex(idx) {
-        mediaItem.stop();
-        mediaItem.currentIndex = idx
-        mediaItem.source = playlist.data(idx, Playlist.FilePathRole)
-        mediaItem.play();
-    }
-
-    function increaseVolume() {
-        mediaItem.volume = (mediaItem.volume + 0.02 > 1) ? 1.0 : mediaItem.volume + 0.02
-        showVolumeOSD();
-    }
-
-    function decreaseVolume() {
-        mediaItem.volume = (mediaItem.volume - 0.02 < 0) ? 0.0 : mediaItem.volume - 0.02
-        showVolumeOSD();
-    }
-
-    function togglePlayPause() {
-        mediaItem.togglePlayPause()
-    }
-
-    function increasePlaybackRate()
-    {
-        if (mediaItem.playbackRate <= 1)
-            mediaItem.playbackRate = 2
-        else if (mediaItem.playbackRate != 16)
-            mediaItem.playbackRate *= 2
-    }
-
-    function decreasePlaybackRate()
-    {
-        if (mediaItem.playbackRate >= 1)
-            mediaItem.playbackRate = -2
-        else if (mediaItem.playbackRate != -16)
-            mediaItem.playbackRate *= 2
-    }
-
-    function showDialog(item) {
-        var onClosedHandler = function() {
-            mediaItem.forceActiveFocus()
-            item.closed.disconnect(onClosedHandler)
-        }
-        item.closed.connect(onClosedHandler)
-        item.open()
-        item.forceActiveFocus()
     }
 }
