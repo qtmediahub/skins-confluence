@@ -31,18 +31,9 @@ Window {
 
         path: generalResourcePath + "/widgets"
 
-        Flow {
-            id: grid
-            scale: 0.6 // magic value by experimentation
-            anchors.centerIn: parent
-        }
+        property bool populated: false
 
-        Component {
-            id: panelComponent
-            Panel { movable: true }
-        }
-
-        Component.onCompleted: {
+        function populateDashboard() {
             var list = db.modules
             for(var i = 0; i < list.length; ++i) {
                 var panel = panelComponent.createObject(grid)
@@ -53,8 +44,24 @@ Window {
                 else if(widget.status == Component.Error)
                     console.log(widget.errorString())
             }
+            populated = true
+        }
+
+        Flow {
+            id: grid
+            scale: 0.6 // magic value by experimentation
+            anchors.centerIn: parent
+        }
+
+        Component {
+            id: panelComponent
+            Panel { movable: true }
         }
     }
+
+    onVisibleChanged:
+        visible && !db.populated ? db.populateDashboard() : undefined
+
     Engine { name: qsTr("Dashboard"); role: "dashboard"; visualElement: root; }
 }
 
