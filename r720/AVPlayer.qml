@@ -122,7 +122,7 @@ FocusScope {
             PropertyChanges {
                 target: root
                 opacity: 1
-                z: UIConstants.screenZValues.background
+                z: hasMedia && playing ? UIConstants.screenZValues.background : UIConstants.screenZValues.hidden
             }
         },
         State {
