@@ -22,6 +22,7 @@ import QtMultimediaKit 1.1
 import confluence.r720.components 1.0
 import Playlist 1.0
 import ActionMapper 1.0
+import "./components/uiconstants.js" as UIConstants
 
 //This serves to isolate import failures if QtMultimedia is not present
 FocusScope {
@@ -121,7 +122,7 @@ FocusScope {
             PropertyChanges {
                 target: root
                 opacity: 1
-                z: 0
+                z: UIConstants.screenZValues.background
             }
         },
         State {
@@ -129,7 +130,7 @@ FocusScope {
             PropertyChanges {
                 target: root
                 opacity: 0
-                z: -1
+                z: UIConstants.screenZValues.hidden
             }
         },
         State {
@@ -137,7 +138,7 @@ FocusScope {
             PropertyChanges {
                 target: root
                 opacity: 1
-                z: 5000
+                z: UIConstants.screenZValues.window
             }
         },
         State {

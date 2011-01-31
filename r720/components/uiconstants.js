@@ -1,6 +1,7 @@
 .pragma library
 
 var screenZValues = {
+    hidden: 0,
     background: 1,
     window: 2,
     mainBlade: 3,
