@@ -146,7 +146,7 @@ FocusScope {
         else if (customCursorLoader.status == Component.Error)
             backend.log(customCursorLoader.errorString())
 
-        !!musicEngine && musicEngine && musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath); // ## Shouldn't be here
+        !!musicEngine && musicEngine && musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
         var musicWindowLoader = Qt.createComponent("MusicWindow.qml")
         if (!!musicEngine
                 && musicWindowLoader.status == Component.Ready) {
@@ -155,7 +155,7 @@ FocusScope {
             backend.log(musicWindowLoader.errorString())
 
         //FIXME: function failing here simply skips rest of init, wish they had exceptions
-        !!videoEngine && videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath); // ## Shouldn't be here
+        !!videoEngine && videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
         var videoWindowLoader = Qt.createComponent("VideoWindow.qml")
         if (!!videoEngine
                 && videoWindowLoader.status == Component.Ready) {
@@ -163,7 +163,7 @@ FocusScope {
         } else if (videoWindowLoader.status == Component.Error)
             backend.log(videoWindowLoader.errorString())
 
-        !!pictureEngine && pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath); // ## Shouldn't be here
+        !!pictureEngine && pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
         var pictureWindowLoader = Qt.createComponent("PictureWindow.qml")
         if (!!pictureEngine
                 && pictureWindowLoader.status == Component.Ready) {

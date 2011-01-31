@@ -125,7 +125,6 @@ Window {
 
     Component.onCompleted: {
         mediaEngine.visualElement = root;
-        mediaEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath);
         setCurrentView(config.value(root.mediaWindowName + "-currentview", "POSTER"))
     }
 }
