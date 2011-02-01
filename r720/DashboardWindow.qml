@@ -20,15 +20,41 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import QMLModuleDiscovery 1.0
 import Qt.labs.particles 1.0
+import ActionMapper 1.0
 
 import confluence.r720.components 1.0
 
 Window {
     id: root
+
+    property Item activatedItem: grid
     focalWidget: grid
 
     onVisibleChanged:
         visible && !db.populated ? db.populateDashboard() : undefined
+
+    Keys.onPressed: {
+        if (actionmap.eventMatch(event, ActionMapper.Forward)) {
+            activate(grid.focusItem())
+        } else if (actionmap.eventMatch(event, ActionMapper.Back)) {
+            activatedItem != grid ? deactivate() : event.accepted = false
+        }
+    }
+
+    function activate(item) {
+        activatedItem = item
+        item.parent = root
+        item.anchors.centerIn = item.parent
+    }
+
+    function deactivate() {
+        //FIXME: have to reset anchors
+        //or someone appears to shortcut their setting above
+        //This crashes the app though
+        //activatedItem.anchors.centerIn = undefined
+        activatedItem != grid ? activatedItem.parent = grid : undefined
+        activatedItem = grid
+    }
 
     QMLModuleDiscovery {
         id: db
@@ -51,6 +77,7 @@ Window {
                     console.log(widget.errorString())
             }
             populated = true
+            grid.focusLowerItem()
         }
 
         Component {
@@ -104,7 +131,12 @@ Window {
                     velocityDeviation: 500
                 }
 
-                Panel { id: panel; movable: true; onFrameClicked: grid.focusLowerItem() }
+                Panel {
+                    id: panel;
+                    movable: true;
+                    onFrameClicked: grid.setFocusItem(currentItem)
+                    onFrameDoubleClicked: root.activate(currentItem)
+                }
             }
         }
     }
@@ -113,6 +145,9 @@ Window {
         id: grid
         scale: 0.6 // magic value by experimentation
         anchors.centerIn: parent
+
+        onActivity:
+            root.deactivate()
     }
 
     Engine { name: qsTr("Dashboard"); role: "dashboard"; visualElement: root; }

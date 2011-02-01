@@ -22,6 +22,7 @@ import ActionMapper 1.0
 
 Flow {
     id: root
+
     property int upperThreshold: children.length - 1
 
     property bool wrapping: false
@@ -48,12 +49,10 @@ Flow {
         //FIXME: surely I can queue these?!
         if(focusedIndex < 0) {
             focusedIndex = wrapping ? upperThreshold : 0
-            //lowerBoundExceeded()
             exceededLower = true
         }
         if(focusedIndex > upperThreshold) {
             focusedIndex = wrapping ? 0 : upperThreshold
-            //upperBoundExceeded()
             exceededUpper = true
         }
         //Propagate beyond spacers
@@ -65,6 +64,25 @@ Flow {
             lowerBoundExceeded()
         if(exceededUpper)
             upperBoundExceeded()
+    }
+
+    function focusItem() {
+        var index = -1
+        for(var i = 0; i < children.length; i++)
+            children[i].activeFocus ? index = i : undefined
+        return index == -1 ? undefined : children[index]
+    }
+
+    function setFocusItem(item) {
+        var index = -1
+
+        for(var i = 0; i < children.length; i++)
+            item == children[i] ? index = i : undefined
+
+        if (index != -1) {
+            children[index].forceActiveFocus()
+            activity()
+        }
     }
 
     function resetFocus() {
@@ -84,6 +102,20 @@ Flow {
     function focusUpperItem() {
         focusedIndex = upperThreshold
         adjustIndex(0)
+    }
+
+    move: Transition {
+        NumberAnimation {
+            properties: "x,y"
+            easing.type: confluence.standardEasingCurve
+        }
+    }
+
+    add: Transition {
+        NumberAnimation {
+            properties: "x,y"
+            easing.type: confluence.standardEasingCurve
+        }
     }
 }
 

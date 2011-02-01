@@ -28,6 +28,7 @@ Item {
     property alias backgroundImageSource : frame.source
     property bool movable: false
     signal frameClicked
+    signal frameDoubleClicked
 
     width: frame.border.left + frame.border.right + contentItem.childrenRect.width
     height: frame.border.top + frame.border.bottom + contentItem.childrenRect.height
@@ -51,6 +52,7 @@ Item {
             drag.target: root
             drag.axis: Drag.XandYAxis
             onClicked: root.frameClicked()
+            onDoubleClicked: root.frameDoubleClicked()
         }
     }
 
