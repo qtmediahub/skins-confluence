@@ -79,14 +79,8 @@ FocusScope {
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
-            PropertyChanges {
-                target: selectedElement
-                state: "visible"
-            }
-            PropertyChanges {
-                target: avPlayer
-                state: "background"
-            }
+            PropertyChanges { target: selectedElement; state: "visible" }
+            PropertyChanges { target: avPlayer; state: "background" }
         },
         State {
             name: "showingSelectedElementMaximized"
@@ -123,7 +117,10 @@ FocusScope {
         if (actionmap.eventMatch(event, ActionMapper.Back)) {
             handleBackout()
         } else if (event.key == Qt.Key_F12) {
-            selectedElement && state == "showingSelectedElement" && selectedElement.maximizable && (selectedElement.maximized = true);
+            selectedElement
+                    && state == "showingSelectedElement"
+                    && selectedElement.maximizable
+                    && (selectedElement.maximized = true);
         } else if (event.key == Qt.Key_F11) {
             show(aboutWindow)
         } else if (event.key == Qt.Key_F10) {
@@ -307,6 +304,35 @@ FocusScope {
         }
     }
 
+    function showContextMenu(item, x, y) {
+        showModal(item)
+        item.x = x
+        item.y = y
+    }
+
+    function showModal(item) {
+        mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
+        var currentFocusedItem = frontend.focusItem();
+        var onClosedHandler = function() {
+            mouseGrabber.opacity = 0;
+            if (currentFocusedItem)
+                currentFocusedItem.forceActiveFocus()
+            item.closed.disconnect(onClosedHandler)
+        }
+        item.closed.connect(onClosedHandler)
+        item.parent = confluence // ## restore parent?
+        item.z = UIConstants.screenZValues.diplomaticImmunity
+        item.open()
+        item.forceActiveFocus()
+    }
+
+    function showFullScreen(item) {
+        item.z = background.z + 2
+        item.parent = confluence
+        item.opacity = 1
+        item.forceActiveFocus()
+    }
+
     // dummyItem useful to avoid error ouput on component loader failures
     Item {
         id: dummyItem
@@ -400,34 +426,5 @@ FocusScope {
     }
 
     ScreenSaver {}
-
-    function showContextMenu(item, x, y) {
-        showModal(item)
-        item.x = x
-        item.y = y
-    }
-
-    function showModal(item) {
-        mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
-        var currentFocusedItem = frontend.focusItem();
-        var onClosedHandler = function() { 
-            mouseGrabber.opacity = 0; 
-            if (currentFocusedItem) 
-                currentFocusedItem.forceActiveFocus() 
-            item.closed.disconnect(onClosedHandler)
-        }
-        item.closed.connect(onClosedHandler)
-        item.parent = confluence // ## restore parent?
-        item.z = UIConstants.screenZValues.diplomaticImmunity
-        item.open()
-        item.forceActiveFocus()
-    }
-
-    function showFullScreen(item) {
-        item.z = background.z + 2
-        item.parent = confluence
-        item.opacity = 1
-        item.forceActiveFocus()
-    }
 }
 

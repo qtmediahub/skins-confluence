@@ -19,11 +19,17 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import QMLModuleDiscovery 1.0
+import Qt.labs.particles 1.0
 
 import confluence.r720.components 1.0
 
 Window {
     id: root
+    focalWidget: grid
+
+    onVisibleChanged:
+        visible && !db.populated ? db.populateDashboard() : undefined
+
     QMLModuleDiscovery {
         id: db
         anchors.fill: parent
@@ -47,21 +53,67 @@ Window {
             populated = true
         }
 
-        Flow {
-            id: grid
-            scale: 0.6 // magic value by experimentation
-            anchors.centerIn: parent
-        }
-
         Component {
             id: panelComponent
-            Panel { movable: true }
+            Item {
+                id: currentItem
+
+                property bool running: root.visible && currentItem.activeFocus
+                property alias contentItem: panel.contentItem
+
+                width: panel.width; height: panel.height
+
+                Timer {
+                    interval: 250; running: currentItem.running; repeat: true
+                    onTriggered: {
+                        crowningParticles.burst(250)
+                        netherParticles.burst(250)
+                    }
+                }
+
+                Particles {
+                    id: crowningParticles
+                    x: parent.width/2.0
+                    width: 1
+                    height: 1
+                    source: themeResourcePath + "/particle2.png"
+                    lifeSpan: 500
+                    count: currentItem.running ? 20 : 0
+                    angle: 0
+                    scale: 0.5
+                    opacity:  0.5
+                    angleDeviation: 360
+                    velocity: 250
+                    velocityDeviation: 500
+                }
+
+                Particles {
+                    id: netherParticles
+                    x: parent.width/2.0
+                    y: parent.height
+                    width: 1
+                    height: 1
+                    source: themeResourcePath + "/particle2.png"
+                    lifeSpan: 500
+                    count: currentItem.running ? 20 : 0
+                    angle: 180
+                    scale: 0.5
+                    opacity:  0.5
+                    angleDeviation: 360
+                    velocity: 250
+                    velocityDeviation: 500
+                }
+
+                Panel { id: panel; movable: true; onFrameClicked: grid.focusLowerItem() }
+            }
         }
     }
 
-    onVisibleChanged:
-        visible && !db.populated ? db.populateDashboard() : undefined
+    ButtonList {
+        id: grid
+        scale: 0.6 // magic value by experimentation
+        anchors.centerIn: parent
+    }
 
     Engine { name: qsTr("Dashboard"); role: "dashboard"; visualElement: root; }
 }
-

@@ -27,6 +27,7 @@ Item {
     property alias contentItem : content
     property alias backgroundImageSource : frame.source
     property bool movable: false
+    signal frameClicked
 
     width: frame.border.left + frame.border.right + contentItem.childrenRect.width
     height: frame.border.top + frame.border.bottom + contentItem.childrenRect.height
@@ -43,13 +44,13 @@ Item {
             anchors.top:  parent.top
             width: parent.width
             source: themeResourcePath + "/media/GlassTitleBar.png"
-
-            MouseArea {
-                enabled: root.movable
-                anchors.fill: parent
-                drag.target: root
-                drag.axis: Drag.XandYAxis
-            }
+        }
+        MouseArea {
+            enabled: root.movable
+            anchors.fill: parent
+            drag.target: root
+            drag.axis: Drag.XandYAxis
+            onClicked: root.frameClicked()
         }
     }
 
