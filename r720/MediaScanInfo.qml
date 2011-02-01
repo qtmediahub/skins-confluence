@@ -20,36 +20,35 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import "./components/uiconstants.js" as UIConstants
 
-
 BorderImage {
     id: root
     property string currentPath
+
     clip: true
-    border { top: 20; right: 20; bottom: 20; left: 2 }
+    border { top: 17; right: 14; bottom: 17; left: 14 }
     source: themeResourcePath + "/media/InfoMessagePanel.png"
     width: 350
     height: currentPathText.height * 4
     z: UIConstants.windowZValues.popupWindow
+    anchors.bottom: parent.bottom
+    anchors.bottomMargin: -height
+    anchors.right: parent.right
+    anchors.rightMargin: 50
 
-    state: "hidden"
+    state: currentPath == "" ? "" : "visible"
 
     states: [
         State {
             name: "visible"
-            when: currentPathText.text != ""
-            PropertyChanges { target: root; y: 0 }
-        },
-        State {
-            name: "hidden"
-            when: currentPathText.text == ""
-            PropertyChanges { target: root; y: -root.height }
+            PropertyChanges { target: root.anchors; bottomMargin: 0 }
         }
-            ]
+    ]
     
-    transitions:
+    transitions: [
         Transition {
-            NumberAnimation { target: root; property: "y"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            NumberAnimation { property: "bottomMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
         }
+    ]
 
     Column {
         id: column
@@ -64,6 +63,8 @@ BorderImage {
             id: currentPathText
             color: "white"
             text: root.currentPath
+            width: parent.width
+            elide: Text.ElideLeft
         }
     }
 }

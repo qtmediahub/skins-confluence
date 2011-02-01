@@ -31,9 +31,7 @@ Window {
 
     MediaScanInfo {
         id: mediaScanInfo
-        x: 765
-        currentPath:
-            mediaEngine.pluginProperties.model.currentScanPath
+        currentPath: mediaEngine.pluginProperties.model.currentScanPath
     }
 
     bladeComponent: MediaWindowBlade {
