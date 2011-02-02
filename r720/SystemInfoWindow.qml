@@ -21,13 +21,20 @@ import QtQuick 1.0
 import QtMobility.systeminfo 1.1
 import confluence.r720.components 1.0
 import QMLFileWrapper 1.0
+import ActionMapper 1.0
 
 Window {
     id: root
 
+    Keys.onPressed:
+        if (actionmap.eventMatch(event, ActionMapper.Up))
+            infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
+        else if (actionmap.eventMatch(event, ActionMapper.Down))
+            infoViewport.contentY = Math.min(infoViewport.contentHeight - height, infoViewport.contentY + 20)
+
     NetworkInfo {
         id: networkInfo
-        mode: NetworkInfo.EthernetMode
+        useMode: NetworkInfo.EthernetMode
     }
 
     QMLFileWrapper {
@@ -38,6 +45,7 @@ Window {
         anchors.centerIn: parent;
 
         Flickable {
+            id: infoViewport
             flickableDirection: Flickable.VerticalFlick
             contentWidth: textFlow.width
             contentHeight: textFlow.height
@@ -45,6 +53,7 @@ Window {
             height: confluence.height - 200
             Flow {
                 id: textFlow
+                width: confluence.width - 100
                 flow: Flow.TopToBottom
                 ConfluenceText { id: heading; font.pointSize: 26; text: "System Information"; horizontalAlignment: Qt.AlignHCenter; width: parent.width; font.weight: Font.Bold }
                 Item { width: heading.width; height: heading.height }
