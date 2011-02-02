@@ -119,11 +119,11 @@ FocusScope {
             height: childrenRect.height
 
             Text {
-                text: qsTr("TRACK")
-                      + ": "
-                      + (media.metaData.trackNumber ? media.metaData.trackNumber : qsTr("#?"))
-                      + "/"
-                      + (media.metaData.trackCount ? media.metaData.trackCount : qsTr("#"))
+                text: media.metaData.trackNumber
+                      ? qsTr("TRACK:")
+                        + (media.metaData.trackNumber ? media.metaData.trackNumber : "" )
+                        + (media.metaData.trackCount ? "/" + media.metaData.trackCount : "")
+                      : ""
                 color: "gray"
                 font.pointSize: 14
                 anchors.left: parent.left
