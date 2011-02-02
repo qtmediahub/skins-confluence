@@ -16,6 +16,7 @@ Item {
         target: backend
         onInputIdle: {
             if (avPlayer.playing
+                || config.isEnabled("screensaver", true)
                 || !frontend.isActiveWindow)
                 return
             var list = qmlscreensavers.modules
