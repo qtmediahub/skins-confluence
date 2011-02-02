@@ -33,7 +33,7 @@ MediaWindow {
         z: parent.z + 1
     }
 
-    function startSlideShow(autoPlay) {
+    function showSlideShow() {
         slideShow.showItem(focalWidget.item.currentItem.itemdata.mediaInfo)
 
         slideShow.x = focalWidget.item.currentThumbnailRect[0]
@@ -46,6 +46,6 @@ MediaWindow {
     }
 
     function itemActivated(item) {
-        root.startSlideShow(false /* autoPlay */)
+        root.showSlideShow()
     }
 }
