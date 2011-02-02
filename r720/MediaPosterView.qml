@@ -35,8 +35,6 @@ Item {
                                                 posterView.currentItem.width,
                                                 posterView.currentItem.height ]
 
-    signal itemActivated(variant itemData)
-
     anchors.fill: parent
 
     BorderImage {
@@ -79,7 +77,7 @@ Item {
             if (currentItem.itemdata.type == "AddNewSource")
                 confluence.showModal(addMediaSourceDialog)
             else
-                root.itemActivated(currentItem.itemdata)
+                mediaWindow.itemActivated(currentItem.itemdata)
         }
         onRightClicked: {
             var scenePos = posterView.mapToItem(null, mouseX, mouseY)

@@ -27,13 +27,7 @@ MediaWindow {
     informationSheet: PictureInformationSheet { id: pictureInformationSheet }
     mediaEngine: pictureEngine
 
-    PictureSlideShow {
-        id: slideShow
-        opacity: 0
-        z: parent.z + 1
-    }
-
-    function showSlideShow() {
+    function showSlideShow(running) {
         slideShow.showItem(focalWidget.item.currentItem.itemdata.mediaInfo)
 
         slideShow.x = focalWidget.item.currentThumbnailRect[0]
@@ -43,9 +37,20 @@ MediaWindow {
 
         slideShow.state = "visible"
         slideShow.focus = true
+        slideShow.running = running
     }
 
     function itemActivated(item) {
-        root.showSlideShow()
+        root.showSlideShow(false)
+    }
+
+    function play() {
+        root.showSlideShow(true)
+    }
+
+    PictureSlideShow {
+        id: slideShow
+        opacity: 0
+        z: parent.z + 1
     }
 }

@@ -19,9 +19,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
+import Playlist 1.0
 
 Window {
-    id: root
+    id: mediaWindow
 
     focalWidget: viewLoader
     property Engine mediaEngine
@@ -29,29 +30,9 @@ Window {
     property string mediaWindowName: "genericMediaWindow"
     property alias mediaScanPath: mediaScanInfo.currentPath
 
-    MediaScanInfo {
-        id: mediaScanInfo
-        currentPath: mediaEngine.pluginProperties.model.currentScanPath
-    }
-
-    bladeComponent: MediaWindowBlade {
-        parent: root
-        visible: true
-        property alias viewAction: viewAction
-
-        actionList: [
-            ConfluenceAction {
-                id: viewAction
-                text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER"), qsTr("AMPHITHEATRE"), qsTr("CAROUSEL"), qsTr("COVERFLOOD")]
-                onTriggered: root.setCurrentView(currentOption)
-            },
-            ConfluenceAction {
-                id: sortByAction
-                text: qsTr("SORT BY")
-                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: mediaEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
-            } ]
+    function play() {
+        var currentItemData = viewLoader.item.currentItem.itemdata
+        avPlayer.playForeground(currentItemData, Playlist.Replace, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);
     }
 
     function setCurrentView(viewType) {
@@ -77,7 +58,7 @@ Window {
             viewLoader.item.setPathStyle("coverFlood")
         }
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
-        config.setValue(root.mediaWindowName + "-currentview", viewType)
+        config.setValue(mediaWindow.mediaWindowName + "-currentview", viewType)
         viewLoader.item.rootIndex = rootIndex
     }
 
@@ -85,13 +66,37 @@ Window {
         console.log("Activated: " + item)
     }
 
+    MediaScanInfo {
+        id: mediaScanInfo
+        currentPath: mediaEngine.pluginProperties.model.currentScanPath
+    }
+
+    bladeComponent: MediaWindowBlade {
+        parent: mediaWindow
+        visible: true
+        property alias viewAction: viewAction
+
+        actionList: [
+            ConfluenceAction {
+                id: viewAction
+                text: qsTr("VIEW")
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER"), qsTr("AMPHITHEATRE"), qsTr("CAROUSEL"), qsTr("COVERFLOOD")]
+                onTriggered: mediaWindow.setCurrentView(currentOption)
+            },
+            ConfluenceAction {
+                id: sortByAction
+                text: qsTr("SORT BY")
+                options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
+                onTriggered: mediaEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
+            } ]
+    }
+
     Component {
         id: thumbnailView
         MediaThumbnailView {
             engineName: mediaEngine.name
             engineModel: mediaEngine.pluginProperties.model
-            informationSheet: root.informationSheet
-            onItemActivated: root.itemActivated(itemData)
+            informationSheet: mediaWindow.informationSheet
         }
     }
 
@@ -100,8 +105,7 @@ Window {
         MediaListView {
             engineName: mediaEngine.name
             engineModel: mediaEngine.pluginProperties.model
-            informationSheet: root.informationSheet
-            onItemActivated: root.itemActivated(itemData)
+            informationSheet: mediaWindow.informationSheet
         }
     }
 
@@ -110,8 +114,7 @@ Window {
         MediaPosterView {
             engineName: mediaEngine.name
             engineModel: mediaEngine.pluginProperties.model
-            informationSheet: root.informationSheet
-            onItemActivated: root.itemActivated(itemData)
+            informationSheet: mediaWindow.informationSheet
         }
     }
 
@@ -122,7 +125,7 @@ Window {
     }
 
     Component.onCompleted: {
-        mediaEngine.visualElement = root;
-        setCurrentView(config.value(root.mediaWindowName + "-currentview", "POSTER"))
+        mediaEngine.visualElement = mediaWindow;
+        setCurrentView(config.value(mediaWindow.mediaWindowName + "-currentview", "POSTER"))
     }
 }

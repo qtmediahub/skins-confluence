@@ -34,8 +34,6 @@ Item {
                                                 sourcesListView.currentItem.width,
                                                 sourcesListView.currentItem.height ]
 
-    signal itemActivated(variant itemData)
-
     anchors.fill: parent
 
     MediaViewContextMenu {
@@ -76,7 +74,7 @@ Item {
                 if (currentItem.itemdata.type == "AddNewSource")
                     confluence.showModal(addMediaSourceDialog)
                 else
-                    root.itemActivated(currentItem.itemdata)
+                    mediaWindow.itemActivated(currentItem.itemdata)
             }
             onRightClicked: {
                 var scenePos = sourcesPanel.mapToItem(null, mouseX, mouseY)

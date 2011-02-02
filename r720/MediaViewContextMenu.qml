@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
-import Playlist 1.0
 
 ContextMenu {
     id: root
@@ -28,8 +27,7 @@ ContextMenu {
 
     title: qsTr("Actions")
     ConfluenceAction { id: playAction; text: qsTr("Play");
-        onTriggered: avPlayer.playForeground(view.currentItem.itemdata, Playlist.Replace, (view.currentItem.itemdata.type == "File") ? Playlist.Flat : Playlist.Recursive);
-        enabled: view.model.mediaType != 1;
+        onTriggered: mediaWindow.play()
     }
     ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onTriggered: view.rootIndex = undefined; }
     ConfluenceAction { id: removeAction; text: qsTr("Remove"); onTriggered: engineModel.removeSearchPath(view.currentIndex)

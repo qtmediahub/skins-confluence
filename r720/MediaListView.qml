@@ -35,8 +35,6 @@ Item {
                                                 sourcesArt.currentItem ? sourcesArt.currentItem.width : 0,
                                                 sourcesArt.currentItem ? sourcesArt.currentItem.height : 0 ]
 
-    signal itemActivated(variant itemData)
-
     anchors.fill: parent
 
     MediaViewContextMenu {
@@ -77,7 +75,7 @@ Item {
                 if (currentItem.itemdata.type == "AddNewSource")
                     confluence.showModal(addMediaSourceDialog)
                 else {
-                    root.itemActivated(currentItem.itemdata)
+                    mediaWindow.itemActivated(currentItem.itemdata)
                 }
             }
             onRightClicked: {
