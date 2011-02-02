@@ -38,25 +38,30 @@ Window {
     function setCurrentView(viewType) {
         var rootIndex
         viewLoader.item ? rootIndex = viewLoader.item.rootIndex : undefined
-        if (viewType == qsTr("THUMBNAIL") || viewType == qsTr("PIC THUMBS")) {
+        if (viewType == qsTr("BIG GRID") || viewType == qsTr("GRID")) {
             viewLoader.changeView(thumbnailView)
-            viewLoader.item.hidePreview = viewType == qsTr("PIC THUMBS")
+            viewLoader.item.hidePreview = viewType == qsTr("BIG GRID")
         } else if (viewType == qsTr("LIST") || viewType == qsTr("BIG LIST")) {
             viewLoader.changeView(listView)
             viewLoader.item.hidePreview = viewType == qsTr("BIG LIST")
         } else if (viewType == qsTr("POSTER")) {
             viewLoader.changeView(posterView)
             viewLoader.item.setPathStyle("linearZoom")
-        } else if (viewType == qsTr("AMPHITHEATRE")) {
+        } else if (viewType == qsTr("AMPHI")) {
             viewLoader.changeView(posterView)
             viewLoader.item.setPathStyle("amphitheatreZoom")
         } else if (viewType == qsTr("CAROUSEL")) {
             viewLoader.changeView(posterView)
             viewLoader.item.setPathStyle("carousel")
-        } else if (viewType == qsTr("COVERFLOOD")) {
+        } else if (viewType == qsTr("FLOW")) {
+            viewLoader.changeView(posterView)
+            viewLoader.item.setPathStyle("coverFlood")
+        } else {
+            //Default in case we remove their stored preference
             viewLoader.changeView(posterView)
             viewLoader.item.setPathStyle("coverFlood")
         }
+
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         config.setValue(mediaWindow.mediaWindowName + "-currentview", viewType)
         viewLoader.item.rootIndex = rootIndex
@@ -80,7 +85,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("THUMBNAIL"), qsTr("PIC THUMBS"), qsTr("POSTER"), qsTr("AMPHITHEATRE"), qsTr("CAROUSEL"), qsTr("COVERFLOOD")]
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")]
                 onTriggered: mediaWindow.setCurrentView(currentOption)
             },
             ConfluenceAction {
