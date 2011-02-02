@@ -25,9 +25,33 @@ import ActionMapper 1.0
 
 FocusScope {
     id: root
+
     property bool running : false
     property variant currentIndex : 0
     property int interval : 3000
+
+    function showItem(item) {
+        showIndex(imagePlayList.add(item, Playlist.Replace, Playlist.Flat))
+    }
+
+    function showIndex(idx) {
+        root.currentIndex = idx
+
+        imageThumbnail.source = imagePlayList.data(root.currentIndex, Playlist.PreviewUrlRole)
+        image.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
+    }
+
+    function next() {
+        showIndex(imagePlayList.playNextIndex(root.currentIndex));
+    }
+
+    function previous() {
+        showIndex(imagePlayList.playPreviousIndex(root.currentIndex));
+    }
+
+    function close() {
+        root.state = ""
+    }
 
     x: parent.width
     y: parent.height
@@ -52,12 +76,13 @@ FocusScope {
 
     Keys.onPressed: {
         if (actionmap.eventMatch(event, ActionMapper.Menu))
-            root.close();
+            root.close()
+        else if (actionmap.eventMatch(event, ActionMapper.Context))
+            root.running = !root.running
         else if (actionmap.eventMatch(event, ActionMapper.Left))
             root.previous()
         else if (actionmap.eventMatch(event, ActionMapper.Right))
             root.next()
-        event.accepted = true
     }
 
     Timer {
@@ -154,6 +179,7 @@ FocusScope {
                     NumberAnimation { properties: "x,y,width,height"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
                 PropertyAction { target: root; property: "visible"; value: false }
+                ScriptAction { script: parent.focalWidget.forceActiveFocus(); }
             }
         },
         Transition {
@@ -169,28 +195,5 @@ FocusScope {
             }
         }
     ]
-
-    function showItem(item) {
-        showIndex(imagePlayList.add(item, Playlist.Replace, Playlist.Flat))
-    }
-
-    function showIndex(idx) {
-        root.currentIndex = idx
-
-        imageThumbnail.source = imagePlayList.data(root.currentIndex, Playlist.PreviewUrlRole)
-        image.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
-    }
-
-    function next() {
-        showIndex(imagePlayList.playNextIndex(root.currentIndex));
-    }
-
-    function previous() {
-        showIndex(imagePlayList.playPreviousIndex(root.currentIndex));
-    }
-
-    function close() {
-        root.state = ""
-    }
 }
 
