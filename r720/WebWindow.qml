@@ -49,7 +49,7 @@ Window {
             webViewport.contentY = Math.max(0, webViewport.contentY - 10)
         else if (actionmap.eventMatch(event, ActionMapper.Down))
             webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
-        else if (actionmap.eventMatch(event, ActionMapper.Back))
+        else if (actionmap.eventMatch(event, ActionMapper.Menu))
             webviewPopup.activeFocus ? webView.forceActiveFocus() : event.accepted = false
         else if (actionmap.eventMatch(event, ActionMapper.Right))
             webviewPopup.urlBar.forceActiveFocus()

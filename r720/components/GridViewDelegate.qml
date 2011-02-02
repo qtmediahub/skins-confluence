@@ -86,7 +86,7 @@ Item {
     }
 
     Keys.onPressed:
-        if (actionmap.eventMatch(event, ActionMapper.Forward))
+        if (actionmap.eventMatch(event, ActionMapper.Enter))
             delegateItem.activate()
         else if (actionmap.eventMatch(event, ActionMapper.Context))
             GridView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)

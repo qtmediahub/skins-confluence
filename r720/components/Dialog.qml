@@ -114,10 +114,10 @@ FocusScope {
             onClicked: root.reject();
         }
         Keys.onPressed:
-            actionmap.eventMatch(event, ActionMapper.Forward) ? root.reject() : undefined
+            actionmap.eventMatch(event, ActionMapper.Enter) ? root.reject() : undefined
     }
 
     Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Back) ? root.reject() : undefined
+        actionmap.eventMatch(event, ActionMapper.Menu) ? root.reject() : undefined
 }
 

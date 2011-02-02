@@ -95,6 +95,6 @@ FocusScope {
     }
 
     Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Back) ? root.close() : undefined
+        actionmap.eventMatch(event, ActionMapper.Menu) ? root.close() : undefined
 }
 

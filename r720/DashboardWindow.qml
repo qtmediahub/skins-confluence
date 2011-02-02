@@ -34,9 +34,9 @@ Window {
         visible && !db.populated ? db.populateDashboard() : undefined
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Forward)) {
+        if (actionmap.eventMatch(event, ActionMapper.Enter)) {
             activate(grid.focusItem())
-        } else if (actionmap.eventMatch(event, ActionMapper.Back)) {
+        } else if (actionmap.eventMatch(event, ActionMapper.Menu)) {
             activatedItem != grid ? deactivate() : event.accepted = false
         }
     }

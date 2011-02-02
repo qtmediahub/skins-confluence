@@ -55,7 +55,7 @@ Item {
                     event.accepted = true
                 }
             } else if (itemType == "File") {
-                if (actionmap.eventMatch(event, ActionMapper.Forward)) {
+                if (actionmap.eventMatch(event, ActionMapper.Enter)) {
                     root.itemTriggered(currentItem.itemdata)
                     event.accepted = true
                 }

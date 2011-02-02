@@ -35,7 +35,7 @@ FocusScope {
         scrollbar: false
 
         Keys.onPressed:
-            actionmap.eventMatch(event, ActionMapper.Forward) ? currentItem.trigger() : undefined
+            actionmap.eventMatch(event, ActionMapper.Enter) ? currentItem.trigger() : undefined
 
         delegate: Item {
             id: delegate

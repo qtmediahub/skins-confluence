@@ -114,7 +114,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Back)) {
+        if (actionmap.eventMatch(event, ActionMapper.Menu)) {
             handleBackout()
         } else if (event.key == Qt.Key_F12) {
             selectedElement

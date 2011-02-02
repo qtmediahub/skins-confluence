@@ -90,7 +90,7 @@ FocusScope {
     ]
 
     Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Back)
+        actionmap.eventMatch(event, ActionMapper.Menu)
         || actionmap.eventMatch(event, ActionMapper.Left)
         || actionmap.eventMatch(event, ActionMapper.Right)
         ? root.close()

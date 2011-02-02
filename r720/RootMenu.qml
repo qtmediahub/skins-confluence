@@ -71,7 +71,7 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Forward))
+            if (actionmap.eventMatch(event, ActionMapper.Enter))
                 currentItem.trigger()
             else if (actionmap.eventMatch(event, ActionMapper.Right))
                 rootMenu.openSubMenu()

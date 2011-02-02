@@ -122,7 +122,7 @@ Window {
             } else if (actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
                 map.zoomLevel = map.zoomLevel + 1
                 event.accepted = true
-            } else if (actionmap.eventMatch(event, ActionMapper.Forward)) {
+            } else if (actionmap.eventMatch(event, ActionMapper.Enter)) {
                 root.blade.open()
                 event.accepted = true
             }

@@ -176,7 +176,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Back)) {
+        if (actionmap.eventMatch(event, ActionMapper.Menu)) {
             if (root.state == "targets")
                 root.state = "maximized"
             else
@@ -400,7 +400,7 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Back))
+            if (actionmap.eventMatch(event, ActionMapper.Menu))
                 videoListDialog.close()
             else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
                 event.accepted = true
@@ -427,7 +427,7 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Back))
+            if (actionmap.eventMatch(event, ActionMapper.Menu))
                 musicListDialog.close()
             else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
                 event.accepted = true
@@ -453,7 +453,7 @@ FocusScope {
             }
 
             Keys.onPressed: {
-                if (actionmap.eventMatch(event, ActionMapper.Back))
+                if (actionmap.eventMatch(event, ActionMapper.Menu))
                     playListDialog.close()
                 else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
                     event.accepted = true

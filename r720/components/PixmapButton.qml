@@ -31,7 +31,7 @@ Item {
     signal clicked
 
     Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Forward) ? button.clicked() : undefined
+        actionmap.eventMatch(event, ActionMapper.Enter) ? button.clicked() : undefined
 
     Image {
         id: pixmap

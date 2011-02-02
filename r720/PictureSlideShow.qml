@@ -51,7 +51,7 @@ FocusScope {
     }
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Back))
+        if (actionmap.eventMatch(event, ActionMapper.Menu))
             root.close();
         else if (actionmap.eventMatch(event, ActionMapper.Left))
             root.previous()

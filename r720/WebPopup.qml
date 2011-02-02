@@ -61,7 +61,7 @@ FocusScope {
                 onRightIconClicked: text=defaultText
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Forward)) {
+                    if (actionmap.eventMatch(event, ActionMapper.Enter)) {
                         webView.url = text
                         webView.forceActiveFocus()
                     }
@@ -94,7 +94,7 @@ FocusScope {
                 rightIconSource: generalResourcePath + "/mx-images/edit-clear.png"
                 onRightIconClicked: text=""
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Forward)) {
+                    if (actionmap.eventMatch(event, ActionMapper.Enter)) {
                     webView.url = "http://www.google.com/search?q=" + text
                     webView.forceActiveFocus()
                 }
