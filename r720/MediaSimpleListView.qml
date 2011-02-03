@@ -41,11 +41,7 @@ Item {
         clip: true
         focus: true;
         onActivated: {
-            if (currentItem.itemdata.type == "AddNewSource") {
-                confluence.showModal(addMediaSourceDialog)
-            } else {
-                root.itemTriggered(currentItem.itemdata)
-            }
+            root.itemTriggered(currentItem.itemdata)
         }
         Keys.onPressed: {
             var itemType = sourcesListView.currentItem.itemdata.type
@@ -61,12 +57,6 @@ Item {
                 }
             }
         }
-    }
-    AddMediaSourceDialog {
-        id: addMediaSourceDialog
-        focalWidget: sourcesListView
-        engineModel: root.engineModel
-        title: qsTr("Add %1 source").arg(root.engineName)
     }
 }
 

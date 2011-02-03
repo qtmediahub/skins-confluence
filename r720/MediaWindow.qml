@@ -93,6 +93,11 @@ Window {
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
                 onTriggered: mediaEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
+            },
+            ConfluenceAction {
+                id: addNewSourceAction
+                text: qsTr("Add new Source")
+                onTriggered: confluence.showModal(addMediaSourceDialog)
             } ]
     }
 
@@ -127,6 +132,13 @@ Window {
         id: viewLoader
         focus: true
         anchors.fill: parent
+    }
+
+    AddMediaSourceDialog {
+        id: addMediaSourceDialog
+        focalWidget: viewLoader
+        engineModel: root.mediaEngine.pluginProperties.model
+        title: qsTr("Add %1 source").arg(root.mediaEngine.name)
     }
 
     Component.onCompleted: {

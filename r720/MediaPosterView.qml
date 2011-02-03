@@ -74,10 +74,7 @@ Item {
         posterModel: engineModel
 
         onActivated: {
-            if (currentItem.itemdata.type == "AddNewSource")
-                confluence.showModal(addMediaSourceDialog)
-            else
-                mediaWindow.itemActivated(currentItem.itemdata)
+            mediaWindow.itemActivated(currentItem.itemdata)
         }
         onRightClicked: {
             var scenePos = posterView.mapToItem(null, mouseX, mouseY)
@@ -111,13 +108,6 @@ Item {
         font.bold: false
         color: "steelblue"
         text: posterView.currentItem && posterView.currentItem.itemdata.type == "File" ? Util.toHumanReadableBytes(posterView.currentItem.itemdata.fileSize) : ""
-    }
-
-    AddMediaSourceDialog {
-        id: addMediaSourceDialog
-        focalWidget: posterView
-        engineModel: root.engineModel
-        title: qsTr("Add %1 source").arg(root.engineName)
     }
 }
 

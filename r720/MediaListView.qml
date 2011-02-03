@@ -72,11 +72,7 @@ Item {
             clip: true
             focus: true
             onActivated: {
-                if (currentItem.itemdata.type == "AddNewSource")
-                    confluence.showModal(addMediaSourceDialog)
-                else {
-                    mediaWindow.itemActivated(currentItem.itemdata)
-                }
+                mediaWindow.itemActivated(currentItem.itemdata)
             }
             onRightClicked: {
                 var scenePos = sourcesPanel.mapToItem(null, mouseX, mouseY)
@@ -106,13 +102,6 @@ Item {
         clip:  true
         opacity: root.hidePreview ? 0 : 1
         source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
-    }
-
-    AddMediaSourceDialog {
-        id: addMediaSourceDialog
-        focalWidget: sourcesListView
-        engineModel: root.engineModel
-        title: qsTr("Add %1 source").arg(root.engineName)
     }
 }
 
