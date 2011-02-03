@@ -53,6 +53,10 @@ FocusScope {
         spacing: confluence.width/40 //30
         focus: true
 
+        //Root menu is a special case
+        //Since should not be a massive number of items
+        keyNavigationWraps: false
+
         anchors { left: parent.left; right: parent.right; top: banner.bottom; bottom: buttonGrid.top }
         preferredHighlightBegin: banner.height; preferredHighlightEnd: height - buttonGrid.height
 

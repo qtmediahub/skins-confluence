@@ -24,9 +24,10 @@ ListView {
 
     property bool scrollbar: true
 
+    keyNavigationWraps: confluence.standardItemViewWraps
+
     highlightRangeMode: confluence.standardHighlightRangeMode
     highlightMoveDuration: confluence.standardHighlightMoveDuration
-    keyNavigationWraps: confluence.standardItemViewWraps
 
     ScrollBar {
         id: verticalScrollBar

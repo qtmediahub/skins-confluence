@@ -21,8 +21,10 @@ import QtQuick 1.0
 
 GridView {
     id: gridView
+
     property alias treeModel : visualDataModel.model
     property alias rootIndex : visualDataModel.rootIndex
+
     signal clicked()
     signal rightClicked(int mouseX, int mouseY)
     signal activated()

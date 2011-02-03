@@ -37,7 +37,7 @@ FocusScope {
     property int standardHighlightRangeMode: ListView.NoHighlightRange
     property int standardHighlightMoveDuration: 400
 
-    property bool standardItemViewWraps: false
+    property bool standardItemViewWraps: true
 
     property variant selectedEngine
     property variant selectedElement
