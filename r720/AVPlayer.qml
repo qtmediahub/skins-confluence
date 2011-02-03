@@ -44,10 +44,17 @@ FocusScope {
 
     function play(item, role, depth) {
         if(item != null) {
-            mediaItem.currentIndex = playlist.add(item.mediaInfo, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+            playMediaInfo(item.mediaInfo, role, depth)
+        }
+    }
+
+    function playMediaInfo(info, role, depth) {
+        if (info != null) {
+            mediaItem.currentIndex = playlist.add(info, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
             playIndex(mediaItem.currentIndex)
         }
     }
+
 
     function playForeground(item, role, depth) {
         root.play(item, role, depth);
