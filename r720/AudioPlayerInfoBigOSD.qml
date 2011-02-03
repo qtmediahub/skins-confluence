@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 import "util.js" as Util
+import Playlist 1.0
 
 FocusScope {
     id: root
@@ -55,7 +56,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: media.currentItem ? media.currentItem.previewUrl : themeResourcePath + "/media/DefaultAlbumCover.png"
+            source: media.currentIndex ? playlist.data(media.currentIndex, Playlist.PreviewUrlRole) : themeResourcePath + "/media/DefaultAlbumCover.png"
             anchors.fill: parent
             anchors.margins: 6
 
