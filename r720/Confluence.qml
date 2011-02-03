@@ -216,9 +216,8 @@ FocusScope {
         if (qtCubeLoader.status == Component.Ready) {
             qtcube = qtCubeLoader.createObject(confluence)
             qtcube.anchors.top = confluence.top
+            qtcube.anchors.right = confluence.right
             qtcube.z = UIConstants.screenZValues.header
-            qtcube.visible = true
-            Qt.createQmlObject("import QtQuick 1.0; Binding { target: qtcube; property: 'x'; value: confluence.width - qtcube.width }", qtcube)
         } else if (qtCubeLoader.status == Component.Error) {
             backend.log(qtCubeLoader.errorString())
             qtcube = dummyItem
