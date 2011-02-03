@@ -266,8 +266,8 @@ FocusScope {
             selectedElement.maximized = false
         else if(confluence.state == "" && avPlayer.playing)
             show(transparentVideoOverlay)
-        else if(confluence.state == "" && !!selectedElement)
-            show(selectedElement)
+        //else if(confluence.state == "" && !!selectedElement)
+        //    show(selectedElement)
         else
             show(mainBlade)
     }
