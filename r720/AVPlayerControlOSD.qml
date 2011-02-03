@@ -110,7 +110,7 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "topMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            ConfluenceAnimation { property: "topMargin" }
         }
     ]
 }

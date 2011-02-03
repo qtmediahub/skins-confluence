@@ -125,12 +125,12 @@ FocusScope {
             }
         }
         Behavior on x {
-            NumberAnimation { duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            ConfluenceAnimation { }
         }
     }
 
     Behavior on opacity {
-        NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+        ConfluenceAnimation { property: "opacity"; }
     }
 }
 

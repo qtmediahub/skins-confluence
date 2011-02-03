@@ -93,7 +93,7 @@ Item {
 
         transitions: Transition {
             SequentialAnimation {
-                NumberAnimation { properties: "scale, opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+                ConfluenceAnimation { properties: "scale, opacity"; }
             }
         }
     }

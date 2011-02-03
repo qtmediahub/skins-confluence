@@ -168,8 +168,7 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
-            NumberAnimation { properties: "x,y,width,height"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            ConfluenceAnimation { properties: "opacity,x,y,width,height"; }
             PropertyAnimation { target: controlOSD; property: "state"; to: "" }
             PropertyAnimation { target: infoOSD; property: "state"; to: "" }
         }
@@ -247,7 +246,7 @@ FocusScope {
 
         transitions:
             Transition {
-                NumberAnimation { property: "topMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+                NumberAnimation { property: "topMargin" }
             }
 
         z: background.z + 2
@@ -367,7 +366,7 @@ FocusScope {
 
         transitions: [
             Transition {
-                NumberAnimation { property: "margins"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+                ConfluenceAnimation { property: "margins" }
             }
         ]
 

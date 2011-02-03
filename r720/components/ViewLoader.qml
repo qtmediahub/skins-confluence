@@ -65,10 +65,10 @@ FocusScope {
         transitions: [
             Transition {
                 to: "visible"
-                NumberAnimation { properties:  "opacity, y"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve; }
+                ConfluenceAnimation { properties:  "opacity, y"; }
             },
             Transition {
-                NumberAnimation { properties:  "opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve; }
+                ConfluenceAnimation { properties:  "opacity"; }
             }
         ]
     }
@@ -96,10 +96,10 @@ FocusScope {
         transitions: [
             Transition {
                 to: "visible"
-                NumberAnimation { properties:  "opacity, y"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve; }
+                ConfluenceAnimation { properties:  "opacity, y" }
             },
             Transition {
-                NumberAnimation { properties:  "opacity"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve; }
+                ConfluenceAnimation { properties:  "opacity" }
             }
         ]
     }

@@ -95,7 +95,7 @@ FocusScope {
         Transition {
             from: "*"
             to: ""
-            NumberAnimation { targets: [qtcube]; properties: "x,y"; easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
+            ConfluenceAnimation { targets: [qtcube]; properties: "x,y"; }
         },
         Transition {
             from: "*"
@@ -103,7 +103,7 @@ FocusScope {
             SequentialAnimation {
                 // Move things out
                 ParallelAnimation {
-                    NumberAnimation { target: qtcube; properties: "x,y"; easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration }
+                    ConfluenceAnimation { target: qtcube; properties: "x,y"; }
                 }
                 // Move things in
                 ParallelAnimation {

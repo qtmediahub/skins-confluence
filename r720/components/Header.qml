@@ -35,7 +35,7 @@ Item {
 
     x: expanded ? (atRight ? confluence.width - width : 0) : (atRight ? confluence.width : -width)
 
-    Behavior on x { PropertyAnimation { easing.type: confluence.standardEasingCurve; duration: confluence.standardAnimationDuration } }
+    Behavior on x { ConfluenceAnimation { } }
 
     BorderImage {
         anchors.fill: parent

@@ -171,7 +171,7 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation { property: "bottomMargin"; duration: confluence.standardAnimationDuration; easing.type: confluence.standardEasingCurve }
+            ConfluenceAnimation { property: "bottomMargin" }
         }
     ]
 }
