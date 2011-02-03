@@ -23,13 +23,13 @@ Item {
     id: root
     property int fillMode: Image.PreserveAspectFit
     property string source
-    property int animationDelay
     property variant currentItem : primary
 
     Image {
         id: primary
         fillMode: root.fillMode
-        width: parent.width
+        //anchors.fill: parent
+        height: parent.height
         asynchronous: true
         opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
@@ -42,7 +42,8 @@ Item {
     Image {
         id: secondary
         fillMode: root.fillMode
-        width: parent.width
+        //anchors.fill: parent
+        height: parent.height
         asynchronous: true
         anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
         opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0

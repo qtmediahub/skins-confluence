@@ -29,7 +29,6 @@ Item {
     ImageCrossFader {
         fillMode: Image.PreserveAspectCrop
         property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
-        animationDelay: 500
         anchors.fill: parent;
         source: themeResourcePath ? (BGMap.bgmap[role] ? backgroundPath + BGMap.bgmap[role] : backgroundPath + "media-overlay.png") : ""
     }

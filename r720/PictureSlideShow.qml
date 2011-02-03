@@ -37,8 +37,7 @@ FocusScope {
     function showIndex(idx) {
         root.currentIndex = idx
 
-        imageThumbnail.source = imagePlayList.data(root.currentIndex, Playlist.PreviewUrlRole)
-        image.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
+        imageCrossFader.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
     }
 
     function next() {
@@ -105,18 +104,10 @@ FocusScope {
         anchors.fill: parent
     }
 
-    Image {
-        id: image
+    ImageCrossFader {
+        id: imageCrossFader
+        fillMode: Image.PreserveAspectCrop
         anchors.fill: parent
-        fillMode: Image.PreserveAspectFit
-        asynchronous: true
-    }
-
-    Image {
-        id: imageThumbnail
-        anchors.fill: image
-        fillMode: Image.PreserveAspectFit
-        visible: image.status != Image.Ready
     }
 
     Image {
