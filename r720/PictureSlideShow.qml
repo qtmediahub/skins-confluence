@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.0
-import ModelIndexIterator 1.0
 import confluence.r720.components 1.0
 import Playlist 1.0
 import ActionMapper 1.0
