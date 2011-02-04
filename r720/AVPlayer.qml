@@ -507,7 +507,7 @@ FocusScope {
         property int position
 
         onClientConnected: {
-            rpcClient.call("qmhvideoplayer.play", source, position)
+            rpcClient.call("qmhmediaplayer.playRemoteSource", source, position)
             disconnectFromHost();
         }
 
