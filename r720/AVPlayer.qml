@@ -484,7 +484,7 @@ FocusScope {
         anchors.left: mediaItem.right
         anchors.leftMargin: 25
         anchors.verticalCenter: mediaItem.verticalCenter
-        model: targetsModel
+        model: backend.targetsModel
         opacity: 0
 
         delegate: Item {
