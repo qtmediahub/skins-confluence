@@ -71,6 +71,10 @@ Window {
         console.log("Activated: " + item)
     }
 
+    function visibleTransitionFinished() {
+        mediaEngine.pluginProperties.model.rowCount() < 1 ? confluence.showModal(addMediaSourceDialog) : undefined
+    }
+
     MediaScanInfo {
         id: mediaScanInfo
         currentPath: mediaEngine.pluginProperties.model.currentScanPath
@@ -96,7 +100,7 @@ Window {
             },
             ConfluenceAction {
                 id: addNewSourceAction
-                text: qsTr("Add new Source")
+                text: qsTr("Add New Source")
                 onTriggered: confluence.showModal(addMediaSourceDialog)
             } ]
     }

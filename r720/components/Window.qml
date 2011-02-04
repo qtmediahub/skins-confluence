@@ -45,6 +45,10 @@ FocusScope {
     property int maximizedWidth: confluence.width
     property int maximizedHeight: confluence.height
 
+    function visibleTransitionFinished() {
+        //no impl
+    }
+
     width: confluence.width
     height: confluence.height
 
@@ -114,6 +118,7 @@ FocusScope {
                 }
                 ScriptAction { scriptName: "forceActiveFocus" }
                 ScriptAction { scriptName: "showAdditionalItems" }
+                ScriptAction { script: root.visibleTransitionFinished() }
             }
         },
         Transition {
