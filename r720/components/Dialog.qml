@@ -40,13 +40,13 @@ FocusScope {
     opacity: 0
 
     function accept() {
-        root.accepted()
         close()
+        root.accepted()
     }
 
     function reject() {
-        root.rejected()
         close()
+        root.rejected()
     }
 
     function close() {
