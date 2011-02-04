@@ -22,6 +22,7 @@ import QtMultimediaKit 1.1
 import confluence.r720.components 1.0
 import Playlist 1.0
 import ActionMapper 1.0
+import RpcConnection 1.0
 import "./components/uiconstants.js" as UIConstants
 
 //This serves to isolate import failures if QtMultimedia is not present
@@ -476,6 +477,23 @@ FocusScope {
         anchors.bottomMargin: 50
     }
 
+    RpcConnection {
+        id: rpcClient
+        property string source
+        property int position
+
+        onClientConnected: {
+            rpcClient.call("qmhvideoplayer.play", source, position)
+            disconnectFromHost();
+        }
+
+        function send(ip, port, src, pos) {
+            source = src
+            position = pos
+            connectToHost(ip, port);
+        }
+    }
+
     ConfluenceListView {
         id: targetsList
         width: root.width - mediaItem.width - 50
@@ -509,7 +527,9 @@ FocusScope {
                 anchors.fill: parent;
                 hoverEnabled: true
                 onEntered: ListView.view.currentIndex = index
+                onClicked: rpcClient.send(model.address, model.port, mediaItem.source, mediaItem.position)
             }
         }
     }
 }
+
