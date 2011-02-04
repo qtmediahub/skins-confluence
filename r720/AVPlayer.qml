@@ -146,13 +146,7 @@ FocusScope {
         onPreviousRequested: root.playPrevious()
         onVolumeUpRequested: root.increaseVolume()
         onVolumeDownRequested: root.decreaseVolume()
-
-    }
-
-    property variant foo : mediaPlayerHelper.mediaInfo
-    onFooChanged: {
-        console.log("rpc AVPlayer play remote file")
-        root.playMediaInfo(mediaPlayerHelper.mediaInfo)
+        onPlayRemoteSourceRequested: { root.playMediaInfo(mediaPlayerHelper.mediaInfo); mediaItem.position = position }
     }
 
     anchors.fill: parent
