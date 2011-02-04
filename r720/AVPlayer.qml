@@ -484,7 +484,7 @@ FocusScope {
         anchors.left: mediaItem.right
         anchors.leftMargin: 25
         anchors.verticalCenter: mediaItem.verticalCenter
-        model: 50
+        model: targetsModel
         opacity: 0
 
         delegate: Item {
@@ -499,7 +499,7 @@ FocusScope {
                 id: sourceText
                 anchors.verticalCenter: parent.verticalCenter
                 z: 1 // ensure it is above the background
-                text: "Device " + index
+                text: model.display
                 font.pointSize: 16
                 font.weight: Font.Light
                 color: "white"
