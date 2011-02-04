@@ -56,7 +56,6 @@ FocusScope {
         }
     }
 
-
     function playForeground(item, role, depth) {
         root.play(item, role, depth);
         confluence.show(this)
@@ -92,6 +91,20 @@ FocusScope {
         showVolumeOSD();
     }
 
+    function stop() {
+        mediaItem.stop();
+    }
+
+    function pause() {
+        mediaItem.pause()
+        mediaItem.playbackRate = 1
+    }
+
+    function resume() {
+        mediaItem.play()
+        mediaItem.playbackRate = 1
+    }
+
     function togglePlayPause() {
         mediaItem.togglePlayPause()
     }
@@ -120,6 +133,17 @@ FocusScope {
         item.closed.connect(onClosedHandler)
         item.open()
         item.forceActiveFocus()
+    }
+
+    // RPC requests
+    Connections {
+        target: mediaPlayerHelper
+        onStopRequested: root.stop()
+        onPauseRequested: root.pause()
+        onResumeRequested: root.resume()
+        onTogglePlayPauseRequested: root.togglePlayPause()
+        onNextRequested: root.playNext()
+        onPreviousRequested: root.playPrevious()
     }
 
     anchors.fill: parent
