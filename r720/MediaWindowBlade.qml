@@ -59,12 +59,4 @@ Blade {
             model: root.actionList
         }
     }
-
-    //FIXME: only outstanding item is to add actions at will!
-//    function addAction(ActionItem)
-//    {
-//        root.actionList.append(ActionItem)
-//    }
-    //onVisibleChanged:
-    //    console.log("Just became visible" + root.visible)
 }
