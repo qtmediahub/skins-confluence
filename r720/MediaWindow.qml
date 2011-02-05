@@ -118,13 +118,13 @@ Window {
             },
             ConfluenceAction {
                 id: removeAction
-                text: qsTr("Remove")
+                text: qsTr("Remove Source")
                 onTriggered: engineModel.removeSearchPath(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
             ConfluenceAction {
                 id: rescanAction;
-                text: qsTr("Rescan this item");
+                text: qsTr("Rescan Source");
                 onTriggered: engineModel.rescan(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
@@ -135,7 +135,7 @@ Window {
             },
             ConfluenceAction {
                 id: informationAction
-                text: qsTr("Show Information")
+                text: qsTr("Show Info")
                 onTriggered: root.showInformationSheet()
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "File"
             }
