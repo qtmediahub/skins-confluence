@@ -91,7 +91,7 @@ FocusScope {
 
     Keys.onPressed:
         //Any unprocessed events close blade
-        root.close()
+        root.close() || (event.accepted = true)
 
     Item {
         id: blade
