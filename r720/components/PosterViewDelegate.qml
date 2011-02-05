@@ -73,9 +73,6 @@ Item {
     }
 
     Keys.onPressed:
-        if (actionmap.eventMatch(event, ActionMapper.Enter))
-            delegateItem.activate()
-        else if (actionmap.eventMatch(event, ActionMapper.Context))
-            PathView.view.rightClicked(delegateItem.x + delegateItem.width/2, delegateItem.y + delegateItem.height/2)
+        actionmap.eventMatch(event, ActionMapper.Enter) ? delegateItem.activate() : undefined
 }
 

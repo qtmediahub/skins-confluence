@@ -128,14 +128,8 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed: {
-        //FIXME: This is a gross way of handling the showing of the blade in all itemviews
-        //Breaks generic behavior
-        if (event.key == Qt.Key_Left || event.key == Qt.Key_Right || event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
-            blade.open();
-            event.accepted = true
-        }
-    }
+    Keys.onPressed:
+        actionmap.eventMatch(event, ActionMapper.Context) ? blade.open() : undefined
 
     Loader {
         id: bladeLoader

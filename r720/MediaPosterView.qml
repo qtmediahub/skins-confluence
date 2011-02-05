@@ -47,11 +47,6 @@ Item {
         border.right: 5; border.bottom: 5
     }
 
-    MediaViewContextMenu {
-        id: contextMenu
-        view: posterView
-    }
-
     function showInformationSheet() {
         if (!informationSheet)
             return
@@ -78,10 +73,7 @@ Item {
         onActivated: {
             mediaWindow.itemActivated(currentItem.itemdata)
         }
-        onRightClicked: {
-            var scenePos = posterView.mapToItem(null, mouseX, mouseY)
-            confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
-        }
+
         Keys.onPressed: {
             var itemType = !!posterView.currentItem ? posterView.currentItem.itemdata.type : ""
             if (itemType == "SearchPath") {

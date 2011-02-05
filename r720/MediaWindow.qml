@@ -24,47 +24,48 @@ import Playlist 1.0
 Window {
     id: mediaWindow
 
-    focalWidget: viewLoader
+    focalWidget: view
+    property alias view: viewLoader.item
     property Engine mediaEngine
     property Item informationSheet
     property string mediaWindowName: "genericMediaWindow"
     property alias mediaScanPath: mediaScanInfo.currentPath
 
     function play() {
-        var currentItemData = viewLoader.item.currentItem.itemdata
+        var currentItemData = view.currentItem.itemdata
         avPlayer.playForeground(currentItemData, Playlist.Replace, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);
     }
 
     function setCurrentView(viewType) {
         var rootIndex
-        viewLoader.item ? rootIndex = viewLoader.item.rootIndex : undefined
+        view ? rootIndex = view.rootIndex : undefined
         if (viewType == qsTr("BIG GRID") || viewType == qsTr("GRID")) {
             viewLoader.changeView(thumbnailView)
-            viewLoader.item.hidePreview = viewType == qsTr("BIG GRID")
+            view.hidePreview = viewType == qsTr("BIG GRID")
         } else if (viewType == qsTr("LIST") || viewType == qsTr("BIG LIST")) {
             viewLoader.changeView(listView)
-            viewLoader.item.hidePreview = viewType == qsTr("BIG LIST")
+            view.hidePreview = viewType == qsTr("BIG LIST")
         } else if (viewType == qsTr("POSTER")) {
             viewLoader.changeView(posterView)
-            viewLoader.item.setPathStyle("linearZoom")
+            view.setPathStyle("linearZoom")
         } else if (viewType == qsTr("AMPHI")) {
             viewLoader.changeView(posterView)
-            viewLoader.item.setPathStyle("amphitheatreZoom")
+            view.setPathStyle("amphitheatreZoom")
         } else if (viewType == qsTr("CAROUSEL")) {
             viewLoader.changeView(posterView)
-            viewLoader.item.setPathStyle("carousel")
+            view.setPathStyle("carousel")
         } else if (viewType == qsTr("FLOW")) {
             viewLoader.changeView(posterView)
-            viewLoader.item.setPathStyle("coverFlood")
+            view.setPathStyle("coverFlood")
         } else {
             //Default in case we remove their stored preference
             viewLoader.changeView(posterView)
-            viewLoader.item.setPathStyle("coverFlood")
+            view.setPathStyle("coverFlood")
         }
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         config.setValue(mediaWindow.mediaWindowName + "-currentview", viewType)
-        viewLoader.item.rootIndex = rootIndex
+        view.rootIndex = rootIndex
     }
 
     function itemActivated(item) {
@@ -92,6 +93,11 @@ Window {
 
         actionList: [
             ConfluenceAction {
+                id: rootAction
+                text: qsTr("Go to root")
+                onTriggered: view.rootIndex = undefined
+            },
+            ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")]
@@ -101,13 +107,37 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: mediaEngine.pluginProperties.model.sort(viewLoader.item.rootIndex, currentOption)
+                onTriggered: mediaEngine.pluginProperties.model.sort(view.rootIndex, currentOption)
             },
             ConfluenceAction {
                 id: addNewSourceAction
                 text: qsTr("Add New Source")
                 onTriggered: confluence.showModal(addMediaSourceDialog)
-            } ]
+            },
+            ConfluenceAction {
+                id: removeAction
+                text: qsTr("Remove")
+                onTriggered: engineModel.removeSearchPath(view.currentIndex)
+                enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
+            },
+            ConfluenceAction {
+                id: rescanAction;
+                text: qsTr("Rescan this item");
+                onTriggered: engineModel.rescan(view.currentIndex)
+                enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
+            },
+            ConfluenceAction {
+                id: playAction;
+                text: qsTr("Play");
+                onTriggered: root.play()
+            },
+            ConfluenceAction {
+                id: informationAction
+                text: qsTr("Show Information")
+                onTriggered: root.showInformationSheet()
+                enabled: !!view.currentItem && view.currentItem.itemdata.type == "File"
+            }
+        ]
     }
 
     Component {

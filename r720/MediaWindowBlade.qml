@@ -61,4 +61,6 @@ Blade {
 //    {
 //        root.actionList.append(ActionItem)
 //    }
+    //onVisibleChanged:
+    //    console.log("Just became visible" + root.visible)
 }

@@ -36,11 +36,6 @@ Item {
 
     anchors.fill: parent
 
-    MediaViewContextMenu {
-        id: contextMenu
-        view: sourcesListView
-    }
-
     function showInformationSheet() {
         if (!informationSheet)
             return
@@ -72,10 +67,6 @@ Item {
             focus: true;
             onActivated: {
                 mediaWindow.itemActivated(currentItem.itemdata)
-            }
-            onRightClicked: {
-                var scenePos = sourcesPanel.mapToItem(null, mouseX, mouseY)
-                confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
             }
             Keys.onPressed: {
                 if (sourcesListView.currentItem) {
