@@ -90,11 +90,8 @@ FocusScope {
     ]
 
     Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Menu)
-        || actionmap.eventMatch(event, ActionMapper.Left)
-        || actionmap.eventMatch(event, ActionMapper.Right)
-        ? root.close()
-        : undefined
+        //Any unprocessed events close blade
+        root.close()
 
     Item {
         id: blade

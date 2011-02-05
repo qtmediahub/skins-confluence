@@ -129,7 +129,7 @@ FocusScope {
             avPlayer.increaseVolume()
         } else if (actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
             avPlayer.decreaseVolume()
-        } else if (event.key == Qt.Key_Space) {
+        } else if (actionmap.eventMatch(event, ActionMapper.MediaPlayPause)) {
             avPlayer.togglePlayPause()
         }
     }
