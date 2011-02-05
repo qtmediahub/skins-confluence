@@ -30,10 +30,12 @@ Item {
     property alias rootIndex: posterView.rootIndex
     property alias currentIndex: posterView.currentIndex
     property alias currentItem: posterView.currentItem
-    property variant currentThumbnailRect : [   posterView.currentItem ? root.x + posterView.x + posterView.currentItem.x : 0,
-                                                posterView.currentItem ? root.y + posterView.y + posterView.currentItem.y : 0,
-                                                posterView.currentItem.width,
-                                                posterView.currentItem.height ]
+    property variant currentThumbnailRect: !!posterView.currentItem
+                                           ? [ root.x + posterView.x + posterView.currentItem.x,
+                                              root.y + posterView.y + posterView.currentItem.y,
+                                              posterView.currentItem.width,
+                                              posterView.currentItem.height ]
+                                           : [ 0, 0, 0, 0]
 
     anchors.fill: parent
 
@@ -81,7 +83,7 @@ Item {
             confluence.showContextMenu(contextMenu, scenePos.x, scenePos.y)
         }
         Keys.onPressed: {
-            var itemType = posterView.currentItem.itemdata.type
+            var itemType = !!posterView.currentItem ? posterView.currentItem.itemdata.type : ""
             if (itemType == "SearchPath") {
                 if (event.key == Qt.Key_Delete) {
                     posterModel.removeSearchPath(currentIndex)

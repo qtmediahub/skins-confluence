@@ -44,7 +44,7 @@ Item {
             root.itemTriggered(currentItem.itemdata)
         }
         Keys.onPressed: {
-            var itemType = sourcesListView.currentItem.itemdata.type
+            var itemType = !!sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.type : ""
             if (itemType == "SearchPath") {
                 if (event.key == Qt.Key_Delete) {
                     treeModel.removeSearchPath(currentIndex)
