@@ -24,7 +24,7 @@ import Playlist 1.0
 Window {
     id: mediaWindow
 
-    focalWidget: view
+    focalWidget: viewLoader
     property alias view: viewLoader.item
     property Engine mediaEngine
     property Item informationSheet
