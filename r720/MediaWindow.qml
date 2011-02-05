@@ -87,9 +87,11 @@ Window {
     }
 
     bladeComponent: MediaWindowBlade {
+        property alias viewAction: viewAction
+
         parent: mediaWindow
         visible: true
-        property alias viewAction: viewAction
+        defaultBladeActionIndex: 1
 
         actionList: [
             ConfluenceAction {

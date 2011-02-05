@@ -27,6 +27,7 @@ Blade {
     // ## Need to check why list<ConfluenceAction> does not work, but it works
     // in my standalone example.
     property list<QtObject> actionList
+    property int defaultBladeActionIndex: 0
 
     bladeWidth: banner.x + listView.width + 50
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
@@ -34,6 +35,9 @@ Blade {
     hoverEnabled: true
     onEntered: open()
     onExited: close()
+
+    onOpened:
+        listView.currentIndex = defaultBladeActionIndex
 
     content: Column {
         anchors.fill: parent
