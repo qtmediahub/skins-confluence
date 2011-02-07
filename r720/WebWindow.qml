@@ -32,6 +32,7 @@ Window {
 
     maximizable: true
 
+    property string enabledBrowserShortcuts
     property variant webviewPopup
     property alias url: webView.url
     property string initialUrl: defaultUrl
@@ -43,6 +44,23 @@ Window {
 
         confluence.show(root)
     }
+
+    bladeComponent: MediaWindowBlade {
+        parent: root
+        visible: true
+
+        actionList: [
+            ConfluenceAction {
+                text: qsTr("Reload")
+                onTriggered: {
+                    webView.reload.trigger()
+                    close()
+                }
+            }
+        ]
+    }
+
+    Keys.enabled: enabledBrowserShortcuts == ""
 
     Keys.onPressed:
         if (actionmap.eventMatch(event, ActionMapper.Up))
@@ -123,6 +141,8 @@ Window {
     //    webView.url = visible ? initialUrl : ""
     onVisibleChanged:
         webView.url != initialUrl ? webView.url = initialUrl : undefined
+    onInitialUrlChanged:
+        enabledBrowserShortcuts = ""
 
     Component.onCompleted: {
         //Conditional on plugins (read flash) being enabled
@@ -149,5 +169,5 @@ Window {
     //Engine { name: qsTr("Tv Clicker"); role: "tv-clicker"; visualElement: root; visualElementProperties: ["url", "http://tv.clicker.com/"] }
     Engine { name: qsTr("Web"); role: "web"; visualElement: root; visualElementProperties: ["initialUrl", defaultUrl] }
     Engine { name: qsTr("Store"); role: "ovi-store"; visualElement: root; visualElementProperties: ["initialUrl", "http://store.ovi.com/"] }
-    Engine { name: qsTr("Maps"); role: "google-maps"; visualElement: root; visualElementProperties: ["initialUrl", generalResourcePath + "/Google\ Maps/Nokia.html"] }
+    Engine { name: qsTr("Maps"); role: "google-maps"; visualElement: root; visualElementProperties: ["initialUrl", generalResourcePath + "/Google\ Maps/Nokia.html", "enabledBrowserShortcuts", "false"] }
 }
