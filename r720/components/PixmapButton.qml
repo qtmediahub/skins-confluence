@@ -28,8 +28,24 @@ Item {
 
     property string basePixmap
     property string focusedPixmap
+    property string depressedPixmap
 
+    property bool depressed: false
+
+    signal pressed
     signal clicked
+    signal released
+
+    onPressed: {
+        depressed = true
+    }
+
+    onReleased: {
+        depressed = false
+    }
+
+    onFocusChanged:
+        depressed = false
 
     Keys.onPressed:
         actionmap.eventMatch(event, ActionMapper.Enter) ? button.clicked() : undefined
@@ -37,7 +53,11 @@ Item {
     Image {
         id: pixmap
         anchors.fill: parent
-        source: resourcePath + (button.activeFocus ? focusedPixmap : basePixmap) + ".png"
+        source: resourcePath
+                + (depressed && depressedPixmap != ""
+                   ? depressedPixmap
+                   : (button.activeFocus && focusedPixmap != "" ? focusedPixmap : basePixmap))
+                + ".png"
     }
 
     MouseArea {
@@ -45,11 +65,17 @@ Item {
         hoverEnabled: true
         anchors.fill: parent
 
+        onPressed: {
+            button.pressed()
+        }
         onClicked: {
             button.clicked()
         }
         onEntered:  {
             button.forceActiveFocus()
+        }
+        onReleased: {
+            button.released()
         }
     }
 }
