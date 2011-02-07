@@ -57,7 +57,6 @@ FocusScope {
         bladeWidth: 50
         bladePixmap: themeResourcePath + "/media/HomeBlade.png"
         parent: root
-        visible: (root.scale == 1.0) && !maximized
         z: 1
         onClicked:
             blade.open()
@@ -98,6 +97,7 @@ FocusScope {
         Transition {
             to: ""
             SequentialAnimation {
+                PropertyAction { target: blade; property: "visible"; value: false }
                 ParallelAnimation {
                     NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
@@ -118,6 +118,9 @@ FocusScope {
                 }
                 ScriptAction { scriptName: "forceActiveFocus" }
                 ScriptAction { scriptName: "showAdditionalItems" }
+                PropertyAction { target: blade; property: "visible"; value: true }
+                PropertyAction { target: blade; property: "state"; value: "" }
+
                 ScriptAction { script: root.visibleTransitionFinished() }
             }
         },

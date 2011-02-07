@@ -26,11 +26,8 @@ FocusScope {
     width: blade.width + blade.x
     height: parent.height
     z: UIConstants.windowZValues.blade
-    property Item focalWidget: root
-
     clip: true
 
-    property bool hoverEnabled: false
     signal entered
     signal exited
     signal clicked
@@ -38,6 +35,10 @@ FocusScope {
     signal closed
     signal hidden
 
+    //pixmap specific offset (pixmap alpha!)
+    property int bladeRightMargin: 30
+    property Item focalWidget: root
+    property bool hoverEnabled: false
     property int closedBladePeek: 30
 
     property alias bladeVisibleWidth: blade.visibleWidth
@@ -45,8 +46,6 @@ FocusScope {
     property alias bladePixmap: bladePixmap.source
     property alias bladeX: blade.x
     default property alias content: content.children
-    //pixmap specific offset (pixmap alpha!)
-    property int bladeRightMargin: 30
 
     function open() {
         if (content.children.length > 0) {
@@ -61,6 +60,12 @@ FocusScope {
         state = "hidden"
     }
 
+    onVisibleChanged:
+        //Our use of behavior over transitions
+        //Makes it unclear how to achieve PropertyAction {}
+        //type behavior: hence cleaning up
+        !visible ? state = "hidden" : undefined
+
     states: [
         State {
             name: ""
@@ -68,19 +73,13 @@ FocusScope {
         },
         State {
             name: "hidden"
-            PropertyChanges {
-                target: blade
-                visibleWidth: 0
-            }
+            PropertyChanges { target: blade; visibleWidth: 0 }
             StateChangeScript { script: root.hidden() }
         },
         State {
             name: "open"
             when: activeFocus
-            PropertyChanges {
-                target: blade
-                visibleWidth: width
-            }
+            PropertyChanges { target: blade; visibleWidth: width }
             StateChangeScript { script: root.opened() }
         }
     ]
@@ -126,4 +125,3 @@ FocusScope {
         ConfluenceAnimation { property: "opacity"; }
     }
 }
-
