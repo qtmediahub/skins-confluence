@@ -266,10 +266,15 @@ FocusScope {
 
     function setActiveEngine(engine)
     {
-        if(selectedEngine != engine)
+        var oldEngine = selectedEngine
+
+        selectedEngine = engine
+        selectedElement = engine.visualElement
+
+        if(oldEngine != engine)
         {
-            selectedEngine = engine
-            selectedElement = engine.visualElement
+            //Don't reset the properties
+            //on already selected item
             var elementProperties = engine.visualElementProperties
             for(var i = 0; i + 2 <= elementProperties.length; i += 2)
                 selectedElement[elementProperties[i]] = elementProperties[i+1]
@@ -279,6 +284,8 @@ FocusScope {
 
     function show(element)
     {
+        selectedElement != element ? selectedElement.state = "" : undefined
+
         if (element == mainBlade) {
             state = ""
         } else if(element == avPlayer) {
