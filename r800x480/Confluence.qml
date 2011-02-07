@@ -53,42 +53,19 @@ FocusScope {
 
     states: [
         State {
-            name: "showingRootBlade"
-            PropertyChanges {
-                target: mainBlade
-                state: "open"
-                focus: true
-            }
-            PropertyChanges { target: ticker; expanded: true }
-            PropertyChanges { target: avPlayer; state: "background" }
-            PropertyChanges { target: dateTimeHeader; expanded: true; showDate: true }
-        },
-        State {
             name: "showingSelectedElement"
-            PropertyChanges {
-                target: mainBlade
-                state: "hidden"
-            }
+            PropertyChanges { target: mainBlade; state: "hidden"; }
             PropertyChanges { target: dateTimeHeader; expanded: true; showDate: false }
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
-            PropertyChanges {
-                target: selectedElement
-                state: "visible"
-            }
-            PropertyChanges {
-                target: avPlayer
-                state: "background"
-            }
+            PropertyChanges { target: selectedElement; state: "visible"; }
+            PropertyChanges { target: avPlayer; state: "background"; }
         },
         State {
             name: "showingSelectedElementMaximized"
             extend: "showingSelectedElement"
-            PropertyChanges {
-                target: selectedElement
-                state: "maximized"
-            }
+            PropertyChanges { target: selectedElement state: "maximized" }
             PropertyChanges {
                 target: avPlayer
                 state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden"
@@ -162,7 +139,7 @@ FocusScope {
         if (avPlayerComponent.status == Component.Ready) {
             avPlayer = avPlayerComponent.createObject(confluence)
             // FIXME: nothing to get video-path during runtime, yet
-            avPlayer.state = "hidden"
+            avPlayer.state = "background"
         } else if (avPlayerComponent.status == Component.Error) {
             backend.log(avPlayerComponent.errorString())
             avPlayer = dummyItem
@@ -188,7 +165,7 @@ FocusScope {
         if (tickerLoader.status == Component.Ready) {
             ticker = tickerLoader.createObject(confluence)
             ticker.z = UIConstants.screenZValues.header
-            ticker.expanded = false;
+            ticker.expanded = true;
         } else if (tickerLoader.status == Component.Error) {
             backend.log(tickerLoader.errorString())
             ticker = dummyItem
@@ -225,9 +202,9 @@ FocusScope {
     {
         if(selectedElement && selectedElement.maximized)
             selectedElement.maximized = false
-        else if(confluence.state == "showingRootBlade" && avPlayer.playing)
+        else if(confluence.state == "" && avPlayer.playing)
             show(transparentVideoOverlay)
-        else if(confluence.state == "showingRootBlade" && !!selectedElement)
+        else if(confluence.state == "" && !!selectedElement)
             show(selectedElement)
         else
             show(mainBlade)
@@ -249,7 +226,7 @@ FocusScope {
     function show(element)
     {
         if (element == mainBlade) {
-            state = "showingRootBlade"
+            state = ""
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
                 show(videoWindow)
@@ -278,7 +255,9 @@ FocusScope {
     }
 
     MainBlade { 
-        id: mainBlade; 
+        id: mainBlade;
+        state: "open"
+        focus: true
     }
 
     Header {
@@ -288,13 +267,14 @@ FocusScope {
 
         z: currentContextHeader.z + 1
         width: homeImage.width + 80
+
         Image {
             id: homeImage
             x: 40
             sourceSize { width: height; height: homeHeader.height-4; }
             source: themeResourcePath + "/media/HomeIcon.png"
-            MouseArea { anchors.fill: parent; onClicked: confluence.state = "showingRootBlade" }
         }
+        MouseArea { anchors.fill: parent; onClicked: confluence.state = "" }
     }
 
     Header {
@@ -324,6 +304,8 @@ FocusScope {
 
     DateTimeHeader {
         id: dateTimeHeader
+        expanded: true
+        showDate: true
     }
 
 

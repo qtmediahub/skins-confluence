@@ -53,13 +53,6 @@ FocusScope {
     height: confluence.height
 
     property Component bladeComponent : Blade {
-        clip: false
-        bladeWidth: 50
-        bladePixmap: themeResourcePath + "/media/HomeBlade.png"
-        parent: root
-        z: 1
-        onClicked:
-            blade.open()
     }
 
     onMaximizedChanged:
