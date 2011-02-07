@@ -245,7 +245,7 @@ FocusScope {
 
     Timer {
         id: osdTimer
-        interval: 3000
+        interval: config.value("osd-timeout", 3000)
         running: controlOSD.state == "visible"
 
         repeat: false
@@ -254,7 +254,7 @@ FocusScope {
 
     Timer {
         id: volumeOSDTimer
-        interval: 800
+        interval: config.value("osd-timeout", 3000)
         running: volumeOSD.state == "visible"
 
         repeat: false
