@@ -103,7 +103,7 @@ FocusScope {
         spacing: 2
         width: parent.width
 
-        PixmapButton {
+        ConfluencePixmapButton {
             id: playMediaButton
             basePixmap: "home-playmedia"
             focusedPixmap: "home-playmedia-FO"
@@ -115,7 +115,7 @@ FocusScope {
                 else if (actionmap.eventMatch(event, ActionMapper.Right))
                     favouritesButton.focus = true
         }
-        PixmapButton {
+        ConfluencePixmapButton {
             id: favouritesButton
             basePixmap: "home-favourites"
             focusedPixmap: "home-favourites-FO"
@@ -127,7 +127,7 @@ FocusScope {
                 else if (actionmap.eventMatch(event, ActionMapper.Right))
                     powerButton.focus = true
         }
-        PixmapButton {
+        ConfluencePixmapButton {
             id: powerButton
             basePixmap: "home-power";
             focusedPixmap: "home-power-FO";

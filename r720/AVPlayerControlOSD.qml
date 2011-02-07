@@ -67,29 +67,29 @@ FocusScope {
 
             onActivity: root.activity()
 
-            PixmapButton { basePixmap: "OSDBookmarksNF"; focusedPixmap: "OSDBookmarksFO"; onClicked: root.showPlayList(); }
-            PixmapButton { basePixmap: "OSDAudioNF"; focusedPixmap: "OSDAudioFO"; onClicked: root.showMusicMenu(); }
-            PixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
+            ConfluencePixmapButton { basePixmap: "OSDBookmarksNF"; focusedPixmap: "OSDBookmarksFO"; onClicked: root.showPlayList(); }
+            ConfluencePixmapButton { basePixmap: "OSDAudioNF"; focusedPixmap: "OSDAudioFO"; onClicked: root.showMusicMenu(); }
+            ConfluencePixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
             Item { width: 100; height: 1; }
-            PixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: root.playPrevious(); }
-            PixmapButton { basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.seekBackward() }
-            PixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: root.stop();}
-            PixmapButton {
+            ConfluencePixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: root.playPrevious(); }
+            ConfluencePixmapButton { basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.seekBackward() }
+            ConfluencePixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: root.stop();}
+            ConfluencePixmapButton {
                 id: playPauseButton
                 basePixmap: !media.playing || media.paused ? "OSDPlayNF" : "OSDPauseNF"
                 focusedPixmap: !media.playing || media.paused ? "OSDPlayFO" : "OSDPauseFO"
                 onClicked: media.togglePlayPause()
             }
-            PixmapButton { basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.seekForward() }
-            PixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
+            ConfluencePixmapButton { basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.seekForward() }
+            ConfluencePixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
-            PixmapButton {
+            ConfluencePixmapButton {
                 basePixmap: playlist.playMode == Playlist.Normal ? "OSDRandomOffNF" : "OSDRandomOnNF"
                 focusedPixmap: playlist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
                 onClicked: playlist.playMode == Playlist.Normal ? playlist.playMode = Playlist.Shuffle : playlist.playMode = Playlist.Normal;
             }
-            PixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
+            ConfluencePixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
         }
     }
 

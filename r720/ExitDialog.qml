@@ -27,11 +27,11 @@ Dialog {
 
     ButtonList {
         id: buttonList
-        PixmapButton { focus: true; basePixmap: "ButtonMenuExitNF"; focusedPixmap: "ButtonMenuExitFO"; onClicked: Qt.quit() }
-        PixmapButton { basePixmap: "ButtonMenuRestartNF"; focusedPixmap: "ButtonMenuRestartFO" }
-        PixmapButton { basePixmap: "ButtonMenuShutdownNF"; focusedPixmap: "ButtonMenuShutdownFO" }
-        PixmapButton { basePixmap: "ButtonMenuLogOffNF"; focusedPixmap: "ButtonMenuLogOffFO" }
-        PixmapButton { basePixmap: "ButtonMenuSleepNF"; focusedPixmap: "ButtonMenuSleepFO" }
+        ConfluencePixmapButton { focus: true; basePixmap: "ButtonMenuExitNF"; focusedPixmap: "ButtonMenuExitFO"; onClicked: Qt.quit() }
+        ConfluencePixmapButton { basePixmap: "ButtonMenuRestartNF"; focusedPixmap: "ButtonMenuRestartFO" }
+        ConfluencePixmapButton { basePixmap: "ButtonMenuShutdownNF"; focusedPixmap: "ButtonMenuShutdownFO" }
+        ConfluencePixmapButton { basePixmap: "ButtonMenuLogOffNF"; focusedPixmap: "ButtonMenuLogOffFO" }
+        ConfluencePixmapButton { basePixmap: "ButtonMenuSleepNF"; focusedPixmap: "ButtonMenuSleepFO" }
     }
 }
 

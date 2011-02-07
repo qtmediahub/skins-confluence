@@ -23,6 +23,7 @@ import ActionMapper 1.0
 Item {
     id: button
     //property real pixmapCorrectionRatio: pixmap.sourceSize.width/pixmap.sourceSize.height
+    property string resourcePath: ""
     width: pixmap.sourceSize.width * confluence.scalingCorrection; height: pixmap.sourceSize.width * confluence.scalingCorrection
 
     property string basePixmap
@@ -36,7 +37,7 @@ Item {
     Image {
         id: pixmap
         anchors.fill: parent
-        source: themeResourcePath + "/media/" + (button.activeFocus ? focusedPixmap : basePixmap) + ".png"
+        source: resourcePath + (button.activeFocus ? focusedPixmap : basePixmap) + ".png"
     }
 
     MouseArea {
