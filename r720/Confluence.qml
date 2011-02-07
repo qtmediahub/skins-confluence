@@ -115,7 +115,12 @@ FocusScope {
 
     Keys.onPressed: {
         if (actionmap.eventMatch(event, ActionMapper.Menu)) {
-            handleBackout()
+            if(selectedElement && selectedElement.maximized)
+                selectedElement.maximized = false
+            else if(confluence.state == "" && avPlayer.playing)
+                show(transparentVideoOverlay)
+            else
+                show(mainBlade)
         } else if (event.key == Qt.Key_F12) {
             selectedElement
                     && state == "showingSelectedElement"
@@ -257,18 +262,6 @@ FocusScope {
 
     function resetFocus() {
         mainBlade.rootMenu.forceActiveFocus()
-    }
-
-    function handleBackout()
-    {
-        if(selectedElement && selectedElement.maximized)
-            selectedElement.maximized = false
-        else if(confluence.state == "" && avPlayer.playing)
-            show(transparentVideoOverlay)
-        //else if(confluence.state == "" && !!selectedElement)
-        //    show(selectedElement)
-        else
-            show(mainBlade)
     }
 
     function setActiveEngine(engine)

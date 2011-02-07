@@ -78,7 +78,7 @@ Window {
 
     Connections {
         target: addMediaSourceDialog
-        onRejected: mediaEngine.pluginProperties.model.rowCount() < 1 ? confluence.handleBackout() : undefined
+        onRejected: mediaEngine.pluginProperties.model.rowCount() < 1 ? confluence.show(mainBlade) : undefined
     }
 
     MediaScanInfo {

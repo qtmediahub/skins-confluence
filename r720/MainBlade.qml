@@ -68,8 +68,4 @@ Blade {
             focus: true
         }
     }
-
-    function close() {
-        confluence.handleBackout()
-    }
 }
