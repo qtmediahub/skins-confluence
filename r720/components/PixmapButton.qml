@@ -24,7 +24,10 @@ Item {
     id: button
     //property real pixmapCorrectionRatio: pixmap.sourceSize.width/pixmap.sourceSize.height
     property string resourcePath: ""
-    width: pixmap.sourceSize.width * confluence.scalingCorrection; height: pixmap.sourceSize.width * confluence.scalingCorrection
+    property real defaultWidth: pixmap.sourceSize.width * confluence.scalingCorrection
+    property real defaultHeight: pixmap.sourceSize.width * confluence.scalingCorrection
+
+    width: defaultWidth; height: defaultHeight
 
     property string basePixmap
     property string focusedPixmap
