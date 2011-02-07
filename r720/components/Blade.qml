@@ -64,10 +64,6 @@ FocusScope {
     states: [
         State {
             name: ""
-            PropertyChanges {
-                target: blade
-                visibleWidth: root.closedBladePeek
-            }
             StateChangeScript { script: root.closed() }
         },
         State {
@@ -96,7 +92,7 @@ FocusScope {
     Item {
         id: blade
         x: -width + visibleWidth
-        property int visibleWidth
+        property int visibleWidth: closedBladePeek
         clip: true
         height: parent.height
         Image {
