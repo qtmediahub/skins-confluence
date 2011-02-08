@@ -45,13 +45,7 @@ FocusScope {
 
     function play(item, role, depth) {
         if(item != null) {
-            playMediaInfo(item.mediaInfo, role, depth)
-        }
-    }
-
-    function playMediaInfo(info, role, depth) {
-        if (info != null) {
-            mediaItem.currentIndex = playlist.add(info, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+            mediaItem.currentIndex = playlist.add(item, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
             playIndex(mediaItem.currentIndex)
         }
     }
@@ -146,7 +140,7 @@ FocusScope {
         onPreviousRequested: root.playPrevious()
         onVolumeUpRequested: root.increaseVolume()
         onVolumeDownRequested: root.decreaseVolume()
-        onPlayRemoteSourceRequested: { root.playMediaInfo(mediaPlayerHelper.mediaInfo); mediaItem.position = position }
+        onPlayRemoteSourceRequested: { root.playForeground(mediaPlayerHelper.mediaInfo); mediaItem.position = position }
     }
 
     anchors.fill: parent
@@ -444,7 +438,7 @@ FocusScope {
             engineModel: videoEngine.pluginProperties.model
 
             onItemTriggered: {
-                root.play(itemData, Playlist.Replace, Playlist.Flat)
+                root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
                 videoListDialog.close()
             }
         }
@@ -471,7 +465,7 @@ FocusScope {
             engineModel: musicEngine.pluginProperties.model
 
             onItemTriggered: {
-                root.play(itemData, Playlist.Replace, Playlist.Flat)
+                root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
                 musicListDialog.close()
             }
         }
