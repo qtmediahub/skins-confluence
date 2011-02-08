@@ -119,13 +119,13 @@ Window {
             ConfluenceAction {
                 id: removeAction
                 text: qsTr("Remove Source")
-                onTriggered: engineModel.removeSearchPath(view.currentIndex)
+                onTriggered: mediaEngine.pluginProperties.model.removeSearchPath(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
             ConfluenceAction {
                 id: rescanAction;
                 text: qsTr("Rescan Source");
-                onTriggered: engineModel.rescan(view.currentIndex)
+                onTriggered: mediaEngine.pluginProperties.model.rescan(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
             ConfluenceAction {
