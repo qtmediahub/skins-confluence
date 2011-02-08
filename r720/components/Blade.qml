@@ -85,8 +85,7 @@ FocusScope {
     ]
 
     Keys.onPressed:
-        //Any unprocessed events close blade
-        root.close() || (event.accepted = true)
+        actionmap.eventMatch(event, ActionMapper.Context) ? root.close() : undefined
 
     Item {
         id: blade

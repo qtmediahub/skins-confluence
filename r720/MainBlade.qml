@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 import "./components/uiconstants.js" as UIConstants
+import ActionMapper 1.0
 
 Blade {
     id: root
@@ -35,8 +36,15 @@ Blade {
     property alias subMenu : subMenu
     property alias rootMenu: rootMenu
 
+    function close() {
+        confluence.state == "" && avPlayer.playing ? show(transparentVideoOverlay) : undefined
+    }
+
     bladeWidth: confluence.width/3.5
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
+
+    Keys.onPressed:
+        actionmap.eventMatch(event, ActionMapper.Menu) ? root.close() : undefined
 
     content: RootMenu {
         id: rootMenu

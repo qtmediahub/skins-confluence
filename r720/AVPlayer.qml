@@ -210,12 +210,16 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Menu)) {
+        if (actionmap.eventMatch(event, ActionMapper.Menu))
             if (root.state == "targets")
                 root.state = "maximized"
             else
-                controlOSD.state == "visible" ? event.accepted = false : showOSD()
-        } else if (actionmap.eventMatch(event, ActionMapper.Up))
+                confluence.state = ""
+        else if (actionmap.eventMatch(event, ActionMapper.Enter))
+            togglePlayPause()
+        else if (actionmap.eventMatch(event, ActionMapper.Context))
+            showOSD()
+        else if (actionmap.eventMatch(event, ActionMapper.Up))
             playPrevious();
         else if (actionmap.eventMatch(event, ActionMapper.Down))
             playNext();

@@ -117,8 +117,6 @@ FocusScope {
         if (actionmap.eventMatch(event, ActionMapper.Menu)) {
             if(selectedElement && selectedElement.maximized)
                 selectedElement.maximized = false
-            else if(confluence.state == "" && avPlayer.playing)
-                show(transparentVideoOverlay)
             else
                 show(mainBlade)
         } else if (event.key == Qt.Key_F12) {
