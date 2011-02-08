@@ -25,13 +25,16 @@ Item {
     property alias column2Text : column2.text
 
     width: ListView.view.width
-    height: column1.height + 8
+    height: row.height
+
     Image {
         id: backgroundImage
         anchors.fill: parent;
         source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
     }
     Row {
+        id: row
+        height: Math.max(column1.height, column2.height) + 10
         spacing: 4
         Text {
             id: column1
