@@ -43,9 +43,6 @@ Blade {
     bladeWidth: confluence.width/3.5
     bladePixmap: themeResourcePath + "/media/HomeBlade.png"
 
-    Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Menu) ? root.close() : undefined
-
     content: RootMenu {
         id: rootMenu
         focus: true
