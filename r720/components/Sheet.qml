@@ -62,6 +62,7 @@ FocusScope {
         anchors.right: panel.right
         anchors.left: panel.left
         anchors.topMargin: panel.border.top + 40
+        anchors.rightMargin: 20
         color: "white"
         text: "Default dialog title"
         font.bold: true
@@ -71,13 +72,14 @@ FocusScope {
 
     Item {
         id: content
+        clip: true
         anchors.top: titleBarText.bottom
         anchors.bottom: panel.bottom
         anchors.left: panel.left;
         anchors.right: panel.right
         anchors.topMargin: panel.border.top + 20
         anchors.leftMargin : panel.border.left
-        anchors.bottomMargin : panel.border.bottom
+        anchors.bottomMargin : panel.border.bottom + 15
         anchors.rightMargin : panel.border.right
     }
 
