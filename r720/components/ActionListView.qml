@@ -55,10 +55,13 @@ ListView {
 
     delegate: Item {
         id: delegateItem
+        property bool spacer: model.modelData.text == ""
         property variant modeldata: model
         width: root.width
         height: itemHeight
         clip: true
+
+        visible: !spacer
 
         function activate() {
             // ## Order is important for ContextMenu
@@ -66,59 +69,63 @@ ListView {
             model.modelData.activateNextOption()
         }
 
-        Image {
-            id: delegateBackground
-            source: themeResourcePath + "/media/button-nofocus.png"
+        Item {
             anchors.fill: parent
-            visible: !root.hideItemBackground
-        }
-
-        Image {
-            id: delegateImage
-            source: themeResourcePath + "/media/button-focus.png"
-            anchors.centerIn: parent
-            width: parent.width-4
-            height: parent.height
-            opacity: delegateItem.focus ? 1 : 0
-        }
-
-        ConfluenceText {
-            id: delegateText
-            color: model.modelData.enabled ? "white" : "gray"
-            text: model.modelData.text
-            horizontalAlignment: Text.AlignRight
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: delegateImage.left
-            anchors.leftMargin: 15
-        }
-
-        ConfluenceText {
-            id: delegateValue
-            color: model.modelData.enabled ? "white" : "gray"
-            text: model.modelData.currentOption
-            horizontalAlignment: Text.AlignRight
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: delegateImage.right
-            anchors.rightMargin: 10
-        }
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            enabled: model.modelData.enabled
-
-            onEntered: root.currentIndex = index
-
-            onClicked: { 
-                root.currentIndex = index
-                root.clicked()
-                delegateItem.activate() 
+            visible: !spacer
+            Image {
+                id: delegateBackground
+                source: themeResourcePath + "/media/button-nofocus.png"
+                anchors.fill: parent
+                visible: !root.hideItemBackground
             }
-        }
 
-        Keys.onPressed:
-            actionmap.eventMatch(event, ActionMapper.Enter) ? model.modelData.enabled && delegateItem.activate() : undefined
+            Image {
+                id: delegateImage
+                source: themeResourcePath + "/media/button-focus.png"
+                anchors.centerIn: parent
+                width: parent.width-4
+                height: parent.height
+                opacity: delegateItem.focus ? 1 : 0
+            }
+
+            ConfluenceText {
+                id: delegateText
+                color: model.modelData.enabled ? "white" : "gray"
+                text: model.modelData.text
+                horizontalAlignment: Text.AlignRight
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: delegateImage.left
+                anchors.leftMargin: 15
+            }
+
+            ConfluenceText {
+                id: delegateValue
+                color: model.modelData.enabled ? "white" : "gray"
+                text: model.modelData.currentOption
+                horizontalAlignment: Text.AlignRight
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+            }
+
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                enabled: model.modelData.enabled
+
+                onEntered: root.currentIndex = index
+
+                onClicked: {
+                    root.currentIndex = index
+                    root.clicked()
+                    delegateItem.activate()
+                }
+            }
+
+            Keys.onPressed:
+                actionmap.eventMatch(event, ActionMapper.Enter) ? model.modelData.enabled && delegateItem.activate() : undefined
+        }
     }
 }
 

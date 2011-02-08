@@ -100,6 +100,9 @@ Window {
                 onTriggered: view.rootIndex = undefined
             },
             ConfluenceAction {
+                text: ""
+            },
+            ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
                 options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")]
@@ -110,6 +113,9 @@ Window {
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
                 onTriggered: mediaEngine.pluginProperties.model.sort(view.rootIndex, currentOption)
+            },
+            ConfluenceAction {
+                text: ""
             },
             ConfluenceAction {
                 id: addNewSourceAction
@@ -127,6 +133,9 @@ Window {
                 text: qsTr("Rescan Source");
                 onTriggered: engineModel.rescan(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
+            },
+            ConfluenceAction {
+                text: ""
             },
             ConfluenceAction {
                 id: playAction;
