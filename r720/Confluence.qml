@@ -42,8 +42,6 @@ FocusScope {
     property variant selectedEngine
     property variant selectedElement
     property variant avPlayer
-    property variant musicWindow
-    property variant videoWindow
     property variant qtcube
     property variant browserWindow
     property variant ticker
@@ -142,7 +140,7 @@ FocusScope {
         qmlComponent = Qt.createComponent("MusicWindow.qml")
         if (!!musicEngine
                 && qmlComponent.status == Component.Ready) {
-            musicWindow = qmlComponent.createObject(confluence)
+            qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error)
             backend.log(qmlComponent.errorString())
 
@@ -158,7 +156,7 @@ FocusScope {
         qmlComponent = Qt.createComponent("VideoWindow.qml")
         if (!!videoEngine
                 && qmlComponent.status == Component.Ready) {
-            videoWindow = qmlComponent.createObject(confluence)
+            qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error)
             backend.log(qmlComponent.errorString())
 
@@ -301,7 +299,7 @@ FocusScope {
             state = ""
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
-                show(videoWindow)
+                show(videoEngine.visualElement)
             } else {
                 show(transparentVideoOverlay)
             }
