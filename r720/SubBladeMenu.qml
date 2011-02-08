@@ -105,7 +105,7 @@ FocusScope {
             }
 
             function trigger() {
-                engine.visualElement["handle" + model.modelData + "Action"]()
+                engine.actionMap["handle" + model.modelData + "Action"]()
             }
         }
     }

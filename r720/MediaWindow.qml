@@ -31,18 +31,6 @@ Window {
     property string mediaWindowName: "genericMediaWindow"
     property alias mediaScanPath: mediaScanInfo.currentPath
 
-    function handleFilesAction() {
-        console.log("Handling files")
-    }
-
-    function handleAddonsAction() {
-        console.log("Handling addons")
-    }
-
-    function handleLibraryAction() {
-        console.log("Handling library")
-    }
-
     function play() {
         var currentItemData = view.currentItem.itemdata
         avPlayer.playForeground(currentItemData, Playlist.Replace, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);

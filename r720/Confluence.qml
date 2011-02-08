@@ -146,6 +146,13 @@ FocusScope {
         } else if (qmlComponent.status == Component.Error)
             backend.log(qmlComponent.errorString())
 
+        qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
+        if (!!musicEngine
+                && qmlComponent.status == Component.Ready) {
+            musicEngine.actionMap = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error)
+            backend.log(qmlComponent.errorString())
+
         //FIXME: function failing here simply skips rest of init, wish they had exceptions
         !!videoEngine && videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
         qmlComponent = Qt.createComponent("VideoWindow.qml")
@@ -155,11 +162,25 @@ FocusScope {
         } else if (qmlComponent.status == Component.Error)
             backend.log(qmlComponent.errorString())
 
+        qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
+        if (!!videoEngine
+                && qmlComponent.status == Component.Ready) {
+            videoEngine.actionMap = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error)
+            backend.log(qmlComponent.errorString())
+
         !!pictureEngine && pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
         qmlComponent = Qt.createComponent("PictureWindow.qml")
         if (!!pictureEngine
                 && qmlComponent.status == Component.Ready) {
             var pictureWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error)
+            backend.log(qmlComponent.errorString())
+
+        qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
+        if (!!pictureEngine
+                && qmlComponent.status == Component.Ready) {
+            pictureEngine.actionMap = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error)
             backend.log(qmlComponent.errorString())
 
