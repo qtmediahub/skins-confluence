@@ -65,7 +65,7 @@ FocusScope {
         State {
             name: "showingSelectedElementMaximized"
             extend: "showingSelectedElement"
-            PropertyChanges { target: selectedElement state: "maximized" }
+            PropertyChanges { target: selectedElement; state: "maximized" }
             PropertyChanges {
                 target: avPlayer
                 state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden"
