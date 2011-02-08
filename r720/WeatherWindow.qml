@@ -133,7 +133,6 @@ Window {
 
                 Column {
                     anchors.fill: parent
-                    anchors.margins: 30
                     spacing: 5
 
                     ConfluenceText {
