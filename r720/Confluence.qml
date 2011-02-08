@@ -132,121 +132,121 @@ FocusScope {
     //FIXME: function failing here simply skips rest of init, wish they had exceptions
     Component.onCompleted: {
         //Create items which may or may not be present
-        var customCursorLoader = Qt.createComponent("./components/Cursor.qml")
-        if (customCursorLoader.status == Component.Ready)
-            customCursorLoader.createObject(confluence)
-        else if (customCursorLoader.status == Component.Error)
-            backend.log(customCursorLoader.errorString())
+        var qmlComponent = Qt.createComponent("./components/Cursor.qml")
+        if (qmlComponent.status == Component.Ready)
+            qmlComponent.createObject(confluence)
+        else if (qmlComponent.status == Component.Error)
+            backend.log(qmlComponent.errorString())
 
         !!musicEngine && musicEngine && musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-        var musicWindowLoader = Qt.createComponent("MusicWindow.qml")
+        qmlComponent = Qt.createComponent("MusicWindow.qml")
         if (!!musicEngine
-                && musicWindowLoader.status == Component.Ready) {
-            musicWindow = musicWindowLoader.createObject(confluence)
-        } else if (musicWindowLoader.status == Component.Error)
-            backend.log(musicWindowLoader.errorString())
+                && qmlComponent.status == Component.Ready) {
+            musicWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error)
+            backend.log(qmlComponent.errorString())
 
         //FIXME: function failing here simply skips rest of init, wish they had exceptions
         !!videoEngine && videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-        var videoWindowLoader = Qt.createComponent("VideoWindow.qml")
+        qmlComponent = Qt.createComponent("VideoWindow.qml")
         if (!!videoEngine
-                && videoWindowLoader.status == Component.Ready) {
-            videoWindow = videoWindowLoader.createObject(confluence)
-        } else if (videoWindowLoader.status == Component.Error)
-            backend.log(videoWindowLoader.errorString())
+                && qmlComponent.status == Component.Ready) {
+            videoWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error)
+            backend.log(qmlComponent.errorString())
 
         !!pictureEngine && pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-        var pictureWindowLoader = Qt.createComponent("PictureWindow.qml")
+        qmlComponent = Qt.createComponent("PictureWindow.qml")
         if (!!pictureEngine
-                && pictureWindowLoader.status == Component.Ready) {
-            var pictureWindow = pictureWindowLoader.createObject(confluence)
-        } else if (pictureWindowLoader.status == Component.Error)
-            backend.log(pictureWindowLoader.errorString())
+                && qmlComponent.status == Component.Ready) {
+            var pictureWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error)
+            backend.log(qmlComponent.errorString())
 
-        var avPlayerComponent = Qt.createComponent("AVPlayer.qml");
-        if (avPlayerComponent.status == Component.Ready) {
-            avPlayer = avPlayerComponent.createObject(confluence)
+        qmlComponent = Qt.createComponent("AVPlayer.qml");
+        if (qmlComponent.status == Component.Ready) {
+            avPlayer = qmlComponent.createObject(confluence)
             // FIXME: nothing to get video-path during runtime, yet
             avPlayer.state = "background"
-        } else if (avPlayerComponent.status == Component.Error) {
-            backend.log(avPlayerComponent.errorString())
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
             avPlayer = dummyItem
         }
 
-        var dashboardLoader = Qt.createComponent("DashboardWindow.qml");
-        if (dashboardLoader.status == Component.Ready) {
-            var dashboard = dashboardLoader.createObject(confluence)
-        } else if (dashboardLoader.status == Component.Error) {
-            backend.log(dashboardLoader.errorString())
+        qmlComponent = Qt.createComponent("DashboardWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            var dashboard = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
         }
 
         //No webkit
-        var webLoader = Qt.createComponent("WebWindow.qml");
-        if (webLoader.status == Component.Ready) {
-            browserWindow = webLoader.createObject(confluence)
-        } else if (webLoader.status == Component.Error) {
-            backend.log(webLoader.errorString())
+        qmlComponent = Qt.createComponent("WebWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            browserWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
         }
 
         //No XML patterns
-        var weatherLoader = Qt.createComponent("WeatherWindow.qml");
-        if (weatherLoader.status == Component.Ready) {
-            weatherWindow = weatherLoader.createObject(confluence)
-        } else if (weatherLoader.status == Component.Error) {
-            backend.log(weatherLoader.errorString())
+        qmlComponent = Qt.createComponent("WeatherWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            weatherWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
         }
 
-        var tickerLoader = Qt.createComponent("Ticker.qml");
-        if (tickerLoader.status == Component.Ready) {
-            ticker = tickerLoader.createObject(confluence)
+        qmlComponent = Qt.createComponent("Ticker.qml");
+        if (qmlComponent.status == Component.Ready) {
+            ticker = qmlComponent.createObject(confluence)
             ticker.z = UIConstants.screenZValues.header
             ticker.expanded = true;
-        } else if (tickerLoader.status == Component.Error) {
-            backend.log(tickerLoader.errorString())
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
             ticker = dummyItem
         }
 
         //no qt3d
-        var qtCubeLoader = Qt.createComponent(generalResourcePath + "/misc/cube/cube.qml")
-        if (qtCubeLoader.status == Component.Ready) {
-            qtcube = qtCubeLoader.createObject(confluence)
+        qmlComponent = Qt.createComponent(generalResourcePath + "/misc/cube/cube.qml")
+        if (qmlComponent.status == Component.Ready) {
+            qtcube = qmlComponent.createObject(confluence)
             qtcube.anchors.top = confluence.top
             qtcube.anchors.right = confluence.right
             qtcube.z = UIConstants.screenZValues.header
-        } else if (qtCubeLoader.status == Component.Error) {
-            backend.log(qtCubeLoader.errorString())
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
             qtcube = dummyItem
         }
 
-        var remoteAppLoader = Qt.createComponent("RemoteAppWindow.qml");
-        if (remoteAppLoader.status == Component.Ready) {
-            var remoteAppWindow = remoteAppLoader.createObject(confluence)
-        } else if (remoteAppLoader.status == Component.Error) {
-            backend.log(remoteAppLoader.errorString())
+        qmlComponent = Qt.createComponent("RemoteAppWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            var remoteAppWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
         }
 
-        var systemInfoLoader = Qt.createComponent("SystemInfoWindow.qml");
-        if (systemInfoLoader.status == Component.Ready) {
-            systemInfoWindow = systemInfoLoader.createObject(confluence)
-        } else if (systemInfoLoader.status == Component.Error) {
-            backend.log(systemInfoLoader.errorString())
+        qmlComponent = Qt.createComponent("SystemInfoWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            systemInfoWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
         }
 
-        var mapsLoader = Qt.createComponent("MapsWindow.qml");
-        if (mapsLoader.status == Component.Ready) {
-            var maps = mapsLoader.createObject(confluence)
-        } else if (mapsLoader.status == Component.Error) {
-            backend.log(mapsLoader.errorString())
+        qmlComponent = Qt.createComponent("MapsWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            var maps = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
         }
 
         //Why would you ever want to do this from QML!
         //One property API FTW
-        var screensaverLoader = Qt.createComponent("SystemScreenSaverControl.qml");
-        if (screensaverLoader.status == Component.Ready) {
-            var screensaver = screensaverLoader.createObject(confluence)
+        qmlComponent = Qt.createComponent("SystemScreenSaverControl.qml");
+        if (qmlComponent.status == Component.Ready) {
+            var screensaver = qmlComponent.createObject(confluence)
             !!screensaver ? screensaver.screenSaverDelayed = true : undefined
-        } else if (screensaverLoader.status == Component.Error) {
-            backend.log(screensaverLoader.errorString())
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
         }
     }
 
