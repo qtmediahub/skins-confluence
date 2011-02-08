@@ -24,7 +24,7 @@ import ActionMapper 1.0
 FocusScope {
     id: root
 
-    property alias model : list.model
+    property QtObject engine
 
     anchors.fill: parent
 
@@ -33,6 +33,7 @@ FocusScope {
         focus: true
         anchors.fill: parent
         scrollbar: false
+        model: !!engine && engine.actionList
 
         Keys.onPressed:
             actionmap.eventMatch(event, ActionMapper.Enter) ? currentItem.trigger() : undefined
@@ -64,7 +65,7 @@ FocusScope {
             ConfluenceText {
                 id: delegateText
                 font.pointSize: 16
-                text: model.modelData.name
+                text: model.modelData
                 horizontalAlignment: Text.AlignRight
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
@@ -104,7 +105,7 @@ FocusScope {
             }
 
             function trigger() {
-                // do stuff
+                engine.visualElement["handle" + model.modelData + "Action"]()
             }
         }
     }

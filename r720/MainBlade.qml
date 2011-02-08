@@ -54,7 +54,7 @@ Blade {
             if (currentItem.hasSubBlade) {
                 subMenu.forceActiveFocus()
                 // not really nice should be also a property of the currentItem, but I don't know how to add a QList<QObject*> property
-                subMenuList.model = backend.engines[currentIndex].childItems;
+                subMenuList.engine = backend.engines[currentIndex]
             }
         }
     }
