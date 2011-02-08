@@ -72,7 +72,8 @@ Blade {
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
         Keys.onPressed:
-            actionmap.eventMatch(event, ActionMapper.Menu) ? subMenu.close() : undefined
+            actionmap.eventMatch(event, ActionMapper.Menu)
+            || actionmap.eventMatch(event, ActionMapper.Left) ? subMenu.close() : undefined
 
         SubBladeMenu {
             id: subMenuList
