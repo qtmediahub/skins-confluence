@@ -76,12 +76,10 @@ Window {
             Image {
                 id: banner
                 source: themeResourcePath + "/media/Confluence_Logo.png"
-                anchors.bottomMargin: 10
             }
 
             ConfluenceListView {
                 id: listView
-                anchors { top: banner.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
 
                 scrollbar: false
                 focus: true
