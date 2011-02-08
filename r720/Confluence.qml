@@ -57,21 +57,12 @@ FocusScope {
     states: [
         State {
             name:  ""
-            StateChangeScript {
-                name: "focusMainBlade"
-                script: mainBlade.forceActiveFocus()
-            }
+            StateChangeScript { name: "focusMainBlade"; script: mainBlade.forceActiveFocus() }
         },
         State {
             name: "showingSelectedElement"
-            PropertyChanges {
-                target: mainBlade
-                state: "hidden"
-            }
-            PropertyChanges {
-                target: qtcube
-                x: confluence.width
-                visible: true
+            PropertyChanges { target: mainBlade; state: "hidden" }
+            PropertyChanges { target: qtcube; x: confluence.width; visible: true
             }
             PropertyChanges { target: avPlayer; state: "hidden" }
             PropertyChanges { target: ticker; expanded: false }
