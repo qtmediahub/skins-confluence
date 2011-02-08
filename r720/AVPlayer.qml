@@ -383,18 +383,18 @@ FocusScope {
 
     Image {
         id: backToHomeButton
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.margins: -backToHomeButton.width
+
+        width: homeBackdrop.width; height: homeBackdrop.height
+
+        anchors { bottom: parent.bottom; left: parent.left; margins: -backToHomeButton.width }
         state: root.state == "maximized" || root.state == "targets" ? "visible" : ""
-        source:  themeResourcePath + "/media/" + (mr.containsMouse ? "HomeIcon-Focus" : "HomeIcon") + ".png"
 
         states: [
             State {
                 name: "visible"
                 PropertyChanges {
                     target: backToHomeButton.anchors
-                    margins: 20
+                    margins: 0
                 }
             }
         ]
@@ -404,6 +404,18 @@ FocusScope {
                 ConfluenceAnimation { property: "margins" }
             }
         ]
+
+        Image {
+            id: homeBackdrop
+            opacity: 0.1
+            anchors.centerIn: parent
+            source:  themeResourcePath + "/media/radialgradient60.png"
+        }
+        Image {
+            anchors.centerIn: parent
+            anchors.horizontalCenterOffset: -1
+            source:  themeResourcePath + "/media/" + (mr.containsMouse ? "HomeIcon-Focus" : "HomeIcon") + ".png"
+        }
 
         MouseArea {
             id: mr
