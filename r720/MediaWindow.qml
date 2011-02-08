@@ -136,7 +136,7 @@ Window {
             ConfluenceAction {
                 id: informationAction
                 text: qsTr("Show Info")
-                onTriggered: root.showInformationSheet()
+                onTriggered: viewLoader.item.showInformationSheet()
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "File"
             }
         ]
