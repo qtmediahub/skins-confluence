@@ -42,7 +42,6 @@ FocusScope {
     property variant selectedEngine
     property variant selectedElement
     property variant avPlayer
-    property variant qtcube
     property variant browserWindow
     property variant ticker
     property variant weatherWindow
@@ -60,8 +59,6 @@ FocusScope {
         State {
             name: "showingSelectedElement"
             PropertyChanges { target: mainBlade; state: "hidden" }
-            PropertyChanges { target: qtcube; x: confluence.width; visible: true
-            }
             PropertyChanges { target: avPlayer; state: "hidden" }
             PropertyChanges { target: ticker; expanded: false }
             PropertyChanges { target: dateTimeHeader; expanded: true; showDate: false }
@@ -84,7 +81,6 @@ FocusScope {
         Transition {
             from: "*"
             to: ""
-            ConfluenceAnimation { targets: [qtcube]; properties: "x,y"; }
         },
         Transition {
             from: "*"
@@ -92,7 +88,6 @@ FocusScope {
             SequentialAnimation {
                 // Move things out
                 ParallelAnimation {
-                    ConfluenceAnimation { target: qtcube; properties: "x,y"; }
                 }
                 // Move things in
                 ParallelAnimation {
@@ -223,18 +218,6 @@ FocusScope {
         } else if (qmlComponent.status == Component.Error) {
             backend.log(qmlComponent.errorString())
             ticker = dummyItem
-        }
-
-        //no qt3d
-        qmlComponent = Qt.createComponent(generalResourcePath + "/misc/cube/cube.qml")
-        if (qmlComponent.status == Component.Ready) {
-            qtcube = qmlComponent.createObject(confluence)
-            qtcube.anchors.top = confluence.top
-            qtcube.anchors.right = confluence.right
-            qtcube.z = UIConstants.screenZValues.header
-        } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
-            qtcube = dummyItem
         }
 
         qmlComponent = Qt.createComponent("RemoteAppWindow.qml");
