@@ -36,8 +36,8 @@ Blade {
     onEntered: open()
     onExited: close()
 
-    //onOpened:
-    //    listView.currentIndex = defaultBladeActionIndex
+    onOpened:
+        listView.currentIndex = defaultBladeActionIndex
 
     content: Column {
         anchors.fill: parent
