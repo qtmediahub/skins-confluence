@@ -29,14 +29,15 @@ FocusScope {
     property variant currentIndex : 0
     property int interval : 3000
 
+    signal closed()
+
     function showItem(item) {
         showIndex(imagePlayList.add(item, Playlist.Replace, Playlist.Flat))
     }
 
     function showIndex(idx) {
         root.currentIndex = idx
-
-        imageCrossFader.source = imagePlayList.data(root.currentIndex, Playlist.FilePathRole)
+        listView.currentIndex = imagePlayList.row(idx)
     }
 
     function next() {
@@ -49,38 +50,55 @@ FocusScope {
 
     function close() {
         root.state = ""
+        root.closed();
     }
 
-    x: parent.width
-    y: parent.height
-    width: 0
-    height: 0
-    visible: false
+    anchors.top: parent.top
+    anchors.left: parent.left
+    height: parent.height
+    width: parent.width
     opacity: 0
+    scale: 1
+    anchors.topMargin: -height
 
-    MouseArea {
-        id: consumer
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: {
-            if (mouse.button == Qt.LeftButton)
-                root.next()
-            else
-                root.previous()
-
-            mouse.accepted = true;
+    states:  [
+        State {
+            name: "visible"
+            PropertyChanges {
+                target: root
+                opacity: 1
+                scale: 1
+            }
+            PropertyChanges {
+                target: root.anchors
+                topMargin: 0
+            }
         }
-    }
+    ]
+
+    transitions: [
+        Transition {
+            NumberAnimation {
+                properties: "opacity, scale, topMargin"
+                duration: confluence.standardAnimationDuration
+                easing.type: confluence.standardEasingCurve
+            }
+        }
+    ]
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Menu))
+        if (actionmap.eventMatch(event, ActionMapper.Menu) || actionmap.eventMatch(event, ActionMapper.Enter)) {
+            root.running = false
             root.close()
-        else if (actionmap.eventMatch(event, ActionMapper.Context))
+        } else if (actionmap.eventMatch(event, ActionMapper.Context)) {
             root.running = !root.running
-        else if (actionmap.eventMatch(event, ActionMapper.Left))
+        } else if (actionmap.eventMatch(event, ActionMapper.Left)) {
+            root.running = false
             root.previous()
-        else if (actionmap.eventMatch(event, ActionMapper.Right))
+        } else if (actionmap.eventMatch(event, ActionMapper.Right)) {
+            root.running = false
             root.next()
+        }
     }
 
     Timer {
@@ -103,87 +121,43 @@ FocusScope {
         anchors.fill: parent
     }
 
-    ImageCrossFader {
-        id: imageCrossFader
-        fillMode: Image.PreserveAspectCrop
+    ListView {
+        id: listView
         anchors.fill: parent
-    }
-
-    Image {
-        id: backToViewButton
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.margins: -backToViewButton.width
-        state: root.visible ? "visible" : ""
-        source: themeResourcePath + "/media/" + (mr.containsMouse ? "HomeIcon-Focus" : "HomeIcon") + ".png"
-
-        states: [
-            State {
-                name: "visible"
-                PropertyChanges {
-                    target: backToViewButton.anchors
-                    margins: 20
-                }
+        orientation: ListView.Horizontal
+        snapMode: ListView.SnapToItem
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        highlightMoveSpeed: 5000
+        model: imagePlayList
+        delegate: Item {
+            width: listView.width
+            height: listView.height
+            Image {
+                id: image
+                fillMode: Image.PreserveAspectFit
+                sourceSize.width: imageThumbnail.width > imageThumbnail.height ? parent.width : 0
+                sourceSize.height: imageThumbnail.width <= imageThumbnail.height ? parent.height : 0
+                anchors.fill: parent
+                source: filePath
+                asynchronous: true
             }
-        ]
-
-        transitions: [
-            Transition {
-                ConfluenceAnimation { property: "margins"; }
+            Image {
+                id: imageThumbnail
+                anchors.fill: image
+                fillMode: Image.PreserveAspectFit
+                visible: image.status != Image.Ready
+                source: previewUrl
             }
-        ]
+        }
 
         MouseArea {
-            id: mr
-            hoverEnabled: true
+            id: consumer
             anchors.fill: parent
-
             onClicked: {
-                root.close();
+                root.close()
                 mouse.accepted = true;
             }
         }
     }
-
-    states: [
-        State {
-            name: "visible"
-            PropertyChanges {
-                target: root
-                visible: true
-                opacity: 1
-                x: 0
-                y: 0
-                width: parent.width
-                height: parent.height
-            }
-        }
-    ]
-
-    transitions: [
-        Transition {
-            to: ""
-            SequentialAnimation {
-                ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
-                    NumberAnimation { properties: "x,y,width,height"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
-                }
-                PropertyAction { target: root; property: "visible"; value: false }
-                ScriptAction { script: parent.focalWidget.forceActiveFocus(); }
-            }
-        },
-        Transition {
-            from: ""
-            to: "visible"
-            SequentialAnimation {
-                PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
-                PropertyAction { target: root; property: "visible"; value: true }
-                ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
-                    NumberAnimation { properties: "x,y,width,height"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
-                }
-            }
-        }
-    ]
 }
 

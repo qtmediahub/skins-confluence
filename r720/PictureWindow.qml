@@ -30,11 +30,6 @@ MediaWindow {
     function showSlideShow(running) {
         slideShow.showItem(focalWidget.item.currentItem.itemdata.mediaInfo)
 
-        slideShow.x = focalWidget.item.currentThumbnailRect[0]
-        slideShow.y = focalWidget.item.currentThumbnailRect[1]
-        slideShow.width = focalWidget.item.currentThumbnailRect[2]
-        slideShow.height = focalWidget.item.currentThumbnailRect[3]
-
         slideShow.state = "visible"
         slideShow.focus = true
         slideShow.running = running
@@ -50,7 +45,10 @@ MediaWindow {
 
     PictureSlideShow {
         id: slideShow
-        opacity: 0
         z: parent.z + 1
+
+        onClosed: {
+            focalWidget.focus = true
+        }
     }
 }
