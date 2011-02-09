@@ -55,6 +55,8 @@ Window {
                 Keys.onPressed:
                     if (actionmap.eventMatch(event, ActionMapper.Down))
                         reloadButton.focus = true
+                    else if (actionmap.eventMatch(event, ActionMapper.Up))
+                        loader.focus = true
                     else if (actionmap.eventMatch(event, ActionMapper.Enter))
                         loader.load()
             }
