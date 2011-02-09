@@ -1,7 +1,7 @@
 import QtQuick 1.0
-import Qt.labs.Mx 1.0 as MxComponents
 import confluence.r720.components 1.0
 import ActionMapper 1.0
+import "components/"
 
 FocusScope {
 
@@ -46,7 +46,7 @@ FocusScope {
                 id: inputLabel
                 text: "url:"
             }
-            MxComponents.Entry {
+            Entry {
                 id: urlEntry
                 property string defaultText: "http://"
                 text: defaultText
@@ -83,7 +83,7 @@ FocusScope {
                 id: googleLabel
                 text: "google:"
             }
-            MxComponents.Entry {
+            Entry {
                 id: googleEntry
                 anchors { left: googleLabel.right; verticalCenter: googleLabel.verticalCenter; right: parent.right }
                 hint: "Search..."
