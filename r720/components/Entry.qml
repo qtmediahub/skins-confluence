@@ -27,7 +27,7 @@
 import QtQuick 1.0
 
 Item {
-    id:lineedit
+    id: root
     property string hint: "Entry"
     property alias text: textInp.text
     property alias leftIconSource: leftIcon.source
@@ -66,7 +66,7 @@ Item {
         states: State{
             name: 'hinting'
             when: textInp.text=="" && textInp.focus==false
-            PropertyChanges{target: hintText; text: lineedit.hint}
+            PropertyChanges{target: hintText; text: root.hint}
         }//No cool animated transition, because mx doesn't do that
 
     }
@@ -95,7 +95,7 @@ Item {
         }
 
         Keys.onPressed: { if ((event.key == Qt.Key_Enter) || (event.key == Qt.Key_Return))
-                              lineedit.enterPressed()
+                              root.enterPressed()
                         }
 
         text:""
@@ -134,7 +134,7 @@ Item {
         z: mainMouseArea.z+1
         MouseArea {
             anchors.fill: parent
-            onClicked: lineedit.rightIconClicked();
+            onClicked: root.rightIconClicked();
         }
     }
     Image {
@@ -145,7 +145,7 @@ Item {
         z: mainMouseArea.z+1
         MouseArea {
             anchors.fill: parent
-            onClicked: lineedit.leftIconClicked();
+            onClicked: root.leftIconClicked();
         }
     }
 
