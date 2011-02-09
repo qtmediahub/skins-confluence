@@ -20,7 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.0
 import confluence.r720.components 1.0
 
-FocusScope {
+Item {
     id: root
 
     property variant foo : bar()
