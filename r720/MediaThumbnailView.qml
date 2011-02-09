@@ -94,6 +94,7 @@ Item {
         clip:  true
         opacity: root.hidePreview ? 0 : 1
         source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
+        centerAnchors: false
     }
 }
 

@@ -24,15 +24,17 @@ Item {
     property int fillMode: Image.PreserveAspectFit
     property string source
     property variant currentItem : primary
+    property bool centerAnchors : true
 
     Image {
         id: primary
         fillMode: root.fillMode
-        //anchors.fill: parent
-        height: parent.height
+        width: parent.width
         asynchronous: true
         opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
-        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: centerAnchors ? undefined: parent.bottom
+        anchors.verticalCenter: centerAnchors ? parent.verticalCenter : undefined
 
         Behavior on opacity {
             ConfluenceAnimation { }
@@ -42,11 +44,12 @@ Item {
     Image {
         id: secondary
         fillMode: root.fillMode
-        //anchors.fill: parent
-        height: parent.height
+        width: parent.width
         asynchronous: true
-        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
         opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: centerAnchors ? undefined: parent.bottom
+        anchors.verticalCenter: centerAnchors ? parent.verticalCenter : undefined
 
         Behavior on opacity {
             ConfluenceAnimation { }
