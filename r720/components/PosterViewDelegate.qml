@@ -46,8 +46,8 @@ Item {
         id: glassOverlay
         anchors.left: backgroundImage.left
         anchors.top: backgroundImage.top
-        width: backgroundImage.width
-        height: backgroundImage.height
+        width: backgroundImage.width * 0.8
+        height: backgroundImage.height * 0.6
         source: themeResourcePath + "/media/" + "GlassOverlay.png"
     }
 
