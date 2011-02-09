@@ -24,19 +24,12 @@
 **
 ****************************************************************************/
 
-import Qt 4.7
-import Qt.labs.components 1.0
+import QtQuick 1.0
 
 Item {
     id:lineedit
-    Item {
-        id: mx
-        property variant fontColor: "#616261";
-        property variant fontSize: 12
-    }
     property string hint: "Entry"
     property alias text: textInp.text
-    property bool secret: false
     property alias leftIconSource: leftIcon.source
     property alias rightIconSource: rightIcon.source
     signal rightIconClicked
@@ -45,30 +38,29 @@ Item {
 
     width: (hintText.state=='hinting'?hintText.width:textInp.width) + 11 + leftIcon.width + rightIcon.width
     height: 13 + 11
+    clip: true
 
     BorderImage {
         source: generalResourcePath + "/mx-images/entry.png"
         anchors.fill:parent
-        border.left:5; border.top:5;
-        border.right:5; border.bottom:5;
+        border { left: 5; right: 5; top: 5; bottom: 5 }
     }
     BorderImage {
         id: focusframe
         opacity:0
         source: generalResourcePath + "/mx-images/entry-active.png"
         anchors.fill:parent
-        border.left:5; border.top:5;
-        border.right:5; border.bottom:5;
+        border { left: 5; right: 5; top: 5; bottom: 5 }
     }
-    clip: true
-    Text{
-        id:hintText
+
+    Text {
+        id: hintText
         anchors.centerIn: parent
         anchors.topMargin:5
         anchors.rightMargin:6+rightIcon.width
         anchors.bottomMargin:6
         anchors.leftMargin:5+leftIcon.width
-        font.pixelSize:mx.fontSize
+        font.pixelSize: 12
         color: '#A2A2A2'
         text: ''
         states: State{
@@ -78,9 +70,9 @@ Item {
         }//No cool animated transition, because mx doesn't do that
 
     }
-    TextInput{
-        id:textInp
-        cursorDelegate: Item{
+    TextInput {
+        id: textInp
+        cursorDelegate: Item {
             Rectangle{
                 visible: parent.parent.focus
                 color: "#009BCE"
@@ -89,12 +81,6 @@ Item {
                 y: 1
             }
         }
-        /*
-        anchors.topMargin:5
-        anchors.rightMargin:6
-        anchors.bottomMargin:6
-        anchors.leftMargin:5
-        */
         property int leftMargin: 6 + leftIcon.width
         property int rightMargin: 6 + rightIcon.width
         x: leftMargin
@@ -114,11 +100,9 @@ Item {
 
         text:""
         horizontalAlignment: TextInput.AlignLeft
-        font.pixelSize:mx.fontSize
-        echoMode: secret?TextInput.Password:TextInput.Normal
+        font.pixelSize: 12
     }
-    MouseArea{
-        //Implements all line edit mouse handling
+    MouseArea {
         id: mainMouseArea
         anchors.fill: parent;
         function translateX(x){
@@ -142,22 +126,24 @@ Item {
         z: textInp.z + 1
     }
 
-    Image{id:rightIcon
+    Image {
+        id: rightIcon
         anchors.right: parent.right
         anchors.rightMargin: 6
         anchors.verticalCenter: parent.verticalCenter
         z: mainMouseArea.z+1
-        MouseArea{
+        MouseArea {
             anchors.fill: parent
             onClicked: lineedit.rightIconClicked();
         }
     }
-    Image{id:leftIcon
+    Image {
+        id:leftIcon
         anchors.left: parent.left
         anchors.leftMargin: 6
         anchors.verticalCenter: parent.verticalCenter
         z: mainMouseArea.z+1
-        MouseArea{
+        MouseArea {
             anchors.fill: parent
             onClicked: lineedit.leftIconClicked();
         }
