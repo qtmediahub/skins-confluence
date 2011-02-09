@@ -19,13 +19,19 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.0
 import confluence.r720.components 1.0
+import ActionMapper 1.0
 
 Window {
     id: root
 
     Loader {
-        id: loader;
+        id: loader
         anchors.centerIn: parent
+
+        function load() {
+            backend.clearComponentCache()
+            source = sourceNameInput.text
+        }
     }
 
     Column {
@@ -45,26 +51,33 @@ Window {
                 text: "http://gitorious.org/qtmediahub/qtmediahub/blobs/raw/master/hub/skins/confluence/remote/RemoteApp.qml" // "http://tinyurl.com/remoteapp-qml" 
                 color: "white"
                 font.pointSize: 15
+
+                Keys.onPressed:
+                    if (actionmap.eventMatch(event, ActionMapper.Down))
+                        reloadButton.focus = true
+                    else if (actionmap.eventMatch(event, ActionMapper.Enter))
+                        loader.load()
             }
 
             MouseArea {
                 id: sourceNameEntryMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: sourceNameInput.forceActiveFocus()
+                onClicked: sourceNameInput.focus = true
             }
         }
 
         Button {
+            id: reloadButton
             text: qsTr("Reload")
             focus: true
             anchors.horizontalCenter: parent.horizontalCenter
 
-            onClicked: {
-                backend.clearComponentCache()
-                loader.source = ""
-                loader.source = sourceNameInput.text
-            }
+            onClicked: loader.load()
+
+           Keys.onPressed:
+                if (actionmap.eventMatch(event, ActionMapper.Up))
+                    sourceNameInput.focus = true
         }
     }
 
