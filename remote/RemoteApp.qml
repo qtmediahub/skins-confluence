@@ -23,12 +23,6 @@ import confluence.r720.components 1.0
 Item {
     id: root
 
-    property variant foo : bar()
-
-    function bar() {
-        console.log(themeResourcePath)
-    }
-
     ListModel {
         id: menuModel
 
