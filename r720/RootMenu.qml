@@ -34,7 +34,7 @@ FocusScope {
     signal openSubMenu
 
     Component.onCompleted: {
-        if (config.isEnabled("menu-sound-effects", false)) {
+        if (config.isEnabled("menu-soundeffects", false)) {
             var menuSoundEffectLoader = Qt.createComponent("./components/QMHAudio.qml");
             if (menuSoundEffectLoader.status == Component.Ready) {
                 menuSoundEffect = menuSoundEffectLoader.createObject(parent)
