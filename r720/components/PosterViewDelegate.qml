@@ -4,6 +4,7 @@ import ActionMapper 1.0
 Item {
     id: delegateItem
     property variant itemdata : model
+    property int frameMargin: 6
     width: PathView.view.delegateWidth
     height: PathView.view.delegateHeight
     clip: true
@@ -24,26 +25,30 @@ Item {
 
     BorderImage {
         id: border
-        anchors.fill: parent
+        anchors.centerIn: parent
+        width: backgroundImage.width + frameMargin*2
+        height: backgroundImage.height + frameMargin*2
         source: themeResourcePath + "/media/" + "ThumbBorder.png"
         border.left: 10; border.top: 10
         border.right: 10; border.bottom: 10
+    }
 
-        Image {
-            id: backgroundImage
-            anchors.fill: parent
-            source: model.previewUrl ? model.previewUrl : ""
-            anchors.margins: 6
+    Image {
+        id: backgroundImage
+        source: model.previewUrl ? model.previewUrl : ""
+        anchors.centerIn: parent
+        width: (sourceSize.width > sourceSize.height ? delegateItem.width : (sourceSize.width / sourceSize.height) * delegateItem.width) - frameMargin*2
+        height: (sourceSize.width <= sourceSize.height ? delegateItem.height : (sourceSize.height / sourceSize.width) * delegateItem.height) - frameMargin*2
 
-            Image {
-                id: glassOverlay
-                anchors.left: parent.left
-                anchors.top: parent.top
-                width: parent.width*0.7
-                height: parent.height*0.6
-                source: themeResourcePath + "/media/" + "GlassOverlay.png"
-            }
-        }
+    }
+
+    Image {
+        id: glassOverlay
+        anchors.left: backgroundImage.left
+        anchors.top: backgroundImage.top
+        width: backgroundImage.width
+        height: backgroundImage.height
+        source: themeResourcePath + "/media/" + "GlassOverlay.png"
     }
 
     function activate()
