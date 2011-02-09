@@ -57,6 +57,7 @@ Window {
 
         Button {
             text: qsTr("Reload")
+            focus: true
             anchors.horizontalCenter: parent.horizontalCenter
 
             onClicked: {
