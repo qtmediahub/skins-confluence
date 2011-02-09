@@ -42,7 +42,7 @@ Window {
             TextInput {
                 id: sourceNameInput
                 anchors.centerIn: parent
-                text: "http://nebulon.de/RemoteApp.qml"
+                text: "http://gitorious.org/qtmediahub/qtmediahub/blobs/raw/master/hub/skins/confluence/remote/RemoteApp.qml"
                 color: "white"
                 font.pointSize: 15
             }
