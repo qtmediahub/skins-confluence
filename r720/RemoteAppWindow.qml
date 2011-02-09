@@ -34,6 +34,15 @@ Window {
         }
     }
 
+    Text {
+        id: statusText
+        text: loader.status == Loader.Loading ? qsTr("Loading : %1%").arg(loader.progress*100) : qsTr("Error loading")
+        anchors.centerIn: parent
+        color: "white"
+        font.pointSize: 14
+        visible: loader.status != Loader.Null && loader.status != Loader.Ready
+    }
+
     Column {
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -85,3 +94,4 @@ Window {
 
     Engine { name: qsTr("RemoteApp"); role: "remoteApp"; visualElement: root }
 }
+
