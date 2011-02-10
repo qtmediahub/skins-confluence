@@ -17,7 +17,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ****************************************************************************/
 
-import QtMultimediaKit 1.1
+import QtMultimediaKit 1.2
 
 //This serves to isolate import failures if QtMultimedia is not present
 Audio {
