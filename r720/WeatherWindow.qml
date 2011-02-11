@@ -70,7 +70,7 @@ Window {
         onEntered: open();
         onExited: close()
 
-        content: Column {
+        content: Item {
             anchors { fill: parent; topMargin: 50; leftMargin: closedBladePeek + 5; rightMargin: 5 }
 
             Image {
