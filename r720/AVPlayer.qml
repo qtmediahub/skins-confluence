@@ -140,7 +140,7 @@ FocusScope {
         onPreviousRequested: root.playPrevious()
         onVolumeUpRequested: root.increaseVolume()
         onVolumeDownRequested: root.decreaseVolume()
-        onPlayRemoteSourceRequested: { root.playForeground(mediaPlayerHelper.mediaInfo); mediaItem.position = position }
+        onPlayRemoteSourceRequested: { root.playForeground(mediaPlayerHelper.mediaInfo); mediaItem.seek(position) }
     }
 
     anchors.fill: parent
