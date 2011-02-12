@@ -310,6 +310,19 @@ FocusScope {
         width: root.width
         height: root.height
 
+        property int _seekPos : -1
+
+        onSeekableChanged : {
+            if (seekable && _seekPos != -1) {
+                position = _seekPos
+                _seekPos = -1
+            }
+        }
+
+        function seek(pos) {
+            _seekPos = pos
+        }
+
         onPositionChanged: {
             audioVisualisationPlaceholder.metronomTick()
         }
