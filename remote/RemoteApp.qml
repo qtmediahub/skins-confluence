@@ -84,7 +84,7 @@ Item {
                 Image {
                     id: backgroundImage
                     anchors.fill: parent;
-                    source: "file://" + themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+                    source: "file://" + themeResourcePath + "/media/" + (ListView.isCurrentItem && ListView.view.activeFocus ? "MenuItemFO.png" : "MenuItemNF.png");
                 }
 
                 Text {
