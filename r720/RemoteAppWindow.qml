@@ -32,6 +32,12 @@ Window {
             backend.clearComponentCache()
             source = sourceNameInput.text
         }
+
+        Keys.onPressed: {
+            if (actionmap.eventMatch(event, ActionMapper.Right)
+                || actionmap.eventMatch(event, ActionMapper.Left))
+                sourceNameInput.focus = true
+        }
     }
 
     Text {
