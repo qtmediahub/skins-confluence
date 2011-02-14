@@ -61,6 +61,8 @@ Item {
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
             GridView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
+            GridView.view.currentIndex = 0
+            GridView.view.currentItem.forceActiveFocus()
         } else {
             GridView.view.currentIndex = index;
             GridView.view.activated()
