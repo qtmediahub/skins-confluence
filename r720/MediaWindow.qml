@@ -66,6 +66,7 @@ Window {
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         config.setValue(mediaWindow.mediaWindowName + "-currentview", viewType)
         view.rootIndex = rootIndex
+        view.selectFirstItem()
     }
 
     function itemActivated(item) {
