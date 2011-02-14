@@ -47,6 +47,7 @@ Item {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
             ListView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
             ListView.view.currentIndex = 0
+            ListView.view.currentItem.forceActiveFocus()
         } else {
             ListView.view.currentIndex = index;
             ListView.view.activated()
