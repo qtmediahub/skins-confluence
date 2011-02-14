@@ -66,10 +66,10 @@ Item {
             treeModel: engineModel
             clip: true
             focus: true
-            onActivated: {
-                mediaWindow.itemActivated(currentItem.itemdata)
-            }
+            onActivated: mediaWindow.itemActivated(currentItem.itemdata)
             Keys.onPressed: {
+                if (!currentItem)
+                    return;
                 var itemType = sourcesListView.currentItem.itemdata.type
                 if (itemType == "SearchPath") {
                     if (event.key == Qt.Key_Delete) {
