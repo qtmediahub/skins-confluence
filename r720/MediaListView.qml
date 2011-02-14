@@ -90,10 +90,10 @@ Item {
         anchors.bottom: sourcesPanel.bottom
         anchors.bottomMargin: 30
         anchors.top: sourcesPanel.top
+        centerAnchors: false
         clip:  true
         opacity: root.hidePreview ? 0 : 1
         source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
-        centerAnchors: false
     }
 }
 

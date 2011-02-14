@@ -89,12 +89,12 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 30
         anchors.bottom: sourcesPanel.bottom
-        anchors.bottomMargin: confluence.height/6
+        anchors.bottomMargin: 30
         anchors.top: sourcesPanel.top
+        centerAnchors: false
         clip:  true
         opacity: root.hidePreview ? 0 : 1
         source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
-        centerAnchors: false
     }
 }
 
