@@ -65,7 +65,7 @@ FocusScope {
             opacity:  0.5
         }
 
-        model: backend.engines //menuList
+        model: backend.advertizedEngines //menuList
         delegate:
             RootMenuListItem { }
 
