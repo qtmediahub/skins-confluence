@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import confluence.r720.components 1.0
 import "./components/uiconstants.js" as UIConstants
+import "./components/cursor.js" as Cursor
 import ActionMapper 1.0
 
 FocusScope {
@@ -124,15 +125,10 @@ FocusScope {
 
     //FIXME: function failing here simply skips rest of init, wish they had exceptions
     Component.onCompleted: {
-        //Create items which may or may not be present
-        var qmlComponent = Qt.createComponent("./components/Cursor.qml")
-        if (qmlComponent.status == Component.Ready)
-            qmlComponent.createObject(confluence)
-        else if (qmlComponent.status == Component.Error)
-            backend.log(qmlComponent.errorString())
+        Cursor.initialize()
 
         !!musicEngine && musicEngine && musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-        qmlComponent = Qt.createComponent("MusicWindow.qml")
+        var qmlComponent = Qt.createComponent("MusicWindow.qml")
         if (!!musicEngine
                 && qmlComponent.status == Component.Ready) {
             qmlComponent.createObject(confluence)
