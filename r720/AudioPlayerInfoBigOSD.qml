@@ -148,7 +148,7 @@ FocusScope {
 
         ProgressBar {
             width: parent.width
-            mProgress: media.position/media.duration
+            mProgress: media.duration != 0 ? media.position/media.duration : 1.0
         }
 
         Item {
