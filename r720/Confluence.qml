@@ -237,6 +237,13 @@ FocusScope {
             backend.log(qmlComponent.errorString())
         }
 
+        qmlComponent = Qt.createComponent("AppStoreWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            var appStore = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
+        }
+
         //Why would you ever want to do this from QML!
         //One property API FTW
         qmlComponent = Qt.createComponent("SystemScreenSaverControl.qml");
