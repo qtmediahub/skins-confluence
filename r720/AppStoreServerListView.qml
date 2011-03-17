@@ -22,12 +22,11 @@ import AppStore 1.0
 import "components/"
 import "JSONBackend.js" as JSONBackend
 
-Item {
+FocusScope {
     id: root
 
     opacity:  0
     scale: 0
-    visible: false
 
     signal appInstallationStarted()
 
@@ -39,7 +38,6 @@ Item {
             name: "visible"
             PropertyChanges {
                 target: root
-                visible: true
                 opacity: 1
                 scale: 1
             }
@@ -49,12 +47,10 @@ Item {
     transitions: [
         Transition {
             SequentialAnimation {
-                PropertyAction { target: blade; property: "visible"; value: false }
                 ParallelAnimation {
                     NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
-                PropertyAction { target: root; property: "visible"; value: false }
             }
         }
     ]
@@ -93,7 +89,6 @@ Item {
         } else {
             var url = server + "/appdownload"
             var data = {"id" :  id, "imei" : "112163001487801"}
-            deleteAppButton.appId = id;
 
             JSONBackend.serverCall(url, data, function(data) {
                 if (data !== 0) {

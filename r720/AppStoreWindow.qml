@@ -72,8 +72,8 @@ Window {
         id: startAppStoreButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        text: app.active ? "Exit App" : "AppStore"
-        onClicked: app.active ? appLoader.source = "" : appStoreListView.state = "visible"
+        text: (app.active || appStoreListView.state == "visible" ) ? "Exit" : "AppStore"
+        onClicked: app.active ? appLoader.source = "" : (appStoreListView.state == "visible" ? appStoreListView.state = "" : appStoreListView.state = "visible")
     }
 
     Engine { name: qsTr("App Store"); role: "appstore"; visualElement: root }
