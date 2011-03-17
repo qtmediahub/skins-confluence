@@ -22,59 +22,50 @@ import AppStore 1.0
 import "components/"
 import "JSONBackend.js" as JSONBackend
 
-Window {
+GridView {
     id: root
 
-    anchors.fill: parent
+    clip: true
+    cellWidth: 154
+    cellHeight: 154
 
-    AppStore {
-        id: appStore
-    }
+    signal launchApp(string appExec)
 
-    AppStoreGrid {
-        id: appGrid
+    delegate : Item {
+        id: delegateItem
 
-        model: appStore.apps
+        width: GridView.view.cellWidth
+        height: GridView.view.cellHeight
 
-        anchors.fill: parent
-        anchors.margins: 100
-
-        onLaunchApp: appLoader.source = appExec
-    }
-
-    AppStoreServerListView {
-        id: appStoreListView
-        state: ""
-        anchors.fill: parent
-
-        onAppInstallationStarted: {
-            appStoreListView.state = ""
-        }
-    }
-
-    Item {
-        id: app
-
-        property bool active : appLoader.status == Loader.Ready
-
-        width: 300
-        height: 600
-        anchors.centerIn: parent
-        opacity: active ? 1 : 0
-
-        Loader {
-            id: appLoader
+        Rectangle {
             anchors.fill: parent
+            anchors.margins: 10
+            color: "steelblue"
+            radius: 30
+            opacity: 0.2
+        }
+
+        Image {
+            id: iconImage
+            anchors.centerIn: parent
+            source: model.modelData.path + "/" + model.modelData.icon
+        }
+
+        ConfluenceText {
+            anchors.top: iconImage.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.topMargin: 10
+            text: model.modelData.name
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: root.launchApp(model.modelData.path + "/" + model.modelData.exec)
         }
     }
 
-    Button {
-        id: startAppStoreButton
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        text: app.active ? "Exit App" : "AppStore"
-        onClicked: app.active ? appLoader.source = "" : appStoreListView.state = "visible"
+    ScrollBar {
+        id: verticalScrollbar
+        flickable: root
     }
-
-    Engine { name: qsTr("App Store"); role: "appstore"; visualElement: root }
 }

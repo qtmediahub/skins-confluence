@@ -18,63 +18,44 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import AppStore 1.0
 import "components/"
-import "JSONBackend.js" as JSONBackend
 
-Window {
+Dialog {
     id: root
 
-    anchors.fill: parent
+    title: qsTr("Yes/No Dialog")
 
-    AppStore {
-        id: appStore
-    }
+    property alias question : questionLabel.text
 
-    AppStoreGrid {
-        id: appGrid
+    Column {
+        spacing: 5
+        width: 620
 
-        model: appStore.apps
+        Text {
+            id: questionLabel
+            width: parent.width
+            text: ""
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: "steelblue"
+        }
 
-        anchors.fill: parent
-        anchors.margins: 100
+        DialogButtonBox {
+            id: buttonBox
+            anchors.horizontalCenter: parent.horizontalCenter
+            onAccepted: {
+                root.accept()
+            }
+            onRejected: {
+                root.reject()
+            }
 
-        onLaunchApp: appLoader.source = appExec
-    }
-
-    AppStoreServerListView {
-        id: appStoreListView
-        state: ""
-        anchors.fill: parent
-
-        onAppInstallationStarted: {
-            appStoreListView.state = ""
+            Keys.onPressed:
+                if (actionmap.eventMatch(event, ActionMapper.Left))
+                    fileSystemView.focus = true
+                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                    sourceNameInput.focus = true
         }
     }
-
-    Item {
-        id: app
-
-        property bool active : appLoader.status == Loader.Ready
-
-        width: 300
-        height: 600
-        anchors.centerIn: parent
-        opacity: active ? 1 : 0
-
-        Loader {
-            id: appLoader
-            anchors.fill: parent
-        }
-    }
-
-    Button {
-        id: startAppStoreButton
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        text: app.active ? "Exit App" : "AppStore"
-        onClicked: app.active ? appLoader.source = "" : appStoreListView.state = "visible"
-    }
-
-    Engine { name: qsTr("App Store"); role: "appstore"; visualElement: root }
 }
+
