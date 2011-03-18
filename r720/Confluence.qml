@@ -56,12 +56,12 @@ FocusScope {
         State {
             name:  ""
             StateChangeScript { name: "focusMainBlade"; script: mainBlade.forceActiveFocus() }
+            PropertyChanges { target: ticker; state: "visible" }
         },
         State {
             name: "showingSelectedElement"
             PropertyChanges { target: mainBlade; state: "hidden" }
             PropertyChanges { target: avPlayer; state: "hidden" }
-            PropertyChanges { target: ticker; expanded: false }
             PropertyChanges { target: dateTimeHeader; expanded: true; showDate: false }
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
@@ -210,7 +210,7 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             ticker = qmlComponent.createObject(confluence)
             ticker.z = UIConstants.screenZValues.header
-            ticker.expanded = true;
+            ticker.state = "visible"
         } else if (qmlComponent.status == Component.Error) {
             backend.log(qmlComponent.errorString())
             ticker = dummyItem

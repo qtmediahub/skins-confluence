@@ -20,11 +20,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import confluence.r720.components 1.0
 
-Header {
+BorderImage {
     id: root
-
-    atTop: false
-    width: parent.width/1.5;
 
     property string currentFeed: "rss.news.yahoo.com/rss/topstories"
     property bool active: confluence.state == ""
@@ -33,6 +30,33 @@ Header {
 
     onLinkClicked: {
         browserWindow ? browserWindow.loadPage(link) : backend.openUrlExternally(link)
+    }
+
+    border.left: 100
+    source: themeResourcePath + "/media/Rss_Back.png"
+    width: parent.width/1.5;
+
+    anchors { top: parent.bottom; right: parent.right; rightMargin: -1 }
+
+    BorderImage {
+        z: 1
+        source: themeResourcePath + "/media/Rss_Back_Overlay.png"
+        border.left: 100
+    }
+
+    states: [
+        State {
+            name: "visible"
+            PropertyChanges {
+                target: root.anchors
+                topMargin: -root.height
+            }
+        }
+    ]
+
+    transitions: Transition {
+        reversible: true
+        NumberAnimation { target: anchors; properties: "topMargin"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
     }
 
     XmlListModel {
