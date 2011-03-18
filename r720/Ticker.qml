@@ -47,14 +47,15 @@ Header {
 
     ListView {
         id: list
+        property int textHeight: root.height - 6
         clip: true
         anchors.right : parent.right
-        anchors.top : parent.top
-        anchors.bottom : parent.bottom
-        anchors.topMargin: 8
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 4
         orientation: ListView.Horizontal
+        height: parent.height
         width: parent.width - 40;
-        interactive: false
+        interactive: true
 
         model: feedModel
         delegate: Item {
@@ -62,12 +63,12 @@ Header {
             width: childrenRect.width; height: parent.height
             ConfluenceText {
                 id: tickerTitle;
-                font.pointSize: 15
+                font.pixelSize: list.textHeight
                 text: title.replace("\n", "")
                 color: delegateMouseArea.containsMouse ? "steelblue" : "white"
             }
 
-            ConfluenceText { font.pointSize: 15; anchors.left: tickerTitle.right; text: " - "; color: "steelblue" }
+            ConfluenceText { font.pixelSize: list.textHeight; anchors.left: tickerTitle.right; text: " - "; color: "steelblue" }
 
             MouseArea {
                 id: delegateMouseArea
