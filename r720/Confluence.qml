@@ -66,6 +66,7 @@ FocusScope {
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
+            PropertyChanges { target: ticker; state: "" }
             PropertyChanges { target: selectedElement; state: "visible" }
             PropertyChanges { target: avPlayer; state: "background" }
         },
