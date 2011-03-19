@@ -106,7 +106,7 @@ BorderImage {
             interval: 50;
             running: root.active && !list.flicking
             repeat: true
-            onTriggered: list.contentX = list.contentX + 2
+            onTriggered: list.contentX = list.contentX + 1
         }
     }
 }
