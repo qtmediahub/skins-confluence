@@ -37,14 +37,6 @@ GridView {
         width: GridView.view.cellWidth
         height: GridView.view.cellHeight
 
-        Rectangle {
-            anchors.fill: parent
-            anchors.margins: 10
-            color: "steelblue"
-            radius: 30
-            opacity: 0.2
-        }
-
         Image {
             id: iconImage
             anchors.centerIn: parent

@@ -52,19 +52,24 @@ Window {
         }
     }
 
-    Item {
+    Panel {
         id: app
 
         property bool active : appLoader.status == Loader.Ready
 
-        width: 300
-        height: 600
+        width: parent.width*0.5
+        height: parent.height*0.8
         anchors.centerIn: parent
         opacity: active ? 1 : 0
+        clip: true
 
         Loader {
             id: appLoader
             anchors.fill: parent
+        }
+
+        Behavior on opacity {
+            NumberAnimation {}
         }
     }
 

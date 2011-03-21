@@ -85,23 +85,19 @@ FocusScope {
     }
 
     function installApp(id) {
-        if (!loggedIn) {
-            loginDialog.open()
-        } else {
-            var url = server + "/appdownload"
-            var data = {"id" :  id, "imei" : "112163001487801"}
+        var url = server + "/appdownload"
+        var data = {"id" :  id, "imei" : "112163001487801"}
 
-            JSONBackend.serverCall(url, data, function(data) {
-                if (data !== 0) {
-                    if(data.status == "ok") {
-                        console.log("status: ok for " + id)
-                        console.log("download url: " + data.url)
-                        appStore.installApp("name", id, data.url)
-                        root.appInstallationStarted()
-                    }
+        JSONBackend.serverCall(url, data, function(data) {
+            if (data !== 0) {
+                if(data.status == "ok") {
+                    console.log("status: ok for " + id)
+                    console.log("download url: " + data.url)
+                    appStore.installApp("name", id, data.url)
+                    root.appInstallationStarted()
                 }
-            })
-        }
+            }
+        })
     }
 
     function deleteApp(id) {
@@ -117,6 +113,10 @@ FocusScope {
 
     AppStore {
         id: appStore
+
+        onInstallAppFinished: console.log("install finished: " + userId + " - " + appUuid);
+        onInstallAppProgress: console.log("install progress: " + userId + " - " + appUuid + " - " + progress);
+        onInstallAppFailed: console.log("install failed: " + userId + " - " + appUuid + " - " + error);
     }
 
     JSONModel {
@@ -274,15 +274,23 @@ FocusScope {
                         onEntered:
                             ListView.view.currentIndex = index
                         onClicked: {
+                            if (!loggedIn) {
+                                loginDialog.open()
+                            } else {
+                                installDialog.id = id;
+                                installDialog.question = "Really install " + model.name
+                                installDialog.open();
+                            }
+                        }
+                    }
+                    Keys.onReturnPressed: {
+                        if (!loggedIn) {
+                            loginDialog.open()
+                        } else {
                             installDialog.id = id;
                             installDialog.question = "Really install " + model.name
                             installDialog.open();
                         }
-                    }
-                    Keys.onReturnPressed: {
-                        installDialog.id = id;
-                        installDialog.question = "Really install " + model.name
-                        installDialog.open();
                         event.accepted = true
                     }
                 }
@@ -316,7 +324,7 @@ FocusScope {
         question: "Really install application"
 
         onAccepted: {
-            installApp(id)
+            installApp(id);
             id = ""
         }
         onRejected:  id = ""
