@@ -55,7 +55,8 @@ FocusScope {
         }
     ]
 
-    property string server: "http://ed.europe.nokia.com:8080"
+//    property string server: "http://ed.europe.nokia.com:8080"
+    property string server:  "http://munich-gw.trolltech.de:8080"
     property bool serverOnline: true
     property string serverReason
     property bool loggedIn:  false
