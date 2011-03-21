@@ -21,13 +21,14 @@ import QtQuick 1.1
 import AppStore 1.0
 import "components/"
 import "JSONBackend.js" as JSONBackend
+import ActionMapper 1.0
 
 GridView {
     id: root
 
     clip: true
-    cellWidth: 154
-    cellHeight: 154
+    cellWidth: 150
+    cellHeight: cellWidth
 
     signal launchApp(string appExec)
 
@@ -36,6 +37,9 @@ GridView {
 
         width: GridView.view.cellWidth
         height: GridView.view.cellHeight
+
+        scale: GridView.isCurrentItem ? 1.0 : 0.8
+        smooth: true
 
         Image {
             id: iconImage
@@ -53,6 +57,16 @@ GridView {
         MouseArea {
             anchors.fill: parent
             onClicked: root.launchApp(model.modelData.path + "/" + model.modelData.exec)
+        }
+
+        Keys.onPressed: {
+            if (actionmap.eventMatch(event, ActionMapper.Enter)) {
+                root.launchApp(model.modelData.path + "/" + model.modelData.exec)
+            }
+        }
+
+        Behavior on scale {
+            NumberAnimation {}
         }
     }
 

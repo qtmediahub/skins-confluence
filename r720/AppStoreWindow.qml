@@ -40,6 +40,8 @@ Window {
         anchors.margins: 100
 
         onLaunchApp: appLoader.source = appExec
+
+        focus: true
     }
 
     AppStoreServerListView {
