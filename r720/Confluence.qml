@@ -352,7 +352,7 @@ FocusScope {
             sourceSize { width: height; height: homeHeader.height-4; }
             source: themeResourcePath + "/media/HomeIcon.png"
         }
-        MouseArea { anchors.fill: parent; onClicked: confluence.state = "" }
+        MouseArea { anchors.fill: parent; onClicked: confluence.show(mainBlade) }
     }
 
     Header {
