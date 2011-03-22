@@ -21,14 +21,19 @@ import QtQuick 1.1
 import AppStore 1.0
 import "components/"
 import "JSONBackend.js" as JSONBackend
+import ActionMapper 1.0
 
 Window {
     id: root
 
     anchors.fill: parent
 
-    function launchAppStore() {
+    function showAppStore() {
         appStoreListView.state = "visible"
+    }
+
+    function hideAppStore() {
+        appStoreListView.state = ""
     }
 
     AppStore {
@@ -46,7 +51,7 @@ Window {
         onLaunchApp: {
             console.log("start: " + appExec)
             if (appExec == "__appStore")
-                launchAppStore();
+                showAppStore();
             else
                 appLoader.source = appPath + "/" + appExec
         }
@@ -90,7 +95,16 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         text: (app.active || appStoreListView.state == "visible" ) ? "Exit" : "AppStore"
-        onClicked: app.active ? appLoader.source = "" : (appStoreListView.state == "visible" ? appStoreListView.state = "" : launchAppStore())
+        onClicked: app.active ? appLoader.source = "" : (appStoreListView.state == "visible" ? hideAppStore() : showAppStore())
+    }
+
+    Keys.onPressed: {
+        if (actionmap.eventMatch(event, ActionMapper.Menu)) {
+            if (appStoreListView.state == "visible")
+                hideAppStore();
+            else
+                event.accepted = false;
+        }
     }
 
     Engine { name: qsTr("App Store"); role: "appstore"; visualElement: root }
