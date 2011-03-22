@@ -30,7 +30,7 @@ GridView {
     cellWidth: 150
     cellHeight: cellWidth
 
-    signal launchApp(string appExec)
+    signal launchApp(string appPath, string appExec)
 
     delegate : Item {
         id: delegateItem
@@ -41,10 +41,15 @@ GridView {
         scale: GridView.isCurrentItem ? 1.0 : 0.8
         smooth: true
 
+        function triggerItem() {
+            root.launchApp(model.modelData.path, model.modelData.exec)
+        }
+
         Image {
             id: iconImage
-            anchors.centerIn: parent
-            source: model.modelData.path + "/" + model.modelData.icon
+            anchors.fill: parent
+            anchors.margins: 40
+            source: model.modelData.exec == "__appStore" ? themeResourcePath + "/media/DefaultAddon.png" : model.modelData.path + "/" + model.modelData.icon
         }
 
         ConfluenceText {
@@ -56,12 +61,12 @@ GridView {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: root.launchApp(model.modelData.path + "/" + model.modelData.exec)
+            onClicked: triggerItem()
         }
 
         Keys.onPressed: {
             if (actionmap.eventMatch(event, ActionMapper.Enter)) {
-                root.launchApp(model.modelData.path + "/" + model.modelData.exec)
+                triggerItem()
             }
         }
 
