@@ -21,6 +21,7 @@ import QtQuick 1.1
 import AppStore 1.0
 import "components/"
 import "JSONBackend.js" as JSONBackend
+import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -106,7 +107,7 @@ FocusScope {
 
     Component.onCompleted: {
         categoriesModel.refresh();
-        listView.model = categoriesModel;
+        categoryListView.model = categoriesModel;
         appModel.refresh();
         appListView.model = appModel;
     }
@@ -160,7 +161,7 @@ FocusScope {
             height: root.height/1.3
 
             ConfluenceListView {
-                id: listView
+                id: categoryListView
                 anchors.fill: parent
 
                 scrollbar: false
@@ -174,7 +175,7 @@ FocusScope {
                 }
 
                 delegate: Item {
-                    width: listView.width
+                    width: categoryListView.width
                     height: 70
                     Image {
                         anchors.fill: parent;
@@ -208,6 +209,10 @@ FocusScope {
                         event.accepted = true
                     }
                 }
+
+                Keys.onPressed:
+                    if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right))
+                        appListView.focus = true
             }
         }
 
@@ -230,7 +235,7 @@ FocusScope {
                 }
 
                 delegate: Item {
-                    width: listView.width
+                    width: categoryListView.width
                     height: 70
                     Image {
                         anchors.fill: parent;
@@ -276,24 +281,32 @@ FocusScope {
                         onClicked: {
                             if (!loggedIn) {
                                 loginDialog.open()
+                                loginDialog.focus = true
                             } else {
                                 installDialog.id = id;
                                 installDialog.question = "Really install " + model.name
                                 installDialog.open();
+                                installDialog.focus = true;
                             }
                         }
                     }
                     Keys.onReturnPressed: {
                         if (!loggedIn) {
                             loginDialog.open()
+                            loginDialog.focus = true
                         } else {
                             installDialog.id = id;
                             installDialog.question = "Really install " + model.name
                             installDialog.open();
+                            installDialog.focus = true;
                         }
                         event.accepted = true
                     }
                 }
+
+                Keys.onPressed:
+                    if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right))
+                        categoryListView.focus = true
             }
         }
     }
@@ -313,6 +326,7 @@ FocusScope {
                                        }
                                    })
         }
+        onClosed: appListView.focus = true
     }
 
     AppStoreDialog {
@@ -328,6 +342,7 @@ FocusScope {
             id = ""
         }
         onRejected:  id = ""
+        onClosed: appListView.focus = true
     }
 
     Behavior on opacity { PropertyAnimation { duration: 500 } }

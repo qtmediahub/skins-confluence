@@ -30,10 +30,12 @@ Window {
 
     function showAppStore() {
         appStoreListView.state = "visible"
+        appStoreListView.focus = true
     }
 
     function hideAppStore() {
         appStoreListView.state = ""
+        appGrid.focus = true
     }
 
     AppStore {
@@ -64,9 +66,7 @@ Window {
         state: ""
         anchors.fill: parent
 
-        onAppInstallationStarted: {
-            appStoreListView.state = ""
-        }
+        onAppInstallationStarted: hideAppStore()
     }
 
     Panel {

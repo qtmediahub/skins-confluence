@@ -19,6 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "components/"
+import ActionMapper 1.0
 
 Dialog {
     id: root
@@ -40,6 +41,7 @@ Dialog {
             verticalAlignment: Text.AlignVCenter
             color: "steelblue"
         }
+
         Image {
             id: sourceNameEntry
             width: parent.width
@@ -52,10 +54,10 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Left))
+                    if (actionmap.eventMatch(event, ActionMapper.Up))
                         buttonBox.focus = true
-                    else if (actionmap.eventMatch(event, ActionMapper.Right))
-                        fileSystemView.focus = true
+                    else if (actionmap.eventMatch(event, ActionMapper.Down))
+                        sourcePasswordInput.focus = true
             }
 
             MouseArea {
@@ -86,10 +88,10 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Left))
+                    if (actionmap.eventMatch(event, ActionMapper.Up))
+                        sourceNameInput.focus = true
+                    else if (actionmap.eventMatch(event, ActionMapper.Down))
                         buttonBox.focus = true
-                    else if (actionmap.eventMatch(event, ActionMapper.Right))
-                        fileSystemView.focus = true
             }
 
             MouseArea {
@@ -110,11 +112,12 @@ Dialog {
             }
 
             Keys.onPressed:
-                if (actionmap.eventMatch(event, ActionMapper.Left))
-                    fileSystemView.focus = true
-                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                if (actionmap.eventMatch(event, ActionMapper.Up))
+                    sourcePasswordInput.focus = true
+                else if (actionmap.eventMatch(event, ActionMapper.Down))
                     sourceNameInput.focus = true
         }
     }
+
 }
 
