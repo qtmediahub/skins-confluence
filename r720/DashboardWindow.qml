@@ -22,7 +22,7 @@ import QMLModuleDiscovery 1.0
 import Qt.labs.particles 1.0
 import ActionMapper 1.0
 
-import confluence.r720.components 1.0
+import "components/"
 
 Window {
     id: root

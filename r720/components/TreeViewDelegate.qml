@@ -26,6 +26,15 @@ Item {
     property variant itemdata : model
     width: ListView.view.width
     height: sourceText.height + 8
+
+    ListView.onAdd: NumberAnimation {
+        target: delegateItem
+        properties: "scale, opacity"
+        from: 0
+        to: 1
+        duration: 200+index*40
+    }
+
     Image {
         id: backgroundImage
         anchors.fill: parent; 

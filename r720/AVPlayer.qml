@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import QtMultimediaKit 1.1
-import confluence.r720.components 1.0
+import "components/"
 import Playlist 1.0
 import ActionMapper 1.0
 import RpcConnection 1.0

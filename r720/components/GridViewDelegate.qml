@@ -26,6 +26,14 @@ Item {
     width: GridView.view.cellWidth
     height: GridView.view.cellHeight
 
+    GridView.onAdd: NumberAnimation {
+        target: delegateItem
+        properties: "scale, opacity"
+        from: 0
+        to: 1
+        duration: 200+index*40
+    }
+
     Image {
         id: backgroundImage
         anchors.fill: parent

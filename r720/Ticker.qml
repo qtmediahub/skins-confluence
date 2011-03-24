@@ -18,13 +18,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import confluence.r720.components 1.0
+import "components/"
 
-Header {
+BorderImage {
     id: root
-
-    atTop: false
-    width: parent.width/1.5;
 
     property string currentFeed: "rss.news.yahoo.com/rss/topstories"
     property bool active: confluence.state == ""
@@ -33,6 +30,33 @@ Header {
 
     onLinkClicked: {
         browserWindow ? browserWindow.loadPage(link) : backend.openUrlExternally(link)
+    }
+
+    border.left: 100
+    source: themeResourcePath + "/media/Rss_Back.png"
+    width: parent.width/1.5;
+
+    anchors { top: parent.bottom; right: parent.right; rightMargin: -1 }
+
+    BorderImage {
+        z: 1
+        source: themeResourcePath + "/media/Rss_Back_Overlay.png"
+        border.left: 100
+    }
+
+    states: [
+        State {
+            name: "visible"
+            PropertyChanges {
+                target: root.anchors
+                topMargin: -root.height
+            }
+        }
+    ]
+
+    transitions: Transition {
+        reversible: true
+        NumberAnimation { target: anchors; properties: "topMargin"; easing.type: standardEasingCurve; duration: standardAnimationDuration }
     }
 
     XmlListModel {
@@ -47,14 +71,15 @@ Header {
 
     ListView {
         id: list
+        property int textHeight: root.height - 6
         clip: true
         anchors.right : parent.right
-        anchors.top : parent.top
-        anchors.bottom : parent.bottom
-        anchors.topMargin: 8
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 4
         orientation: ListView.Horizontal
+        height: parent.height
         width: parent.width - 40;
-        interactive: false
+        interactive: true
 
         model: feedModel
         delegate: Item {
@@ -62,12 +87,12 @@ Header {
             width: childrenRect.width; height: parent.height
             ConfluenceText {
                 id: tickerTitle;
-                font.pointSize: 15
+                font.pixelSize: list.textHeight
                 text: title.replace("\n", "")
                 color: delegateMouseArea.containsMouse ? "steelblue" : "white"
             }
 
-            ConfluenceText { font.pointSize: 15; anchors.left: tickerTitle.right; text: " - "; color: "steelblue" }
+            ConfluenceText { font.pixelSize: list.textHeight; anchors.left: tickerTitle.right; text: " - "; color: "steelblue" }
 
             MouseArea {
                 id: delegateMouseArea
@@ -81,7 +106,7 @@ Header {
             interval: 50;
             running: root.active && !list.flicking
             repeat: true
-            onTriggered: list.contentX = list.contentX + 2
+            onTriggered: list.contentX = list.contentX + 1
         }
     }
 }

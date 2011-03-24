@@ -18,7 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import confluence.r720.components 1.0
+import "components/"
 import "./components/uiconstants.js" as UIConstants
 import "./components/cursor.js" as Cursor
 import ActionMapper 1.0
@@ -56,16 +56,17 @@ FocusScope {
         State {
             name:  ""
             StateChangeScript { name: "focusMainBlade"; script: mainBlade.forceActiveFocus() }
+            PropertyChanges { target: ticker; state: "visible" }
         },
         State {
             name: "showingSelectedElement"
             PropertyChanges { target: mainBlade; state: "hidden" }
             PropertyChanges { target: avPlayer; state: "hidden" }
-            PropertyChanges { target: ticker; expanded: false }
             PropertyChanges { target: dateTimeHeader; expanded: true; showDate: false }
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
+            PropertyChanges { target: ticker; state: "" }
             PropertyChanges { target: selectedElement; state: "visible" }
             PropertyChanges { target: avPlayer; state: "background" }
         },
@@ -217,7 +218,7 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             ticker = qmlComponent.createObject(confluence)
             ticker.z = UIConstants.screenZValues.header
-            ticker.expanded = true;
+            ticker.state = "visible"
         } else if (qmlComponent.status == Component.Error) {
             backend.log(qmlComponent.errorString())
             ticker = dummyItem
@@ -359,7 +360,7 @@ FocusScope {
             sourceSize { width: height; height: homeHeader.height-4; }
             source: themeResourcePath + "/media/HomeIcon.png"
         }
-        MouseArea { anchors.fill: parent; onClicked: confluence.state = "" }
+        MouseArea { anchors.fill: parent; onClicked: confluence.show(mainBlade) }
     }
 
     Header {
