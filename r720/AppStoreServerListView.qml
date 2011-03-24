@@ -26,10 +26,17 @@ import ActionMapper 1.0
 FocusScope {
     id: root
 
-    opacity:  0
-    scale: 0
+//    property string server: "http://ed.europe.nokia.com:8080"
+    property string server:  "http://munich-gw.trolltech.de:8080"
+    property bool serverOnline: true
+    property string serverReason
+    property bool loggedIn:  false
+    property alias appStore: appStore
 
     signal appInstallationStarted()
+
+    opacity:  0
+    scale: 0
 
     states: [
         State {
@@ -56,11 +63,6 @@ FocusScope {
         }
     ]
 
-//    property string server: "http://ed.europe.nokia.com:8080"
-    property string server:  "http://munich-gw.trolltech.de:8080"
-    property bool serverOnline: true
-    property string serverReason
-    property bool loggedIn:  false
 
     function checkServer() {
         var url = server + "/hello"
@@ -162,20 +164,19 @@ FocusScope {
 
             ConfluenceListView {
                 id: categoryListView
-                anchors.fill: parent
 
-                scrollbar: false
-                focus: true
+                anchors.fill: parent
                 clip: true
                 model: 0
+                opacity: activeFocus ? 1.0 : 0.3
 
                 BusyIndicator {
-                    anchors.centerIn:  parent
+                    anchors.centerIn: parent
                     on: categoriesModel.status == "loading"
                 }
 
                 delegate: Item {
-                    width: categoryListView.width
+                    width: parent.width
                     height: 70
                     Image {
                         anchors.fill: parent;
@@ -211,8 +212,14 @@ FocusScope {
                 }
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right))
+                    if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right)) {
                         appListView.focus = true
+                        categoryListView.focus = false
+                    }
+
+                Behavior on opacity {
+                    NumberAnimation {}
+                }
             }
         }
 
@@ -222,21 +229,22 @@ FocusScope {
 
             ConfluenceListView {
                 id: appListView
-                anchors.fill: parent
 
-                scrollbar: false
+                anchors.fill: parent
                 focus: true
                 clip: true
                 model: 0
+                opacity: activeFocus ? 1.0 : 0.3
 
                 BusyIndicator {
-                    anchors.centerIn:  parent
+                    anchors.centerIn: parent
                     on: appModel.status == "loading"
                 }
 
                 delegate: Item {
-                    width: categoryListView.width
+                    width: parent.width
                     height: 70
+
                     Image {
                         anchors.fill: parent;
                         source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
@@ -260,6 +268,7 @@ FocusScope {
 
                     Column {
                         anchors.right: parent.right
+                        anchors.rightMargin: appListView.scrollbarItem.width
                         height: parent.height
 
                         Rating {
@@ -273,40 +282,43 @@ FocusScope {
                         }
                     }
 
-                    MouseArea {
-                        anchors.fill: parent;
-                        hoverEnabled: true
-                        onEntered:
-                            ListView.view.currentIndex = index
-                        onClicked: {
-                            if (!loggedIn) {
-                                loginDialog.open()
-                                loginDialog.focus = true
-                            } else {
-                                installDialog.id = id;
-                                installDialog.question = "Really install " + model.name
-                                installDialog.open();
-                                installDialog.focus = true;
-                            }
-                        }
-                    }
-                    Keys.onReturnPressed: {
+                    function activated() {
                         if (!loggedIn) {
                             loginDialog.open()
                             loginDialog.focus = true
-                        } else {
+                        } else if (appStore.localInstaller()) {
                             installDialog.id = id;
                             installDialog.question = "Really install " + model.name
                             installDialog.open();
                             installDialog.focus = true;
+                        } else {
+                            errorDialog.message = qsTr("No local Installer found")
+                            errorDialog.open()
+                            errorDialog.focus = true;
                         }
-                        event.accepted = true
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent;
+                        hoverEnabled: true
+                        onEntered: ListView.view.currentIndex = index
+                        onClicked: activated()
+                    }
+                    Keys.onPressed: {
+                        if (actionmap.eventMatch(event, ActionMapper.Enter))
+                            activated()
                     }
                 }
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right))
+                    if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right)) {
+                        appListView.focus = false
                         categoryListView.focus = true
+                    }
+
+                Behavior on opacity {
+                    NumberAnimation {}
+                }
             }
         }
     }
@@ -342,6 +354,38 @@ FocusScope {
             id = ""
         }
         onRejected:  id = ""
+        onClosed: appListView.focus = true
+    }
+
+    Dialog {
+        id: errorDialog
+
+        title: qsTr("Error")
+
+        property alias message : messageLabel.text
+
+        Column {
+            spacing: 5
+            width: 620
+
+            Text {
+                id: messageLabel
+                width: parent.width
+                text: ""
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "steelblue"
+            }
+
+            Button {
+                id: okButton
+                text: qsTr("OK")
+                focus: true
+                onClicked: errorDialog.accept()
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+        }
+
         onClosed: appListView.focus = true
     }
 

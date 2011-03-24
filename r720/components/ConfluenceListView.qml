@@ -23,6 +23,7 @@ ListView {
     id: listView
 
     property bool scrollbar: true
+    property alias scrollbarItem: verticalScrollBar
 
     keyNavigationWraps: confluence.standardItemViewWraps
 

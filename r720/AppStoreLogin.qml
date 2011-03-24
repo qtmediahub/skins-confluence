@@ -50,7 +50,7 @@ Dialog {
             TextInput {
                 id: sourceNameInput
                 anchors.centerIn: parent
-                text: "testuser"
+                text: "qtmediahub"
                 color: "white"
 
                 Keys.onPressed:
@@ -83,7 +83,7 @@ Dialog {
             TextInput {
                 id: sourcePasswordInput
                 anchors.centerIn: parent
-                text: "test"
+                text: "qtmediahub"
                 echoMode: TextInput.Password
                 color: "white"
 
