@@ -37,6 +37,10 @@ Window {
         appGrid.focus = true
     }
 
+    function closeApp() {
+        appLoader.source = ""
+    }
+
     AppStoreGrid {
         id: appGrid
 
@@ -46,7 +50,6 @@ Window {
         anchors.margins: 100
 
         onLaunchApp: {
-            console.log("start: " + appExec)
             if (appExec == "__appStore")
                 showAppStore();
             else
@@ -86,17 +89,24 @@ Window {
     }
 
     Button {
-        id: startAppStoreButton
+        id: exitApp
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        text: (app.active || appStoreListView.state == "visible" ) ? "Exit" : "AppStore"
-        onClicked: app.active ? appLoader.source = "" : (appStoreListView.state == "visible" ? hideAppStore() : showAppStore())
+        opacity: (app.active || appStoreListView.state == "visible") ? 1 : 0
+        text: qsTr("Exit")
+        onClicked: app.active ? closeApp() : (appStoreListView.state == "visible" ? hideAppStore() : showAppStore())
+
+        Behavior on opacity {
+            NumberAnimation {}
+        }
     }
 
     Keys.onPressed: {
         if (actionmap.eventMatch(event, ActionMapper.Menu)) {
             if (appStoreListView.state == "visible")
                 hideAppStore();
+            else if (app.active)
+                closeApp();
             else
                 event.accepted = false;
         }
