@@ -20,7 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import QtWebKit 1.0
 import ActionMapper 1.0
-import confluence.r720.components 1.0
+import "components/"
 
 //TODO:
 //Suspend loading of page until animation is complete
@@ -148,7 +148,7 @@ Window {
         //Conditional on plugins (read flash) being enabled
         config.isEnabled("wk-plugins", false)
         ? Qt.createQmlObject('\
-                             import confluence.r720.components 1.0; \
+                             import "components/"; \
                              Engine { name: qsTr("Youtube"); \
                                       role: "youtube"; \
                                       visualElement: root; \
