@@ -40,9 +40,6 @@ FocusScope {
 
     states: [
         State {
-            name: ""
-        },
-        State {
             name: "visible"
             PropertyChanges {
                 target: root
@@ -170,6 +167,11 @@ FocusScope {
                 model: 0
                 opacity: activeFocus ? 1.0 : 0.3
 
+                function gainFocus() {
+                    appListView.focus = false
+                    categoryListView.focus = true
+                }
+
                 BusyIndicator {
                     anchors.centerIn: parent
                     on: categoriesModel.status == "loading"
@@ -201,8 +203,10 @@ FocusScope {
                     MouseArea {
                         anchors.fill: parent;
                         hoverEnabled: true
-                        onEntered:
+                        onEntered: {
+                            categoryListView.gainFocus()
                             ListView.view.currentIndex = index
+                        }
                         onClicked: categorySelected(id)
                     }
                     Keys.onReturnPressed: {
@@ -213,8 +217,7 @@ FocusScope {
 
                 Keys.onPressed:
                     if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right)) {
-                        appListView.focus = true
-                        categoryListView.focus = false
+                        appListView.gainFocus()
                     }
 
                 Behavior on opacity {
@@ -235,6 +238,11 @@ FocusScope {
                 clip: true
                 model: 0
                 opacity: activeFocus ? 1.0 : 0.3
+
+                function gainFocus() {
+                    appListView.focus = true
+                    categoryListView.focus = false
+                }
 
                 BusyIndicator {
                     anchors.centerIn: parent
@@ -301,7 +309,10 @@ FocusScope {
                     MouseArea {
                         anchors.fill: parent;
                         hoverEnabled: true
-                        onEntered: ListView.view.currentIndex = index
+                        onEntered: {
+                            appListView.gainFocus()
+                            ListView.view.currentIndex = index
+                        }
                         onClicked: activated()
                     }
                     Keys.onPressed: {
@@ -312,9 +323,16 @@ FocusScope {
 
                 Keys.onPressed:
                     if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right)) {
+                        categoryListView.gainFocus()
+                    }
+
+                MouseArea {
+                    hoverEnabled: true
+                    onEntered: {
                         appListView.focus = false
                         categoryListView.focus = true
                     }
+                }
 
                 Behavior on opacity {
                     NumberAnimation {}
