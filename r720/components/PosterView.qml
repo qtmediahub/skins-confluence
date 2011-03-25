@@ -45,6 +45,7 @@ PathView {
 
     model: visualDataModel
     preferredHighlightEnd: pathView.preferredHighlightBegin
+    dragMargin: width
 
     VisualDataModel {
         id: visualDataModel
