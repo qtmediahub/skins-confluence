@@ -38,7 +38,7 @@ GridView {
         width: GridView.view.cellWidth
         height: GridView.view.cellHeight
 
-        scale: GridView.isCurrentItem ? 1.0 : 0.8
+        scale: GridView.isCurrentItem ? 1.5 : 0.8
         smooth: true
 
         function triggerItem() {
@@ -62,6 +62,8 @@ GridView {
         MouseArea {
             anchors.fill: parent
             onClicked: triggerItem()
+            hoverEnabled: true
+            onEntered: GridView.view.currentIndex = index
         }
 
         Keys.onPressed: {

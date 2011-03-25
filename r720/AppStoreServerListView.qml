@@ -57,13 +57,17 @@ FocusScope {
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
             }
+        },
+        Transition {
+            to: "visible"
+            ScriptAction { script: refresh() }
         }
     ]
 
 
     function checkServer() {
         var url = server + "/hello"
-        var data = {"platform" : "KRAK", "version" : "1.0.0"}
+        var data = {"platform" : "QTMEDIAHUB", "version" : "1.0.0"}
         JSONBackend.serverCall(url, data, function(data) {
             if (data !== 0) {
                 if(data.status == "ok") {
@@ -104,12 +108,14 @@ FocusScope {
         appStore.deleteApp("name", id, true);
     }
 
-    Component.onCompleted: {
+    function refresh() {
         categoriesModel.refresh();
         categoryListView.model = categoriesModel;
         appModel.refresh();
         appListView.model = appModel;
     }
+
+    Component.onCompleted: refresh()
 
     AppStore {
         id: appStore
@@ -139,7 +145,7 @@ FocusScope {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.weight: Font.Normal
-        text: "Server status: " + (serverOnline ? "online" : "offline")
+        text: qsTr("Server status: ") + (serverOnline ? qsTr("online") : qsTr("offline"))
     }
 
     ConfluenceText {
@@ -147,7 +153,7 @@ FocusScope {
         anchors.top: serverStatus.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.weight: Font.Normal
-        text: "Account: " + (loggedIn ? "logged in" : "not logged in")
+        text: qsTr("Account: ") + (loggedIn ? qsTr("logged in") : qsTr("not logged in"))
     }
 
     Row {
@@ -203,10 +209,7 @@ FocusScope {
                     MouseArea {
                         anchors.fill: parent;
                         hoverEnabled: true
-                        onEntered: {
-                            categoryListView.gainFocus()
-                            ListView.view.currentIndex = index
-                        }
+                        onEntered: ListView.view.currentIndex = index
                         onClicked: categorySelected(id)
                     }
                     Keys.onReturnPressed: {
@@ -219,6 +222,12 @@ FocusScope {
                     if (actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right)) {
                         appListView.gainFocus()
                     }
+
+                MouseArea {
+                    anchors.fill: parent;
+                    hoverEnabled: true
+                    onEntered: categoryListView.gainFocus()
+                }
 
                 Behavior on opacity {
                     NumberAnimation {}
@@ -296,7 +305,7 @@ FocusScope {
                             loginDialog.focus = true
                         } else if (appStore.localInstaller()) {
                             installDialog.id = id;
-                            installDialog.question = "Really install " + model.name
+                            installDialog.question = qsTr("Really install ") + model.name
                             installDialog.open();
                             installDialog.focus = true;
                         } else {
@@ -309,10 +318,7 @@ FocusScope {
                     MouseArea {
                         anchors.fill: parent;
                         hoverEnabled: true
-                        onEntered: {
-                            appListView.gainFocus()
-                            ListView.view.currentIndex = index
-                        }
+                        onEntered: ListView.view.currentIndex = index
                         onClicked: activated()
                     }
                     Keys.onPressed: {
@@ -327,11 +333,9 @@ FocusScope {
                     }
 
                 MouseArea {
+                    anchors.fill: parent;
                     hoverEnabled: true
-                    onEntered: {
-                        appListView.focus = false
-                        categoryListView.focus = true
-                    }
+                    onEntered: appListView.gainFocus()
                 }
 
                 Behavior on opacity {
@@ -364,8 +368,8 @@ FocusScope {
 
         property string id
 
-        title: "Installation"
-        question: "Really install application"
+        title: qsTr("Installation")
+        question: qsTr("Really install application")
 
         onAccepted: {
             installApp(id);
