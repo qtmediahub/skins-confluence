@@ -83,6 +83,10 @@ FocusScope {
                 height: maximizedHeight
                 anchors.horizontalCenterOffset: 0
             }
+            PropertyChanges {
+                target: bladeLoader.item
+                state: "hidden"
+            }
         }
     ]
 
