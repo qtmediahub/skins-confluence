@@ -41,6 +41,8 @@ FocusScope {
     property bool hoverEnabled: false
     property int closedBladePeek: 30
 
+    //Every blade belongs to a window
+    property alias associatedWindow: root.parent
     property alias bladeVisibleWidth: blade.visibleWidth
     property alias bladeWidth: blade.width
     property alias bladePixmap: bladePixmap.source
@@ -54,7 +56,10 @@ FocusScope {
     }
     function close() {
         //Won't be able to close unless we have a focal widget!
-        !!root.parent.focalWidget && root.parent.focalWidget.visible ? root.parent.focalWidget.forceActiveFocus() : undefined
+        if (!!associatedWindow.focalWidget && associatedWindow.focalWidget.visible) {
+            associatedWindow.focalWidget.forceActiveFocus()
+            associatedWindow.maximized ? hide() : undefined
+        }
     }
     function hide() {
         state = "hidden"
