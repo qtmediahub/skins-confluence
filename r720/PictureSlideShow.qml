@@ -127,7 +127,7 @@ FocusScope {
         orientation: ListView.Horizontal
         snapMode: ListView.SnapToItem
         highlightRangeMode: ListView.StrictlyEnforceRange
-        highlightMoveSpeed: 5000
+        highlightMoveDuration: 1000
         model: imagePlayList
         delegate: Item {
             width: listView.width
