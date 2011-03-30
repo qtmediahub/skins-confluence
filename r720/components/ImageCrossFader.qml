@@ -28,6 +28,7 @@ Item {
 
     Image {
         id: primary
+        cache: false
         fillMode: root.fillMode
         width: parent.width
         asynchronous: true
@@ -43,6 +44,7 @@ Item {
 
     Image {
         id: secondary
+        cache: false
         fillMode: root.fillMode
         width: parent.width
         asynchronous: true
