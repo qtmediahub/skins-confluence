@@ -134,6 +134,7 @@ FocusScope {
             height: listView.height
             Image {
                 id: image
+                cache: false
                 fillMode: Image.PreserveAspectFit
                 sourceSize.width: imageThumbnail.width > imageThumbnail.height ? parent.width : 0
                 sourceSize.height: imageThumbnail.width <= imageThumbnail.height ? parent.height : 0
@@ -143,6 +144,7 @@ FocusScope {
             }
             Image {
                 id: imageThumbnail
+                cache: false
                 anchors.fill: image
                 fillMode: Image.PreserveAspectFit
                 visible: image.status != Image.Ready
