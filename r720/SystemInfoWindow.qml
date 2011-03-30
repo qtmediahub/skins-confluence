@@ -34,7 +34,7 @@ Window {
 
     NetworkInfo {
         id: networkInfo
-        useMode: NetworkInfo.EthernetMode
+        mode: NetworkInfo.EthernetMode
     }
 
     QMLFileWrapper {
