@@ -24,7 +24,7 @@ BorderImage {
     id: root
 
     property string currentFeed: "rss.news.yahoo.com/rss/topstories"
-    property bool active: confluence.state == ""
+    property bool active: confluence.state == "" && Qt.application.active
 
     signal linkClicked (string link);
 

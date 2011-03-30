@@ -31,7 +31,7 @@ Item {
         cache: false
         fillMode: root.fillMode
         width: parent.width
-        asynchronous: true
+        //asynchronous: true
         opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: centerAnchors ? undefined: parent.bottom
@@ -47,7 +47,7 @@ Item {
         cache: false
         fillMode: root.fillMode
         width: parent.width
-        asynchronous: true
+        //asynchronous: true
         opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: centerAnchors ? undefined: parent.bottom
