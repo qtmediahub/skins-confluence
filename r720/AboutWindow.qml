@@ -31,7 +31,7 @@ Window {
     Timer {
         id: rotTimer
         interval: 10
-        running: root.state == "visible"
+        running: root.state == "visible" && Qt.application.active
 
         repeat: true
         onTriggered: rotation.angle += 10

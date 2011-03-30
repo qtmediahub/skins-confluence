@@ -103,7 +103,7 @@ FocusScope {
 
     Timer {
         id: timer
-        running: root.running
+        running: root.running && Qt.application.isActive
         repeat: true
         interval: root.interval
         triggeredOnStart: true

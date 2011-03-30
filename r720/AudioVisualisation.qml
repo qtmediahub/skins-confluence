@@ -26,14 +26,19 @@ Rectangle {
 
     property bool running : false
 
+    QtObject {
+        id: d
+        property bool running: root.running && Qt.application.active
+    }
+
     Timer {
-        interval: 250; running: root.running; repeat: true
+        interval: 250; running: d.running; repeat: true
         onTriggered: part3.burst(250)
     }
 
     ParallelAnimation {
         id: anim
-        running: root.running
+        running: d.running
 
         property real setting1 : Math.random()
         property real setting2 : Math.random()
@@ -62,7 +67,7 @@ Rectangle {
         }
 
         onCompleted: {
-            if (root.running) {
+            if (d.running) {
                 anim.setting1 = Math.random()
                 anim.setting2 = Math.random()
                 anim.setting3 = Math.random()
@@ -78,7 +83,7 @@ Rectangle {
         height: 1
         source: themeResourcePath + "/particle2.png"
         lifeSpan: 5000
-        count: root.running ? 500 : 0
+        count: d.running ? 500 : 0
         angle: 0
         scale: 0.5
         opacity:  0.5
@@ -95,7 +100,7 @@ Rectangle {
         height: 30
         source: themeResourcePath + "/particle1.png"
         lifeSpan: 5000
-        count: root.running ? 400 : 0
+        count: d.running ? 400 : 0
         angle: 70
         angleDeviation: 36
         velocity: 300
@@ -113,7 +118,7 @@ Rectangle {
         height: parent.height
         source: themeResourcePath + "/particle.png"
         lifeSpan: 5000
-        count: root.running ? 200 : 0
+        count: d.running ? 200 : 0
         angle: 270
         angleDeviation: 45
         velocity: 50
@@ -131,7 +136,7 @@ Rectangle {
     }
 
     function metronomTick() {
-        if (root.running) {
+        if (d.running) {
             part2.opacity = Math.random()
         }
     }
