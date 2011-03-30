@@ -29,7 +29,7 @@ FocusScope {
     property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
 
     property string generalResourcePath: backend.resourcePath
-    property string themeResourcePath: backend.skinPath + "/confluence/3rdparty/skin.confluence"
+    property string themeResourcePath: skin.path + "/3rdparty/skin.confluence"
 
     //FIXME: QML const equivalent?
     property int standardEasingCurve: Easing.InQuad
