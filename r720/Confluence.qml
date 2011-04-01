@@ -47,6 +47,7 @@ FocusScope {
     property variant ticker
     property variant weatherWindow
     property variant systemInfoWindow
+    property variant aboutWindow
 
     height: 720; width: 1280
     focus: true
@@ -245,6 +246,19 @@ FocusScope {
             backend.log(qmlComponent.errorString())
         }
 
+        qmlComponent = Qt.createComponent("ScreenSaver.qml");
+        if (qmlComponent.status == Component.Ready) {
+            qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
+        }
+
+        qmlComponent = Qt.createComponent("AboutWindow.qml");
+        if (qmlComponent.status == Component.Ready) {
+            aboutWindow = qmlComponent.createObject(confluence)
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
+        }
 
         //Why would you ever want to do this from QML!
         //One property API FTW
@@ -394,9 +408,6 @@ FocusScope {
         showDate: true
     }
 
-
-    AboutWindow { id: aboutWindow }
-
     Rectangle {
         id: mouseGrabber
         color: "black"
@@ -420,7 +431,5 @@ FocusScope {
         onFocusChanged:
             activeFocus ? avPlayer.forceActiveFocus() : undefined
     }
-
-    ScreenSaver {}
 }
 
