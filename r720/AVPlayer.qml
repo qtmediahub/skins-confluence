@@ -241,6 +241,11 @@ FocusScope {
         onPressed: lastX = mouseX
     }
 
+    Playlist {
+        id: playlist
+        playMode: Playlist.Normal
+    }
+
     Timer {
         id: osdTimer
         interval: config.value("osd-timeout", 3000)
