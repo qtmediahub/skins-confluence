@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import ActionMapper 1.0
+import QMHPlugin 1.0
 
 Window {
     id: root
@@ -98,6 +99,6 @@ Window {
         }
     }
 
-    Engine { name: qsTr("RemoteApp"); role: "remoteApp"; visualElement: root }
+    Engine { name: qsTr("RemoteApp"); role: QMHPlugin.Application; visualElement: root }
 }
 

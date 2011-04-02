@@ -21,6 +21,7 @@ import QtQuick 1.1
 import "components/"
 import "JSONBackend.js" as JSONBackend
 import ActionMapper 1.0
+import QMHPlugin 1.0
 
 Window {
     id: root
@@ -112,5 +113,5 @@ Window {
         }
     }
 
-    Engine { name: qsTr("App Store"); role: "appstore"; visualElement: root }
+    Engine { name: qsTr("App Store"); role: QMHPlugin.Store; visualElement: root }
 }

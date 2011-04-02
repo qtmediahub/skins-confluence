@@ -21,6 +21,7 @@ import QtQuick 1.1
 import QMLModuleDiscovery 1.0
 import Qt.labs.particles 1.0
 import ActionMapper 1.0
+import QMHPlugin 1.0
 
 import "components/"
 
@@ -150,5 +151,5 @@ Window {
             root.deactivate()
     }
 
-    Engine { name: qsTr("Dashboard"); role: "dashboard"; visualElement: root; }
+    Engine { name: qsTr("Dashboard"); role: QMHPlugin.Dashboard; visualElement: root; }
 }
