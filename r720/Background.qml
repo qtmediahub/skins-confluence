@@ -20,9 +20,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import "./components/uiconstants.js" as UIConstants
-import "./components/bgmap.js" as BGMap
 
 Item {
+//enum PluginRole { Undefined, Unadvertized, Music, Video, Picture, Dashboard, Weather, SingletonRoles, Store, Web, Application, Game, Map, RoleCount };
+    property variant bgmap: [ "", "", "music.jpg", "videos.jpg", "pictures.jpg", "programs.jpg", "weather.jpg", "", "", "", "programs.jpg", "", "", "" ]
     property string role
     z: UIConstants.screenZValues.background
 
@@ -30,6 +31,6 @@ Item {
         fillMode: Image.PreserveAspectCrop
         property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
         anchors.fill: parent;
-        source: themeResourcePath ? (BGMap.bgmap[role] ? backgroundPath + BGMap.bgmap[role] : backgroundPath + "media-overlay.png") : ""
+        source: themeResourcePath ? (bgmap[role] ? backgroundPath + bgmap[role] : backgroundPath + "media-overlay.png") : ""
     }
 }
