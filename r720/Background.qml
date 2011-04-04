@@ -23,7 +23,7 @@ import "./components/uiconstants.js" as UIConstants
 
 Item {
 //enum PluginRole { Undefined, Unadvertized, Music, Video, Picture, Dashboard, Weather, SingletonRoles, Store, Web, Application, Game, Map, RoleCount };
-    property variant bgmap: [ "", "", "music.jpg", "videos.jpg", "pictures.jpg", "programs.jpg", "weather.jpg", "", "", "", "programs.jpg", "", "", "" ]
+    property variant bgmap: [ "", "", "music.jpg", "videos.jpg", "pictures.jpg", "programs.jpg", "weather.jpg", "", "", "web.jpg", "programs.jpg", "", "carta_marina.jpeg", "" ]
     property string role
     z: UIConstants.screenZValues.background
 
