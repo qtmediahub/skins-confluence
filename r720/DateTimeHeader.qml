@@ -35,7 +35,7 @@ Header {
         x: root.showDate ? 41 : 21;
         y: 1
         font.pointSize: 14
-        color: "black"
+        color: "white"
         text: showDate ? plainCurrentDateTime : plainCurrentTime
     }
 
