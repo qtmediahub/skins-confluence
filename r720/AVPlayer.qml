@@ -452,8 +452,8 @@ FocusScope {
         MediaSimpleListView {
             id: videoListPanel
             anchors.fill: parent
-            engineName: videoEngine.name
-            engineModel: videoEngine.pluginProperties.model
+            engineName: typeof videoEngine != "undefined" ? videoEngine.name : undefined
+            engineModel: typeof videoEngine != "undefined" ? videoEngine.pluginProperties.model : undefined
 
             onItemTriggered: {
                 root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
@@ -479,8 +479,8 @@ FocusScope {
         MediaSimpleListView {
             id: musicListPanel
             anchors.fill: parent
-            engineName: musicEngine.name
-            engineModel: musicEngine.pluginProperties.model
+            engineName: typeof musicEngine != "undefined" ? musicEngine.name : undefined
+            engineModel: typeof musicEngine != "undefined" ? musicEngine.pluginProperties.model : undefined
 
             onItemTriggered: {
                 root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)

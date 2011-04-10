@@ -129,58 +129,59 @@ FocusScope {
     Component.onCompleted: {
         Cursor.initialize()
 
-        qmlComponent = Qt.createComponent("AppStoreWindow.qml");
+        var qmlComponent = Qt.createComponent("AppStoreWindow.qml");
         if (qmlComponent.status == Component.Ready) {
             var appStore = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
             backend.log(qmlComponent.errorString())
         }
 
-        !!musicEngine && musicEngine && musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-        var qmlComponent = Qt.createComponent("MusicWindow.qml")
-        if (!!musicEngine
-                && qmlComponent.status == Component.Ready) {
-            qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error)
-            backend.log(qmlComponent.errorString())
+        if (typeof musicEngine != "undefined") {
+            musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+            qmlComponent = Qt.createComponent("MusicWindow.qml")
+            if (qmlComponent.status == Component.Ready) {
+                qmlComponent.createObject(confluence)
+                qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
+                if (qmlComponent.status == Component.Ready) {
+                    musicEngine.actionMap = qmlComponent.createObject(confluence)
+                } else if (qmlComponent.status == Component.Error) {
+                    backend.log(qmlComponent.errorString())
+                }
+            } else if (qmlComponent.status == Component.Error)
+                backend.log(qmlComponent.errorString())
 
-        qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
-        if (!!musicEngine
-                && qmlComponent.status == Component.Ready) {
-            musicEngine.actionMap = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error)
-            backend.log(qmlComponent.errorString())
+        }
 
-        //FIXME: function failing here simply skips rest of init, wish they had exceptions
-        !!videoEngine && videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-        qmlComponent = Qt.createComponent("VideoWindow.qml")
-        if (!!videoEngine
-                && qmlComponent.status == Component.Ready) {
-            qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error)
-            backend.log(qmlComponent.errorString())
+        if (typeof videoEngine != "undefined") {
+            videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+            qmlComponent = Qt.createComponent("VideoWindow.qml")
+            if (qmlComponent.status == Component.Ready) {
+                qmlComponent.createObject(confluence)
+                qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
+                if (qmlComponent.status == Component.Ready) {
+                    videoEngine.actionMap = qmlComponent.createObject(confluence)
+                } else if (qmlComponent.status == Component.Error) {
+                    backend.log(qmlComponent.errorString())
+                }
+            } else if (qmlComponent.status == Component.Error) {
+                backend.log(qmlComponent.errorString())
+            }
+        }
 
-        qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
-        if (!!videoEngine
-                && qmlComponent.status == Component.Ready) {
-            videoEngine.actionMap = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error)
-            backend.log(qmlComponent.errorString())
-
-        !!pictureEngine && pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-        qmlComponent = Qt.createComponent("PictureWindow.qml")
-        if (!!pictureEngine
-                && qmlComponent.status == Component.Ready) {
-            var pictureWindow = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error)
-            backend.log(qmlComponent.errorString())
-
-        qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
-        if (!!pictureEngine
-                && qmlComponent.status == Component.Ready) {
-            pictureEngine.actionMap = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error)
-            backend.log(qmlComponent.errorString())
+        if (typeof pictureEngine != "undefined") {
+            pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+            qmlComponent = Qt.createComponent("PictureWindow.qml")
+            if (qmlComponent.status == Component.Ready) {
+                var pictureWindow = qmlComponent.createObject(confluence)
+                qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
+                if (qmlComponent.status == Component.Ready) {
+                    pictureEngine.actionMap = qmlComponent.createObject(confluence)
+                } else if (qmlComponent.status == Component.Error)
+                    backend.log(qmlComponent.errorString())
+            } else if (qmlComponent.status == Component.Error) {
+                backend.log(qmlComponent.errorString())
+            }
+        }
 
         qmlComponent = Qt.createComponent("AVPlayer.qml");
         if (qmlComponent.status == Component.Ready) {
@@ -301,7 +302,10 @@ FocusScope {
             state = ""
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
-                show(videoEngine.visualElement)
+                if (typeof videoEngine != "undefined")
+                    show(videoEngine.visualElement)
+                else if (typeof musicEngine != "undefined")
+                    show(musicEngine.visualElement)
             } else {
                 show(transparentVideoOverlay)
             }
