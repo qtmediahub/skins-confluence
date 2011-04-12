@@ -37,9 +37,12 @@ Header {
     }
 
     function mapIcon(name) {
-        var i = name.lastIndexOf("/")+1;
-        var sn = themeResourcePath+"/media/weathericons/"+name.substr(i, name.length-i-4)+".png";
-        return sn;
+        if (typeof name != "undefined") {
+            var i = name.lastIndexOf("/")+1;
+            var sn = themeResourcePath+"/media/weathericons/"+name.substr(i, name.length-i-4)+".png";
+            return sn;
+        }
+        return "";
     }
 
     Row {

@@ -49,13 +49,19 @@ Window {
             "Sat" : qsTr("SATURDAY"),
             "Sun" : qsTr("SUNDAY"),
     };
-        return map[name];
+        if (typeof map[name] != "undefined")
+            return map[name];
+        else
+            return "";
     }
 
     function mapIcon(name) {
-        var i = name.lastIndexOf("/")+1;
-        var sn = themeResourcePath+"/media/weathericons/"+name.substr(i, name.length-i-4)+".png";
-        return sn;
+        if (typeof name != "undefined") {
+            var i = name.lastIndexOf("/")+1;
+            var sn = themeResourcePath+"/media/weathericons/"+name.substr(i, name.length-i-4)+".png";
+            return sn;
+        }
+        return "";
     }
 
     function stripLast5(string) {
@@ -201,7 +207,7 @@ Window {
                     }
                     ConfluenceText {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: weatherMeasurements.count > 0 ? weatherMeasurements.get(0).wind_condition : ""
+                        text: weatherMeasurements.count > 0 && typeof weatherMeasurements.get(0).wind_condition != "undefined" ? weatherMeasurements.get(0).wind_condition : ""
                     }
                 }
             }
@@ -246,7 +252,7 @@ Window {
                             id: dayofweek
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: sep.bottom; anchors.topMargin: 8
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) ? fullWeekDay(weatherForecast.get(index).day_of_week) : ""
+                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).day_of_week != "undefined"  ? fullWeekDay(weatherForecast.get(index).day_of_week) : ""
                         }
 
                         Text {
@@ -262,7 +268,7 @@ Window {
                             anchors.top: dayofweek.bottom
                             anchors.left: hightemptext.right
                             font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C" : ""
+                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).high_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C" : ""
                         }
 
                         Text {
@@ -278,14 +284,14 @@ Window {
                             anchors.left: lowtemptext.right;
                             anchors.top: dayofweek.bottom
                             font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) ? root.fahrenheit2celsius(weatherForecast.get(index).low_f)  + " °C" : ""
+                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).low_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).low_f)  + " °C" : ""
                         }
 
                         ConfluenceText {
                             id: condition
                             anchors.top: hightemptext.bottom
                             font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) ? weatherForecast.get(index).condition : ""
+                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).condition != "undefined" ? weatherForecast.get(index).condition : ""
                         }
 
                         Image {
@@ -294,7 +300,7 @@ Window {
                             height: width
                             smooth: true
                             //asynchronous: true
-                            source: weatherForecast.count > 0 && weatherForecast.get(index) ? mapIcon(weatherForecast.get(index).icon) : ""
+                            source: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).icon != "undefined"  ? mapIcon(weatherForecast.get(index).icon) : ""
                             anchors.right: parent.right
                             anchors.bottom: condition.bottom
 
@@ -355,8 +361,8 @@ Window {
     ListModel {
         id: cityList
         ListElement { name: "Atlanta" }
-        ListElement { name: "Bangalore" }
         ListElement { name: "Bangkok" }
+        ListElement { name: "Barcelona" }
         ListElement { name: "Beijing" }
         ListElement { name: "Berlin" }
         ListElement { name: "Bogota" }
@@ -367,6 +373,7 @@ Window {
         ListElement { name: "Helsinki" }
         ListElement { name: "Juneau" }
         ListElement { name: "Landshut" }
+        ListElement { name: "Las Vegas" }
         ListElement { name: "Lhasa" }
         ListElement { name: "Lima" }
         ListElement { name: "London" }
@@ -378,8 +385,8 @@ Window {
         ListElement { name: "Paris" }
         ListElement { name: "Rome" }
         ListElement { name: "San Francisco" }
+        ListElement { name: "Seoul" }
         ListElement { name: "Sydney" }
-        ListElement { name: "Timbuktu" }
         ListElement { name: "Tokyo" }
         ListElement { name: "Ulm" }
         ListElement { name: "Untermarchtal" }
