@@ -158,13 +158,6 @@ Window {
                              root,
                              null)
         : undefined
-
-        var popupLoader = Qt.createComponent("WebPopup.qml");
-        if (popupLoader.status == Component.Ready) {
-            webviewPopup = popupLoader.createObject(root)
-        } else if (popupLoader.status == Component.Error) {
-            backend.log(popupLoader.errorString())
-        }
     }
 
     //Fixme: Enable when functional
