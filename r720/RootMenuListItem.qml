@@ -25,7 +25,7 @@ Item {
     width: parent.width; height: entry.height
 
     property int role: model.modelData.role
-    property bool hasSubBlade: false //model.modelData.actionList.length > 0
+    property bool hasSubBlade: model.modelData.actionList.length > 0
     property alias textColor: entry.color
     property alias text: entry.text
 
