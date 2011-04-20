@@ -216,15 +216,15 @@ FocusScope {
             backend.log(qmlComponent.errorString())
         }
 
-        qmlComponent = Qt.createComponent("Ticker.qml");
-        if (qmlComponent.status == Component.Ready) {
-            ticker = qmlComponent.createObject(confluence)
-            ticker.z = UIConstants.screenZValues.header
-            ticker.state = "visible"
-        } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
-            ticker = dummyItem
-        }
+//        qmlComponent = Qt.createComponent("Ticker.qml");
+//        if (qmlComponent.status == Component.Ready) {
+//            ticker = qmlComponent.createObject(confluence)
+//            ticker.z = UIConstants.screenZValues.header
+//            ticker.state = "visible"
+//        } else if (qmlComponent.status == Component.Error) {
+//            backend.log(qmlComponent.errorString())
+//            ticker = dummyItem
+//        }
 
         qmlComponent = Qt.createComponent("RemoteAppWindow.qml");
         if (qmlComponent.status == Component.Ready) {

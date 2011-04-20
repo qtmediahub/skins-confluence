@@ -34,7 +34,6 @@ Window {
     maximizable: true
 
     property string enabledBrowserShortcuts
-    property variant webviewPopup
     property alias url: webView.url
     property string initialUrl: defaultUrl
     property string defaultUrl: "http://www.google.com"
@@ -68,10 +67,6 @@ Window {
             webViewport.contentY = Math.max(0, webViewport.contentY - 10)
         else if (actionmap.eventMatch(event, ActionMapper.Down))
             webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
-        else if (actionmap.eventMatch(event, ActionMapper.Menu))
-            webviewPopup.activeFocus ? webView.forceActiveFocus() : event.accepted = false
-        else if (actionmap.eventMatch(event, ActionMapper.Right))
-            webviewPopup.urlBar.forceActiveFocus()
 
     Panel {
         id: panel
