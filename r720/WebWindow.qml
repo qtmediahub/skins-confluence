@@ -112,7 +112,7 @@ Window {
                     NumberAnimation{}
                 }
 
-                Component.onCompleted: frontend.applyWebViewFocusFix(webView) // https://bugs.webkit.org/show_bug.cgi?id=51094
+                Component.onCompleted: utils.applyWebViewFocusFix(webView) // https://bugs.webkit.org/show_bug.cgi?id=51094
             }
 
             Behavior on width {
