@@ -28,7 +28,7 @@ Window {
 
     anchors.fill: parent
 
-    property string city: "Munich"
+    property string city: config.value("weather-city", "Munich")
 
     function fahrenheit2celsius(f) {
         return ((f-32)*5/9.0).toFixed(0);
@@ -36,6 +36,7 @@ Window {
 
     function showCast(name) {
         city=name;
+        config.setValue("weather-city", city)
         weather.opacity=1.0;
     }
 
