@@ -44,7 +44,7 @@ FocusScope {
     property variant selectedElement
     property variant avPlayer
     property variant browserWindow
-    property variant ticker
+    // property variant ticker
     property variant weatherWindow
     property variant systemInfoWindow
     property variant aboutWindow
@@ -57,7 +57,7 @@ FocusScope {
         State {
             name:  ""
             StateChangeScript { name: "focusMainBlade"; script: mainBlade.forceActiveFocus() }
-            PropertyChanges { target: ticker; state: "visible" }
+            // PropertyChanges { target: ticker; state: "visible" }
         },
         State {
             name: "showingSelectedElement"
@@ -67,7 +67,7 @@ FocusScope {
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
-            PropertyChanges { target: ticker; state: "" }
+            // PropertyChanges { target: ticker; state: "" }
             PropertyChanges { target: selectedElement; state: "visible" }
             PropertyChanges { target: avPlayer; state: "background" }
         },
