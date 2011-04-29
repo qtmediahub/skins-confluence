@@ -48,7 +48,7 @@ Item {
         fillMode: Image.PreserveAspectFit
         anchors.verticalCenter: parent.verticalCenter
         z: 1 // ensure it is above the background
-        source: model.previewUrl
+        source: model.previewUrl ? model.previewUrl : themeResourcePath + "/media/Fanart_Fallback_Music_Small.jpg"
     }
 
     Text {

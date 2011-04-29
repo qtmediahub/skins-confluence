@@ -35,7 +35,7 @@ Item {
 
     Image {
         id: backgroundImage
-        source: model.previewUrl ? model.previewUrl : ""
+        source: model.previewUrl ? model.previewUrl : themeResourcePath + "/media/Fanart_Fallback_Music_Small.jpg"
         anchors.centerIn: parent
         width: (sourceSize.width > sourceSize.height ? delegateItem.width : (sourceSize.width / sourceSize.height) * delegateItem.width) - frameMargin*2
         height: (sourceSize.width <= sourceSize.height ? delegateItem.height : (sourceSize.height / sourceSize.width) * delegateItem.height) - frameMargin*2
