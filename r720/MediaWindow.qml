@@ -113,6 +113,12 @@ Window {
                 onTriggered: mediaEngine.pluginProperties.model.sort(view.rootIndex, currentOption)
             },
             ConfluenceAction {
+                id: groupByAction
+                text: qsTr("GROUP BY")
+                options: mediaEngine.pluginProperties.model.groupByOptions()
+                onTriggered: mediaEngine.pluginProperties.model.groupBy(currentOptionIndex)
+            },
+            ConfluenceAction {
                 id: addNewSourceAction
                 text: qsTr("Add New Source")
                 onTriggered: confluence.showModal(addMediaSourceDialog)
