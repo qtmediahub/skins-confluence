@@ -28,12 +28,13 @@ Item {
 
     Timer {
         id: splashDelay
-        interval: 1000
+        interval: config.value("splash-lead-time", 500)
         onTriggered:
             loader.source = "TopLevel.qml"
     }
 
     Image {
+        id: splash
         anchors.centerIn: parent
         source: "../3rdparty/splash/splash.jpg"
     }
@@ -41,8 +42,10 @@ Item {
     Loader {
         id: loader
         anchors.fill: parent
-        onLoaded:
+        onLoaded: {
             reset()
+            splash.visible = false
+        }
     }
     Component.onCompleted:
         splashDelay.start()
