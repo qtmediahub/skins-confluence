@@ -1,1 +1,0 @@
-../r720/AVPlayer.qml

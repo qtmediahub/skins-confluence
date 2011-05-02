@@ -1,1 +1,0 @@
-../r720/RemoteAppWindow.qml

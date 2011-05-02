@@ -1,1 +1,0 @@
-../r720/WeatherWindow.qml
