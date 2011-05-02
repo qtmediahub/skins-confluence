@@ -44,7 +44,7 @@ FocusScope {
     property variant selectedElement
     property variant avPlayer
     property variant browserWindow
-    // property variant ticker
+    property variant ticker
     property variant weatherWindow
     property variant systemInfoWindow
     property variant aboutWindow
@@ -57,7 +57,7 @@ FocusScope {
         State {
             name:  ""
             StateChangeScript { name: "focusMainBlade"; script: mainBlade.forceActiveFocus() }
-            // PropertyChanges { target: ticker; state: "visible" }
+            PropertyChanges { target: ticker; state: "visible" }
         },
         State {
             name: "showingSelectedElement"
@@ -67,7 +67,7 @@ FocusScope {
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
-            // PropertyChanges { target: ticker; state: "" }
+            PropertyChanges { target: ticker; state: "" }
             PropertyChanges { target: selectedElement; state: "visible" }
             PropertyChanges { target: avPlayer; state: "background" }
         },
@@ -127,6 +127,7 @@ FocusScope {
 
     //FIXME: function failing here simply skips rest of init, wish they had exceptions
     Component.onCompleted: {
+
         Cursor.initialize()
 
         var qmlComponent = Qt.createComponent("AppStoreWindow.qml");
@@ -216,15 +217,7 @@ FocusScope {
             backend.log(qmlComponent.errorString())
         }
 
-//        qmlComponent = Qt.createComponent("Ticker.qml");
-//        if (qmlComponent.status == Component.Ready) {
-//            ticker = qmlComponent.createObject(confluence)
-//            ticker.z = UIConstants.screenZValues.header
-//            ticker.state = "visible"
-//        } else if (qmlComponent.status == Component.Error) {
-//            backend.log(qmlComponent.errorString())
-//            ticker = dummyItem
-//        }
+
 
         qmlComponent = Qt.createComponent("RemoteAppWindow.qml");
         if (qmlComponent.status == Component.Ready) {
@@ -245,6 +238,16 @@ FocusScope {
             var maps = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
             backend.log(qmlComponent.errorString())
+        }
+
+        qmlComponent = Qt.createComponent("Ticker.qml");
+        if (qmlComponent.status == Component.Ready) {
+            ticker = qmlComponent.createObject(confluence)
+            ticker.z = UIConstants.screenZValues.header
+            ticker.state = "visible"
+        } else if (qmlComponent.status == Component.Error) {
+            backend.log(qmlComponent.errorString())
+            ticker = dummyItem
         }
 
         qmlComponent = Qt.createComponent("ScreenSaver.qml");
