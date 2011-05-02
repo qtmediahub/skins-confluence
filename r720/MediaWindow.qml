@@ -74,17 +74,17 @@ Window {
     }
 
     function visibleTransitionFinished() {
-        mediaEngine.pluginProperties.model.rowCount() < 1 ? confluence.showModal(addMediaSourceDialog) : undefined
+        mediaEngine.model.rowCount() < 1 ? confluence.showModal(addMediaSourceDialog) : undefined
     }
 
     Connections {
         target: addMediaSourceDialog
-        onRejected: mediaEngine.pluginProperties.model.rowCount() < 1 ? confluence.show(mainBlade) : undefined
+        onRejected: mediaEngine.model.rowCount() < 1 ? confluence.show(mainBlade) : undefined
     }
 
     MediaScanInfo {
         id: mediaScanInfo
-        currentPath: mediaEngine.pluginProperties.model.currentScanPath
+        currentPath: mediaEngine.model.currentScanPath
     }
 
     bladeComponent: MediaWindowBlade {
@@ -110,7 +110,7 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: mediaEngine.pluginProperties.model.sort(view.rootIndex, currentOption)
+                onTriggered: mediaEngine.model.sort(view.rootIndex, currentOption)
             },
             ConfluenceAction {
                 id: addNewSourceAction
@@ -120,13 +120,13 @@ Window {
             ConfluenceAction {
                 id: removeAction
                 text: qsTr("Remove Source")
-                onTriggered: mediaEngine.pluginProperties.model.removeSearchPath(view.currentIndex)
+                onTriggered: mediaEngine.model.removeSearchPath(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
             ConfluenceAction {
                 id: rescanAction;
                 text: qsTr("Rescan Source");
-                onTriggered: mediaEngine.pluginProperties.model.rescan(view.currentIndex)
+                onTriggered: mediaEngine.model.rescan(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
             ConfluenceAction {
@@ -147,7 +147,7 @@ Window {
         id: thumbnailView
         MediaThumbnailView {
             engineName: mediaEngine.name
-            engineModel: mediaEngine.pluginProperties.model
+            engineModel: mediaEngine.model
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -156,7 +156,7 @@ Window {
         id: listView
         MediaListView {
             engineName: mediaEngine.name
-            engineModel: mediaEngine.pluginProperties.model
+            engineModel: mediaEngine.model
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -165,7 +165,7 @@ Window {
         id: posterView
         MediaPosterView {
             engineName: mediaEngine.name
-            engineModel: mediaEngine.pluginProperties.model
+            engineModel: mediaEngine.model
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -179,7 +179,7 @@ Window {
     AddMediaSourceDialog {
         id: addMediaSourceDialog
         focalWidget: viewLoader
-        engineModel: root.mediaEngine.pluginProperties.model
+        engineModel: root.mediaEngine.model
         title: qsTr("Add %1 source").arg(root.mediaEngine.name)
     }
 

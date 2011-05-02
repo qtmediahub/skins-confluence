@@ -453,7 +453,7 @@ FocusScope {
             id: videoListPanel
             anchors.fill: parent
             engineName: typeof videoEngine != "undefined" ? videoEngine.name : undefined
-            engineModel: typeof videoEngine != "undefined" ? videoEngine.pluginProperties.model : undefined
+            engineModel: typeof videoEngine != "undefined" ? videoEngine.model : undefined
 
             onItemTriggered: {
                 root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
@@ -480,7 +480,7 @@ FocusScope {
             id: musicListPanel
             anchors.fill: parent
             engineName: typeof musicEngine != "undefined" ? musicEngine.name : undefined
-            engineModel: typeof musicEngine != "undefined" ? musicEngine.pluginProperties.model : undefined
+            engineModel: typeof musicEngine != "undefined" ? musicEngine.model : undefined
 
             onItemTriggered: {
                 root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)

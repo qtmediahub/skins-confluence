@@ -214,7 +214,7 @@ FocusScope {
         }
 
         if (typeof musicEngine != "undefined") {
-            musicEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+            musicEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
             qmlComponent = Qt.createComponent("MusicWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 qmlComponent.createObject(confluence)
@@ -230,7 +230,7 @@ FocusScope {
         }
 
         if (typeof videoEngine != "undefined") {
-            videoEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+            videoEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
             qmlComponent = Qt.createComponent("VideoWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 qmlComponent.createObject(confluence)
@@ -246,7 +246,7 @@ FocusScope {
         }
 
         if (typeof pictureEngine != "undefined") {
-            pictureEngine.pluginProperties.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+            pictureEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
             qmlComponent = Qt.createComponent("PictureWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 var pictureWindow = qmlComponent.createObject(confluence)
