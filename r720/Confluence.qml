@@ -41,7 +41,9 @@ Item {
     Loader {
         id: loader
         anchors.fill: parent
-        Component.onCompleted:
-            splashDelay.start()
+        onLoaded:
+            reset()
     }
+    Component.onCompleted:
+        splashDelay.start()
 }

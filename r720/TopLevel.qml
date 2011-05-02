@@ -49,7 +49,7 @@ FocusScope {
     property variant systemInfoWindow
     property variant aboutWindow
 
-    height: 720; width: 1280
+    anchors.fill: parent
     focus: true
     clip: true
 
