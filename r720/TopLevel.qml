@@ -53,6 +53,82 @@ FocusScope {
     focus: true
     clip: true
 
+    function resetFocus() {
+        state = ""
+        mainBlade.rootMenu.forceActiveFocus()
+    }
+
+    function setActiveEngine(engine)
+    {
+        var oldEngine = selectedEngine
+
+        selectedEngine = engine
+        selectedElement = engine.visualElement
+
+        if(oldEngine != engine)
+        {
+            //Don't reset the properties
+            //on already selected item
+            var elementProperties = engine.visualElementProperties
+            for(var i = 0; i + 2 <= elementProperties.length; i += 2)
+                selectedElement[elementProperties[i]] = elementProperties[i+1]
+        }
+        show(selectedElement)
+    }
+
+    function show(element)
+    {
+        !!selectedElement && selectedElement != element ? selectedElement.state = "" : undefined
+
+        if (element == mainBlade) {
+            state = ""
+        } else if(element == avPlayer) {
+            if(!avPlayer.hasMedia) {
+                if (typeof videoEngine != "undefined")
+                    show(videoEngine.visualElement)
+                else if (typeof musicEngine != "undefined")
+                    show(musicEngine.visualElement)
+            } else {
+                show(transparentVideoOverlay)
+            }
+        } else if (element == transparentVideoOverlay) {
+            selectedElement = transparentVideoOverlay
+            state = "showingSelectedElementMaximized"
+        } else {
+            selectedElement = element
+            state = "showingSelectedElement"
+        }
+    }
+
+    function showContextMenu(item, x, y) {
+        showModal(item)
+        item.x = x
+        item.y = y
+    }
+
+    function showModal(item) {
+        mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
+        var currentFocusedItem = utils.focusItem();
+        var onClosedHandler = function() {
+            mouseGrabber.opacity = 0;
+            if (currentFocusedItem)
+                currentFocusedItem.forceActiveFocus()
+            item.closed.disconnect(onClosedHandler)
+        }
+        item.closed.connect(onClosedHandler)
+        item.parent = confluence // ## restore parent?
+        item.z = UIConstants.screenZValues.diplomaticImmunity
+        item.open()
+        item.forceActiveFocus()
+    }
+
+    function showFullScreen(item) {
+        item.z = background.z + 2
+        item.parent = confluence
+        item.opacity = 1
+        item.forceActiveFocus()
+    }
+
     states: [
         State {
             name:  ""
@@ -217,8 +293,6 @@ FocusScope {
             backend.log(qmlComponent.errorString())
         }
 
-
-
         qmlComponent = Qt.createComponent("RemoteAppWindow.qml");
         if (qmlComponent.status == Component.Ready) {
             var remoteAppWindow = qmlComponent.createObject(confluence)
@@ -273,81 +347,6 @@ FocusScope {
         } else if (qmlComponent.status == Component.Error) {
             backend.log(qmlComponent.errorString())
         }
-    }
-
-    function resetFocus() {
-        mainBlade.rootMenu.forceActiveFocus()
-    }
-
-    function setActiveEngine(engine)
-    {
-        var oldEngine = selectedEngine
-
-        selectedEngine = engine
-        selectedElement = engine.visualElement
-
-        if(oldEngine != engine)
-        {
-            //Don't reset the properties
-            //on already selected item
-            var elementProperties = engine.visualElementProperties
-            for(var i = 0; i + 2 <= elementProperties.length; i += 2)
-                selectedElement[elementProperties[i]] = elementProperties[i+1]
-        }
-        show(selectedElement)
-    }
-
-    function show(element)
-    {
-        !!selectedElement && selectedElement != element ? selectedElement.state = "" : undefined
-
-        if (element == mainBlade) {
-            state = ""
-        } else if(element == avPlayer) {
-            if(!avPlayer.hasMedia) {
-                if (typeof videoEngine != "undefined")
-                    show(videoEngine.visualElement)
-                else if (typeof musicEngine != "undefined")
-                    show(musicEngine.visualElement)
-            } else {
-                show(transparentVideoOverlay)
-            }
-        } else if (element == transparentVideoOverlay) {
-            selectedElement = transparentVideoOverlay
-            state = "showingSelectedElementMaximized"
-        } else {
-            selectedElement = element
-            state = "showingSelectedElement"
-        }
-    }
-
-    function showContextMenu(item, x, y) {
-        showModal(item)
-        item.x = x
-        item.y = y
-    }
-
-    function showModal(item) {
-        mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
-        var currentFocusedItem = utils.focusItem();
-        var onClosedHandler = function() {
-            mouseGrabber.opacity = 0;
-            if (currentFocusedItem)
-                currentFocusedItem.forceActiveFocus()
-            item.closed.disconnect(onClosedHandler)
-        }
-        item.closed.connect(onClosedHandler)
-        item.parent = confluence // ## restore parent?
-        item.z = UIConstants.screenZValues.diplomaticImmunity
-        item.open()
-        item.forceActiveFocus()
-    }
-
-    function showFullScreen(item) {
-        item.z = background.z + 2
-        item.parent = confluence
-        item.opacity = 1
-        item.forceActiveFocus()
     }
 
     // dummyItem useful to avoid error ouput on component loader failures

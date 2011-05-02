@@ -22,6 +22,10 @@ import QtQuick 1.1
 Item {
     anchors.fill: parent
 
+    function reset() {
+        loader.item.resetFocus()
+    }
+
     Timer {
         id: splashDelay
         interval: 1000
