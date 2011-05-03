@@ -35,7 +35,9 @@ Item {
 
     Image {
         id: splash
-        anchors.centerIn: parent
+        anchors.fill: parent
+        smooth: true
+        fillMode: Image.PreserveAspectFit
         source: "../3rdparty/splash/splash.jpg"
     }
 
