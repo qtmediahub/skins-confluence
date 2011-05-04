@@ -50,7 +50,7 @@ FocusScope {
         }
     }
 
-    function playForeground(item, role, depth) {
+    function playForeground(item, role, depth) { // this now gets uri...
         root.play(item, role, depth);
         confluence.show(this)
     }
@@ -131,7 +131,7 @@ FocusScope {
 
     // RPC requests
     Connections {
-        target: mediaPlayerHelper
+        target: mediaPlayerRpc
         onStopRequested: root.stop()
         onPauseRequested: root.pause()
         onResumeRequested: root.resume()
@@ -140,7 +140,7 @@ FocusScope {
         onPreviousRequested: root.playPrevious()
         onVolumeUpRequested: root.increaseVolume()
         onVolumeDownRequested: root.decreaseVolume()
-        onPlayRemoteSourceRequested: { root.playForeground(mediaPlayerHelper.mediaInfo); mediaItem.seek(position) }
+        onPlayRemoteSourceRequested: { root.playForeground(uri); mediaItem.seek(position) }
     }
 
     anchors.fill: parent

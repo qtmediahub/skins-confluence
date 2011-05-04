@@ -31,7 +31,7 @@ FocusScope {
 
     signal closed()
 
-    function showItem(item) {
+    function showItem(index) {
         showIndex(imagePlayList.add(item, Playlist.Replace, Playlist.Flat))
     }
 

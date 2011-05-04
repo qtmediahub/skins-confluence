@@ -28,7 +28,7 @@ MediaWindow {
     mediaEngine: pictureEngine
 
     function showSlideShow(running) {
-        slideShow.showItem(focalWidget.item.currentItem.itemdata.mediaInfo)
+        slideShow.showItem(root.view.currentIndex)
 
         slideShow.state = "visible"
         slideShow.focus = true
