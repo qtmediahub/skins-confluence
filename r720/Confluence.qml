@@ -51,4 +51,16 @@ Item {
     }
     Component.onCompleted:
         splashDelay.start()
+
+    Connections {
+        target: systemHelper
+        onDeviceAdded: {
+            console.log("new device detected");
+            console.log("mount device "+device)
+            systemHelper.getDeviceByPath(device).mount();
+        }
+        onDeviceRemoved: {
+            console.log("device removed "+device)
+        }
+    }
 }
