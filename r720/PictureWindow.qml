@@ -35,7 +35,7 @@ MediaWindow {
         slideShow.running = running
     }
 
-    function itemActivated(item) {
+    function itemActivated(itemdata) {
         root.showSlideShow(false)
     }
 

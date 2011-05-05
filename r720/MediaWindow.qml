@@ -69,8 +69,8 @@ Window {
         view.selectFirstItem()
     }
 
-    function itemActivated(item) {
-        console.log("Activated: " + item)
+    function itemActivated(itemdata) {
+        console.log("Activated: " + itemdata)
     }
 
     function visibleTransitionFinished() {
