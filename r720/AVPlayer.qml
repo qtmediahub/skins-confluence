@@ -43,15 +43,15 @@ FocusScope {
         volumeOSDTimer.restart();
     }
 
-    function play(item, role, depth) {
-        if(item != null) {
-            mediaItem.currentModelIndex = playlist.add(item, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+    function play(itemdata, role, depth) {
+        if(itemdata != null) {
+            mediaItem.currentModelIndex = playlist.add(itemdata.modelIndex, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
             playModelIndex(mediaItem.currentModelIndex)
         }
     }
 
-    function playForeground(item, role, depth) { // this now gets uri...
-        root.play(item, role, depth);
+    function playForeground(itemdata, role, depth) { // this now gets uri...
+        root.play(itemdata, role, depth);
         confluence.show(this)
     }
 
@@ -456,7 +456,7 @@ FocusScope {
             engineModel: typeof videoEngine != "undefined" ? videoEngine.pluginProperties.model : undefined
 
             onItemTriggered: {
-                root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
+                root.play(itemData, Playlist.Replace, Playlist.Flat)
                 videoListDialog.close()
             }
         }
@@ -483,7 +483,7 @@ FocusScope {
             engineModel: typeof musicEngine != "undefined" ? musicEngine.pluginProperties.model : undefined
 
             onItemTriggered: {
-                root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
+                root.play(itemData, Playlist.Replace, Playlist.Flat)
                 musicListDialog.close()
             }
         }
@@ -510,7 +510,7 @@ FocusScope {
             engineModel: playlist
 
             onItemTriggered: {
-                root.playModelIndex(playlist.indexFromMediaInfo(itemData.mediaInfo))
+                root.playModelIndex(itemData.modelIndex)
                 playListDialog.close()
             }
 
