@@ -45,8 +45,8 @@ FocusScope {
 
     function play(item, role, depth) {
         if(item != null) {
-            mediaItem.currentIndex = playlist.add(item, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
-            playIndex(mediaItem.currentIndex)
+            mediaItem.currentModelIndex = playlist.add(item, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+            playIndex(mediaItem.currentModelIndex)
         }
     }
 
@@ -61,16 +61,16 @@ FocusScope {
     }
 
     function playNext() {
-        playIndex(playlist.playNextIndex(mediaItem.currentIndex));
+        playIndex(playlist.playNextIndex(mediaItem.currentModelIndex));
     }
 
     function playPrevious() {
-        playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+        playIndex(playlist.playPreviousIndex(mediaItem.currentModelIndex));
     }
 
     function playIndex(idx) {
         mediaItem.stop();
-        mediaItem.currentIndex = idx
+        mediaItem.currentModelIndex = idx
         mediaItem.source = playlist.data(idx, Playlist.FilePathRole)
         mediaItem.play();
     }
@@ -308,7 +308,7 @@ FocusScope {
 
         volume: config.value("media-volume", 0.1)
 
-        property variant currentIndex
+        property variant currentModelIndex
 
         x: 0
         y: 0
@@ -372,8 +372,8 @@ FocusScope {
         onShowVideoMenu: showDialog(videoListDialog);
         onShowMusicMenu: showDialog(musicListDialog);
         onStop: mediaItem.stop();
-        onPlayNext: playIndex(playlist.playNextIndex(mediaItem.currentIndex));
-        onPlayPrevious: playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+        onPlayNext: playIndex(playlist.playNextIndex(mediaItem.currentModelIndex));
+        onPlayPrevious: playIndex(playlist.playPreviousIndex(mediaItem.currentModelIndex));
         onSeekBackward: decreasePlaybackRate();
         onSeekForward: increasePlaybackRate();
         onShowTargets: root.state = "targets"
