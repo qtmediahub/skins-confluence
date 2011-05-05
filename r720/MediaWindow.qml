@@ -115,8 +115,8 @@ Window {
             ConfluenceAction {
                 id: groupByAction
                 text: qsTr("GROUP BY")
-                options: mediaEngine.pluginProperties.model.groupByOptions ? mediaEngine.pluginProperties.model.groupByOptions() : ""
-                onTriggered: mediaEngine.pluginProperties.model.groupBy(currentOptionIndex)
+                options: mediaEngine.model.groupByOptions ? mediaEngine.model.groupByOptions() : ""
+                onTriggered: mediaEngine.model.groupBy(currentOptionIndex)
             },
             ConfluenceAction {
                 id: addNewSourceAction
