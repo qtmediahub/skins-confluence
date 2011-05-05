@@ -23,6 +23,7 @@ import "components/"
 import Playlist 1.0
 import ActionMapper 1.0
 import RpcConnection 1.0
+import Media 1.0
 import "./components/uiconstants.js" as UIConstants
 
 //This serves to isolate import failures if QtMultimedia is not present
@@ -71,7 +72,7 @@ FocusScope {
     function playModelIndex(idx) {
         mediaItem.stop();
         mediaItem.currentModelIndex = idx
-        mediaItem.source = playlist.data(idx, Playlist.FilePathRole)
+        mediaItem.source = playlist.data(idx, Media.FilePathRole)
         mediaItem.play();
     }
 
