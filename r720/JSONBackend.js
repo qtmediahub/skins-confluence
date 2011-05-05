@@ -13,7 +13,6 @@ function serverCall(url, data, dataReadyFunction) {
     }
 
     var xhr = new XMLHttpRequest();
-    console.log("HTTP GET to " + url);
     xhr.open("GET", url);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
