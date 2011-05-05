@@ -33,7 +33,7 @@ Window {
 
     function play() {
         var currentItemData = view.currentItem.itemdata
-        avPlayer.playForeground(currentItemData.mediaInfo, Playlist.Replace, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);
+        avPlayer.playForeground(currentItemData, Playlist.Replace, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);
     }
 
     function setCurrentView(viewType) {
@@ -69,8 +69,8 @@ Window {
         view.selectFirstItem()
     }
 
-    function itemActivated(item) {
-        console.log("Activated: " + item)
+    function itemActivated(itemdata) {
+        console.log("Activated: " + itemdata)
     }
 
     function visibleTransitionFinished() {
@@ -111,6 +111,12 @@ Window {
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
                 onTriggered: mediaEngine.model.sort(view.rootIndex, currentOption)
+            },
+            ConfluenceAction {
+                id: groupByAction
+                text: qsTr("GROUP BY")
+                options: mediaEngine.pluginProperties.model.groupByOptions ? mediaEngine.pluginProperties.model.groupByOptions() : ""
+                onTriggered: mediaEngine.pluginProperties.model.groupBy(currentOptionIndex)
             },
             ConfluenceAction {
                 id: addNewSourceAction

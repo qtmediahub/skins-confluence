@@ -28,14 +28,14 @@ MediaWindow {
     mediaEngine: pictureEngine
 
     function showSlideShow(running) {
-        slideShow.showItem(focalWidget.item.currentItem.itemdata.mediaInfo)
+        slideShow.setModelIndex(root.view.currentItem.itemdata.modelIndex)
 
         slideShow.state = "visible"
         slideShow.focus = true
         slideShow.running = running
     }
 
-    function itemActivated(item) {
+    function itemActivated(itemdata) {
         root.showSlideShow(false)
     }
 

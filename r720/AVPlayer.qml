@@ -23,6 +23,7 @@ import "components/"
 import Playlist 1.0
 import ActionMapper 1.0
 import RpcConnection 1.0
+import Media 1.0
 import "./components/uiconstants.js" as UIConstants
 
 //This serves to isolate import failures if QtMultimedia is not present
@@ -43,15 +44,15 @@ FocusScope {
         volumeOSDTimer.restart();
     }
 
-    function play(item, role, depth) {
-        if(item != null) {
-            mediaItem.currentIndex = playlist.add(item, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
-            playIndex(mediaItem.currentIndex)
+    function play(itemdata, role, depth) {
+        if(itemdata != null) {
+            mediaItem.currentModelIndex = playlist.add(itemdata.modelIndex, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+            playModelIndex(mediaItem.currentModelIndex)
         }
     }
 
-    function playForeground(item, role, depth) {
-        root.play(item, role, depth);
+    function playForeground(itemdata, role, depth) { // this now gets uri...
+        root.play(itemdata, role, depth);
         confluence.show(this)
     }
 
@@ -61,17 +62,17 @@ FocusScope {
     }
 
     function playNext() {
-        playIndex(playlist.playNextIndex(mediaItem.currentIndex));
+        playModelIndex(playlist.playNextIndex(mediaItem.currentModelIndex));
     }
 
     function playPrevious() {
-        playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+        playModelIndex(playlist.playPreviousIndex(mediaItem.currentModelIndex));
     }
 
-    function playIndex(idx) {
+    function playModelIndex(idx) {
         mediaItem.stop();
-        mediaItem.currentIndex = idx
-        mediaItem.source = playlist.data(idx, Playlist.FilePathRole)
+        mediaItem.currentModelIndex = idx
+        mediaItem.source = playlist.data(idx, Media.FilePathRole)
         mediaItem.play();
     }
 
@@ -131,7 +132,7 @@ FocusScope {
 
     // RPC requests
     Connections {
-        target: mediaPlayerHelper
+        target: mediaPlayerRpc
         onStopRequested: root.stop()
         onPauseRequested: root.pause()
         onResumeRequested: root.resume()
@@ -140,7 +141,7 @@ FocusScope {
         onPreviousRequested: root.playPrevious()
         onVolumeUpRequested: root.increaseVolume()
         onVolumeDownRequested: root.decreaseVolume()
-        onPlayRemoteSourceRequested: { root.playForeground(mediaPlayerHelper.mediaInfo); mediaItem.seek(position) }
+        onPlayRemoteSourceRequested: { root.playForeground(uri); mediaItem.seek(position) }
     }
 
     anchors.fill: parent
@@ -308,7 +309,7 @@ FocusScope {
 
         volume: config.value("media-volume", 0.1)
 
-        property variant currentIndex
+        property variant currentModelIndex
 
         x: 0
         y: 0
@@ -372,8 +373,8 @@ FocusScope {
         onShowVideoMenu: showDialog(videoListDialog);
         onShowMusicMenu: showDialog(musicListDialog);
         onStop: mediaItem.stop();
-        onPlayNext: playIndex(playlist.playNextIndex(mediaItem.currentIndex));
-        onPlayPrevious: playIndex(playlist.playPreviousIndex(mediaItem.currentIndex));
+        onPlayNext: playModelIndex(playlist.playNextIndex(mediaItem.currentModelIndex));
+        onPlayPrevious: playModelIndex(playlist.playPreviousIndex(mediaItem.currentModelIndex));
         onSeekBackward: decreasePlaybackRate();
         onSeekForward: increasePlaybackRate();
         onShowTargets: root.state = "targets"
@@ -456,7 +457,7 @@ FocusScope {
             engineModel: typeof videoEngine != "undefined" ? videoEngine.model : undefined
 
             onItemTriggered: {
-                root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
+                root.play(itemData, Playlist.Replace, Playlist.Flat)
                 videoListDialog.close()
             }
         }
@@ -483,7 +484,7 @@ FocusScope {
             engineModel: typeof musicEngine != "undefined" ? musicEngine.model : undefined
 
             onItemTriggered: {
-                root.play(itemData.mediaInfo, Playlist.Replace, Playlist.Flat)
+                root.play(itemData, Playlist.Replace, Playlist.Flat)
                 musicListDialog.close()
             }
         }
@@ -510,7 +511,7 @@ FocusScope {
             engineModel: playlist
 
             onItemTriggered: {
-                root.playIndex(playlist.indexFromMediaInfo(itemData.mediaInfo))
+                root.playModelIndex(itemData.modelIndex)
                 playListDialog.close()
             }
 

@@ -31,8 +31,8 @@ Item {
         cache: false
         fillMode: root.fillMode
         width: parent.width
-        asynchronous: true
-        opacity:  (primary.status == Image.Ready && currentItem == primary) || (currentItem == secondary && secondary.status != Image.Ready ) ? 1 : 0
+        //asynchronous: true
+        opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: centerAnchors ? undefined: parent.bottom
         anchors.verticalCenter: centerAnchors ? parent.verticalCenter : undefined
@@ -47,8 +47,8 @@ Item {
         cache: false
         fillMode: root.fillMode
         width: parent.width
-        asynchronous: true
-        opacity:  (secondary.status == Image.Ready && currentItem == secondary) || (currentItem == primary && primary.status != Image.Ready ) ? 1 : 0
+        //asynchronous: true
+        opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: centerAnchors ? undefined: parent.bottom
         anchors.verticalCenter: centerAnchors ? parent.verticalCenter : undefined
@@ -65,8 +65,7 @@ Item {
         onTriggered: SequentialAnimation {
             // This is not a PropertyAction because of QTBUG-16146
             ScriptAction { script: {
-                    if (currentItem.status == Image.Ready)
-                        currentItem = currentItem == primary ? secondary : primary;
+                    currentItem = currentItem == primary ? secondary : primary;
                     currentItem.source = root.source;
                 } }
         }

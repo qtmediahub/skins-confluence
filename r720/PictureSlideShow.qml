@@ -26,26 +26,27 @@ FocusScope {
     id: root
 
     property bool running : false
-    property variant currentIndex : 0
+    property variant currentModelIndex : 0
     property int interval : 3000
 
     signal closed()
 
-    function showItem(item) {
-        showIndex(imagePlayList.add(item, Playlist.Replace, Playlist.Flat))
+    function setModelIndex(modelIndex) {
+        var idx = imagePlayList.add(modelIndex, Playlist.Replace, Playlist.Flat)
+        showModelIndex(idx)
     }
 
-    function showIndex(idx) {
-        root.currentIndex = idx
-        listView.currentIndex = imagePlayList.row(idx)
+    function showModelIndex(modelIndex) {
+        root.currentModelIndex = modelIndex
+        listView.currentIndex = imagePlayList.row(modelIndex)
     }
 
     function next() {
-        showIndex(imagePlayList.playNextIndex(root.currentIndex));
+        showModelIndex(imagePlayList.playNextIndex(root.currentModelIndex));
     }
 
     function previous() {
-        showIndex(imagePlayList.playPreviousIndex(root.currentIndex));
+        showModelIndex(imagePlayList.playPreviousIndex(root.currentModelIndex));
     }
 
     function close() {

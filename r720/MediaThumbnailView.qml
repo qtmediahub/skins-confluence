@@ -94,7 +94,7 @@ Item {
         centerAnchors: false
         clip:  true
         opacity: root.hidePreview ? 0 : 1
-        source: sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.previewUrl : ""
+        source: sourcesListView.currentItem && sourcesListView.currentItem.itemdata.previewUrl ? sourcesListView.currentItem.itemdata.previewUrl : themeResourcePath + "/media/Fanart_Fallback_Music_Small.jpg"
     }
 }
 
