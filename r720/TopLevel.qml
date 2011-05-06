@@ -22,6 +22,7 @@ import "components/"
 import "./components/uiconstants.js" as UIConstants
 import "./components/cursor.js" as Cursor
 import ActionMapper 1.0
+import "util.js" as Util
 
 FocusScope {
     id: confluence
@@ -207,155 +208,70 @@ FocusScope {
         }
     }
 
-    //FIXME: function failing here simply skips rest of init, wish they had exceptions
-    Component.onCompleted: {
+    function createQmlObjectFromFile(file) {
+        var qmlComponent = Qt.createComponent(file)
+        if (qmlComponent.status == Component.Ready) {
+            return qmlComponent.createObject(confluence)
+        }
+        runtime.backend.log(qmlComponent.errorString())
+        return null
+    }
 
+    Component.onCompleted: {
         Cursor.initialize()
 
-        var qmlComponent = Qt.createComponent("AppStoreWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            var appStore = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
+        createQmlObjectFromFile("AppStoreWindow.qml")
 
         if (typeof runtime.musicEngine != "undefined") {
             runtime.musicEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-            qmlComponent = Qt.createComponent("MusicWindow.qml")
-            if (qmlComponent.status == Component.Ready) {
-                qmlComponent.createObject(confluence)
+            if (createQmlObjectFromFile("MusicWindow.qml")) {
                 confluence.addEngine(runtime.musicEngine)
-                qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
-                if (qmlComponent.status == Component.Ready) {
-                    runtime.musicEngine.actionMap = qmlComponent.createObject(confluence)
-                } else if (qmlComponent.status == Component.Error) {
-                    runtime.backend.log(qmlComponent.errorString())
-                }
-            } else if (qmlComponent.status == Component.Error)
-                runtime.backend.log(qmlComponent.errorString())
-
+                runtime.musicEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
+            }
         }
 
         if (typeof runtime.videoEngine != "undefined") {
             runtime.videoEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-            qmlComponent = Qt.createComponent("VideoWindow.qml")
-            if (qmlComponent.status == Component.Ready) {
-                qmlComponent.createObject(confluence)
+            if (createQmlObjectFromFile("VideoWindow.qml")) {
                 confluence.addEngine(runtime.videoEngine)
-                qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
-                if (qmlComponent.status == Component.Ready) {
-                    runtime.videoEngine.actionMap = qmlComponent.createObject(confluence)
-                } else if (qmlComponent.status == Component.Error) {
-                    runtime.backend.log(qmlComponent.errorString())
-                }
-            } else if (qmlComponent.status == Component.Error) {
-                runtime.backend.log(qmlComponent.errorString())
+                runtime.videoEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
             }
         }
 
         if (typeof runtime.pictureEngine != "undefined") {
             runtime.pictureEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-            qmlComponent = Qt.createComponent("PictureWindow.qml")
-            if (qmlComponent.status == Component.Ready) {
-                var pictureWindow = qmlComponent.createObject(confluence)
+            if (createQmlObjectFromFile("PictureWindow.qml")) {
                 confluence.addEngine(runtime.pictureEngine)
-                qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
-                if (qmlComponent.status == Component.Ready) {
-                    runtime.pictureEngine.actionMap = qmlComponent.createObject(confluence)
-                } else if (qmlComponent.status == Component.Error)
-                    runtime.backend.log(qmlComponent.errorString())
-            } else if (qmlComponent.status == Component.Error) {
-                runtime.backend.log(qmlComponent.errorString())
+                runtime.pictureEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
             }
         }
 
-        qmlComponent = Qt.createComponent("AVPlayer.qml");
-        if (qmlComponent.status == Component.Ready) {
-            avPlayer = qmlComponent.createObject(confluence)
+        avPlayer = createQmlObjectFromFile("AVPlayer.qml")
+        if (avPlayer) {
             // FIXME: nothing to get video-path during runtime, yet
             avPlayer.state = "background"
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
+        } else {
             avPlayer = dummyItem
         }
 
-        qmlComponent = Qt.createComponent("DashboardWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            var dashboard = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
+        createQmlObjectFromFile("DashboardWindow.qml")
+        browserWindow = createQmlObjectFromFile("WebWindow.qml")
+        weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
+        createQmlObjectFromFile("RemoteAppWindow.qml")
+        systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
+        createQmlObjectFromFile("MapsWindow.qml")
 
-        //No webkit
-        qmlComponent = Qt.createComponent("WebWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            browserWindow = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
-
-        //No XML patterns
-        qmlComponent = Qt.createComponent("WeatherWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            weatherWindow = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
-
-        qmlComponent = Qt.createComponent("RemoteAppWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            var remoteAppWindow = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
-
-        qmlComponent = Qt.createComponent("SystemInfoWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            systemInfoWindow = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
-
-        qmlComponent = Qt.createComponent("MapsWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            var maps = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
-
-        qmlComponent = Qt.createComponent("Ticker.qml");
-        if (qmlComponent.status == Component.Ready) {
-            ticker = qmlComponent.createObject(confluence)
+        ticker = createQmlObjectFromFile("Ticker.qml")
+        if (ticker) {
             ticker.z = UIConstants.screenZValues.header
             ticker.state = "visible"
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
+        } else {
             ticker = dummyItem
         }
 
-        qmlComponent = Qt.createComponent("ScreenSaver.qml");
-        if (qmlComponent.status == Component.Ready) {
-            qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
-
-        qmlComponent = Qt.createComponent("AboutWindow.qml");
-        if (qmlComponent.status == Component.Ready) {
-            aboutWindow = qmlComponent.createObject(confluence)
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
-
-        //Why would you ever want to do this from QML!
-        //One property API FTW
-        qmlComponent = Qt.createComponent("SystemScreenSaverControl.qml");
-        if (qmlComponent.status == Component.Ready) {
-            var screensaver = qmlComponent.createObject(confluence)
-            !!screensaver ? screensaver.screenSaverDelayed = true : undefined
-        } else if (qmlComponent.status == Component.Error) {
-            runtime.backend.log(qmlComponent.errorString())
-        }
+        createQmlObjectFromFile("ScreenSaver.qml")
+        aboutWindow = createQmlObjectFromFile("AboutWindow.qml")
+        createQmlObjectFromFile("SystemScreenSaverControl.qml")
     }
 
     // dummyItem useful to avoid error ouput on component loader failures
