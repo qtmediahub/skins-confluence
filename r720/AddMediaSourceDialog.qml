@@ -51,7 +51,7 @@ Dialog {
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
             Keys.onPressed: {
-                actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right) ? sourceNameInput.focus = true : undefined
+                runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right) ? sourceNameInput.focus = true : undefined
             }
         }
         Text {
@@ -74,9 +74,9 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Down) || actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right)) 
+                    if (runtime.actionmap.eventMatch(event, ActionMapper.Down) || runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right)) 
                         buttonBox.focus = true
-                    else if (actionmap.eventMatch(event, ActionMapper.Up))
+                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
                         fileSystemView.focus = true
             }
 
@@ -99,9 +99,9 @@ Dialog {
             }
 
             Keys.onPressed:
-                if (actionmap.eventMatch(event, ActionMapper.Down) || actionmap.eventMatch(event, ActionMapper.Left) || actionmap.eventMatch(event, ActionMapper.Right)) 
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Down) || runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right)) 
                     fileSystemView.focus = true
-                else if (actionmap.eventMatch(event, ActionMapper.Up))
+                else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
                     sourceNameInput.focus = true
         }
     }

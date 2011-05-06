@@ -29,7 +29,7 @@ BorderImage {
     signal linkClicked (string link);
 
     onLinkClicked: {
-        browserWindow ? browserWindow.loadPage(link) : backend.openUrlExternally(link)
+        browserWindow ? browserWindow.loadPage(link) : runtime.backend.openUrlExternally(link)
     }
 
     border.left: 100

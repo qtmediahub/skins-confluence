@@ -8,15 +8,15 @@ Item {
         path: generalResourcePath + "/screensavers"
     }
     Connections {
-        target: backend
+        target: runtime.backend
         onInputActive:
             !!screensaver ? screensaver.destroy() : undefined
     }
     Connections {
-        target: backend
+        target: runtime.backend
         onInputIdle: {
             if (avPlayer.playing
-                || !config.isEnabled("screensaver", false)
+                || !runtime.config.isEnabled("screensaver", false)
                 || !Qt.application.active)
                 //bail
                 return

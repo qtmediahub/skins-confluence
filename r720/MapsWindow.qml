@@ -105,25 +105,25 @@ Window {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Right)) {
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
                 map.pan(100, 0)
                 event.accepted = true
-            } else if (actionmap.eventMatch(event, ActionMapper.Left)) {
+            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Left)) {
                 map.pan(-100, 0)
                 event.accepted = true
-            } else if (actionmap.eventMatch(event, ActionMapper.Up)) {
+            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Up)) {
                 map.pan(0, -100)
                 event.accepted = true
-            } else if (actionmap.eventMatch(event, ActionMapper.Down)) {
+            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Down)) {
                 map.pan(0, 100)
                 event.accepted = true
-            } else if (actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
+            } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
                 map.zoomLevel = map.zoomLevel - 1
                 event.accepted = true
-            } else if (actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
+            } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
                 map.zoomLevel = map.zoomLevel + 1
                 event.accepted = true
-            } else if (actionmap.eventMatch(event, ActionMapper.Enter)) {
+            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
                 root.blade.open()
                 event.accepted = true
             }
@@ -143,11 +143,11 @@ Window {
         } else if (viewType == qsTr("Street View")) {
             map.mapType = Map.StreetMap
         }
-        config.setValue("mapwindow-currentview", viewType)
+        runtime.config.setValue("mapwindow-currentview", viewType)
     }
 
     Component.onCompleted: {
-        setCurrentView(config.value("mapwindow-currentview", qsTr("Street View")))
+        setCurrentView(runtime.config.value("mapwindow-currentview", qsTr("Street View")))
     }
 
     Engine { name: qsTr("Ovi Maps"); role: QMHPlugin.Map; visualElement: root; visualElementProperties: [] }

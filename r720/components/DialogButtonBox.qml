@@ -47,7 +47,7 @@ Item {
             onClicked: root.accept()
 
             Keys.onPressed:
-                actionmap.eventMatch(event, ActionMapper.Right) ? cancelButton.focus = true : 0
+                runtime.actionmap.eventMatch(event, ActionMapper.Right) ? cancelButton.focus = true : 0
         }
 
         Item {
@@ -61,7 +61,7 @@ Item {
             text: qsTr("Cancel")
             onClicked: root.reject()
             Keys.onPressed:
-                actionmap.eventMatch(event, ActionMapper.Left) ? okButton.focus = true : 0
+                runtime.actionmap.eventMatch(event, ActionMapper.Left) ? okButton.focus = true : 0
         }
     }
 }

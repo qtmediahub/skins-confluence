@@ -33,9 +33,9 @@ Flow {
     signal upperBoundExceeded
 
     Keys.onPressed:
-        if (actionmap.eventMatch(event, ActionMapper.Right))
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
             flow == Flow.LeftToRight ? adjustIndex(+1) : undefined
-        else if (actionmap.eventMatch(event, ActionMapper.Left))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
             flow == Flow.LeftToRight ? adjustIndex(-1) : undefined
 
     function adjustIndex(delta)

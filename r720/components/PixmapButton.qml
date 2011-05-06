@@ -51,7 +51,7 @@ Item {
         depressed = false
 
     Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Enter) ? button.clicked() : undefined
+        runtime.actionmap.eventMatch(event, ActionMapper.Enter) ? button.clicked() : undefined
 
     Image {
         id: pixmap

@@ -67,7 +67,7 @@ GridView {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Enter)) {
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
                 triggerItem()
             }
         }

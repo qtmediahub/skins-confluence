@@ -51,7 +51,7 @@ Blade {
             if (currentItem.hasSubBlade) {
                 subMenu.forceActiveFocus()
                 // not really nice should be also a property of the currentItem, but I don't know how to add a QList<QObject*> property
-                subMenuList.engine = backend.advertizedEngines[currentIndex]
+                subMenuList.engine = runtime.backend.advertizedEngines[currentIndex]
             }
         }
     }
@@ -69,8 +69,8 @@ Blade {
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
         Keys.onPressed:
-            actionmap.eventMatch(event, ActionMapper.Menu)
-            || actionmap.eventMatch(event, ActionMapper.Left) ? subMenu.close() : undefined
+            runtime.actionmap.eventMatch(event, ActionMapper.Menu)
+            || runtime.actionmap.eventMatch(event, ActionMapper.Left) ? subMenu.close() : undefined
 
         SubBladeMenu {
             id: subMenuList

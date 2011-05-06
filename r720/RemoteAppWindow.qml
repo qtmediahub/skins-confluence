@@ -30,13 +30,13 @@ Window {
         anchors.centerIn: parent
 
         function load() {
-            backend.clearComponentCache()
+            runtime.backend.clearComponentCache()
             source = sourceNameInput.text
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Right)
-                || actionmap.eventMatch(event, ActionMapper.Left))
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Right)
+                || runtime.actionmap.eventMatch(event, ActionMapper.Left))
                 sourceNameInput.focus = true
         }
     }
@@ -64,16 +64,16 @@ Window {
             TextInput {
                 id: sourceNameInput
                 anchors.centerIn: parent
-                text: "http://gitorious.org/qtmediahub/qtmediahub/blobs/raw/master/hub/skins/confluence/remote/RemoteApp.qml" // "http://tinyurl.com/remoteapp-qml" 
+                text: "http://gitorious.org/qtmediahub/qtmediahub/blobs/raw/master/hub/runtime.skins/confluence/remote/RemoteApp.qml" // "http://tinyurl.com/remoteapp-qml" 
                 color: "white"
                 font.pointSize: 15
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Down))
+                    if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
                         reloadButton.focus = true
-                    else if (actionmap.eventMatch(event, ActionMapper.Up))
+                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
                         loader.focus = true
-                    else if (actionmap.eventMatch(event, ActionMapper.Enter))
+                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
                         loader.load()
             }
 
@@ -94,7 +94,7 @@ Window {
             onClicked: loader.load()
 
            Keys.onPressed:
-                if (actionmap.eventMatch(event, ActionMapper.Up))
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
                     sourceNameInput.focus = true
         }
     }

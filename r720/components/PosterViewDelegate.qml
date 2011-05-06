@@ -78,6 +78,6 @@ Item {
     }
 
     Keys.onPressed:
-        actionmap.eventMatch(event, ActionMapper.Enter) ? delegateItem.activate() : undefined
+        runtime.actionmap.eventMatch(event, ActionMapper.Enter) ? delegateItem.activate() : undefined
 }
 

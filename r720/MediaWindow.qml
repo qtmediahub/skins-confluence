@@ -64,7 +64,7 @@ Window {
         }
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
-        config.setValue(mediaWindow.mediaWindowName + "-currentview", viewType)
+        runtime.config.setValue(mediaWindow.mediaWindowName + "-currentview", viewType)
         view.rootIndex = rootIndex
         view.selectFirstItem()
     }
@@ -191,6 +191,6 @@ Window {
 
     Component.onCompleted: {
         mediaEngine.visualElement = mediaWindow;
-        setCurrentView(config.value(mediaWindow.mediaWindowName + "-currentview", "POSTER"))
+        setCurrentView(runtime.config.value(mediaWindow.mediaWindowName + "-currentview", "POSTER"))
     }
 }

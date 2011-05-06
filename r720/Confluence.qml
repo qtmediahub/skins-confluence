@@ -28,7 +28,7 @@ Item {
 
     Timer {
         id: splashDelay
-        interval: config.value("splash-lead-time", 500)
+        interval: runtime.config.value("splash-lead-time", 500)
         onTriggered:
             loader.source = "TopLevel.qml"
     }
@@ -53,11 +53,11 @@ Item {
         splashDelay.start()
 
     Connections {
-        target: systemHelper
+        target: runtime.systemHelper
         onDeviceAdded: {
             console.log("new device detected");
             console.log("mount device "+device)
-            systemHelper.getDeviceByPath(device).mount();
+            runtime.systemHelper.getDeviceByPath(device).mount();
         }
         onDeviceRemoved: {
             console.log("device removed "+device)

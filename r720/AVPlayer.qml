@@ -132,7 +132,7 @@ FocusScope {
 
     // RPC requests
     Connections {
-        target: mediaPlayerRpc
+        target: runtime.mediaPlayerRpc
         onStopRequested: root.stop()
         onPauseRequested: root.pause()
         onResumeRequested: root.resume()
@@ -205,22 +205,22 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Menu))
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
             if (root.state == "targets")
                 root.state = "maximized"
             else
                 confluence.state = ""
-        else if (actionmap.eventMatch(event, ActionMapper.Enter))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
             togglePlayPause()
-        else if (actionmap.eventMatch(event, ActionMapper.Context))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Context))
             showOSD()
-        else if (actionmap.eventMatch(event, ActionMapper.Up))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
             playPrevious();
-        else if (actionmap.eventMatch(event, ActionMapper.Down))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
             playNext();
-        else if (actionmap.eventMatch(event, ActionMapper.Right))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
             increasePlaybackRate();
-        else if (actionmap.eventMatch(event, ActionMapper.Left))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
             decreasePlaybackRate();
     }
 
@@ -249,7 +249,7 @@ FocusScope {
 
     Timer {
         id: osdTimer
-        interval: config.value("osd-timeout", 3000)
+        interval: runtime.config.value("osd-timeout", 3000)
         running: controlOSD.state == "visible"
 
         repeat: false
@@ -258,7 +258,7 @@ FocusScope {
 
     Timer {
         id: volumeOSDTimer
-        interval: config.value("osd-timeout", 3000)
+        interval: runtime.config.value("osd-timeout", 3000)
         running: volumeOSD.state == "visible"
 
         repeat: false
@@ -307,7 +307,7 @@ FocusScope {
     Video {
         id: mediaItem
 
-        volume: config.value("media-volume", 0.1)
+        volume: runtime.config.value("media-volume", 0.1)
 
         property variant currentModelIndex
 
@@ -334,7 +334,7 @@ FocusScope {
         }
 
         onVolumeChanged:
-            config.setValue("media-volume", mediaItem.volume)
+            runtime.config.setValue("media-volume", mediaItem.volume)
 
         function togglePlayPause() {
             if (Math.abs(mediaItem.playbackRate) != 1) {
@@ -463,9 +463,9 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Menu))
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
                 videoListDialog.close()
-            else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
+            else if (runtime.actionmap.eventMatch(event, ActionMapper.Up) || runtime.actionmap.eventMatch(event, ActionMapper.Down))
                 event.accepted = true
         }
     }
@@ -490,9 +490,9 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Menu))
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
                 musicListDialog.close()
-            else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
+            else if (runtime.actionmap.eventMatch(event, ActionMapper.Up) || runtime.actionmap.eventMatch(event, ActionMapper.Down))
                 event.accepted = true
         }
     }
@@ -516,9 +516,9 @@ FocusScope {
             }
 
             Keys.onPressed: {
-                if (actionmap.eventMatch(event, ActionMapper.Menu))
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
                     playListDialog.close()
-                else if (actionmap.eventMatch(event, ActionMapper.Up) || actionmap.eventMatch(event, ActionMapper.Down))
+                else if (runtime.actionmap.eventMatch(event, ActionMapper.Up) || runtime.actionmap.eventMatch(event, ActionMapper.Down))
                     event.accepted = true
             }
         }
@@ -558,7 +558,7 @@ FocusScope {
         anchors.left: mediaItem.right
         anchors.leftMargin: 25
         anchors.verticalCenter: mediaItem.verticalCenter
-        model: backend.targetsModel
+        model: runtime.backend.targetsModel
         opacity: 0
 
         delegate: Item {

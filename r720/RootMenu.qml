@@ -34,13 +34,13 @@ FocusScope {
     signal openSubMenu
 
     Component.onCompleted: {
-        if (config.isEnabled("menu-soundeffects", false)) {
+        if (runtime.config.isEnabled("menu-soundeffects", false)) {
             var menuSoundEffectLoader = Qt.createComponent("./components/QMHAudio.qml");
             if (menuSoundEffectLoader.status == Component.Ready) {
                 menuSoundEffect = menuSoundEffectLoader.createObject(parent)
                 menuSoundEffect.source = themeResourcePath + "/sounds/click.wav"
             } else if (menuSoundEffectLoader.status == Component.Error) {
-                backend.log(menuSoundEffectLoader.errorString())
+                runtime.backend.log(menuSoundEffectLoader.errorString())
             }
         }
     }
@@ -65,7 +65,7 @@ FocusScope {
             opacity:  0.5
         }
 
-        model: backend.advertizedEngines //menuList
+        model: runtime.backend.advertizedEngines //menuList
         delegate:
             RootMenuListItem { }
 
@@ -75,13 +75,13 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (actionmap.eventMatch(event, ActionMapper.Enter))
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
                 currentItem.trigger()
-            else if (actionmap.eventMatch(event, ActionMapper.Right))
+            else if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
                 rootMenu.openSubMenu()
-            else if (actionmap.eventMatch(event, ActionMapper.Left))
+            else if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
                 playMediaButton.forceActiveFocus()
-            else if (actionmap.eventMatch(event, ActionMapper.Right))
+            else if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
                 playMediaButton.forceActiveFocus()
         }
     }
@@ -104,8 +104,8 @@ FocusScope {
         width: parent.width
 
         Keys.onPressed:
-            actionmap.eventMatch(event, ActionMapper.Up)
-            ||actionmap.eventMatch(event, ActionMapper.Down)
+            runtime.actionmap.eventMatch(event, ActionMapper.Up)
+            ||runtime.actionmap.eventMatch(event, ActionMapper.Down)
             ? rootMenuList.focus = true
             : undefined
 
@@ -116,9 +116,9 @@ FocusScope {
             onClicked: confluence.show(avPlayer)
 
             Keys.onPressed:
-                if (actionmap.eventMatch(event, ActionMapper.Left))
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
                     rootMenuList.focus = true
-                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                else if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
                     favouritesButton.focus = true
         }
         ConfluencePixmapButton {
@@ -128,9 +128,9 @@ FocusScope {
             onClicked: confluence.show(aboutWindow)
 
             Keys.onPressed:
-                if (actionmap.eventMatch(event, ActionMapper.Left))
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
                     playMediaButton.focus = true
-                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                else if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
                     powerButton.focus = true
         }
         ConfluencePixmapButton {
@@ -140,9 +140,9 @@ FocusScope {
             onClicked: confluence.showModal(exitDialog)
 
             Keys.onPressed:
-                if (actionmap.eventMatch(event, ActionMapper.Left))
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
                     favouritesButton.focus = true
-                else if (actionmap.eventMatch(event, ActionMapper.Right))
+                else if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
                     rootMenuList.focus = true
         }
     }

@@ -28,8 +28,8 @@ FocusScope {
 
     property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
 
-    property string generalResourcePath: backend.resourcePath
-    property string themeResourcePath: skin.path + "/3rdparty/skin.confluence"
+    property string generalResourcePath: runtime.backend.resourcePath
+    property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence"
 
     //FIXME: QML const equivalent?
     property int standardEasingCurve: Easing.InQuad
@@ -108,7 +108,7 @@ FocusScope {
 
     function showModal(item) {
         mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
-        var currentFocusedItem = utils.focusItem();
+        var currentFocusedItem = runtime.utils.focusItem();
         var onClosedHandler = function() {
             mouseGrabber.opacity = 0;
             if (currentFocusedItem)
@@ -177,7 +177,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Menu)) {
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu)) {
             if(selectedElement && selectedElement.maximized)
                 selectedElement.maximized = false
             else
@@ -192,11 +192,11 @@ FocusScope {
             show(aboutWindow)
         } else if (event.key == Qt.Key_F10) {
             show(systemInfoWindow)
-        } else if (actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
             avPlayer.increaseVolume()
-        } else if (actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
             avPlayer.decreaseVolume()
-        } else if (actionmap.eventMatch(event, ActionMapper.MediaPlayPause)) {
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.MediaPlayPause)) {
             avPlayer.togglePlayPause()
         }
     }
@@ -210,7 +210,7 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             var appStore = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         if (typeof musicEngine != "undefined") {
@@ -222,10 +222,10 @@ FocusScope {
                 if (qmlComponent.status == Component.Ready) {
                     musicEngine.actionMap = qmlComponent.createObject(confluence)
                 } else if (qmlComponent.status == Component.Error) {
-                    backend.log(qmlComponent.errorString())
+                    runtime.backend.log(qmlComponent.errorString())
                 }
             } else if (qmlComponent.status == Component.Error)
-                backend.log(qmlComponent.errorString())
+                runtime.backend.log(qmlComponent.errorString())
 
         }
 
@@ -238,10 +238,10 @@ FocusScope {
                 if (qmlComponent.status == Component.Ready) {
                     videoEngine.actionMap = qmlComponent.createObject(confluence)
                 } else if (qmlComponent.status == Component.Error) {
-                    backend.log(qmlComponent.errorString())
+                    runtime.backend.log(qmlComponent.errorString())
                 }
             } else if (qmlComponent.status == Component.Error) {
-                backend.log(qmlComponent.errorString())
+                runtime.backend.log(qmlComponent.errorString())
             }
         }
 
@@ -254,9 +254,9 @@ FocusScope {
                 if (qmlComponent.status == Component.Ready) {
                     pictureEngine.actionMap = qmlComponent.createObject(confluence)
                 } else if (qmlComponent.status == Component.Error)
-                    backend.log(qmlComponent.errorString())
+                    runtime.backend.log(qmlComponent.errorString())
             } else if (qmlComponent.status == Component.Error) {
-                backend.log(qmlComponent.errorString())
+                runtime.backend.log(qmlComponent.errorString())
             }
         }
 
@@ -266,7 +266,7 @@ FocusScope {
             // FIXME: nothing to get video-path during runtime, yet
             avPlayer.state = "background"
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
             avPlayer = dummyItem
         }
 
@@ -274,7 +274,7 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             var dashboard = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         //No webkit
@@ -282,7 +282,7 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             browserWindow = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         //No XML patterns
@@ -290,28 +290,28 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             weatherWindow = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         qmlComponent = Qt.createComponent("RemoteAppWindow.qml");
         if (qmlComponent.status == Component.Ready) {
             var remoteAppWindow = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         qmlComponent = Qt.createComponent("SystemInfoWindow.qml");
         if (qmlComponent.status == Component.Ready) {
             systemInfoWindow = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         qmlComponent = Qt.createComponent("MapsWindow.qml");
         if (qmlComponent.status == Component.Ready) {
             var maps = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         qmlComponent = Qt.createComponent("Ticker.qml");
@@ -320,7 +320,7 @@ FocusScope {
             ticker.z = UIConstants.screenZValues.header
             ticker.state = "visible"
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
             ticker = dummyItem
         }
 
@@ -328,14 +328,14 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         qmlComponent = Qt.createComponent("AboutWindow.qml");
         if (qmlComponent.status == Component.Ready) {
             aboutWindow = qmlComponent.createObject(confluence)
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
 
         //Why would you ever want to do this from QML!
@@ -345,7 +345,7 @@ FocusScope {
             var screensaver = qmlComponent.createObject(confluence)
             !!screensaver ? screensaver.screenSaverDelayed = true : undefined
         } else if (qmlComponent.status == Component.Error) {
-            backend.log(qmlComponent.errorString())
+            runtime.backend.log(qmlComponent.errorString())
         }
     }
 

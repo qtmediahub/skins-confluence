@@ -88,15 +88,15 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (actionmap.eventMatch(event, ActionMapper.Menu) || actionmap.eventMatch(event, ActionMapper.Enter)) {
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu) || runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
             root.running = false
             root.close()
-        } else if (actionmap.eventMatch(event, ActionMapper.Context)) {
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Context)) {
             root.running = !root.running
-        } else if (actionmap.eventMatch(event, ActionMapper.Left)) {
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Left)) {
             root.running = false
             root.previous()
-        } else if (actionmap.eventMatch(event, ActionMapper.Right)) {
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
             root.running = false
             root.next()
         }

@@ -28,10 +28,10 @@ Dialog {
     ButtonList {
         id: buttonList
         ConfluencePixmapButton { focus: true; basePixmap: "ButtonMenuExitNF"; focusedPixmap: "ButtonMenuExitFO"; onClicked: { Qt.quit(); root.close() } }
-        ConfluencePixmapButton { basePixmap: "ButtonMenuRestartNF"; focusedPixmap: "ButtonMenuRestartFO"; onClicked: { systemHelper.restart(); root.close() } }
-        ConfluencePixmapButton { basePixmap: "ButtonMenuShutdownNF"; focusedPixmap: "ButtonMenuShutdownFO"; onClicked: { systemHelper.shutdown(); root.close() } }
+        ConfluencePixmapButton { basePixmap: "ButtonMenuRestartNF"; focusedPixmap: "ButtonMenuRestartFO"; onClicked: { runtime.systemHelper.restart(); root.close() } }
+        ConfluencePixmapButton { basePixmap: "ButtonMenuShutdownNF"; focusedPixmap: "ButtonMenuShutdownFO"; onClicked: { runtime.systemHelper.shutdown(); root.close() } }
         ConfluencePixmapButton { basePixmap: "ButtonMenuLogOffNF"; focusedPixmap: "ButtonMenuLogOffFO" }
-        ConfluencePixmapButton { basePixmap: "ButtonMenuSleepNF"; focusedPixmap: "ButtonMenuSleepFO"; onClicked: { systemHelper.suspend(); root.close(); } }
+        ConfluencePixmapButton { basePixmap: "ButtonMenuSleepNF"; focusedPixmap: "ButtonMenuSleepFO"; onClicked: { runtime.systemHelper.suspend(); root.close(); } }
     }
 }
 

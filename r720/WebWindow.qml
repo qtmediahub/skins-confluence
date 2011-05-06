@@ -63,9 +63,9 @@ Window {
     Keys.enabled: enabledBrowserShortcuts == ""
 
     Keys.onPressed:
-        if (actionmap.eventMatch(event, ActionMapper.Up))
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
             webViewport.contentY = Math.max(0, webViewport.contentY - 10)
-        else if (actionmap.eventMatch(event, ActionMapper.Down))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
             webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
 
     Panel {
@@ -87,20 +87,20 @@ Window {
                 url: defaultUrl
                 focus: true
                 settings.sansSerifFontFamily : "DejaVu Sans"
-                settings.javaEnabled: config.isEnabled("wk-java", false)
-                settings.javascriptCanAccessClipboard: config.isEnabled("wk-js-clipboard", false)
-                settings.javascriptCanOpenWindows: config.isEnabled("wk-js-windows", false)
-                settings.javascriptEnabled: config.isEnabled("wk-js", true)
-                settings.linksIncludedInFocusChain: config.isEnabled("wk-focus-links", true)
-                settings.localContentCanAccessRemoteUrls: config.isEnabled("wk-local-acc-remote", true)
-                settings.localStorageDatabaseEnabled: config.isEnabled("wk-local-store", true)
-                settings.offlineStorageDatabaseEnabled: config.isEnabled("wk-offline-store", true)
-                settings.offlineWebApplicationCacheEnabled: config.isEnabled("wk-web-app-cache", true)
-                settings.printElementBackgrounds: config.isEnabled("wk-print-bg", false)
-                settings.privateBrowsingEnabled: config.isEnabled("wk-private", false)
-                settings.zoomTextOnly: config.isEnabled("wk-zoom-text", false)
-                settings.pluginsEnabled: config.isEnabled("wk-plugins", false)
-                settings.autoLoadImages: config.isEnabled("wk-auto-load-images", true)
+                settings.javaEnabled: runtime.config.isEnabled("wk-java", false)
+                settings.javascriptCanAccessClipboard: runtime.config.isEnabled("wk-js-clipboard", false)
+                settings.javascriptCanOpenWindows: runtime.config.isEnabled("wk-js-windows", false)
+                settings.javascriptEnabled: runtime.config.isEnabled("wk-js", true)
+                settings.linksIncludedInFocusChain: runtime.config.isEnabled("wk-focus-links", true)
+                settings.localContentCanAccessRemoteUrls: runtime.config.isEnabled("wk-local-acc-remote", true)
+                settings.localStorageDatabaseEnabled: runtime.config.isEnabled("wk-local-store", true)
+                settings.offlineStorageDatabaseEnabled: runtime.config.isEnabled("wk-offline-store", true)
+                settings.offlineWebApplicationCacheEnabled: runtime.config.isEnabled("wk-web-app-cache", true)
+                settings.printElementBackgrounds: runtime.config.isEnabled("wk-print-bg", false)
+                settings.privateBrowsingEnabled: runtime.config.isEnabled("wk-private", false)
+                settings.zoomTextOnly: runtime.config.isEnabled("wk-zoom-text", false)
+                settings.pluginsEnabled: runtime.config.isEnabled("wk-plugins", false)
+                settings.autoLoadImages: runtime.config.isEnabled("wk-auto-load-images", true)
 
                 opacity: progress == 1 ? 1 : 0.5
                 preferredWidth: webViewport.width
@@ -112,7 +112,7 @@ Window {
                     NumberAnimation{}
                 }
 
-                Component.onCompleted: utils.applyWebViewFocusFix(webView) // https://bugs.webkit.org/show_bug.cgi?id=51094
+                Component.onCompleted: runtime.utils.applyWebViewFocusFix(webView) // https://bugs.webkit.org/show_bug.cgi?id=51094
             }
 
             Behavior on width {
@@ -142,7 +142,7 @@ Window {
 
     Component.onCompleted: {
         //Conditional on plugins (read flash) being enabled
-        config.isEnabled("wk-plugins", false)
+        runtime.config.isEnabled("wk-plugins", false)
         ? Qt.createQmlObject('\
                              import QMHPlugin 1.0; \
                              import "components/"; \

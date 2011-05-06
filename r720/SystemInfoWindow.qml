@@ -27,9 +27,9 @@ Window {
     id: root
 
     Keys.onPressed:
-        if (actionmap.eventMatch(event, ActionMapper.Up))
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
             infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
-        else if (actionmap.eventMatch(event, ActionMapper.Down))
+        else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
             infoViewport.contentY = Math.min(infoViewport.contentHeight - height, infoViewport.contentY + 20)
 
     NetworkInfo {

@@ -54,9 +54,9 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Up))
+                    if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
                         buttonBox.focus = true
-                    else if (actionmap.eventMatch(event, ActionMapper.Down))
+                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
                         sourcePasswordInput.focus = true
             }
 
@@ -88,9 +88,9 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed:
-                    if (actionmap.eventMatch(event, ActionMapper.Up))
+                    if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
                         sourceNameInput.focus = true
-                    else if (actionmap.eventMatch(event, ActionMapper.Down))
+                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
                         buttonBox.focus = true
             }
 
@@ -112,9 +112,9 @@ Dialog {
             }
 
             Keys.onPressed:
-                if (actionmap.eventMatch(event, ActionMapper.Up))
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
                     sourcePasswordInput.focus = true
-                else if (actionmap.eventMatch(event, ActionMapper.Down))
+                else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
                     sourceNameInput.focus = true
         }
     }
