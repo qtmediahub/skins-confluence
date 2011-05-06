@@ -190,8 +190,6 @@ Window {
     }
 
     Component.onCompleted: {
-        if (mediaEngine)
-            mediaEngine.visualElement = mediaWindow;
         setCurrentView(runtime.config.value(mediaWindow.mediaWindowName + "-currentview", "POSTER"))
     }
 }
