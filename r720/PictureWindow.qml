@@ -25,7 +25,7 @@ MediaWindow {
 
     mediaWindowName: "picture"
     informationSheet: PictureInformationSheet { id: pictureInformationSheet }
-    mediaEngine: pictureEngine
+    mediaEngine: runtime.pictureEngine
 
     function showSlideShow(running) {
         slideShow.setModelIndex(root.view.currentItem.itemdata.modelIndex)

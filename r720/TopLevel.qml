@@ -84,10 +84,10 @@ FocusScope {
             state = ""
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
-                if (typeof videoEngine != "undefined")
-                    show(videoEngine.visualElement)
-                else if (typeof musicEngine != "undefined")
-                    show(musicEngine.visualElement)
+                if (typeof runtime.videoEngine != "undefined")
+                    show(runtime.videoEngine.visualElement)
+                else if (typeof runtime.musicEngine != "undefined")
+                    show(runtime.musicEngine.visualElement)
             } else {
                 show(transparentVideoOverlay)
             }
@@ -213,14 +213,14 @@ FocusScope {
             runtime.backend.log(qmlComponent.errorString())
         }
 
-        if (typeof musicEngine != "undefined") {
-            musicEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+        if (typeof runtime.musicEngine != "undefined") {
+            runtime.musicEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
             qmlComponent = Qt.createComponent("MusicWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 qmlComponent.createObject(confluence)
                 qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
                 if (qmlComponent.status == Component.Ready) {
-                    musicEngine.actionMap = qmlComponent.createObject(confluence)
+                    runtime.musicEngine.actionMap = qmlComponent.createObject(confluence)
                 } else if (qmlComponent.status == Component.Error) {
                     runtime.backend.log(qmlComponent.errorString())
                 }
@@ -229,14 +229,14 @@ FocusScope {
 
         }
 
-        if (typeof videoEngine != "undefined") {
-            videoEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+        if (typeof runtime.videoEngine != "undefined") {
+            runtime.videoEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
             qmlComponent = Qt.createComponent("VideoWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 qmlComponent.createObject(confluence)
                 qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
                 if (qmlComponent.status == Component.Ready) {
-                    videoEngine.actionMap = qmlComponent.createObject(confluence)
+                    runtime.videoEngine.actionMap = qmlComponent.createObject(confluence)
                 } else if (qmlComponent.status == Component.Error) {
                     runtime.backend.log(qmlComponent.errorString())
                 }
@@ -245,14 +245,14 @@ FocusScope {
             }
         }
 
-        if (typeof pictureEngine != "undefined") {
-            pictureEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
+        if (typeof runtime.pictureEngine != "undefined") {
+            runtime.pictureEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
             qmlComponent = Qt.createComponent("PictureWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 var pictureWindow = qmlComponent.createObject(confluence)
                 qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
                 if (qmlComponent.status == Component.Ready) {
-                    pictureEngine.actionMap = qmlComponent.createObject(confluence)
+                    runtime.pictureEngine.actionMap = qmlComponent.createObject(confluence)
                 } else if (qmlComponent.status == Component.Error)
                     runtime.backend.log(qmlComponent.errorString())
             } else if (qmlComponent.status == Component.Error) {
