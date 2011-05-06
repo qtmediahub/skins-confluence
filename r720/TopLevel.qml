@@ -234,19 +234,19 @@ FocusScope {
         if (engineNames.indexOf("music") != -1) {
             musicEngine = runtime.backend.engine("music")
             var musicWindow = createQmlObjectFromFile("MusicWindow.qml", { mediaEngine: musicEngine });
-            confluence.addToRootMenu({name: musicEngine.name, role: QMHPlugin.Music, visualElement: musicWindow, engine: musicEngine})
+            confluence.addToRootMenu({name: qsTr("Music"), role: QMHPlugin.Music, visualElement: musicWindow, engine: musicEngine})
         }
 
         if (engineNames.indexOf("video") != -1) {
             videoEngine = runtime.backend.engine("video")
             var videoWindow = createQmlObjectFromFile("VideoWindow.qml", { mediaEngine: videoEngine });
-            confluence.addToRootMenu({name: videoEngine.name, role: QMHPlugin.Video, visualElement: videoWindow, engine: videoEngine})
+            confluence.addToRootMenu({name: qsTr("Video"), role: QMHPlugin.Video, visualElement: videoWindow, engine: videoEngine})
         }
 
         if (engineNames.indexOf("picture") != -1) {
             var pictureEngine = runtime.backend.engine("picture")
             var pictureWindow = createQmlObjectFromFile("PictureWindow.qml", { mediaEngine: pictureEngine });
-            confluence.addToRootMenu({name: pictureEngine.name, role: QMHPlugin.Picture, visualElement: pictureWindow, engine: pictureEngine})
+            confluence.addToRootMenu({name: qsTr("Picture"), role: QMHPlugin.Picture, visualElement: pictureWindow, engine: pictureEngine})
         }
 
         avPlayer = createQmlObjectFromFile("AVPlayer.qml")
