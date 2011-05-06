@@ -21,7 +21,6 @@ import QtQuick 1.1
 import QtWebKit 1.0
 import ActionMapper 1.0
 import "components/"
-import QMHPlugin 1.0
 
 //TODO:
 //Suspend loading of page until animation is complete
@@ -139,24 +138,4 @@ Window {
         webView.url != initialUrl ? webView.url = initialUrl : undefined
     onInitialUrlChanged:
         enabledBrowserShortcuts = ""
-
-    Component.onCompleted: {
-        //Conditional on plugins (read flash) being enabled
-        runtime.config.isEnabled("wk-plugins", false)
-        ? Qt.createQmlObject('\
-                             import QMHPlugin 1.0; \
-                             import "components/"; \
-                             Engine { name: qsTr("Youtube"); \
-                                      role: QMHPlugin.Application; \
-                                      visualElement: root; \
-                                      visualElementProperties: ["initialUrl", "http://www.youtube.com/xl"] }',
-                             root,
-                             null)
-        : undefined
-    }
-
-    //Fixme: Enable when functional
-    //Engine { name: qsTr("Tv Clicker"); role: "tv-clicker"; visualElement: root; visualElementProperties: ["url", "http://tv.clicker.com/"] }
-    Engine { name: qsTr("Web"); role: QMHPlugin.Web; visualElement: root; visualElementProperties: ["initialUrl", defaultUrl] }
-    Engine { name: qsTr("Goole Maps"); role: QMHPlugin.Map; visualElement: root; visualElementProperties: ["initialUrl", generalResourcePath + "/googlemaps/Nokia.html", "enabledBrowserShortcuts", "false"] }
 }

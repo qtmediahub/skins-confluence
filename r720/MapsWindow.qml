@@ -21,7 +21,6 @@ import QtQuick 1.1
 import QtMobility.location 1.2
 import "components/"
 import ActionMapper 1.0
-import QMHPlugin 1.0
 
 Window {
     id: root
@@ -149,6 +148,4 @@ Window {
     Component.onCompleted: {
         setCurrentView(runtime.config.value("mapwindow-currentview", qsTr("Street View")))
     }
-
-    Engine { name: qsTr("Ovi Maps"); role: QMHPlugin.Map; visualElement: root; visualElementProperties: [] }
 }

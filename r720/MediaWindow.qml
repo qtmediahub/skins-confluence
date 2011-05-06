@@ -26,7 +26,7 @@ Window {
 
     focalWidget: viewLoader
     property alias view: viewLoader.item
-    property Engine mediaEngine
+    property variant mediaEngine
     property Item informationSheet
     property string mediaWindowName: "genericMediaWindow"
     property alias mediaScanPath: mediaScanInfo.currentPath
