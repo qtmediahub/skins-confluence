@@ -25,7 +25,6 @@ MediaWindow {
     id: root
 
     informationSheet: MusicInformationSheet { id: musicInformationSheet }
-    mediaEngine: runtime.musicEngine
     mediaWindowName: "musicwindow"
 
     function itemActivated(itemdata) {

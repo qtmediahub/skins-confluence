@@ -24,7 +24,6 @@ import Playlist 1.0
 MediaWindow {
     id: root
 
-    mediaEngine: runtime.videoEngine
     mediaWindowName: "videowindow"
 
     function itemActivated(itemdata) {

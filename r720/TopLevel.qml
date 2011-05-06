@@ -208,10 +208,10 @@ FocusScope {
         }
     }
 
-    function createQmlObjectFromFile(file) {
+    function createQmlObjectFromFile(file, properties) {
         var qmlComponent = Qt.createComponent(file)
         if (qmlComponent.status == Component.Ready) {
-            return qmlComponent.createObject(confluence)
+            return qmlComponent.createObject(confluence, properties ? properties : {})
         }
         runtime.backend.log(qmlComponent.errorString())
         return null
@@ -220,29 +220,33 @@ FocusScope {
     Component.onCompleted: {
         Cursor.initialize()
 
-        createQmlObjectFromFile("AppStoreWindow.qml")
+        runtime.backend.loadEngines()
+        var engineNames = runtime.backend.loadedEngineNames()
 
-        if (typeof runtime.musicEngine != "undefined") {
-            runtime.musicEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-            if (createQmlObjectFromFile("MusicWindow.qml")) {
-                confluence.addEngine(runtime.musicEngine)
-                runtime.musicEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
+        if (engineNames.indexOf("appstore") != -1)
+            createQmlObjectFromFile("AppStoreWindow.qml")
+
+        if (engineNames.indexOf("music") != -1) {
+            var musicEngine = runtime.backend.engine("music")
+            if (createQmlObjectFromFile("MusicWindow.qml", { "mediaEngine": musicEngine })) {
+                confluence.addEngine(musicEngine)
+                musicEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
             }
         }
 
-        if (typeof runtime.videoEngine != "undefined") {
-            runtime.videoEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-            if (createQmlObjectFromFile("VideoWindow.qml")) {
-                confluence.addEngine(runtime.videoEngine)
-                runtime.videoEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
+        if (engineNames.indexOf("video") != -1) {
+            var videoEngine = runtime.backend.engine("video")
+            if (createQmlObjectFromFile("VideoWindow.qml", { "mediaEngine": videoEngine })) {
+                confluence.addEngine(videoEngine)
+                videoEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
             }
         }
 
-        if (typeof runtime.pictureEngine != "undefined") {
-            runtime.pictureEngine.model.setThemeResourcePath(themeResourcePath + "/media/"); // ## Shouldn't be here
-            if (createQmlObjectFromFile("PictureWindow.qml")) {
-                confluence.addEngine(runtime.pictureEngine)
-                runtime.pictureEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
+        if (engineNames.indexOf("picture") != -1) {
+            var pictureEngine = runtime.backend.engine("picture")
+            if (createQmlObjectFromFile("PictureWindow.qml", { "mediaEngine": pictureEngine })) {
+                confluence.addEngine(pictureEngine)
+                pictureEngine.actionMap = createQmlObjectFromFile("MediaWindowActionMap.qml")
             }
         }
 
