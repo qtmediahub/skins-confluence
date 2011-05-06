@@ -49,6 +49,8 @@ FocusScope {
     property variant systemInfoWindow
     property variant aboutWindow
 
+    property variant enginesModel : ListModel { }
+
     anchors.fill: parent
     focus: true
     clip: true
@@ -56,6 +58,10 @@ FocusScope {
     function resetFocus() {
         state = ""
         mainBlade.rootMenu.forceActiveFocus()
+    }
+
+    function addEngine(engine) {
+        enginesModel.append(engine)
     }
 
     function setActiveEngine(engine)
@@ -218,6 +224,7 @@ FocusScope {
             qmlComponent = Qt.createComponent("MusicWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 qmlComponent.createObject(confluence)
+                confluence.addEngine(runtime.musicEngine)
                 qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
                 if (qmlComponent.status == Component.Ready) {
                     runtime.musicEngine.actionMap = qmlComponent.createObject(confluence)
@@ -234,6 +241,7 @@ FocusScope {
             qmlComponent = Qt.createComponent("VideoWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 qmlComponent.createObject(confluence)
+                confluence.addEngine(runtime.videoEngine)
                 qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
                 if (qmlComponent.status == Component.Ready) {
                     runtime.videoEngine.actionMap = qmlComponent.createObject(confluence)
@@ -250,6 +258,7 @@ FocusScope {
             qmlComponent = Qt.createComponent("PictureWindow.qml")
             if (qmlComponent.status == Component.Ready) {
                 var pictureWindow = qmlComponent.createObject(confluence)
+                confluence.addEngine(runtime.pictureEngine)
                 qmlComponent = Qt.createComponent("MediaWindowActionMap.qml")
                 if (qmlComponent.status == Component.Ready) {
                     runtime.pictureEngine.actionMap = qmlComponent.createObject(confluence)

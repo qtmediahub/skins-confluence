@@ -23,5 +23,5 @@ import QMHPlugin 1.0
 QMHPlugin {
     id: engine
     Component.onCompleted:
-        runtime.backend.advertizeEngine(engine)
+        confluence.addEngine(engine)
 }

@@ -65,7 +65,7 @@ FocusScope {
             opacity:  0.5
         }
 
-        model: runtime.backend.advertizedEngines //menuList
+        model: confluence.enginesModel
         delegate:
             RootMenuListItem { }
 

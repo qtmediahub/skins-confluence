@@ -24,8 +24,8 @@ Item {
     id: menuItem
     width: parent.width; height: entry.height
 
-    property int role: model.modelData.role
-    property bool hasSubBlade: model.modelData.actionList.length > 0
+    property int role: model.role
+    property bool hasSubBlade: model.actionList.length > 0
     property alias textColor: entry.color
     property alias text: entry.text
 
@@ -47,7 +47,7 @@ Item {
     ]
 
     function trigger() {
-        confluence.setActiveEngine(model.modelData)
+        confluence.setActiveEngine(model)
     }
 
     MouseArea {
@@ -76,7 +76,7 @@ Item {
         scale: 0.5
 
         font.pixelSize: confluence.width/24 //60
-        text: model.modelData.name
+        text: model.name
         horizontalAlignment: Text.AlignRight
         font.weight: Font.Bold
 
