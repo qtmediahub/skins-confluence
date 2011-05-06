@@ -259,6 +259,7 @@ FocusScope {
 
         var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
         confluence.addToRootMenu({ name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, visualElement: dashboardWindow})
+
         browserWindow = createQmlObjectFromFile("WebWindow.qml")
         confluence.addToRootMenu({name: qsTr("Web"), role: QMHPlugin.Web, visualElement: browserWindow, visualElementProperties: ["initialUrl", "http://www.google.com"] })
         confluence.addToRootMenu({name: qsTr("Goole Maps"), role: QMHPlugin.Map, visualElement: browserWindow, visualElementProperties: ["initialUrl", generalResourcePath + "/googlemaps/Nokia.html", "enabledBrowserShortcuts", "false"] })
@@ -267,9 +268,12 @@ FocusScope {
 
         weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
         confluence.addToRootMenu({name: qsTr("Weather"), role: QMHPlugin.Weather, visualElement: weatherWindow})
+
         var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
         confluence.addToRootMenu({ name: qsTr("RemoteApp"), role: QMHPlugin.Application, visualElement: remoteAppWindow })
+
         systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
+
         var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
         confluence.addToRootMenu({name: qsTr("Ovi Maps"), role: QMHPlugin.Map, visualElement: mapsWindow})
 
