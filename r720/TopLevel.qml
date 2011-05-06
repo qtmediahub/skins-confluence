@@ -51,7 +51,7 @@ FocusScope {
     property variant systemInfoWindow
     property variant aboutWindow
 
-    property variant enginesModel : ListModel { }
+    property variant rootMenuModel: ListModel { }
 
     anchors.fill: parent
     focus: true
@@ -64,8 +64,8 @@ FocusScope {
 
     // obj has {name, role, visualElement, visualElementProperties, engine}
     // FIXME: Remove role, it's primarily for the background images
-    function addEngine(obj) {
-        enginesModel.append(obj)
+    function addToRootMenu(obj) {
+        rootMenuModel.append(obj)
     }
 
     function setActiveEngine(engine) {
@@ -225,25 +225,25 @@ FocusScope {
 
         if (engineNames.indexOf("appstore") != -1) {
             var appStoreWindow = createQmlObjectFromFile("AppStoreWindow.qml")
-            confluence.addEngine({name: qsTr("App Store"), role: QMHPlugin.Store, visualElement: appStoreWindow})
+            confluence.addToRootMenu({name: qsTr("App Store"), role: QMHPlugin.Store, visualElement: appStoreWindow})
         }
 
         if (engineNames.indexOf("music") != -1) {
             var musicEngine = runtime.backend.engine("music")
             var musicWindow = createQmlObjectFromFile("MusicWindow.qml", { mediaEngine: musicEngine });
-            confluence.addEngine({name: musicEngine.name, role: QMHPlugin.Music, visualElement: musicWindow, engine: musicEngine})
+            confluence.addToRootMenu({name: musicEngine.name, role: QMHPlugin.Music, visualElement: musicWindow, engine: musicEngine})
         }
 
         if (engineNames.indexOf("video") != -1) {
             var videoEngine = runtime.backend.engine("video")
             var videoWindow = createQmlObjectFromFile("VideoWindow.qml", { mediaEngine: videoEngine });
-            confluence.addEngine({name: videoEngine.name, role: QMHPlugin.Video, visualElement: videoWindow, engine: videoEngine})
+            confluence.addToRootMenu({name: videoEngine.name, role: QMHPlugin.Video, visualElement: videoWindow, engine: videoEngine})
         }
 
         if (engineNames.indexOf("picture") != -1) {
             var pictureEngine = runtime.backend.engine("picture")
             var pictureWindow = createQmlObjectFromFile("PictureWindow.qml", { mediaEngine: pictureEngine });
-            confluence.addEngine({name: pictureEngine.name, role: QMHPlugin.Picture, visualElement: pictureWindow, engine: pictureEngine})
+            confluence.addToRootMenu({name: pictureEngine.name, role: QMHPlugin.Picture, visualElement: pictureWindow, engine: pictureEngine})
         }
 
         avPlayer = createQmlObjectFromFile("AVPlayer.qml")
@@ -255,20 +255,20 @@ FocusScope {
         }
 
         var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
-        confluence.addEngine({ name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, visualElement: dashboardWindow})
+        confluence.addToRootMenu({ name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, visualElement: dashboardWindow})
         browserWindow = createQmlObjectFromFile("WebWindow.qml")
-        confluence.addEngine({name: qsTr("Web"), role: QMHPlugin.Web, visualElement: browserWindow, visualElementProperties: ["initialUrl", "http://www.google.com"] })
-        confluence.addEngine({name: qsTr("Goole Maps"), role: QMHPlugin.Map, visualElement: browserWindow, visualElementProperties: ["initialUrl", generalResourcePath + "/googlemaps/Nokia.html", "enabledBrowserShortcuts", "false"] })
+        confluence.addToRootMenu({name: qsTr("Web"), role: QMHPlugin.Web, visualElement: browserWindow, visualElementProperties: ["initialUrl", "http://www.google.com"] })
+        confluence.addToRootMenu({name: qsTr("Goole Maps"), role: QMHPlugin.Map, visualElement: browserWindow, visualElementProperties: ["initialUrl", generalResourcePath + "/googlemaps/Nokia.html", "enabledBrowserShortcuts", "false"] })
         if (runtime.config.isEnabled("wk-plugins", false))
-            confluence.addEngine({name: qsTr("Youtube"), role: QMHPlugin.Application, visualElement: browserWindow, visualElementProperties: ["initialUrl", "http://www.youtube.com/xl"] })
+            confluence.addToRootMenu({name: qsTr("Youtube"), role: QMHPlugin.Application, visualElement: browserWindow, visualElementProperties: ["initialUrl", "http://www.youtube.com/xl"] })
 
         weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
-        confluence.addEngine({name: qsTr("Weather"), role: QMHPlugin.Weather, visualElement: weatherWindow})
+        confluence.addToRootMenu({name: qsTr("Weather"), role: QMHPlugin.Weather, visualElement: weatherWindow})
         var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
-        confluence.addEngine({ name: qsTr("RemoteApp"), role: QMHPlugin.Application, visualElement: remoteAppWindow })
+        confluence.addToRootMenu({ name: qsTr("RemoteApp"), role: QMHPlugin.Application, visualElement: remoteAppWindow })
         systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
         var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
-        confluence.addEngine({name: qsTr("Ovi Maps"), role: QMHPlugin.Map, visualElement: mapsWindow})
+        confluence.addToRootMenu({name: qsTr("Ovi Maps"), role: QMHPlugin.Map, visualElement: mapsWindow})
 
         ticker = createQmlObjectFromFile("Ticker.qml")
         if (ticker) {

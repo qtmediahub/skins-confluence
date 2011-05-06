@@ -65,7 +65,7 @@ FocusScope {
             opacity:  0.5
         }
 
-        model: confluence.enginesModel
+        model: confluence.rootMenuModel
         delegate:
             RootMenuListItem { }
 
