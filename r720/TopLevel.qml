@@ -51,6 +51,9 @@ FocusScope {
     property variant systemInfoWindow
     property variant aboutWindow
 
+    property variant musicEngine
+    property variant videoEngine
+
     property variant rootMenuModel: ListModel { }
 
     anchors.fill: parent
@@ -229,13 +232,13 @@ FocusScope {
         }
 
         if (engineNames.indexOf("music") != -1) {
-            var musicEngine = runtime.backend.engine("music")
+            musicEngine = runtime.backend.engine("music")
             var musicWindow = createQmlObjectFromFile("MusicWindow.qml", { mediaEngine: musicEngine });
             confluence.addToRootMenu({name: musicEngine.name, role: QMHPlugin.Music, visualElement: musicWindow, engine: musicEngine})
         }
 
         if (engineNames.indexOf("video") != -1) {
-            var videoEngine = runtime.backend.engine("video")
+            videoEngine = runtime.backend.engine("video")
             var videoWindow = createQmlObjectFromFile("VideoWindow.qml", { mediaEngine: videoEngine });
             confluence.addToRootMenu({name: videoEngine.name, role: QMHPlugin.Video, visualElement: videoWindow, engine: videoEngine})
         }
