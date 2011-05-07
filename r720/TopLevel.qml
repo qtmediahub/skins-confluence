@@ -65,7 +65,7 @@ FocusScope {
         mainBlade.rootMenu.forceActiveFocus()
     }
 
-    // obj has {name, role, visualElement, visualElementProperties, engine}
+    // obj has {name, role, visualElement, activationProperties, engine}
     // FIXME: Remove role, it's primarily for the background images
     function addToRootMenu(obj) {
         rootMenuModel.append(obj)
@@ -80,9 +80,9 @@ FocusScope {
         if (oldEngine != engine) {
             //Don't reset the properties
             //on already selected item
-            var elementProperties = engine.visualElementProperties || []
-            for(var i = 0; i + 2 <= elementProperties.length; i += 2)
-                selectedElement[elementProperties[i]] = elementProperties[i+1]
+            var elementProperties = engine.activationProperties || {}
+            for (prop in elementProperties)
+                selectedElement[elementProperties[prop]] = elementProperties[prop]
         }
         show(selectedElement)
     }
@@ -261,10 +261,10 @@ FocusScope {
         confluence.addToRootMenu({ name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, visualElement: dashboardWindow})
 
         browserWindow = createQmlObjectFromFile("WebWindow.qml")
-        confluence.addToRootMenu({name: qsTr("Web"), role: QMHPlugin.Web, visualElement: browserWindow, visualElementProperties: ["initialUrl", "http://www.google.com"] })
-        confluence.addToRootMenu({name: qsTr("Goole Maps"), role: QMHPlugin.Map, visualElement: browserWindow, visualElementProperties: ["initialUrl", generalResourcePath + "/googlemaps/Nokia.html", "enabledBrowserShortcuts", "false"] })
+        confluence.addToRootMenu({name: qsTr("Web"), role: QMHPlugin.Web, visualElement: browserWindow, activationProperties: {initialUrl: "http://www.google.com"} })
+        confluence.addToRootMenu({name: qsTr("Google Maps"), role: QMHPlugin.Map, visualElement: browserWindow, activationProperties: {initialUrl: generalResourcePath + "/googlemaps/Nokia.html", enabledBrowserShortcuts: "false" }})
         if (runtime.config.isEnabled("wk-plugins", false))
-            confluence.addToRootMenu({name: qsTr("Youtube"), role: QMHPlugin.Application, visualElement: browserWindow, visualElementProperties: ["initialUrl", "http://www.youtube.com/xl"] })
+            confluence.addToRootMenu({name: qsTr("Youtube"), role: QMHPlugin.Application, visualElement: browserWindow, activationProperties: {initialUrl: "http://www.youtube.com/xl"} })
 
         weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
         confluence.addToRootMenu({name: qsTr("Weather"), role: QMHPlugin.Weather, visualElement: weatherWindow})
