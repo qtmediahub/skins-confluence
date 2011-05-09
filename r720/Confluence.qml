@@ -18,9 +18,18 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
+import Qt.labs.shaders 1.0
+import Qt.labs.shaders.effects 1.0
 
 Item {
+    id: root
+
     anchors.fill: parent
+
+    onWidthChanged: {
+        curtain.animated = false
+        settleTimer.start()
+    }
 
     function reset() {
         loader.item.resetFocus()
@@ -33,6 +42,13 @@ Item {
             loader.source = "TopLevel.qml"
     }
 
+    Timer {
+        id: settleTimer
+        interval: 1
+        onTriggered:
+            curtain.animated = true
+    }
+
     Image {
         id: splash
         anchors.fill: parent
@@ -41,14 +57,52 @@ Item {
         source: "../3rdparty/splash/splash.jpg"
     }
 
+    CurtainEffect {
+        id: curtain
+        property bool animated: false
+        z: 100
+        anchors.fill: splash
+        bottomWidth: topWidth
+        topWidth: parent.width
+        source: ShaderEffectSource { sourceItem: splash; hideSource: true }
+
+        onBottomWidthChanged:
+            if (bottomWidth == 0)
+                destroy()
+
+        Behavior on topWidth {
+            enabled: curtain.animated
+            PropertyAnimation { duration: 1000 }
+        }
+
+        Behavior on bottomWidth {
+            enabled: curtain.animated
+            SpringAnimation { easing.type: Easing.OutElastic; velocity: 1500; mass: 1.5; spring: 0.5; damping: 0.15}
+        }
+
+        SequentialAnimation on topWidth {
+            id: topWidthAnim
+            loops: 1
+            running: false
+
+            NumberAnimation { to: root.width - 50; duration: 700 }
+            PauseAnimation { duration: 500 }
+            NumberAnimation { to: root.width + 50; duration: 700 }
+            PauseAnimation { duration: 500 }
+            ScriptAction { script: curtain.topWidth = 0; }
+        }
+
+    }
+
     Loader {
         id: loader
         anchors.fill: parent
         onLoaded: {
             reset()
-            splash.visible = false
+            topWidthAnim.running = true
         }
     }
+
     Component.onCompleted:
         splashDelay.start()
 
