@@ -66,13 +66,13 @@ Item {
         topWidth: parent.width
         source: ShaderEffectSource { sourceItem: splash; hideSource: true }
 
-        onBottomWidthChanged:
-            if (bottomWidth == 0)
-                destroy()
-
         Behavior on topWidth {
             enabled: curtain.animated
-            PropertyAnimation { duration: 1000 }
+            SequentialAnimation {
+                PropertyAnimation { duration: 1000 }
+                PauseAnimation { duration: 2000 }
+                ScriptAction { script: curtain.destroy() }
+            }
         }
 
         Behavior on bottomWidth {
