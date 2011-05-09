@@ -32,7 +32,7 @@ Window {
 
     maximizable: true
 
-    property string enabledBrowserShortcuts
+    property bool enableBrowserShortcuts : true
     property alias url: webView.url
     property string initialUrl: defaultUrl
     property string defaultUrl: "http://www.google.com"
@@ -59,7 +59,7 @@ Window {
         ]
     }
 
-    Keys.enabled: enabledBrowserShortcuts == ""
+    Keys.enabled: enableBrowserShortcuts
 
     Keys.onPressed:
         if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
@@ -137,5 +137,5 @@ Window {
     onVisibleChanged:
         webView.url != initialUrl ? webView.url = initialUrl : undefined
     onInitialUrlChanged:
-        enabledBrowserShortcuts = ""
+        enableBrowserShortcuts = true
 }
