@@ -40,8 +40,6 @@ Window {
     function loadPage(url) {
         webView.url = url
         webViewport.contentY = 0
-
-        confluence.show(root)
     }
 
     bladeComponent: MediaWindowBlade {

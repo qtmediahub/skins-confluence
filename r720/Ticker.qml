@@ -29,7 +29,12 @@ BorderImage {
     signal linkClicked (string link);
 
     onLinkClicked: {
-        browserWindow ? browserWindow.loadPage(link) : runtime.backend.openUrlExternally(link)
+        if (browserWindow) {
+            browserWindow.loadPage(link)
+            confluence.show(browserWindow)
+        } else {
+            runtime.backend.openUrlExternally(link)
+        }
     }
 
     border.left: 100
