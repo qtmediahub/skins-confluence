@@ -24,6 +24,7 @@ import "./components/cursor.js" as Cursor
 import ActionMapper 1.0
 import "util.js" as Util
 import QMHPlugin 1.0
+import "rootmenumodelitem.js" as RootMenuModelItem
 
 FocusScope {
     id: confluence
@@ -67,8 +68,9 @@ FocusScope {
 
     // obj has {name, role, visualElement, activationProperties, engine}
     // FIXME: Remove role, it's primarily for the background images
-    function addToRootMenu(obj) {
+    function addToRootMenu(obj, activationHandler) {
         rootMenuModel.append(obj)
+        RootMenuModelItem.activationHandlers[rootMenuModel.count-1] = activationHandler
     }
 
     function setActiveEngine(index) {
@@ -79,11 +81,8 @@ FocusScope {
         selectedElement = engine.visualElement
 
         if (oldEngine != engine) {
-            //Don't reset the properties
-            //on already selected item
-            var elementProperties = engine.activationProperties || {}
-            for (prop in elementProperties)
-                selectedElement[elementProperties[prop]] = elementProperties[prop]
+            if (RootMenuModelItem.activationHandlers[index])
+                RootMenuModelItem.activationHandlers[index].call(engine)
         }
         show(selectedElement)
     }
@@ -229,25 +228,25 @@ FocusScope {
 
         if (engineNames.indexOf("appstore") != -1) {
             var appStoreWindow = createQmlObjectFromFile("AppStoreWindow.qml")
-            confluence.addToRootMenu({name: qsTr("App Store"), role: QMHPlugin.Store, visualElement: appStoreWindow})
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("App Store"), QMHPlugin.Store, appStoreWindow))
         }
 
         if (engineNames.indexOf("music") != -1) {
             musicEngine = runtime.backend.engine("music")
             var musicWindow = createQmlObjectFromFile("MusicWindow.qml", { mediaEngine: musicEngine });
-            confluence.addToRootMenu({name: qsTr("Music"), role: QMHPlugin.Music, visualElement: musicWindow, engine: musicEngine})
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, musicEngine))
         }
 
         if (engineNames.indexOf("video") != -1) {
             videoEngine = runtime.backend.engine("video")
             var videoWindow = createQmlObjectFromFile("VideoWindow.qml", { mediaEngine: videoEngine });
-            confluence.addToRootMenu({name: qsTr("Video"), role: QMHPlugin.Video, visualElement: videoWindow, engine: videoEngine})
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, videoEngine))
         }
 
         if (engineNames.indexOf("picture") != -1) {
             var pictureEngine = runtime.backend.engine("picture")
             var pictureWindow = createQmlObjectFromFile("PictureWindow.qml", { mediaEngine: pictureEngine });
-            confluence.addToRootMenu({name: qsTr("Picture"), role: QMHPlugin.Picture, visualElement: pictureWindow, engine: pictureEngine})
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, pictureEngine))
         }
 
         avPlayer = createQmlObjectFromFile("AVPlayer.qml")
@@ -259,24 +258,24 @@ FocusScope {
         }
 
         var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
-        confluence.addToRootMenu({ name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, visualElement: dashboardWindow})
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Dashboard"), QMHPlugin.Dashboard, dashboardWindow))
 
         browserWindow = createQmlObjectFromFile("WebWindow.qml")
-        confluence.addToRootMenu({name: qsTr("Web"), role: QMHPlugin.Web, visualElement: browserWindow, activationProperties: {initialUrl: "http://www.google.com"} })
-        confluence.addToRootMenu({name: qsTr("Google Maps"), role: QMHPlugin.Map, visualElement: browserWindow, activationProperties: {initialUrl: generalResourcePath + "/googlemaps/Nokia.html", enabledBrowserShortcuts: "false" }})
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Web"), QMHPlugin.Web, browserWindow), function() { this.visualElement.initialUrl = "http://www.google.com" })
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Google Maps"), QMHPlugin.Map, browserWindow), function() { this.visualElement.initialUrl = confluence.generalResourcePath + "/googlemaps/Nokia.html"; this.visualElement.enabledBrowserShortcuts = "false" })
         if (runtime.config.isEnabled("wk-plugins", false))
-            confluence.addToRootMenu({name: qsTr("Youtube"), role: QMHPlugin.Application, visualElement: browserWindow, activationProperties: {initialUrl: "http://www.youtube.com/xl"} })
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Youtube"), QMHPlugin.Application, browserWindow), function() { this.visualElement.initialUrl = "http://www.youtube.com/xl"})
 
         weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
-        confluence.addToRootMenu({name: qsTr("Weather"), role: QMHPlugin.Weather, visualElement: weatherWindow})
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Weather"), QMHPlugin.Weather, weatherWindow))
 
         var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
-        confluence.addToRootMenu({ name: qsTr("RemoteApp"), role: QMHPlugin.Application, visualElement: remoteAppWindow })
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("RemoteApp"), QMHPlugin.Application, remoteAppWindow))
 
         systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
 
         var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
-        confluence.addToRootMenu({name: qsTr("Ovi Maps"), role: QMHPlugin.Map, visualElement: mapsWindow})
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow))
 
         ticker = createQmlObjectFromFile("Ticker.qml")
         if (ticker) {
