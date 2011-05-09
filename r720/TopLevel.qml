@@ -71,7 +71,8 @@ FocusScope {
         rootMenuModel.append(obj)
     }
 
-    function setActiveEngine(engine) {
+    function setActiveEngine(index) {
+        var engine = rootMenuModel.get(index)
         var oldEngine = selectedEngine
 
         selectedEngine = engine

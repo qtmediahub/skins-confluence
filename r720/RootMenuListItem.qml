@@ -47,7 +47,7 @@ Item {
     ]
 
     function trigger() {
-        confluence.setActiveEngine(model)
+        confluence.setActiveEngine(index)
     }
 
     MouseArea {
