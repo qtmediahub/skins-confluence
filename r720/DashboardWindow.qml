@@ -18,9 +18,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import QMLModuleDiscovery 1.0
 import Qt.labs.particles 1.0
 import ActionMapper 1.0
+import File 1.0
 
 import "components/"
 
@@ -56,17 +56,12 @@ Window {
         activatedItem = grid
     }
 
-    QMLModuleDiscovery {
+    File {
         id: db
-        anchors.fill: parent
-        anchors.leftMargin: root.blade.closedBladePeek
-
-        path: generalResourcePath + "/widgets"
-
         property bool populated: false
 
         function populateDashboard() {
-            var list = db.modules
+            var list = db.findQmlModules(generalResourcePath + "/widgets")
             for(var i = 0; i < list.length; ++i) {
                 var panel = panelComponent.createObject(grid)
 
@@ -79,6 +74,11 @@ Window {
             populated = true
             grid.focusLowerItem()
         }
+    }
+
+    Item {
+        anchors.fill: parent
+        anchors.leftMargin: root.blade.closedBladePeek
 
         Component {
             id: panelComponent

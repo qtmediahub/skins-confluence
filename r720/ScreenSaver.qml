@@ -1,11 +1,10 @@
 import QtQuick 1.1
-import QMLModuleDiscovery 1.0
+import File 1.0
 
 Item {
     property Item screensaver
-    QMLModuleDiscovery {
-        id: qmlscreensavers
-        path: generalResourcePath + "/screensavers"
+    File {
+        id: file
     }
     Connections {
         target: runtime.backend
@@ -20,7 +19,7 @@ Item {
                 || !Qt.application.active)
                 //bail
                 return
-            var list = qmlscreensavers.modules
+            var list = file.findQmlModules(generalResourcePath + "/screensavers")
             var index = Math.floor(Math.random() * list.length)
             var screensaverLoader = Qt.createComponent(list[index])
             if (screensaverLoader.status == Component.Ready) {
