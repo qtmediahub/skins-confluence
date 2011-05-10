@@ -330,7 +330,7 @@ FocusScope {
         expanded: false
 
         width: contextText.width + homeHeader.width + 25
-        Text { 
+        ConfluenceText {
             id: contextText 
             anchors { right: parent.right; rightMargin: 25; verticalCenter: parent.verticalCenter }
             text: selectedEngine ? selectedEngine.name : ""; color: "white"

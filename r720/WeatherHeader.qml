@@ -49,7 +49,9 @@ Header {
         id: row
         z: 1
         spacing: 5
-        x: 20
+        x: 30
+        anchors.verticalCenter: parent.verticalCenter
+
         Image {
             id: weatherIcon
             width: weatherDegree.height
@@ -58,20 +60,11 @@ Header {
             asynchronous: true
             source: currentConditions.count > 0 ? mapIcon(currentConditions.get(0).icon) : ""
         }
-        Text {
+        ConfluenceText {
             id: weatherDegree
             color: "white"
-            font.pointSize: 14
             text: (currentConditions.count > 0 ? currentConditions.get(0).temp_c : "0") + "°C"
-
-	    Text {
-	        id: weatherDegreeShadow
-	        color: "black"
-                font.pointSize: 14
-                x: 1; y: 1
-                z: parent.z - 1
-                text: (currentConditions.count > 0 ? currentConditions.get(0).temp_c : "0") + "°C"
-	    }
+            anchors.verticalCenter: weatherIcon.verticalCenter
         }
     }
 

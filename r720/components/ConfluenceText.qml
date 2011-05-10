@@ -21,6 +21,9 @@ import QtQuick 1.1
 
 Text {
     id: root
+
+    property bool animated : true
+
     color: "white"
     //Disable on transitions
     smooth: true
@@ -28,6 +31,7 @@ Text {
     font.weight: Font.Light
 
     Behavior on text {
+        enabled: root.animated
         SequentialAnimation {
             NumberAnimation {
                 target: root
