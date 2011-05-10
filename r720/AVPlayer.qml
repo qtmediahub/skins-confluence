@@ -33,6 +33,11 @@ FocusScope {
     property bool hasMedia: !!mediaItem && mediaItem.source != ""
     property bool playing: hasMedia && mediaItem.playing
 
+    QtObject {
+        id: d
+        property bool queuedShow: false
+    }
+
     function showOSD() {
         if (root.state == "maximized") {
             controlOSD.state = "visible";
@@ -53,7 +58,7 @@ FocusScope {
 
     function playForeground(itemdata, role, depth) { // this now gets uri...
         root.play(itemdata, role, depth);
-        confluence.show(this)
+        d.queuedShow = true
     }
 
     function playBackground(item, role, depth) {
@@ -128,6 +133,20 @@ FocusScope {
         item.closed.connect(onClosedHandler)
         item.open()
         item.forceActiveFocus()
+    }
+
+    function handlePendingShow() {
+        d.queuedShow = false
+        confluence.show(root)
+    }
+
+    Connections {
+        target: mediaItem
+        onStatusChanged:
+            d.queuedShow
+            && mediaItem.status == Video.Buffered
+            ? handlePendingShow()
+            : undefined
     }
 
     // RPC requests
