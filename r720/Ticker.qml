@@ -89,15 +89,22 @@ BorderImage {
         model: feedModel
         delegate: Item {
             id: tickerItem
-            width: childrenRect.width; height: parent.height
+            width: childrenRect.width
+            height: parent.height
+
             ConfluenceText {
                 id: tickerTitle;
-                font.pixelSize: list.textHeight
-                text: title.replace("\n", "")
+                text: title.replace(/\n/g, "")
                 color: delegateMouseArea.containsMouse ? "steelblue" : "white"
+                anchors.verticalCenter: parent.verticalCenter
             }
 
-            ConfluenceText { font.pixelSize: list.textHeight; anchors.left: tickerTitle.right; text: " - "; color: "steelblue" }
+            ConfluenceText {
+                anchors.left: tickerTitle.right
+                anchors.verticalCenter: parent.verticalCenter
+                text: " - "
+                color: "steelblue"
+            }
 
             MouseArea {
                 id: delegateMouseArea
