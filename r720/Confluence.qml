@@ -107,11 +107,11 @@ Item {
         splashDelay.start()
 
     Connections {
-        target: runtime.systemHelper
+        target: runtime.deviceManager
         onDeviceAdded: {
             console.log("new device detected");
             console.log("mount device "+device)
-            runtime.systemHelper.getDeviceByPath(device).mount();
+            runtime.deviceManager.getDeviceByPath(device).mount();
         }
         onDeviceRemoved: {
             console.log("device removed "+device)
