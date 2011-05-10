@@ -26,8 +26,7 @@ MediaWindow {
 
     mediaWindowName: "videowindow"
 
-    function itemActivated(itemdata) {
-        avPlayer.playForeground(itemdata, Playlist.Replace, Playlist.Flat);
-    }
+    onItemActivated:
+        avPlayer.playForeground(mediaItem.itemdata, Playlist.Replace, Playlist.Flat);
 }
 

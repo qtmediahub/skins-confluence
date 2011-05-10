@@ -27,8 +27,7 @@ MediaWindow {
     informationSheet: MusicInformationSheet { id: musicInformationSheet }
     mediaWindowName: "musicwindow"
 
-    function itemActivated(itemdata) {
-        avPlayer.playForeground(itemdata, Playlist.Replace, Playlist.Flat);
-    }
+    onItemActivated:
+        avPlayer.playForeground(mediaItem.itemdata, Playlist.Replace, Playlist.Flat);
 }
 

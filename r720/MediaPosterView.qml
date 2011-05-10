@@ -69,7 +69,7 @@ Item {
         posterModel: engineModel
 
         onActivated: {
-            mediaWindow.itemActivated(currentItem.itemdata)
+            mediaWindow.itemActivated(currentItem)
         }
 
         Keys.onPressed: {

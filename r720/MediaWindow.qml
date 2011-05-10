@@ -21,10 +21,15 @@ import QtQuick 1.1
 import "components/"
 import Playlist 1.0
 
+import Qt.labs.shaders 1.0
+import Qt.labs.shaders.effects 1.0
+
 Window {
     id: mediaWindow
 
     focalWidget: viewLoader
+
+    signal itemActivated(variant mediaItem)
     property alias view: viewLoader.item
     property variant mediaEngine
     property Item informationSheet
@@ -69,12 +74,42 @@ Window {
         view.selectFirstItem()
     }
 
-    function itemActivated(itemdata) {
-        console.log("Activated: " + itemdata)
+    onItemActivated: {
+        waveAnim.stop()
+        var scenePos = confluence.mapFromItem(mediaItem.parent, mediaItem.x + mediaItem.width/2, mediaItem.y + mediaItem.height/2)
+        waveLayer.waveOriginX = scenePos.x/confluence.width
+        waveLayer.waveOriginY = scenePos.y/confluence.height
+        waveAnim.start()
     }
 
     function visibleTransitionFinished() {
         mediaEngine.model.rowCount() < 1 ? confluence.showModal(addMediaSourceDialog) : undefined
+    }
+
+    ShaderEffectSource {
+        id: viewSource
+        sourceItem: view
+        live: true
+        hideSource: true
+    }
+
+    RadialWaveEffect {
+        id: waveLayer
+        anchors.fill: parent;
+        source: viewSource
+
+        wave: 0.0
+        waveOriginX: 0.5
+        waveOriginY: 0.5
+        waveWidth: 0.01
+
+        NumberAnimation on wave {
+            id: waveAnim
+            running: true
+            easing.type: "Linear"
+            from: 0.0000; to: 2.0000;
+            duration: 2500
+        }
     }
 
     Connections {

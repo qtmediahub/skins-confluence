@@ -66,7 +66,8 @@ Item {
             treeModel: engineModel
             clip: true
             focus: true
-            onActivated: mediaWindow.itemActivated(currentItem.itemdata)
+            onActivated:
+                mediaWindow.itemActivated(currentItem)
             Keys.onPressed: {
                 if (!currentItem)
                     return;

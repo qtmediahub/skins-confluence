@@ -66,7 +66,7 @@ Item {
             clip: true
             focus: true;
             onActivated: {
-                mediaWindow.itemActivated(currentItem.itemdata)
+                mediaWindow.itemActivated(currentItem)
             }
             Keys.onPressed: {
                 if (sourcesListView.currentItem) {
