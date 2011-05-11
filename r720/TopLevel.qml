@@ -378,5 +378,25 @@ FocusScope {
         onFocusChanged:
             activeFocus ? avPlayer.forceActiveFocus() : undefined
     }
+
+    DeviceDialog {
+        id: deviceDialog
+    }
+
+
+    Connections {
+        target: runtime.deviceManager
+        onDeviceAdded: {
+            var d = runtime.deviceManager.getDeviceByPath(device)
+            if (d.isPartition) {
+                deviceDialog.device = d
+                d.mount();
+                confluence.showModal(deviceDialog)
+            }
+        }
+        onDeviceRemoved: {
+            deviceDialog.close()
+        }
+    }
 }
 
