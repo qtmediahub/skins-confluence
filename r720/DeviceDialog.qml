@@ -67,6 +67,10 @@ Dialog {
             anchors.horizontalCenter: parent.horizontalCenter
             height: parent.height - browseLabel.height - buttonBox.height
             model: root.actionList
+
+            Keys.onPressed:
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right))
+                    buttonBox.focus = true
         }
 
         DialogButtonBox {

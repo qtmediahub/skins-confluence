@@ -79,7 +79,7 @@ ListView {
             anchors.centerIn: parent
             width: parent.width-4
             height: parent.height
-            opacity: delegateItem.focus ? 1 : 0
+            opacity: delegateItem.focus && root.focus ? 1 : 0
         }
 
         ConfluenceText {
