@@ -55,10 +55,11 @@ Window {
             return "";
     }
 
-    function mapIcon(name) {
+    function mapToFile(name) {
         if (typeof name != "undefined") {
             var i = name.lastIndexOf("/")+1;
-            var sn = themeResourcePath+"/media/weathericons/"+name.substr(i, name.length-i-4)+".png";
+            var sn = "weather/forecasts/"+name.replace(/\ /g, "")+".qml";
+            console.log("file:" + sn)
             return sn;
         }
         return "";
@@ -132,189 +133,144 @@ Window {
         anchors.centerIn: parent
         spacing: 60
 
-        Panel {
+        Item {
             width: root.width/2.0 - weather.spacing*2
             height: root.height/1.3
 
             Item {
-                id: currentWeather
+                id: itemInner
                 anchors.fill: parent
 
-                Column {
+                Loader {
+                    id: forecastLoader
                     anchors.fill: parent
-                    spacing: 5
 
-                    ConfluenceText {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: qsTr("CURRENT TEMP")
+                    onLoaded: {
+                        var tmp = weatherMeasurements.get(0);
+                        item.cityName = root.city;
+                        item.isDay = true;
+                        item.lowTemperature = tmp.temp_c;
+                        item.highTemperature = tmp.temp_c;
+                        item.currentTemperature = tmp.temp_c;
+                        forecastLoader.item.present()
                     }
+                }
 
-                    ConfluenceText {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: parent.width
-                        horizontalAlignment: Text.AlignHCenter
-                        elide: Text.ElideRight
-                        text: weatherModel.count > 0 ? weatherModel.get(0).city : ""
-                    }
+                function loadForecastQml() {
+                    if (weatherMeasurements.count > 0)
+                        forecastLoader.source = mapToFile(weatherMeasurements.get(0).condition)
+                }
 
-                    Text {
-                        color: "grey"
-                        font.pointSize: 12
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: weatherModel.count > 0 ? "Last Updated - " + stripLast5(weatherModel.get(0).current_date_time) : ""
-                    }
-
-                    Item {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: parent.width/1.3
-                        height: 220
-                        Text {
-                            id: weatherDegree
-                            color: "white"
-                            font.pointSize: 64
-                            text: weatherMeasurements.count > 0 ? weatherMeasurements.get(0).temp_c : "0"
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.left: parent.left
-                        }
-
-                        ConfluenceText {
-                            text: qsTr("°C")
-                            anchors.verticalCenter: weatherDegree.top
-                            anchors.left: weatherDegree.right; anchors.leftMargin: 10
-                        }
-
-                        Image {
-                            id: weatherIcon
-                            width: 120
-                            height: width
-                            smooth: true
-                            asynchronous: true
-                            source: weatherMeasurements.count > 0 ? mapIcon(weatherMeasurements.get(0).icon) : ""
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-
-                    ConfluenceText {
-                        height: 100
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: weatherMeasurements.count > 0 ? weatherMeasurements.get(0).condition : ""
-                    }
-
-                    ConfluenceText {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: weatherMeasurements.count > 0 ? weatherMeasurements.get(0).humidity : ""
-                    }
-                    ConfluenceText {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: weatherMeasurements.count > 0 && typeof weatherMeasurements.get(0).wind_condition != "undefined" ? weatherMeasurements.get(0).wind_condition : ""
-                    }
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: { forecastLoader.item.state = "" }
+                    onReleased: { forecastLoader.item.state = "final" }
                 }
             }
         }
 
-        Panel {
+        Item {
             id: forecastPanel
             width: root.width/2.0 - weather.spacing*2
             height: root.height/1.3
 
-            Column {
-                anchors.fill: parent
-                spacing: 40
+//            Column {
+//                anchors.fill: parent
+//                spacing: 40
 
-                ConfluenceText {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("WEATHER FORECAST")
-                }
+//                ConfluenceText {
+//                    anchors.horizontalCenter: parent.horizontalCenter
+//                    text: qsTr("WEATHER FORECAST")
+//                }
 
-                ListView {
-                    id: forecastListView
-                    height: 500
-                    width: parent.width
-                    clip: true
-                    model: weatherForecast
-                    delegate:
-                        Item {
-                        height: 120
-                        width: forecastListView.width
+//                ListView {
+//                    id: forecastListView
+//                    height: 500
+//                    width: parent.width
+//                    clip: true
+//                    model: weatherForecast
+//                    delegate:
+//                        Item {
+//                        height: 120
+//                        width: forecastListView.width
 
-                        Rectangle {
-                            id: sep
-                            width: forecastListView.width
-                            height: 4
-                            radius: 2
-                            color: "#40FFFFFF"
-                            anchors.topMargin: 5
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
+//                        Rectangle {
+//                            id: sep
+//                            width: forecastListView.width
+//                            height: 4
+//                            radius: 2
+//                            color: "#40FFFFFF"
+//                            anchors.topMargin: 5
+//                            anchors.horizontalCenter: parent.horizontalCenter
+//                        }
 
-                        ConfluenceText {
-                            id: dayofweek
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.top: sep.bottom; anchors.topMargin: 8
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).day_of_week != "undefined"  ? fullWeekDay(weatherForecast.get(index).day_of_week) : ""
-                        }
+//                        ConfluenceText {
+//                            id: dayofweek
+//                            anchors.horizontalCenter: parent.horizontalCenter
+//                            anchors.top: sep.bottom; anchors.topMargin: 8
+//                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).day_of_week != "undefined"  ? fullWeekDay(weatherForecast.get(index).day_of_week) : ""
+//                        }
 
-                        Text {
-                            id: hightemptext
-                            anchors.top: dayofweek.bottom
-                            smooth: true
-                            font.pointSize: 20
-                            color: "grey"
-                            text: qsTr("High: ")
-                        }
-                        ConfluenceText {
-                            id: hightempvalue
-                            anchors.top: dayofweek.bottom
-                            anchors.left: hightemptext.right
-                            font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).high_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C" : ""
-                        }
+//                        Text {
+//                            id: hightemptext
+//                            anchors.top: dayofweek.bottom
+//                            smooth: true
+//                            font.pointSize: 20
+//                            color: "grey"
+//                            text: qsTr("High: ")
+//                        }
+//                        ConfluenceText {
+//                            id: hightempvalue
+//                            anchors.top: dayofweek.bottom
+//                            anchors.left: hightemptext.right
+//                            font.weight: Font.Normal
+//                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).high_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C" : ""
+//                        }
 
-                        Text {
-                            id: lowtemptext
-                            anchors.top: dayofweek.bottom
-                            anchors.left: hightempvalue.right; anchors.leftMargin: 25
-                            smooth: true
-                            font.pointSize: 20
-                            color: "grey"
-                            text: qsTr("Low: ")
-                        }
-                        ConfluenceText {
-                            anchors.left: lowtemptext.right;
-                            anchors.top: dayofweek.bottom
-                            font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).low_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).low_f)  + " °C" : ""
-                        }
+//                        Text {
+//                            id: lowtemptext
+//                            anchors.top: dayofweek.bottom
+//                            anchors.left: hightempvalue.right; anchors.leftMargin: 25
+//                            smooth: true
+//                            font.pointSize: 20
+//                            color: "grey"
+//                            text: qsTr("Low: ")
+//                        }
+//                        ConfluenceText {
+//                            anchors.left: lowtemptext.right;
+//                            anchors.top: dayofweek.bottom
+//                            font.weight: Font.Normal
+//                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).low_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).low_f)  + " °C" : ""
+//                        }
 
-                        ConfluenceText {
-                            id: condition
-                            anchors.top: hightemptext.bottom
-                            font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).condition != "undefined" ? weatherForecast.get(index).condition : ""
-                        }
+//                        ConfluenceText {
+//                            id: condition
+//                            anchors.top: hightemptext.bottom
+//                            font.weight: Font.Normal
+//                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).condition != "undefined" ? weatherForecast.get(index).condition : ""
+//                        }
 
-                        Image {
-                            id: weatherIconSmall
-                            width: parent.height/1.5
-                            height: width
-                            smooth: true
-                            //asynchronous: true
-                            source: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).icon != "undefined"  ? mapIcon(weatherForecast.get(index).icon) : ""
-                            anchors.right: parent.right
-                            anchors.bottom: condition.bottom
+//                        Image {
+//                            id: weatherIconSmall
+//                            width: parent.height/1.5
+//                            height: width
+//                            smooth: true
+//                            //asynchronous: true
+//                            source: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).icon != "undefined"  ? mapIcon(weatherForecast.get(index).icon) : ""
+//                            anchors.right: parent.right
+//                            anchors.bottom: condition.bottom
 
-                            SequentialAnimation {
-                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 30; to: 10; duration: 2000; easing.type: Easing.InOutBack }
-                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 10; to: 30; duration: 2000; easing.type: Easing.InOutBack }
+//                            SequentialAnimation {
+//                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 30; to: 10; duration: 2000; easing.type: Easing.InOutBack }
+//                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 10; to: 30; duration: 2000; easing.type: Easing.InOutBack }
 
-                                running: true
-                                loops: Animation.Infinite
-                            }
-                        }
-                    }
-                }
-            }
+//                                running: true
+//                                loops: Animation.Infinite
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
 
         Behavior on opacity { PropertyAnimation { duration: 500 } }
@@ -335,6 +291,8 @@ Window {
         id: weatherMeasurements
         source: "http://www.google.com/ig/api?weather=" + city
         query: "/xml_api_reply/weather/current_conditions"
+
+        onCountChanged: if (count > 0) itemInner.loadForecastQml()
 
         //current condition
         XmlRole { name: "condition"; query: "condition/@data/string()" }
