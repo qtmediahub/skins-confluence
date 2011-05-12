@@ -51,9 +51,9 @@ Item {
     property bool isDay : true;
     property bool isClear : true;
     property string cityName;
-    property int lowTemperature;
-    property int highTemperature;
     property int currentTemperature;
+    property string currentHumidity;
+    property string currentWindCondition;
     property string folder: "images/"
 
     function scaledX(x) {
@@ -64,25 +64,17 @@ Item {
         return y;
     }
 
-//    Image {
-//        id: bg
-//        x: root.width / 2 - bg.width / 2
-//        source: root.isDay ? (root.isClear ? folder + "bg_day_clear.png" : folder + "bg_day_rain.png")
-//                       : (root.isClear ? folder + "bg_night_clear.png" : folder + "bg_night_rain.png");
-//    }
-
     ForecastLabel {
         id: display1
         z: 99
         width: scaledX(320)
         height: 180
         anchors.left: parent.left
-//        anchors.leftMargin: (128 * window.scaleFactorX) - xOffset
         anchors.bottomMargin: 106
         anchors.bottom: parent.bottom
         currentTemperature: root.currentTemperature
-        lowTemperature: root.lowTemperature
-        highTemperature: root.highTemperature
+        currentHumidity: root.currentHumidity
+        currentWindCondition: root.currentWindCondition
     }
 
     Text {
@@ -96,7 +88,6 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: scaledX(50)
-//        anchors.bottomMargin: textOffset
         anchors.bottom: parent.bottom
     }
 

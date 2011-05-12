@@ -44,9 +44,9 @@ import Qt 4.7
 Item {
     id: root
 
-    property string lowTemperature
-    property string highTemperature
     property string currentTemperature
+    property string currentHumidity
+    property string currentWindCondition
     property string folder: "../../images/"
 
     Row {
@@ -79,43 +79,23 @@ Item {
         anchors.leftMargin: 50
     }
 
-    Row {
-        anchors.left: line.left
+    Column {
         anchors.top: line.bottom
 
-        Image {
-            source: folder + "icon_max.png"
-            anchors.bottom: highTempText.bottom
-            anchors.bottomMargin: 10
+        Text {
+            text: currentHumidity
+            font.family: "Nokia Sans"
+            font.pixelSize: 32
+            font.bold: true
+            color: "white"
         }
 
         Text {
-            id: highTempText
-            text: highTemperature + "°C"
+            text: currentWindCondition
             font.family: "Nokia Sans"
-            font.pixelSize: 40
+            font.pixelSize: 32
+            font.bold: true
             color: "white"
-            opacity: 0.7
-        }
-    }
-
-    Row {
-        anchors.right: line.right
-        anchors.top: line.bottom
-
-        Image {
-            source: folder + "icon_min.png"
-            anchors.bottom: lowTempText.bottom
-            anchors.bottomMargin: 10
-        }
-
-        Text {
-            id: lowTempText
-            text: lowTemperature + "°C"
-            font.family: "Nokia Sans"
-            font.pixelSize: 40
-            color: "white"
-            opacity: 0.7
         }
     }
 }
