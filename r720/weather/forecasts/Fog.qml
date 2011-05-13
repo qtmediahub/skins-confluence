@@ -77,8 +77,10 @@ ForecastView {
 
     Image {
         id: fog
-        x: translateX(-30)
         source: "../" + folder + "fog.png"
+        anchors.fill: parent
+        anchors.leftMargin: 50
+        anchors.rightMargin: 50
     }
 
     states : State {
