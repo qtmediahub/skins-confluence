@@ -41,6 +41,7 @@
 
 import Qt 4.7
 import "forecasts/elements"
+import "../components/"
 
 Item {
     id: root
@@ -56,40 +57,72 @@ Item {
     property string currentWindCondition;
     property string folder: "images/"
 
-    function scaledX(x) {
-        return x;
+    function translateX(x) {
+        return root.width/10.0 + (x/700*root.width);
     }
 
-    function scaledY(y) {
-        return y;
+    function translateY(y) {
+        var tmp = y+root.height/5.0;
+        return tmp > 0 ? -20 : tmp;
     }
 
-    ForecastLabel {
-        id: display1
-        z: 99
-        width: scaledX(320)
-        height: 180
-        anchors.left: parent.left
-        anchors.bottomMargin: 106
-        anchors.bottom: parent.bottom
-        currentTemperature: root.currentTemperature
-        currentHumidity: root.currentHumidity
-        currentWindCondition: root.currentWindCondition
+    Row {
+        anchors.bottom: line.top
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        ConfluenceText {
+            id: temperatureText
+            text: root.currentTemperature ? root.currentTemperature : " "
+            font.pixelSize: 170
+            font.bold: true
+            color: "white"
+        }
+
+        Image {
+            source: folder + "centigrades.png"
+            anchors.bottom: temperatureText.bottom
+            anchors.bottomMargin: 34
+            opacity: temperatureText.text != " " ? 1 : 0
+            Behavior on opacity { NumberAnimation {} }
+        }
     }
 
-    Text {
+    Image {
+        id: line
+        source: folder + "division_line.png"
+        anchors.bottom: currentConditionColumn.top
+        anchors.topMargin: 104
+        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: temperatureText.text != " " ? 1 : 0
+        Behavior on opacity { NumberAnimation {} }
+    }
+
+    Column {
+        id: currentConditionColumn
+        anchors.bottom: cityLabel.top
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        ConfluenceText {
+            text: root.currentHumidity ? root.currentHumidity : " "
+            font.pixelSize: 32
+            font.bold: true
+            color: "white"
+        }
+
+        ConfluenceText {
+            text: root.currentWindCondition ? root.currentWindCondition : " "
+            font.pixelSize: 32
+            font.bold: true
+            color: "white"
+        }
+    }
+
+    ConfluenceText {
         id: cityLabel
-        z: 99
-        text: root.cityName
-        font.family: "Nokia Sans"
-        font.pixelSize: scaledX(50)
-        color: "#ffffff"
-        horizontalAlignment: "AlignHCenter"
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: scaledX(50)
+        text: root.cityName ? root.cityName : " "
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: root.height/10.0
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: confluence.width/20
     }
-
-    Connections { target: parent; onPresent: present(); }
 }

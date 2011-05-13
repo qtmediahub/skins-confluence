@@ -48,12 +48,12 @@ ForecastView {
 
     HungItem {
         id: sun
-        x: isDay ? scaledX(120) : scaledX(220)
-        y: scaledY(-800)
+        x: isDay ? translateX(120) : translateX(220)
+        y: translateY(-800)
         itemX: 0
         itemY:  isDay ? 200 : 180
         height:  isDay ? 500 : 440
-        finalY: isDay ? scaledY(-198) : scaledY(-205)
+        finalY: isDay ? translateY(-198) : translateY(-205)
         itemImage: isDay ? folder + "sun.png" : folder + "moon.png"
         lineImage: isDay ? folder + "sun_line.png" : folder + "moon_line.png"
     }

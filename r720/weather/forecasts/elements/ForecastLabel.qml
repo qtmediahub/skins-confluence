@@ -49,53 +49,5 @@ Item {
     property string currentWindCondition
     property string folder: "../../images/"
 
-    Row {
-        anchors.bottomMargin: 58
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: line.horizontalCenter
 
-        Text {
-            id: temperatureText
-            text: currentTemperature
-            font.family: "Nokia Sans"
-            font.pixelSize: 170
-            font.bold: true
-            color: "white"
-        }
-
-        Image {
-            source: folder + "centigrades.png"
-            anchors.bottom: temperatureText.bottom
-            anchors.bottomMargin: 34
-        }
-    }
-
-    Image {
-        id: line
-        source: folder + "division_line.png"
-        anchors.top: parent.top
-        anchors.topMargin: 104
-        anchors.left: parent.left
-        anchors.leftMargin: 50
-    }
-
-    Column {
-        anchors.top: line.bottom
-
-        Text {
-            text: currentHumidity
-            font.family: "Nokia Sans"
-            font.pixelSize: 32
-            font.bold: true
-            color: "white"
-        }
-
-        Text {
-            text: currentWindCondition
-            font.family: "Nokia Sans"
-            font.pixelSize: 32
-            font.bold: true
-            color: "white"
-        }
-    }
 }

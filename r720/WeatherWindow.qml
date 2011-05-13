@@ -69,6 +69,11 @@ Window {
         return (string.substr(0, string.length-5))
     }
 
+    function loadForecastQml() {
+        if (weatherMeasurements.count > 0)
+            forecastLoader.source = mapToFile(weatherMeasurements.get(0).condition)
+    }
+
     bladeComponent: Blade {
         parent: root
         bladeWidth: banner.x + banner.width + 50
@@ -130,49 +135,39 @@ Window {
 
     Row {
         id: weather
-        anchors.centerIn: parent
-        spacing: 60
+        anchors.fill: parent
 
         Item {
-            width: root.width*2/3.0 - weather.spacing*2
-            height: root.height/1.3
+            width: parent.width*0.66
+            height: parent.height
 
-            Item {
-                id: itemInner
+            Loader {
+                id: forecastLoader
                 anchors.fill: parent
 
-                Loader {
-                    id: forecastLoader
-                    anchors.fill: parent
-
-                    onLoaded: {
-                        var tmp = weatherMeasurements.get(0);
-                        item.cityName = root.city;
-                        item.isDay = true;
-                        item.currentTemperature = tmp.temp_c;
-                        item.currentHumidity = tmp.humidity;
-                        item.currentWindCondition = tmp.wind_condition;
-                        forecastLoader.item.present()
-                    }
+                onLoaded: {
+                    var tmp = weatherMeasurements.get(0);
+                    item.cityName = root.city;
+                    item.isDay = true;
+                    item.currentTemperature = tmp.temp_c;
+                    item.currentHumidity = tmp.humidity;
+                    item.currentWindCondition = tmp.wind_condition;
+                    forecastLoader.item.present()
                 }
+            }
 
-                function loadForecastQml() {
-                    if (weatherMeasurements.count > 0)
-                        forecastLoader.source = mapToFile(weatherMeasurements.get(0).condition)
-                }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: { forecastLoader.item.state = "" }
-                    onReleased: { forecastLoader.item.state = "final" }
-                }
+            MouseArea {
+                anchors.fill: parent
+                onPressed: { forecastLoader.item.state = "" }
+                onReleased: { forecastLoader.item.state = "final" }
             }
         }
 
         Item {
             id: forecastPanel
-            width: root.width/3.0 - weather.spacing*2
-            height: root.height/1.3
+            width: parent.width*0.33
+            height: 500
 
             Column {
                 anchors.fill: parent
@@ -185,8 +180,7 @@ Window {
 
                 ListView {
                     id: forecastListView
-                    height: 500
-                    width: parent.width
+                    height: 700
                     clip: true
                     model: weatherForecast
                     delegate:
@@ -292,7 +286,7 @@ Window {
         source: "http://www.google.com/ig/api?weather=" + city
         query: "/xml_api_reply/weather/current_conditions"
 
-        onCountChanged: if (count > 0) itemInner.loadForecastQml()
+        onCountChanged: if (count > 0) root.loadForecastQml()
 
         //current condition
         XmlRole { name: "condition"; query: "condition/@data/string()" }

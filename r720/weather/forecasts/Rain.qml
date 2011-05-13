@@ -49,61 +49,61 @@ ForecastView {
 
     RainItem {
         id: rain
-        x: scaledX(30)
-        y: scaledY(300) - yOffset
+        x: translateX(30)
+        y: translateY(300) - yOffset
         visible: false
         rainType: "rain"
     }
 
     SmallCloud {
         id: cloud5
-        x: scaledX(300)
-        y: scaledY(-800)
-        finalY: scaledY(-469);
+        x: translateX(300)
+        y: translateY(-800)
+        finalY: translateY(-469);
         type: "cloud_rain"
     }
 
     HungItem {
         id: sun
-        x: isDay ? scaledX(198) : scaledX(220)
-        y: scaledY(-800)
+        x: isDay ? translateX(198) : translateX(220)
+        y: translateY(-800)
         itemX: 0
         itemY:  isDay ? 176 : 180
         height:  isDay ? 460 : 440
-        finalY: isDay ? scaledY(-255) : scaledY(-205)
+        finalY: isDay ? translateY(-255) : translateY(-205)
         itemImage: isDay ? folder + "cold_sun.png" : folder + "moon.png"
         lineImage: isDay ? folder + "cold_sun_line.png" : folder + "moon_line.png"
     }
 
     MediumCloud {
         id: cloud4
-        x: scaledX(100)
-        y: scaledY(-800)
-        finalY: scaledY(-356)
+        x: translateX(100)
+        y: translateY(-800)
+        finalY: translateY(-356)
         type: "cloud_rain"
     }
 
     MediumCloud {
         id: cloud3
-        x: scaledX(340)
-        y: scaledY(-800)
-        finalY: scaledY(-339)
+        x: translateX(340)
+        y: translateY(-800)
+        finalY: translateY(-339)
         type: "cloud_rain"
     }
 
     LargeCloud {
         id: cloud2
-        x: scaledX(186)
-        y: scaledY(-800)
-        finalY: scaledY(-319)
+        x: translateX(186)
+        y: translateY(-800)
+        finalY: translateY(-319)
         type: "cloud_rain"
     }
 
     LargeCloud {
         id: cloud1
-        x: scaledX(-62)
-        y: scaledY(-800)
-        finalY: scaledY(-289)
+        x: translateX(-62)
+        y: translateY(-800)
+        finalY: translateY(-289)
         type: "cloud_rain"
     }
 

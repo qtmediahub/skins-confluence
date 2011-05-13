@@ -49,12 +49,12 @@ ForecastView {
 
     HungItem {
         id: question
-        x: scaledX(260)
-        y: scaledY(-800)
+        x: translateX(260)
+        y: translateY(-800)
         itemX: 8
         itemY: 190
         height: 476
-        finalY: scaledY(-255)
+        finalY: translateY(-255)
         itemImage: folder + "na_icon.png"
         lineImage: folder + "na_icon_line.png"
     }

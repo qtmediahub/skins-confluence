@@ -49,61 +49,61 @@ ForecastView {
 
     RainItem {
         id: rain
-        x: scaledX(30)
-        y: scaledY(300) - yOffset
+        x: translateX(30)
+        y: translateY(300) - yOffset
         visible: false
         rainType: "rain"
     }
 
     SmallCloud {
         id: cloud5
-        x: scaledX(297)
-        y: scaledY(-800)
-        finalY: scaledY(-460);
+        x: translateX(297)
+        y: translateY(-800)
+        finalY: translateY(-460);
         type: "cloud_rain"
     }
 
     SmallCloud {
         id: cloud4
-        x: scaledX(64)
-        y: scaledY(-800)
-        finalY: scaledY(-436)
+        x: translateX(64)
+        y: translateY(-800)
+        finalY: translateY(-436)
         type: "cloud_rain"
     }
 
     HungItem {
         id: sun
-        x: isDay ? scaledX(198) : scaledX(220)
-        y: scaledY(-800)
+        x: isDay ? translateX(198) : translateX(220)
+        y: translateY(-800)
         itemX: 0
         itemY:  isDay ? 176 : 180
         height:  isDay ? 460 : 440
-        finalY: isDay ? scaledY(-255) : scaledY(-205)
+        finalY: isDay ? translateY(-255) : translateY(-205)
         itemImage: isDay ? folder + "cold_sun.png" : folder + "moon.png"
         lineImage: isDay ? folder + "cold_sun_line.png" : folder + "moon_line.png"
     }
 
     MediumCloud {
         id: cloud3
-        x: scaledX(154)
-        y: scaledY(-800)
-        finalY: scaledY(-296)
+        x: translateX(154)
+        y: translateY(-800)
+        finalY: translateY(-296)
         type: "cloud_rain"
     }
 
     LargeCloud {
         id: cloud2
-        x: scaledX(315)
-        y: scaledY(-800)
-        finalY: scaledY(-351)
+        x: translateX(315)
+        y: translateY(-800)
+        finalY: translateY(-351)
         type: "cloud_rain"
     }
 
     LargeCloud {
         id: cloud1
-        x: scaledX(-70)
-        y: scaledY(-800)
-        finalY: scaledY(-294)
+        x: translateX(-70)
+        y: translateY(-800)
+        finalY: translateY(-294)
         type: "cloud_rain"
     }
 

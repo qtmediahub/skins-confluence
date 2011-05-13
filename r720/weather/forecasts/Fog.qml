@@ -49,35 +49,35 @@ ForecastView {
 
     SmallCloud {
         id: cloud2
-        x: scaledX(308)
-        y: scaledY(-800)
-        finalY: scaledY(-468);
+        x: translateX(308)
+        y: translateY(-800)
+        finalY: translateY(-468);
         type: "cloud_rain"
     }
 
     HungItem {
         id: sun
-        x: isDay ? scaledX(198) : scaledX(220)
-        y: scaledY(-800)
+        x: isDay ? translateX(198) : translateX(220)
+        y: translateY(-800)
         itemX: 0
         itemY:  isDay ? 176 : 180
         height:  isDay ? 460 : 440
-        finalY: isDay ? scaledY(-255) : scaledY(-205)
+        finalY: isDay ? translateY(-255) : translateY(-205)
         itemImage: isDay ? folder + "cold_sun.png" : folder + "moon.png"
         lineImage: isDay ? folder + "cold_sun_line.png" : folder + "moon_line.png"
     }
 
     MediumCloud {
         id: cloud1
-        x: scaledX(3)
-        y: scaledY(-800)
-        finalY: scaledY(-296)
+        x: translateX(3)
+        y: translateY(-800)
+        finalY: translateY(-296)
         type: "cloud_rain"
     }
 
     Image {
         id: fog
-        x: scaledX(-30)
+        x: translateX(-30)
         source: "../" + folder + "fog.png"
     }
 

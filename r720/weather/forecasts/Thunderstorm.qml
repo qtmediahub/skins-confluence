@@ -49,61 +49,61 @@ ForecastView {
 
     RainItem {
         id: rain
-        x: scaledX(30)
-        y: scaledY(300) - yOffset
+        x: translateX(30)
+        y: translateY(300) - yOffset
         visible: false
         rainType: "storm"
     }
 
     SmallCloud {
         id: cloud5
-        x: scaledX(56)
-        y: scaledY(-800)
-        finalY: scaledY(-481)
+        x: translateX(56)
+        y: translateY(-800)
+        finalY: translateY(-481)
         type: "cloud_storm"
     }
 
     MediumCloud {
         id: cloud4
-        x: scaledX(275)
-        y: scaledY(-800)
-        finalY: scaledY(-359)
+        x: translateX(275)
+        y: translateY(-800)
+        finalY: translateY(-359)
         type: "cloud_storm"
     }
 
     HungItem {
         id: sun
-        x: isDay ? scaledX(198) : scaledX(220)
-        y: scaledY(-800)
+        x: isDay ? translateX(198) : translateX(220)
+        y: translateY(-800)
         itemX: 0
         itemY:  isDay ? 176 : 180
         height:  isDay ? 460 : 440
-        finalY: isDay ? scaledY(-255) : scaledY(-205)
+        finalY: isDay ? translateY(-255) : translateY(-205)
         itemImage: isDay ? folder + "cold_sun.png" : folder + "moon.png"
         lineImage: isDay ? folder + "cold_sun_line.png" : folder + "moon_line.png"
     }
 
     MediumCloud {
         id: cloud2
-        x: scaledX(115)
-        y: scaledY(-800)
-        finalY: scaledY(-350)
+        x: translateX(115)
+        y: translateY(-800)
+        finalY: translateY(-350)
         type: "cloud_tstorm"
     }
 
     LargeCloud {
         id: cloud3
-        x: scaledX(-12)
-        y: scaledY(-800)
-        finalY: scaledY(-323)
+        x: translateX(-12)
+        y: translateY(-800)
+        finalY: translateY(-323)
         type: "cloud_storm"
     }
 
     LargeCloud {
         id: cloud1
-        x: scaledX(249)
-        y: scaledY(-850)
-        finalY: scaledY(-310)
+        x: translateX(249)
+        y: translateY(-850)
+        finalY: translateY(-310)
         type: "cloud_tstorm"
     }
 
