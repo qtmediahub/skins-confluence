@@ -57,12 +57,40 @@ Window {
 
     function mapToFile(name) {
         if (typeof name != "undefined") {
-            var i = name.lastIndexOf("/")+1;
-            var sn = "weather/forecasts/"+name.replace(/\ /g, "")+".qml";
-            console.log("file:" + sn)
-            return sn;
+            var map = {
+                "chance_of_rain" : "Rain.qml",
+                "sunny" : "Sunny.qml",
+                "mostly_sunny" : "MostlySunny.qml",
+                "partly_cloudy" : "PartlyCloudy.qml",
+                "mostly_cloudy" : "MostlyCloudy.qml",
+                "chance_of_storm" : "Storm.qml",
+                "showers" : "Rain.qml",
+                "rain" : "Rain.qml",
+                "chance_of_snow" : "UnknownForecast.qml",
+                "cloudy" : "MostlyCloudy.qml",
+                "mist" : "Mist.qml",
+                "storm" : "Storm.qml",
+                "thunderstorm" : "Thunderstorm.qml",
+                "chance_of_tstorm" : "Thunderstorm.qml",
+                "sleet" : "UnknownForecast.qml",
+                "snow" : "UnknownForecast.qml",
+                "icy" : "UnknownForecast.qml",
+                "dust" : "UnknownForecast.qml",
+                "fog" : "Fog.qml",
+                "smoke" : "UnknownForecast.qml",
+                "haze" : "Haze.qml",
+                "flurries" : "UnknownForecast.qml"
+            }
+
+            var tmp = "UnknownForecast.qml";
+            var slice = name.substring(name.lastIndexOf("/")+1,name.lastIndexOf("."));
+
+            if (map[slice])
+                tmp = map[slice]
+
+            return "weather/forecasts/"+tmp;
         }
-        return "";
+       return "weather/forecasts/UnknownForecast.qml";
     }
 
     function stripLast5(string) {
@@ -70,8 +98,10 @@ Window {
     }
 
     function loadForecastQml() {
-        if (weatherMeasurements.count > 0)
-            forecastLoader.source = mapToFile(weatherMeasurements.get(0).condition)
+        if (weatherMeasurements.count > 0) {
+            forecastLoader.source = ""
+            forecastLoader.source = mapToFile(weatherMeasurements.get(0).icon)
+        }
     }
 
     bladeComponent: Blade {
@@ -149,10 +179,12 @@ Window {
                     var tmp = weatherMeasurements.get(0);
                     item.cityName = root.city;
                     item.isDay = true;
-                    item.currentTemperature = tmp.temp_c;
-                    item.currentHumidity = tmp.humidity;
-                    item.currentWindCondition = tmp.wind_condition;
                     forecastLoader.item.present()
+                    if (typeof tmp != "undefined") {
+                        item.currentTemperature = typeof tmp.temp_c != "undefined" ? tmp.temp_c : "";
+                        item.currentHumidity = typeof tmp.humidity != "undefined" ? tmp.humidity : "";
+                        item.currentWindCondition = typeof tmp.wind_condition != "undefined" ? tmp.wind_condition : "";
+                    }
                 }
             }
 

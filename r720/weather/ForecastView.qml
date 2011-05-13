@@ -69,6 +69,7 @@ Item {
     Row {
         anchors.bottom: line.top
         anchors.horizontalCenter: parent.horizontalCenter
+        z: 1
 
         ConfluenceText {
             id: temperatureText
@@ -94,6 +95,7 @@ Item {
         anchors.topMargin: 104
         anchors.horizontalCenter: parent.horizontalCenter
         opacity: temperatureText.text != " " ? 1 : 0
+        z: 1
         Behavior on opacity { NumberAnimation {} }
     }
 
@@ -101,6 +103,7 @@ Item {
         id: currentConditionColumn
         anchors.bottom: cityLabel.top
         anchors.horizontalCenter: parent.horizontalCenter
+        z: 1
 
         ConfluenceText {
             text: root.currentHumidity ? root.currentHumidity : " "
@@ -124,5 +127,6 @@ Item {
         anchors.bottomMargin: root.height/10.0
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: confluence.width/20
+        z: 1
     }
 }
