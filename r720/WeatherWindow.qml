@@ -177,9 +177,18 @@ Window {
 
                 onLoaded: {
                     var tmp = weatherMeasurements.get(0);
+                    var info = forecastInformation.get(0);
                     item.cityName = root.city;
-                    item.isDay = true;
                     forecastLoader.item.present()
+
+                    if (typeof info != "undefined" && typeof info.current_date_time != "undefined") {
+                        var date_time = info.current_date_time;
+                        var slice = date_time.substring(date_time.indexOf(" ")+1,date_time.indexOf(":"));
+                        item.isDay = slice > 18 || slice < 6 ? false : true;
+                    } else {
+                        item.isDay = true;
+                    }
+
                     if (typeof tmp != "undefined") {
                         item.currentTemperature = typeof tmp.temp_c != "undefined" ? tmp.temp_c : "";
                         item.currentHumidity = typeof tmp.humidity != "undefined" ? tmp.humidity : "";
@@ -312,7 +321,7 @@ Window {
     }
 
     XmlListModel {
-        id: weatherModel
+        id: forecastInformation
         source: "http://www.google.com/ig/api?weather=" + city
         query: "/xml_api_reply/weather/forecast_information"
 
