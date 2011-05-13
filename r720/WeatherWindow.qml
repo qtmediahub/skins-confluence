@@ -167,30 +167,39 @@ Window {
         Item {
             id: forecastPanel
             width: parent.width*0.33
-            height: 500
+            height: parent.height
 
             Column {
-                anchors.fill: parent
-                spacing: 40
+                anchors.centerIn: parent
+                width: parent.width
+                height: childrenRect.height
 
                 ConfluenceText {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("WEATHER FORECAST")
                 }
 
+                Item {
+                    width: parent.width
+                    height: 50
+                }
+
                 ListView {
                     id: forecastListView
-                    height: 700
+                    height: forecastPanel.height/2.0
+                    width: parent.width
                     clip: true
                     model: weatherForecast
+                    interactive: contentHeight >= height
+
                     delegate:
                         Item {
                         height: 120
-                        width: forecastListView.width
+                        width: forecastPanel.width
 
                         Rectangle {
                             id: sep
-                            width: forecastListView.width
+                            width: parent.width
                             height: 4
                             radius: 2
                             color: "#40FFFFFF"
