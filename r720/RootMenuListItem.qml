@@ -24,7 +24,7 @@ Item {
     id: menuItem
     width: parent.width; height: entry.height
 
-    property int role: model.role
+    property string background: model.background
     property bool hasSubBlade: false
     property alias textColor: entry.color
     property alias text: entry.text
