@@ -38,6 +38,9 @@ FocusScope {
     signal closed
 
     opacity: 0
+    scale: 0
+    state: ""
+    visible: false
 
     function accept() {
         close()
@@ -50,20 +53,53 @@ FocusScope {
     }
 
     function close() {
-        opacity = 0
+        state = ""
         root.closed()
     }
 
     function open() {
-        opacity = 1
+        state = "visible"
         root.opened()
     }
 
     onClose: root.parent.forceActiveFocus()
 
-    Behavior on opacity {
-        NumberAnimation{}
-    }
+    states: [
+        State {
+            name: "visible"
+            PropertyChanges {
+                target: root
+                visible: true
+                opacity: 1
+                scale: 1
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: ""
+            SequentialAnimation {
+                ParallelAnimation {
+                    NumberAnimation { property: "opacity"; duration: transitionDuration/2.0; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                }
+                PropertyAction { target: root; property: "visible"; value: false }
+            }
+        },
+        Transition {
+            from: ""
+            to: "visible"
+            SequentialAnimation {
+                PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
+                PropertyAction { target: root; property: "visible"; value: true }
+                ParallelAnimation {
+                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: Easing.OutBack }
+                }
+            }
+        }
+    ]
 
     BorderImage {
         id: panel
