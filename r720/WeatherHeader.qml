@@ -45,29 +45,15 @@ Header {
         return "";
     }
 
-    Row {
-        id: row
+    ConfluenceText {
+        id: weatherDegree
         z: 1
-        spacing: 5
         x: 30
         anchors.verticalCenter: parent.verticalCenter
-
-        Image {
-            id: weatherIcon
-            width: weatherDegree.height
-            height: width
-            smooth: true
-            asynchronous: true
-            source: currentConditions.count > 0 ? mapIcon(currentConditions.get(0).icon) : ""
-        }
-        ConfluenceText {
-            id: weatherDegree
-            color: "white"
-            text: (currentConditions.count > 0 ? currentConditions.get(0).temp_c : "0") + "°C"
-            anchors.verticalCenter: weatherIcon.verticalCenter
-        }
+        color: "white"
+        text: (currentConditions.count > 0 ? currentConditions.get(0).temp_c : "0") + "°C"
     }
 
-    property Item content: row;
+    property Item content: weatherDegree;
 }
 
