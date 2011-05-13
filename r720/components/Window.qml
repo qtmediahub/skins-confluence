@@ -96,7 +96,7 @@ FocusScope {
             SequentialAnimation {
                 PropertyAction { target: blade; property: "visible"; value: false }
                 ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { property: "opacity"; duration: transitionDuration/2.0; easing.type: confluence.standardEasingCurve }
                     NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
                 }
                 PropertyAction { target: root; property: "visible"; value: false }
@@ -107,11 +107,12 @@ FocusScope {
             from: ""
             to: "visible"
             SequentialAnimation {
+                PauseAnimation { duration: transitionDuration } // wait for main blade to be hidden
                 PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
                 PropertyAction { target: root; property: "visible"; value: true }
                 ParallelAnimation {
                     NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
-                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: Easing.OutBack }
                 }
                 ScriptAction { scriptName: "forceActiveFocus" }
                 ScriptAction { scriptName: "showAdditionalItems" }
@@ -140,7 +141,7 @@ FocusScope {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: "black"
+        color: "transparent"
         opacity: 0
 
         Behavior on opacity {
