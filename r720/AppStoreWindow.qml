@@ -19,7 +19,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "components/"
-import "JSONBackend.js" as JSONBackend
+import "appstore/"
+import "appstore/JSONBackend.js" as JSONBackend
 import ActionMapper 1.0
 
 Window {
