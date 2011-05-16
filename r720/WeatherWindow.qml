@@ -163,18 +163,12 @@ Window {
         }
     }
 
-    Rectangle {
-        color: "black"
-        anchors.fill: parent
-        opacity: 0.6
-    }
-
     Row {
         id: weather
         anchors.fill: parent
 
-        Item {
-            width: parent.width*0.66
+        Panel {
+            width: parent.width*0.67
             height: parent.height
 
             Loader {
@@ -211,7 +205,7 @@ Window {
             }
         }
 
-        Item {
+        Panel {
             id: forecastPanel
             width: parent.width*0.33
             height: parent.height
@@ -224,6 +218,7 @@ Window {
                 ConfluenceText {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("WEATHER FORECAST")
+                    font.pixelSize: 40
                 }
 
                 Item {

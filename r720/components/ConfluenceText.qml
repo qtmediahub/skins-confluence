@@ -33,17 +33,19 @@ Text {
     Behavior on text {
         enabled: root.animated
         SequentialAnimation {
+            //PropertyAction { target: root; property: smooth; value: false }
             NumberAnimation {
                 target: root
                 property: "opacity"
                 to: 0
             }
-            PropertyAction {  }
+            //PropertyAction {  }
             NumberAnimation {
                 target: root
                 property: "opacity"
                 to: 1
             }
+            //PropertyAction { target: root; property: smooth; value: true }
         }
     }
 }
