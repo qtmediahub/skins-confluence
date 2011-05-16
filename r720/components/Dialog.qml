@@ -24,6 +24,7 @@ FocusScope {
     id: root
 
     property Item focalWidget: root
+    property int transitionDuration: confluence.standardAnimationDuration
 
     width: contentItem.childrenRect.width + contentItem.anchors.leftMargin + contentItem.anchors.rightMargin
     height: glassTitleBar.height + contentItem.childrenRect.height + contentItem.anchors.topMargin + contentItem.anchors.bottomMargin

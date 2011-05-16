@@ -32,6 +32,7 @@ FocusScope {
     property string serverReason
     property bool loggedIn:  false
     property alias appStore: appStore
+    property int transitionDuration: confluence.standardAnimationDuration
 
     signal appInstallationStarted()
 
