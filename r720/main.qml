@@ -53,7 +53,6 @@ Item {
             target: splashLoader.item
             onFinished: {
                 splashLoader.source = ""
-                splashLoader.deleteLater()
             }
         }
     }
