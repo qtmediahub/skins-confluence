@@ -132,12 +132,12 @@ Window {
                 model: cityList
 
                 delegate: Item {
-                    id: delegate
+                    id: delegateItem
                     width: listView.width
                     height: thistext.height + 8
                     Image {
                         anchors.fill: parent;
-                        source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+                        source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
                     }
                     Text {
                         id: thistext
@@ -150,7 +150,7 @@ Window {
                         anchors.fill: parent;
                         hoverEnabled: true
                         onEntered:
-                            ListView.view.currentIndex = index
+                            delegateItem.ListView.view.currentIndex = index
                         onClicked:
                             showCast(name)
                     }
@@ -233,8 +233,7 @@ Window {
                     model: weatherForecast
                     interactive: contentHeight >= height
 
-                    delegate:
-                        Item {
+                    delegate: Item {
                         height: 120
                         width: forecastPanel.width
 

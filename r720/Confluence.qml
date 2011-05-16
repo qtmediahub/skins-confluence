@@ -18,91 +18,388 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import Qt.labs.shaders 1.0
-import Qt.labs.shaders.effects 1.0
+import "components/"
+import "./components/uiconstants.js" as UIConstants
+import "./components/cursor.js" as Cursor
+import ActionMapper 1.0
+import "util.js" as Util
+import QMHPlugin 1.0
+import "rootmenumodelitem.js" as RootMenuModelItem
 
-Item {
-    id: root
+FocusScope {
+    id: confluence
+
+    property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
+
+    property string generalResourcePath: runtime.backend.resourcePath
+    property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence"
+
+    //FIXME: QML const equivalent?
+    property int standardEasingCurve: Easing.InQuad
+    property int standardAnimationDuration: 350
+
+    property int standardHighlightRangeMode: ListView.NoHighlightRange
+    property int standardHighlightMoveDuration: 400
+
+    property bool standardItemViewWraps: true
+
+    property variant selectedEngine
+    property variant selectedElement
+    property variant avPlayer
+    property variant browserWindow
+    property variant ticker
+    property variant weatherWindow
+    property variant systemInfoWindow
+    property variant aboutWindow
+
+    property variant musicEngine
+    property variant videoEngine
+
+    property variant rootMenuModel: ListModel { }
 
     anchors.fill: parent
+    focus: true
+    clip: true
 
-    onWidthChanged: {
-        curtain.animated = false
-        settleTimer.start()
+    function resetFocus() {
+        state = ""
+        mainBlade.rootMenu.forceActiveFocus()
     }
 
-    function reset() {
-        loader.item.resetFocus()
+    // obj has {name, role, visualElement, activationProperties, engine}
+    function addToRootMenu(obj, activationHandler) {
+        rootMenuModel.append(obj)
+        RootMenuModelItem.activationHandlers[rootMenuModel.count-1] = activationHandler
     }
 
-    Timer {
-        id: splashDelay
-        interval: runtime.config.value("splash-lead-time", 500)
-        onTriggered:
-            loader.source = "TopLevel.qml"
+    function changeBackground(source) {
+        background.source = source
     }
 
-    Timer {
-        id: settleTimer
-        interval: 1
-        onTriggered:
-            curtain.animated = true
+    function setActiveEngine(index) {
+        var engine = rootMenuModel.get(index)
+        var oldEngine = selectedEngine
+
+        selectedEngine = engine
+        selectedElement = engine.visualElement
+
+        if (oldEngine != engine) {
+            if (RootMenuModelItem.activationHandlers[index])
+                RootMenuModelItem.activationHandlers[index].call(engine)
+        }
+        show(selectedElement)
     }
 
-    Image {
-        id: splash
-        anchors.fill: parent
-        smooth: true
-        fillMode: Image.PreserveAspectFit
-        source: "../3rdparty/splash/splash.jpg"
+    function show(element) {
+        !!selectedElement && selectedElement != element ? selectedElement.state = "" : undefined
+
+        if (element == mainBlade) {
+            state = ""
+        } else if(element == avPlayer) {
+            if(!avPlayer.hasMedia) {
+                if (typeof runtime.videoEngine != "undefined")
+                    show(runtime.videoEngine.visualElement)
+                else if (typeof runtime.musicEngine != "undefined")
+                    show(runtime.musicEngine.visualElement)
+            } else {
+                show(transparentVideoOverlay)
+            }
+        } else if (element == transparentVideoOverlay) {
+            selectedElement = transparentVideoOverlay
+            state = "showingSelectedElementMaximized"
+        } else {
+            selectedElement = element
+            state = "showingSelectedElement"
+        }
     }
 
-    CurtainEffect {
-        id: curtain
-        property bool animated: false
-        z: 100
-        anchors.fill: splash
-        bottomWidth: topWidth
-        topWidth: parent.width
-        source: ShaderEffectSource { sourceItem: splash; hideSource: true }
+    function showContextMenu(item, x, y) {
+        showModal(item)
+        item.x = x
+        item.y = y
+    }
 
-        Behavior on topWidth {
-            enabled: curtain.animated
+    function showModal(item) {
+        mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
+        var currentFocusedItem = runtime.utils.focusItem();
+        var onClosedHandler = function() {
+            mouseGrabber.opacity = 0;
+            if (currentFocusedItem)
+                currentFocusedItem.forceActiveFocus()
+            item.closed.disconnect(onClosedHandler)
+        }
+        item.closed.connect(onClosedHandler)
+        item.parent = confluence // ## restore parent?
+        item.z = UIConstants.screenZValues.diplomaticImmunity
+        item.open()
+        item.forceActiveFocus()
+    }
+
+    function showFullScreen(item) {
+        item.z = background.z + 2
+        item.parent = confluence
+        item.opacity = 1
+        item.forceActiveFocus()
+    }
+
+    states: [
+        State {
+            name:  ""
+            StateChangeScript { name: "focusMainBlade"; script: mainBlade.forceActiveFocus() }
+            PropertyChanges { target: ticker; state: "visible" }
+        },
+        State {
+            name: "showingSelectedElement"
+            PropertyChanges { target: mainBlade; state: "hidden" }
+            PropertyChanges { target: avPlayer; state: "hidden" }
+            PropertyChanges { target: dateTimeHeader; expanded: true; showDate: false }
+            PropertyChanges { target: weatherHeader; expanded: false }
+            PropertyChanges { target: homeHeader; expanded: true }
+            PropertyChanges { target: currentContextHeader; expanded: true }
+            PropertyChanges { target: ticker; state: "" }
+            PropertyChanges { target: selectedElement; state: "visible" }
+            PropertyChanges { target: avPlayer; state: "background" }
+        },
+        State {
+            name: "showingSelectedElementMaximized"
+            extend: "showingSelectedElement"
+            PropertyChanges { target: selectedElement; state: "maximized" }
+            PropertyChanges { target: avPlayer; state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden" }
+            PropertyChanges { target: dateTimeHeader; expanded: false; showDate: false }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            from: "*"
+            to: ""
+        },
+        Transition {
+            from: "*"
+            to: "showingSelectedElement"
             SequentialAnimation {
-                PropertyAnimation { duration: 1000 }
-                PauseAnimation { duration: 2000 }
-                ScriptAction { script: curtain.destroy() }
+                // Move things out
+                ParallelAnimation {
+                }
+                // Move things in
+                ParallelAnimation {
+                    PropertyAction { target: selectedElement; property: "state"; value: "visible" }
+                }
             }
         }
+    ]
 
-        Behavior on bottomWidth {
-            enabled: curtain.animated
-            SpringAnimation { easing.type: Easing.OutElastic; velocity: 1500; mass: 1.5; spring: 0.5; damping: 0.15}
-        }
-
-        SequentialAnimation on topWidth {
-            id: topWidthAnim
-            loops: 1
-            running: false
-
-            NumberAnimation { to: root.width - 50; duration: 700 }
-            PauseAnimation { duration: 500 }
-            NumberAnimation { to: root.width + 50; duration: 700 }
-            PauseAnimation { duration: 500 }
-            ScriptAction { script: curtain.topWidth = 0; }
-        }
-
-    }
-
-    Loader {
-        id: loader
-        anchors.fill: parent
-        onLoaded: {
-            reset()
-            topWidthAnim.running = true
+    Keys.onPressed: {
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu)) {
+            if(selectedElement && selectedElement.maximized)
+                selectedElement.maximized = false
+            else
+                show(mainBlade)
+        } else if (event.key == Qt.Key_F12) {
+            selectedElement
+                    && selectedElement.maximizable
+                    && state == "showingSelectedElement"
+                    ? selectedElement.maximized = true
+                    : undefined
+        } else if (event.key == Qt.Key_F11) {
+            show(aboutWindow)
+        } else if (event.key == Qt.Key_F10) {
+            show(systemInfoWindow)
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
+            avPlayer.increaseVolume()
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
+            avPlayer.decreaseVolume()
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.MediaPlayPause)) {
+            avPlayer.togglePlayPause()
         }
     }
 
-    Component.onCompleted:
-        splashDelay.start()
+    function createQmlObjectFromFile(file, properties) {
+        var qmlComponent = Qt.createComponent(file)
+        if (qmlComponent.status == Component.Ready) {
+            return qmlComponent.createObject(confluence, properties ? properties : {})
+        }
+        runtime.backend.log(qmlComponent.errorString())
+        return null
+    }
+
+    Component.onCompleted: {
+        Cursor.initialize()
+
+        runtime.backend.loadEngines()
+        var engineNames = runtime.backend.loadedEngineNames()
+
+        if (engineNames.indexOf("appstore") != -1) {
+            var appStoreWindow = createQmlObjectFromFile("AppStoreWindow.qml")
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("App Store"), QMHPlugin.Store, appStoreWindow))
+        }
+
+        if (engineNames.indexOf("music") != -1) {
+            musicEngine = runtime.backend.engine("music")
+            var musicWindow = createQmlObjectFromFile("MusicWindow.qml", { mediaEngine: musicEngine });
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, "music.jpg", musicEngine))
+        }
+
+        if (engineNames.indexOf("video") != -1) {
+            videoEngine = runtime.backend.engine("video")
+            var videoWindow = createQmlObjectFromFile("VideoWindow.qml", { mediaEngine: videoEngine });
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, "videos.jpg", videoEngine))
+        }
+
+        if (engineNames.indexOf("picture") != -1) {
+            var pictureEngine = runtime.backend.engine("picture")
+            var pictureWindow = createQmlObjectFromFile("PictureWindow.qml", { mediaEngine: pictureEngine });
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg", pictureEngine))
+        }
+
+        avPlayer = createQmlObjectFromFile("AVPlayer.qml")
+        if (avPlayer) {
+            // FIXME: nothing to get video-path during runtime, yet
+            avPlayer.state = "background"
+        } else {
+            avPlayer = dummyItem
+        }
+
+        var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Dashboard"), QMHPlugin.Dashboard, dashboardWindow, "programs.jpg"))
+
+        browserWindow = createQmlObjectFromFile("WebWindow.qml")
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Web"), QMHPlugin.Web, browserWindow, "web.jpg"), function() { this.visualElement.initialUrl = "http://www.google.com" })
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Google Maps"), QMHPlugin.Map, browserWindow, "carta_marina.jpg"), function() { this.visualElement.initialUrl = confluence.generalResourcePath + "/googlemaps/Nokia.html"; this.visualElement.enableBrowserShortcuts = false })
+        if (runtime.config.isEnabled("wk-plugins", false))
+            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Youtube"), QMHPlugin.Application, browserWindow), function() { this.visualElement.initialUrl = "http://www.youtube.com/xl"})
+
+        weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Weather"), QMHPlugin.Weather, weatherWindow, "weather.jpg"))
+
+        var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("RemoteApp"), QMHPlugin.Application, remoteAppWindow))
+
+        systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
+
+        var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
+        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow, "carta_marina.jpg"))
+
+        ticker = createQmlObjectFromFile("Ticker.qml")
+        if (ticker) {
+            ticker.z = UIConstants.screenZValues.header
+            ticker.state = "visible"
+        } else {
+            ticker = dummyItem
+        }
+
+        createQmlObjectFromFile("ScreenSaver.qml")
+        aboutWindow = createQmlObjectFromFile("AboutWindow.qml")
+        createQmlObjectFromFile("SystemScreenSaverControl.qml")
+    }
+
+    // dummyItem useful to avoid error ouput on component loader failures
+    Item {
+        id: dummyItem
+        visible: false
+    }
+
+    Background {
+        id: background
+        anchors.fill: parent;
+        visible: !avPlayer.playing
+    }
+
+    MainBlade { 
+        id: mainBlade;
+        state: "open"
+        focus: true
+    }
+
+    Header {
+        id: homeHeader
+        atRight : false
+        expanded: false
+
+        z: currentContextHeader.z + 1
+        width: homeImage.width + 80
+        Image {
+            id: homeImage
+            x: 40
+            sourceSize { width: height; height: homeHeader.height-4; }
+            source: themeResourcePath + "/media/HomeIcon.png"
+        }
+        MouseArea { anchors.fill: parent; onClicked: confluence.show(mainBlade) }
+    }
+
+    Header {
+        id: currentContextHeader
+        atRight: false
+        expanded: false
+
+        width: contextText.width + homeHeader.width + 25
+        ConfluenceText {
+            id: contextText 
+            anchors { right: parent.right; rightMargin: 25; verticalCenter: parent.verticalCenter }
+            text: selectedEngine ? selectedEngine.name : ""; color: "white"
+        }
+    }
+
+    WeatherHeader {
+        id: weatherHeader
+
+        width: content.width + dateTimeHeader.width + 50
+        city: weatherWindow.city
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: confluence.show(weatherWindow)
+        }
+    }
+
+    DateTimeHeader {
+        id: dateTimeHeader
+        expanded: true
+        showDate: true
+    }
+
+    Rectangle {
+        id: mouseGrabber
+        color: "black"
+        anchors.fill: parent;
+        z: UIConstants.screenZValues.mouseGrabber
+        opacity: 0
+
+        Behavior on opacity {
+            NumberAnimation { }
+        }
+
+        MouseArea {
+            anchors.fill: parent;
+            hoverEnabled: true
+        }
+    }
+
+    Window {
+        id: transparentVideoOverlay
+        overlay: true
+        onFocusChanged:
+            activeFocus ? avPlayer.forceActiveFocus() : undefined
+    }
+
+    DeviceDialog {
+        id: deviceDialog
+    }
+
+
+    Connections {
+        target: runtime.deviceManager
+        onDeviceAdded: {
+            var d = runtime.deviceManager.getDeviceByPath(device)
+            if (d.isPartition) {
+                deviceDialog.device = d
+                d.mount();
+                confluence.showModal(deviceDialog)
+            }
+        }
+        onDeviceRemoved: {
+            deviceDialog.close()
+        }
+    }
 }
+

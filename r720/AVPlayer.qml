@@ -581,12 +581,13 @@ FocusScope {
         opacity: 0
 
         delegate: Item {
+            id: delegateItem
             width: ListView.view.width
             height: sourceText.height + 8
             Image {
                 id: backgroundImage
                 anchors.fill: parent;
-                source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+                source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
             }
             Text {
                 id: sourceText
@@ -601,7 +602,7 @@ FocusScope {
             MouseArea {
                 anchors.fill: parent;
                 hoverEnabled: true
-                onEntered: ListView.view.currentIndex = index
+                onEntered: delegateItem.ListView.view.currentIndex = index
                 onClicked: rpcClient.send(model.address, model.port, mediaItem.source, mediaItem.position)
             }
         }
