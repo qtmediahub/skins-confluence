@@ -378,7 +378,6 @@ FocusScope {
 
     Window {
         id: transparentVideoOverlay
-        overlay: true
         onFocusChanged:
             activeFocus ? avPlayer.forceActiveFocus() : undefined
     }

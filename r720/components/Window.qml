@@ -34,7 +34,6 @@ FocusScope {
 
     property Item focalWidget: root
 
-    property bool overlay: false
     property alias blade: bladeLoader.item
 
     property int transitionDuration: confluence.standardAnimationDuration
