@@ -228,7 +228,9 @@ Window {
 
                 ListView {
                     id: forecastListView
-                    height: forecastPanel.height/2.0
+                    //Need to find out why implicitHeight
+                    //does not use item.height*itemCount
+                    height: Math.min(120*count, forecastPanel.height/1.3)
                     width: parent.width
                     clip: true
                     model: weatherForecast
@@ -252,7 +254,10 @@ Window {
                             id: dayofweek
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: sep.bottom; anchors.topMargin: 8
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).day_of_week != "undefined"  ? fullWeekDay(weatherForecast.get(index).day_of_week) : ""
+                            text: weatherForecast.count > 0 && weatherForecast.get(index)
+                                  && typeof weatherForecast.get(index).day_of_week != "undefined"
+                                  ? fullWeekDay(weatherForecast.get(index).day_of_week)
+                                  : ""
                         }
 
                         Text {
@@ -268,7 +273,11 @@ Window {
                             anchors.top: dayofweek.bottom
                             anchors.left: hightemptext.right
                             font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).high_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C" : ""
+                            text: weatherForecast.count > 0
+                                  && weatherForecast.get(index)
+                                  && typeof weatherForecast.get(index).high_f != "undefined"
+                                  ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C"
+                                  : ""
                         }
 
                         Text {
