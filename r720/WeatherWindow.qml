@@ -230,11 +230,12 @@ Window {
                     id: forecastListView
                     //Need to find out why implicitHeight
                     //does not use item.height*itemCount
-                    height: Math.min(120*count, forecastPanel.height/1.3)
+                    property real contentHeightHack: 120*count
+                    height: Math.min(contentHeightHack, forecastPanel.height/1.3)
                     width: parent.width
                     clip: true
                     model: weatherForecast
-                    interactive: contentHeight >= height
+                    interactive: contentHeightHack > height
 
                     delegate: Item {
                         height: 120
@@ -260,67 +261,65 @@ Window {
                                   : ""
                         }
 
-                        Text {
-                            id: hightemptext
+                        Item {
+                            id: forecastTextInfo
                             anchors.top: dayofweek.bottom
-                            smooth: true
-                            font.pointSize: 20
-                            color: "grey"
-                            text: qsTr("High: ")
-                        }
-                        ConfluenceText {
-                            id: hightempvalue
-                            anchors.top: dayofweek.bottom
-                            anchors.left: hightemptext.right
-                            font.weight: Font.Normal
-                            text: weatherForecast.count > 0
-                                  && weatherForecast.get(index)
-                                  && typeof weatherForecast.get(index).high_f != "undefined"
-                                  ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C"
-                                  : ""
-                        }
-
-                        Text {
-                            id: lowtemptext
-                            anchors.top: dayofweek.bottom
-                            anchors.left: hightempvalue.right; anchors.leftMargin: 25
-                            smooth: true
-                            font.pointSize: 20
-                            color: "grey"
-                            text: qsTr("Low: ")
-                        }
-                        ConfluenceText {
-                            anchors.left: lowtemptext.right;
-                            anchors.top: dayofweek.bottom
-                            font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).low_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).low_f)  + " °C" : ""
-                        }
-
-                        ConfluenceText {
-                            id: condition
-                            anchors.top: hightemptext.bottom
-                            font.weight: Font.Normal
-                            text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).condition != "undefined" ? weatherForecast.get(index).condition : ""
-                        }
-
-                        Image {
-                            id: weatherIconSmall
-                            width: parent.height/1.5
-                            height: width
-                            smooth: true
-                            //asynchronous: true
-//                            source: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).icon != "undefined"  ? mapIcon(weatherForecast.get(index).icon) : ""
-                            anchors.right: parent.right
-                            anchors.bottom: condition.bottom
-
-                            SequentialAnimation {
-                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 30; to: 10; duration: 2000; easing.type: Easing.InOutBack }
-                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 10; to: 30; duration: 2000; easing.type: Easing.InOutBack }
-
-                                running: true
-                                loops: Animation.Infinite
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            height: childrenRect.height; width: childrenRect.width
+                            Text {
+                                id: hightemptext
+                                smooth: true
+                                font.pointSize: 20
+                                color: "grey"
+                                text: qsTr("High: ")
+                            }
+                            ConfluenceText {
+                                id: hightempvalue
+                                anchors.left: hightemptext.right
+                                font.weight: Font.Normal
+                                text: weatherForecast.count > 0
+                                      && weatherForecast.get(index)
+                                      && typeof weatherForecast.get(index).high_f != "undefined"
+                                      ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C"
+                                      : ""
+                            }
+                            Text {
+                                id: lowtemptext
+                                anchors.left: hightempvalue.right; anchors.leftMargin: 25
+                                smooth: true
+                                font.pointSize: 20
+                                color: "grey"
+                                text: qsTr("Low: ")
+                            }
+                            ConfluenceText {
+                                anchors.left: lowtemptext.right;
+                                font.weight: Font.Normal
+                                text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).low_f != "undefined"  ? root.fahrenheit2celsius(weatherForecast.get(index).low_f)  + " °C" : ""
+                            }
+                            ConfluenceText {
+                                id: condition
+                                anchors.top: hightemptext.bottom
+                                font.weight: Font.Normal
+                                text: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).condition != "undefined" ? weatherForecast.get(index).condition : ""
                             }
                         }
+//                        Image {
+//                            id: weatherIconSmall
+//                            width: forecastTextInfo.height/1.5
+//                            height: width
+//                            smooth: true
+//                            asynchronous: true
+//                            source: weatherForecast.count > 0 && weatherForecast.get(index) && typeof weatherForecast.get(index).icon != "undefined"  ? mapIcon(weatherForecast.get(index).icon) : ""
+//                            anchors.left: forecastTextInfo.right
+
+////                            SequentialAnimation {
+////                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 30; to: 10; duration: 2000; easing.type: Easing.InOutBack }
+////                                NumberAnimation { target: weatherIconSmall.anchors; property: "rightMargin"; from: 10; to: 30; duration: 2000; easing.type: Easing.InOutBack }
+
+////                                running: true
+////                                loops: Animation.Infinite
+////                            }
+//                        }
                     }
                 }
             }
