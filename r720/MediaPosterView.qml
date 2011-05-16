@@ -73,7 +73,7 @@ Item {
         }
 
         Keys.onPressed: {
-            var itemType = !!posterView.currentItem ? posterView.currentItem.itemdata.type : ""
+            var itemType = posterView.currentItem ? posterView.currentItem.itemdata.type : ""
             if (itemType == "SearchPath") {
                 if (event.key == Qt.Key_Delete) {
                     posterModel.removeSearchPath(currentIndex)

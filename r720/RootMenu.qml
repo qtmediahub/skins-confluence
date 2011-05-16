@@ -71,7 +71,7 @@ FocusScope {
 
         onCurrentIndexChanged: {
             confluence.changeBackground(currentItem.background)
-            !!menuSoundEffect ? menuSoundEffect.play() : undefined
+            if (menuSoundEffect) menuSoundEffect.play()
         }
 
         Keys.onPressed: {

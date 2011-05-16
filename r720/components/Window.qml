@@ -71,7 +71,7 @@ FocusScope {
                 opacity: 1
                 scale: 1
             }
-            StateChangeScript { name: "forceActiveFocus"; script: { !!focalWidget && focalWidget.forceActiveFocus() } }
+            StateChangeScript { name: "forceActiveFocus"; script: { if (focalWidget) focalWidget.forceActiveFocus() } }
             StateChangeScript { name: "showAdditionalItems"; script: { background.opacity = 0.5; blade.opacity = 1 } }
         },
         State {

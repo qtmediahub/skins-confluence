@@ -27,7 +27,8 @@ Flipable {
 
     function show(face) {
         face == back ? angle = 180 : angle = 0
-        !!face ? face.forceActiveFocus() : undefined
+        if (face)
+            face.forceActiveFocus()
     }
 
     function flip() {

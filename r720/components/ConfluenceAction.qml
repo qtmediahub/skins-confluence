@@ -24,7 +24,7 @@ QtObject {
     property variant options
     property int currentOptionIndex : 0
     property bool enabled: true
-    property string currentOption: options && !!options[currentOptionIndex] ? options[currentOptionIndex] : ""
+    property string currentOption: options && options[currentOptionIndex] ? options[currentOptionIndex] : ""
 
     signal triggered()
     

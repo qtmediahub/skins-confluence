@@ -33,7 +33,7 @@ FocusScope {
         focus: true
         anchors.fill: parent
         scrollbar: false
-        model: !!engine && engine.actionList
+        model: engine ? engine.actionList : null
 
         Keys.onPressed:
             runtime.actionmap.eventMatch(event, ActionMapper.Enter) ? currentItem.trigger() : undefined

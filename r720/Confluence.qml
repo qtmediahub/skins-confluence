@@ -91,7 +91,8 @@ FocusScope {
     }
 
     function show(element) {
-        !!selectedElement && selectedElement != element ? selectedElement.state = "" : undefined
+        if (selectedElement && selectedElement != element)
+            selectedElement.state = ""
 
         if (element == mainBlade) {
             state = ""

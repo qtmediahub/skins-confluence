@@ -9,7 +9,7 @@ Item {
     Connections {
         target: runtime.backend
         onInputActive:
-            !!screensaver ? screensaver.destroy() : undefined
+            if (screensaver) screensaver.destroy()
     }
     Connections {
         target: runtime.backend
@@ -17,7 +17,6 @@ Item {
             if (avPlayer.playing
                 || !runtime.config.isEnabled("screensaver", false)
                 || !Qt.application.active)
-                //bail
                 return
             var list = file.findQmlModules(generalResourcePath + "/screensavers")
             var index = Math.floor(Math.random() * list.length)

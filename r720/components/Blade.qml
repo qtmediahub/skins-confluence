@@ -56,7 +56,7 @@ FocusScope {
     }
     function close() {
         //Won't be able to close unless we have a focal widget!
-        if (!!associatedWindow.focalWidget && associatedWindow.focalWidget.visible) {
+        if (associatedWindow.focalWidget && associatedWindow.focalWidget.visible) {
             associatedWindow.focalWidget.forceActiveFocus()
             associatedWindow.maximized ? hide() : undefined
         }
