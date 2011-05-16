@@ -63,7 +63,7 @@ GridView {
             anchors.fill: parent
             onClicked: triggerItem()
             hoverEnabled: true
-            onEntered: GridView.view.currentIndex = index
+            onEntered: delegateItem.GridView.view.currentIndex = index
         }
 
         Keys.onPressed: {

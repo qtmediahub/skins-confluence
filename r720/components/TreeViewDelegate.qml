@@ -38,7 +38,7 @@ Item {
     Image {
         id: backgroundImage
         anchors.fill: parent; 
-        source: themeResourcePath + "/media/" + (ListView.isCurrentItem && delegateItem.activeFocus ? "MenuItemFO.png" : "MenuItemNF.png");
+        source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem && delegateItem.activeFocus ? "MenuItemFO.png" : "MenuItemNF.png");
     }
     Text {
         id: sourceText
@@ -51,15 +51,15 @@ Item {
     }
 
     function activate() {
-        var visualDataModel = ListView.view.model
+        var visualDataModel = delegateItem.ListView.view.model
         if (model.hasModelChildren) {
             visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-            ListView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
-            ListView.view.currentIndex = 0
-            ListView.view.currentItem.forceActiveFocus()
+            delegateItem.ListView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
+            delegateItem.ListView.view.currentIndex = 0
+            delegateItem.ListView.view.currentItem.forceActiveFocus()
         } else {
-            ListView.view.currentIndex = index;
-            ListView.view.activated()
+            delegateItem.ListView.view.currentIndex = index;
+            delegateItem.ListView.view.activated()
         }
     }
 
@@ -68,15 +68,15 @@ Item {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: {
-            ListView.view.currentIndex = index
+            delegateItem.ListView.view.currentIndex = index
             currentItem.focus = true
         }
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                ListView.view.clicked()
+                delegateItem.ListView.view.clicked()
                 delegateItem.activate()
             } else {
-                ListView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
+                delegateItem.ListView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
             }
         }
     }

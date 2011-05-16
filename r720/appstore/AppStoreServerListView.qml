@@ -184,11 +184,12 @@ FocusScope {
                 }
 
                 delegate: Item {
+                    id: delegateItem
                     width: parent.width
                     height: 70
                     Image {
                         anchors.fill: parent;
-                        source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+                        source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
                     }
                     Image {
                         id: iconImage
@@ -209,7 +210,7 @@ FocusScope {
                     MouseArea {
                         anchors.fill: parent;
                         hoverEnabled: true
-                        onEntered: ListView.view.currentIndex = index
+                        onEntered: delegateItem.ListView.view.currentIndex = index
                         onClicked: categorySelected(id)
                     }
                     Keys.onReturnPressed: {
@@ -259,12 +260,13 @@ FocusScope {
                 }
 
                 delegate: Item {
+                    id: delegateItem
                     width: parent.width
                     height: 70
 
                     Image {
                         anchors.fill: parent;
-                        source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+                        source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
                     }
                     Image {
                         id: appIcon
@@ -318,7 +320,7 @@ FocusScope {
                     MouseArea {
                         anchors.fill: parent;
                         hoverEnabled: true
-                        onEntered: ListView.view.currentIndex = index
+                        onEntered: delegateItem.ListView.view.currentIndex = index
                         onClicked: activated()
                     }
                     Keys.onPressed: {

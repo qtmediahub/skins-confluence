@@ -15,7 +15,7 @@ Item {
     transform: Rotation {
         axis { x: 0; y: 1; z: 0 }
         origin { x: width/2 }
-        angle: PathView.rotation ? PathView.rotation : 0
+        angle: delegateItem.PathView.rotation ? delegateItem.PathView.rotation : 0
     }
 
     PathView.onIsCurrentItemChanged: { // QTBUG-16347
@@ -70,10 +70,10 @@ Item {
 
         onClicked:
             if (mouse.button == Qt.LeftButton) {
-                PathView.view.clicked()
+                delegateItem.PathView.view.clicked()
                 delegateItem.activate()
             } else {
-                PathView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
+                delegateItem.PathView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
             }
     }
 

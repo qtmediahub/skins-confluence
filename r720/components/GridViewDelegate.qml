@@ -82,15 +82,15 @@ Item {
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: {
-            GridView.view.currentIndex = index
+            delegateItem.GridView.view.currentIndex = index
             currentItem.focus = true
         }
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
-                GridView.view.clicked()
+                delegateItem.GridView.view.clicked()
                 delegateItem.activate()
             } else {
-                GridView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
+                delegateItem.GridView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
             }
         }
     }
