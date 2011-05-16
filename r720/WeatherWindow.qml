@@ -163,6 +163,12 @@ Window {
         }
     }
 
+    Rectangle {
+        color: "black"
+        anchors.fill: parent
+        opacity: 0.6
+    }
+
     Row {
         id: weather
         anchors.fill: parent
