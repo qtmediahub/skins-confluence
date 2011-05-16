@@ -48,6 +48,14 @@ Item {
         onLoaded: {
             item.start()
         }
+
+        Connections {
+            target: splashLoader.item
+            onFinished: {
+                splashLoader.source = ""
+                splashLoader.deleteLater()
+            }
+        }
     }
 
     Component.onCompleted:

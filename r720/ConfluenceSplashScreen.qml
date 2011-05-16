@@ -13,6 +13,8 @@ Item {
         topWidthAnim.running = true
     }
 
+    signal finished
+
     anchors.fill: parent
 
     onWidthChanged: {
@@ -55,7 +57,7 @@ Item {
             SequentialAnimation {
                 PropertyAnimation { duration: 1000 }
                 PauseAnimation { duration: 2000 }
-                ScriptAction { script: root.destroy() }
+                ScriptAction { script: root.finished() }
             }
         }
 
