@@ -118,7 +118,8 @@ ListView {
         }
 
         Keys.onPressed:
-            runtime.actionmap.eventMatch(event, ActionMapper.Enter) ? model.modelData.enabled && delegateItem.activate() : undefined
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+                model.modelData.enabled && delegateItem.activate()
     }
 }
 

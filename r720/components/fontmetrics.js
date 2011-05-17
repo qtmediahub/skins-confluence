@@ -19,7 +19,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 function calcTextWidth(text, pixelSize, parent)
 {
-    if (parent == undefined)
+    if (!parent)
         return 0;
 
     var textElement = Qt.createQmlObject(
@@ -37,7 +37,7 @@ function calcTextWidth(text, pixelSize, parent)
 
 function calcTextHeight(text, pixelSize, parent)
 {
-    if (parent == undefined)
+    if (!parent)
         return 0;
 
     var textElement = Qt.createQmlObject(

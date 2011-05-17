@@ -33,10 +33,11 @@ Flow {
     signal upperBoundExceeded
 
     Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
-            flow == Flow.LeftToRight ? adjustIndex(+1) : undefined
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
-            flow == Flow.LeftToRight ? adjustIndex(-1) : undefined
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
+            if (flow == Flow.LeftToRight) adjustIndex(+1)
+        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Left)) {
+            if (flow == Flow.LeftToRight) adjustIndex(-1)
+        }
 
     function adjustIndex(delta)
     {
@@ -69,15 +70,17 @@ Flow {
     function focusItem() {
         var index = -1
         for(var i = 0; i < children.length; i++)
-            children[i].activeFocus ? index = i : undefined
-        return index == -1 ? undefined : children[index]
+            if (children[i].activeFocus)
+               index = i
+        return index == -1 ? null : children[index]
     }
 
     function setFocusItem(item) {
         var index = -1
 
         for(var i = 0; i < children.length; i++)
-            item == children[i] ? index = i : undefined
+            if (item == children[i]) 
+                index = i
 
         if (index != -1) {
             children[index].forceActiveFocus()

@@ -58,7 +58,8 @@ FocusScope {
         //Won't be able to close unless we have a focal widget!
         if (associatedWindow.focalWidget && associatedWindow.focalWidget.visible) {
             associatedWindow.focalWidget.forceActiveFocus()
-            associatedWindow.maximized ? hide() : undefined
+            if (associatedWindow.maximized)
+                hide()
         }
     }
     function hide() {
@@ -69,7 +70,7 @@ FocusScope {
         //Our use of behavior over transitions
         //Makes it unclear how to achieve PropertyAction {}
         //type behavior: hence cleaning up
-        !visible ? state = "hidden" : undefined
+        if (!visible) state = "hidden"
 
     states: [
         State {
@@ -90,7 +91,8 @@ FocusScope {
     ]
 
     Keys.onPressed:
-        runtime.actionmap.eventMatch(event, ActionMapper.Menu) ? root.close() : undefined
+        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
+            root.close()
 
     Item {
         id: blade
