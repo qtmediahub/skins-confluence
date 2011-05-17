@@ -52,7 +52,6 @@ FocusScope {
     property variant _browserWindow
     property variant _ticker
     property variant _weatherWindow
-    property variant _systemInfoWindow
     property variant _aboutWindow
     property variant _selectedEngine
     property variant _selectedElement
@@ -77,6 +76,11 @@ FocusScope {
 
     function showAboutWindow() {
         show(_aboutWindow)
+    }
+
+    function showSystemInfoWindow() {
+        var systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml", { deleteOnClose: true })
+        show(systemInfoWindow)
     }
 
     // obj has {name, role, visualElement, activationProperties, engine}
@@ -215,7 +219,7 @@ FocusScope {
         } else if (event.key == Qt.Key_F11) {
             showAboutWindow()
         } else if (event.key == Qt.Key_F10) {
-            show(_systemInfoWindow)
+            showSystemInfoWindow()
         } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
             avPlayer.increaseVolume()
         } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
@@ -285,8 +289,6 @@ FocusScope {
 
         var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
         addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("RemoteApp"), QMHPlugin.Application, remoteAppWindow))
-
-        _systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
 
         var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
         addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow, "carta_marina.jpg"))

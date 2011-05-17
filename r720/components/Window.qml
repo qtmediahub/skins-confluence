@@ -44,6 +44,8 @@ FocusScope {
     property int maximizedWidth: confluence.width
     property int maximizedHeight: confluence.height
 
+    property bool deleteOnClose: false
+
     function visibleTransitionFinished() {
         //no impl
     }
@@ -60,7 +62,7 @@ FocusScope {
     states: [
         State {
             name: ""
-            StateChangeScript { name: "hideAdditionalItems"; script: { background.opacity = 0; blade.opacity = 0 } }
+            StateChangeScript { name: "hideAdditionalItems"; script: { background.opacity = 0; blade.opacity = 0; if (root.deleteOnClose) root.destroy() } }
         },
         State {
             name: "visible"
