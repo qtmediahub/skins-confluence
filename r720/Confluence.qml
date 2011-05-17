@@ -34,7 +34,6 @@ FocusScope {
     property string generalResourcePath: runtime.backend.resourcePath
     property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence"
 
-    //FIXME: QML const equivalent?
     property int standardEasingCurve: Easing.InQuad
     property int standardAnimationDuration: 350
 
@@ -43,19 +42,20 @@ FocusScope {
 
     property bool standardItemViewWraps: true
 
-    property variant selectedEngine
-    property variant selectedElement
     property variant avPlayer
-    property variant browserWindow
-    property variant ticker
-    property variant weatherWindow
-    property variant systemInfoWindow
-    property variant aboutWindow
-
     property variant musicEngine
     property variant videoEngine
 
     property variant rootMenuModel: ListModel { }
+
+    // private
+    property variant _browserWindow
+    property variant _ticker
+    property variant _weatherWindow
+    property variant _systemInfoWindow
+    property variant _aboutWindow
+    property variant _selectedEngine
+    property variant _selectedElement
 
     anchors.fill: parent
     focus: true
@@ -67,16 +67,16 @@ FocusScope {
     }
 
     function openLink(link) {
-        if (browserWindow) {
-            browserWindow.loadPage(link)
-            confluence.show(browserWindow)
+        if (_browserWindow) {
+            _browserWindow.loadPage(link)
+            confluence.show(_browserWindow)
         } else {
             runtime.backend.openUrlExternally(link)
         }
     }
 
     function showAboutWindow() {
-        show(aboutWindow)
+        show(_aboutWindow)
     }
 
     // obj has {name, role, visualElement, activationProperties, engine}
@@ -91,21 +91,21 @@ FocusScope {
 
     function setActiveEngine(index) {
         var engine = rootMenuModel.get(index)
-        var oldEngine = selectedEngine
+        var oldEngine = _selectedEngine
 
-        selectedEngine = engine
-        selectedElement = engine.visualElement
+        _selectedEngine = engine
+        _selectedElement = engine.visualElement
 
         if (oldEngine != engine) {
             if (RootMenuModelItem.activationHandlers[index])
                 RootMenuModelItem.activationHandlers[index].call(engine)
         }
-        show(selectedElement)
+        show(_selectedElement)
     }
 
     function show(element) {
-        if (selectedElement && selectedElement != element)
-            selectedElement.state = ""
+        if (_selectedElement && _selectedElement != element)
+            _selectedElement.state = ""
 
         if (element == mainBlade) {
             state = ""
@@ -119,10 +119,10 @@ FocusScope {
                 show(transparentVideoOverlay)
             }
         } else if (element == transparentVideoOverlay) {
-            selectedElement = transparentVideoOverlay
+            _selectedElement = transparentVideoOverlay
             state = "showingSelectedElementMaximized"
         } else {
-            selectedElement = element
+            _selectedElement = element
             state = "showingSelectedElement"
         }
     }
@@ -160,7 +160,7 @@ FocusScope {
         State {
             name:  ""
             StateChangeScript { name: "focusMainBlade"; script: mainBlade.forceActiveFocus() }
-            PropertyChanges { target: ticker; state: "visible" }
+            PropertyChanges { target: _ticker; state: "visible" }
         },
         State {
             name: "showingSelectedElement"
@@ -170,15 +170,15 @@ FocusScope {
             PropertyChanges { target: weatherHeader; expanded: false }
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
-            PropertyChanges { target: ticker; state: "" }
-            PropertyChanges { target: selectedElement; state: "visible" }
+            PropertyChanges { target: _ticker; state: "" }
+            PropertyChanges { target: _selectedElement; state: "visible" }
             PropertyChanges { target: avPlayer; state: "background" }
         },
         State {
             name: "showingSelectedElementMaximized"
             extend: "showingSelectedElement"
-            PropertyChanges { target: selectedElement; state: "maximized" }
-            PropertyChanges { target: avPlayer; state: selectedElement == transparentVideoOverlay ? "maximized" : "hidden" }
+            PropertyChanges { target: _selectedElement; state: "maximized" }
+            PropertyChanges { target: avPlayer; state: _selectedElement == transparentVideoOverlay ? "maximized" : "hidden" }
             PropertyChanges { target: dateTimeHeader; expanded: false; showDate: false }
         }
     ]
@@ -197,7 +197,7 @@ FocusScope {
                 }
                 // Move things in
                 ParallelAnimation {
-                    PropertyAction { target: selectedElement; property: "state"; value: "visible" }
+                    PropertyAction { target: _selectedElement; property: "state"; value: "visible" }
                 }
             }
         }
@@ -205,17 +205,17 @@ FocusScope {
 
     Keys.onPressed: {
         if (runtime.actionmap.eventMatch(event, ActionMapper.Menu)) {
-            if(selectedElement && selectedElement.maximized)
-                selectedElement.maximized = false
+            if (_selectedElement && _selectedElement.maximized)
+                _selectedElement.maximized = false
             else
                 show(mainBlade)
         } else if (event.key == Qt.Key_F12) {
-            if (selectedElement && selectedElement.maximizable && state == "showingSelectedElement")
-                selectedElement.maximized = true
+            if (_selectedElement && _selectedElement.maximizable && state == "showingSelectedElement")
+                _selectedElement.maximized = true
         } else if (event.key == Qt.Key_F11) {
-            show(aboutWindow)
+            showAboutWindow()
         } else if (event.key == Qt.Key_F10) {
-            show(systemInfoWindow)
+            show(_systemInfoWindow)
         } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
             avPlayer.increaseVolume()
         } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
@@ -274,34 +274,34 @@ FocusScope {
         var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
         addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Dashboard"), QMHPlugin.Dashboard, dashboardWindow, "programs.jpg"))
 
-        browserWindow = createQmlObjectFromFile("WebWindow.qml")
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Web"), QMHPlugin.Web, browserWindow, "web.jpg"), function() { this.visualElement.initialUrl = "http://www.google.com" })
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Google Maps"), QMHPlugin.Map, browserWindow, "carta_marina.jpg"), function() { this.visualElement.initialUrl = confluence.generalResourcePath + "/googlemaps/Nokia.html"; this.visualElement.enableBrowserShortcuts = false })
+        _browserWindow = createQmlObjectFromFile("WebWindow.qml")
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Web"), QMHPlugin.Web, _browserWindow, "web.jpg"), function() { this.visualElement.initialUrl = "http://www.google.com" })
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Google Maps"), QMHPlugin.Map, _browserWindow, "carta_marina.jpg"), function() { this.visualElement.initialUrl = confluence.generalResourcePath + "/googlemaps/Nokia.html"; this.visualElement.enableBrowserShortcuts = false })
         if (runtime.config.isEnabled("wk-plugins", false))
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Youtube"), QMHPlugin.Application, browserWindow), function() { this.visualElement.initialUrl = "http://www.youtube.com/xl"})
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Youtube"), QMHPlugin.Application, _browserWindow), function() { this.visualElement.initialUrl = "http://www.youtube.com/xl"})
 
-        weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Weather"), QMHPlugin.Weather, weatherWindow, "weather.jpg"))
+        _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Weather"), QMHPlugin.Weather, _weatherWindow, "weather.jpg"))
 
         var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
         addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("RemoteApp"), QMHPlugin.Application, remoteAppWindow))
 
-        systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
+        _systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
 
         var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
         addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow, "carta_marina.jpg"))
 
-        ticker = createQmlObjectFromFile("Ticker.qml")
-        if (ticker) {
-            ticker.z = UIConstants.screenZValues.header
-            ticker.state = "visible"
-            ticker.linkClicked.connect(confluence.openLink)
+        _ticker = createQmlObjectFromFile("Ticker.qml")
+        if (_ticker) {
+            _ticker.z = UIConstants.screenZValues.header
+            _ticker.state = "visible"
+            _ticker.linkClicked.connect(confluence.openLink)
         } else {
-            ticker = dummyItem
+            _ticker = dummyItem
         }
 
         createQmlObjectFromFile("ScreenSaver.qml")
-        aboutWindow = createQmlObjectFromFile("AboutWindow.qml")
+        _aboutWindow = createQmlObjectFromFile("AboutWindow.qml")
         createQmlObjectFromFile("SystemScreenSaverControl.qml")
     }
 
@@ -348,7 +348,7 @@ FocusScope {
         ConfluenceText {
             id: contextText 
             anchors { right: parent.right; rightMargin: 25; verticalCenter: parent.verticalCenter }
-            text: selectedEngine ? selectedEngine.name : ""; color: "white"
+            text: _selectedEngine ? _selectedEngine.name : ""; color: "white"
         }
     }
 
@@ -356,11 +356,11 @@ FocusScope {
         id: weatherHeader
 
         width: content.width + dateTimeHeader.width + 50
-        city: weatherWindow.city
+        city: _weatherWindow.city
 
         MouseArea {
             anchors.fill: parent
-            onClicked: confluence.show(weatherWindow)
+            onClicked: confluence.show(_weatherWindow)
         }
     }
 
