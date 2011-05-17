@@ -267,14 +267,6 @@ FocusScope {
             addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg", pictureEngine))
         }
 
-        avPlayer = createQmlObjectFromFile("AVPlayer.qml")
-        if (avPlayer) {
-            // FIXME: nothing to get video-path during runtime, yet
-            avPlayer.state = "background"
-        } else {
-            avPlayer = dummyItem
-        }
-
         var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
         addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Dashboard"), QMHPlugin.Dashboard, dashboardWindow, "programs.jpg"))
 
@@ -293,10 +285,10 @@ FocusScope {
         var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
         addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow, "carta_marina.jpg"))
 
-        _ticker = createQmlObjectFromFile("Ticker.qml")
+        avPlayer = createQmlObjectFromFile("AVPlayer.qml", { state: "background" }) || dummyItem
+
+        _ticker = createQmlObjectFromFile("Ticker.qml", { z: UIConstants.screenZValues.header, state: "visible" })
         if (_ticker) {
-            _ticker.z = UIConstants.screenZValues.header
-            _ticker.state = "visible"
             _ticker.linkClicked.connect(confluence.openLink)
         } else {
             _ticker = dummyItem
