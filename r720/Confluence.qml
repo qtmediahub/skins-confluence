@@ -52,7 +52,7 @@ FocusScope {
     property variant _browserWindow
     property variant _ticker
     property variant _weatherWindow
-    property variant _selectedEngine
+    property int _selectedIndex : 0
     property variant _selectedElement
 
     anchors.fill: parent
@@ -95,15 +95,15 @@ FocusScope {
 
     function setActiveEngine(index) {
         var engine = rootMenuModel.get(index)
-        var oldEngine = _selectedEngine
 
-        _selectedEngine = engine
         _selectedElement = engine.visualElement
 
-        if (oldEngine != engine) {
+        if (index != _selectedIndex) {
             if (RootMenuModelItem.activationHandlers[index])
                 RootMenuModelItem.activationHandlers[index].call(engine)
         }
+
+        _selectedIndex = index
         show(_selectedElement)
     }
 
@@ -341,7 +341,8 @@ FocusScope {
         ConfluenceText {
             id: contextText 
             anchors { right: parent.right; rightMargin: 25; verticalCenter: parent.verticalCenter }
-            text: _selectedEngine ? _selectedEngine.name : ""; color: "white"
+            text: _selectedIndex < rootMenuModel.count ? rootMenuModel.get(_selectedIndex).name : ""
+            color: "white"
         }
     }
 
