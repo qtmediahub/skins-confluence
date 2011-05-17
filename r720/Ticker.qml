@@ -26,16 +26,7 @@ BorderImage {
     property string currentFeed: "rss.news.yahoo.com/rss/topstories"
     property bool active: confluence.state == "" && Qt.application.active
 
-    signal linkClicked (string link);
-
-    onLinkClicked: {
-        if (browserWindow) {
-            browserWindow.loadPage(link)
-            confluence.show(browserWindow)
-        } else {
-            runtime.backend.openUrlExternally(link)
-        }
-    }
+    signal linkClicked (string link)
 
     border.left: 100
     source: themeResourcePath + "/media/Rss_Back.png"

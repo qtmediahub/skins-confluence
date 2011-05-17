@@ -66,6 +66,15 @@ FocusScope {
         mainBlade.rootMenu.forceActiveFocus()
     }
 
+    function openLink(link) {
+        if (browserWindow) {
+            browserWindow.loadPage(link)
+            confluence.show(browserWindow)
+        } else {
+            runtime.backend.openUrlExternally(link)
+        }
+    }
+
     // obj has {name, role, visualElement, activationProperties, engine}
     function addToRootMenu(obj, activationHandler) {
         rootMenuModel.append(obj)
@@ -282,6 +291,7 @@ FocusScope {
         if (ticker) {
             ticker.z = UIConstants.screenZValues.header
             ticker.state = "visible"
+            ticker.linkClicked.connect(confluence.openLink)
         } else {
             ticker = dummyItem
         }
