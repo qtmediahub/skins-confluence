@@ -25,6 +25,7 @@ MediaWindow {
     id: root
 
     mediaWindowName: "videowindow"
+    mediaEngine: runtime.backend.engine("video")
 
     onItemActivated:
         avPlayer.playForeground(mediaItem.itemdata, Playlist.Replace, Playlist.Flat);

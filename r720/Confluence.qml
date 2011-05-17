@@ -251,19 +251,19 @@ FocusScope {
 
         if (engineNames.indexOf("music") != -1) {
             musicEngine = runtime.backend.engine("music")
-            var musicWindow = createQmlObjectFromFile("MusicWindow.qml", { mediaEngine: musicEngine });
+            var musicWindow = createQmlObjectFromFile("MusicWindow.qml");
             addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, "music.jpg", musicEngine))
         }
 
         if (engineNames.indexOf("video") != -1) {
             videoEngine = runtime.backend.engine("video")
-            var videoWindow = createQmlObjectFromFile("VideoWindow.qml", { mediaEngine: videoEngine });
+            var videoWindow = createQmlObjectFromFile("VideoWindow.qml");
             addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, "videos.jpg", videoEngine))
         }
 
         if (engineNames.indexOf("picture") != -1) {
+            var pictureWindow = createQmlObjectFromFile("PictureWindow.qml")
             var pictureEngine = runtime.backend.engine("picture")
-            var pictureWindow = createQmlObjectFromFile("PictureWindow.qml", { mediaEngine: pictureEngine });
             addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg", pictureEngine))
         }
 

@@ -24,6 +24,7 @@ MediaWindow {
     id: root
 
     mediaWindowName: "picture"
+    mediaEngine: runtime.backend.engine("picture")
     informationSheet: PictureInformationSheet { id: pictureInformationSheet }
 
     function showSlideShow(running) {

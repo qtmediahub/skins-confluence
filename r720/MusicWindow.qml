@@ -26,6 +26,7 @@ MediaWindow {
 
     informationSheet: MusicInformationSheet { id: musicInformationSheet }
     mediaWindowName: "musicwindow"
+    mediaEngine: runtime.backend.engine("music")
 
     onItemActivated:
         avPlayer.playForeground(mediaItem.itemdata, Playlist.Replace, Playlist.Flat);
