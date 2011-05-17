@@ -104,10 +104,9 @@ FocusScope {
         width: parent.width
 
         Keys.onPressed:
-            runtime.actionmap.eventMatch(event, ActionMapper.Up)
-            ||runtime.actionmap.eventMatch(event, ActionMapper.Down)
-            ? rootMenuList.focus = true
-            : undefined
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Up)
+                ||runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                rootMenuList.focus = true
 
         ConfluencePixmapButton {
             id: playMediaButton

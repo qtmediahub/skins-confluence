@@ -51,7 +51,8 @@ Dialog {
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
             Keys.onPressed: {
-                runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right) ? sourceNameInput.focus = true : undefined
+                if (runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right))
+                    sourceNameInput.focus = true
             }
         }
         Text {

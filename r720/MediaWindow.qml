@@ -83,7 +83,8 @@ Window {
     }
 
     function visibleTransitionFinished() {
-        mediaEngine.model.rowCount() < 1 ? confluence.showModal(addMediaSourceDialog) : undefined
+        if (mediaEngine.model.rowCount() < 1) 
+            confluence.showModal(addMediaSourceDialog)
     }
 
     ShaderEffectSource {
@@ -114,7 +115,7 @@ Window {
 
     Connections {
         target: addMediaSourceDialog
-        onRejected: mediaEngine.model.rowCount() < 1 ? confluence.show(mainBlade) : undefined
+        onRejected: if (mediaEngine.model.rowCount() < 1) confluence.show(mainBlade)
     }
 
     MediaScanInfo {

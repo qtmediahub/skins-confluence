@@ -143,10 +143,8 @@ FocusScope {
     Connections {
         target: mediaItem
         onStatusChanged:
-            d.queuedShow
-            && mediaItem.status == Video.Buffered
-            ? handlePendingShow()
-            : undefined
+            if (d.queuedShow && mediaItem.status == Video.Buffered)
+                handlePendingShow()
     }
 
     // RPC requests

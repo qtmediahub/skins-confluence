@@ -36,7 +36,7 @@ FocusScope {
         model: engine ? engine.actionList : null
 
         Keys.onPressed:
-            runtime.actionmap.eventMatch(event, ActionMapper.Enter) ? currentItem.trigger() : undefined
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Enter)) currentItem.trigger()
 
         delegate: Item {
             id: delegate

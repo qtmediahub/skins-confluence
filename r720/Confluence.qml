@@ -197,11 +197,8 @@ FocusScope {
             else
                 show(mainBlade)
         } else if (event.key == Qt.Key_F12) {
-            selectedElement
-                    && selectedElement.maximizable
-                    && state == "showingSelectedElement"
-                    ? selectedElement.maximized = true
-                    : undefined
+            if (selectedElement && selectedElement.maximizable && state == "showingSelectedElement")
+                selectedElement.maximized = true
         } else if (event.key == Qt.Key_F11) {
             show(aboutWindow)
         } else if (event.key == Qt.Key_F10) {

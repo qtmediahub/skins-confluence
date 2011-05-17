@@ -133,7 +133,8 @@ Window {
     //onVisibleChanged:
     //    webView.url = visible ? initialUrl : ""
     onVisibleChanged:
-        webView.url != initialUrl ? webView.url = initialUrl : undefined
+        if (webView.url != initialUrl)
+            webView.url = initialUrl
     onInitialUrlChanged:
         enableBrowserShortcuts = true
 }

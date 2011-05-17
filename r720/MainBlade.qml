@@ -37,7 +37,8 @@ Blade {
     property alias rootMenu: rootMenu
 
     function close() {
-        confluence.state == "" && avPlayer.playing ? show(transparentVideoOverlay) : undefined
+        if (confluence.state == "" && avPlayer.playing) 
+            show(transparentVideoOverlay)
     }
 
     bladeWidth: confluence.width/3.5
@@ -69,8 +70,9 @@ Blade {
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
         Keys.onPressed:
-            runtime.actionmap.eventMatch(event, ActionMapper.Menu)
-            || runtime.actionmap.eventMatch(event, ActionMapper.Left) ? subMenu.close() : undefined
+            if (runtime.actionmap.eventMatch(event, ActionMapper.Menu)
+                || runtime.actionmap.eventMatch(event, ActionMapper.Left))
+               subMenu.close()
 
         SubBladeMenu {
             id: subMenuList

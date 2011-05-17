@@ -31,7 +31,8 @@ Window {
     focalWidget: grid
 
     onVisibleChanged:
-        visible && !db.populated ? db.populateDashboard() : undefined
+        if (visible && !db.populated)
+            db.populateDashboard()
 
     Keys.onPressed: {
         if (runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
@@ -52,7 +53,8 @@ Window {
         //or someone appears to shortcut their setting above
         //This crashes the app though
         //activatedItem.anchors.centerIn = undefined
-        activatedItem != grid ? activatedItem.parent = grid : undefined
+        if (activatedItem != grid)
+            activatedItem.parent = grid
         activatedItem = grid
     }
 
