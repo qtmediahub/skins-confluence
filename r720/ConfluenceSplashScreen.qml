@@ -40,7 +40,7 @@ Item {
         id: splash
         anchors.fill: parent
         smooth: true
-        fillMode: Image.PreserveAspectFit
+        fillMode: Image.PreserveAspectCrop
         source: "../3rdparty/splash/splash.jpg"
     }
 
