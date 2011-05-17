@@ -52,7 +52,6 @@ FocusScope {
     property variant _browserWindow
     property variant _ticker
     property variant _weatherWindow
-    property variant _aboutWindow
     property variant _selectedEngine
     property variant _selectedElement
 
@@ -75,7 +74,8 @@ FocusScope {
     }
 
     function showAboutWindow() {
-        show(_aboutWindow)
+        var aboutWindow = createQmlObjectFromFile("AboutWindow.qml", { deleteOnClose: true })
+        show(aboutWindow)
     }
 
     function showSystemInfoWindow() {
@@ -303,7 +303,6 @@ FocusScope {
         }
 
         createQmlObjectFromFile("ScreenSaver.qml")
-        _aboutWindow = createQmlObjectFromFile("AboutWindow.qml")
         createQmlObjectFromFile("SystemScreenSaverControl.qml")
     }
 
