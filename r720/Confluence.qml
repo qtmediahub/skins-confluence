@@ -242,25 +242,25 @@ FocusScope {
 
         if (engineNames.indexOf("appstore") != -1) {
             var appStoreWindow = createQmlObjectFromFile("AppStoreWindow.qml")
-            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("App Store"), QMHPlugin.Store, appStoreWindow))
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("App Store"), QMHPlugin.Store, appStoreWindow))
         }
 
         if (engineNames.indexOf("music") != -1) {
             musicEngine = runtime.backend.engine("music")
             var musicWindow = createQmlObjectFromFile("MusicWindow.qml", { mediaEngine: musicEngine });
-            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, "music.jpg", musicEngine))
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, "music.jpg", musicEngine))
         }
 
         if (engineNames.indexOf("video") != -1) {
             videoEngine = runtime.backend.engine("video")
             var videoWindow = createQmlObjectFromFile("VideoWindow.qml", { mediaEngine: videoEngine });
-            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, "videos.jpg", videoEngine))
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, "videos.jpg", videoEngine))
         }
 
         if (engineNames.indexOf("picture") != -1) {
             var pictureEngine = runtime.backend.engine("picture")
             var pictureWindow = createQmlObjectFromFile("PictureWindow.qml", { mediaEngine: pictureEngine });
-            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg", pictureEngine))
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg", pictureEngine))
         }
 
         avPlayer = createQmlObjectFromFile("AVPlayer.qml")
@@ -272,24 +272,24 @@ FocusScope {
         }
 
         var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
-        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Dashboard"), QMHPlugin.Dashboard, dashboardWindow, "programs.jpg"))
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Dashboard"), QMHPlugin.Dashboard, dashboardWindow, "programs.jpg"))
 
         browserWindow = createQmlObjectFromFile("WebWindow.qml")
-        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Web"), QMHPlugin.Web, browserWindow, "web.jpg"), function() { this.visualElement.initialUrl = "http://www.google.com" })
-        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Google Maps"), QMHPlugin.Map, browserWindow, "carta_marina.jpg"), function() { this.visualElement.initialUrl = confluence.generalResourcePath + "/googlemaps/Nokia.html"; this.visualElement.enableBrowserShortcuts = false })
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Web"), QMHPlugin.Web, browserWindow, "web.jpg"), function() { this.visualElement.initialUrl = "http://www.google.com" })
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Google Maps"), QMHPlugin.Map, browserWindow, "carta_marina.jpg"), function() { this.visualElement.initialUrl = confluence.generalResourcePath + "/googlemaps/Nokia.html"; this.visualElement.enableBrowserShortcuts = false })
         if (runtime.config.isEnabled("wk-plugins", false))
-            confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Youtube"), QMHPlugin.Application, browserWindow), function() { this.visualElement.initialUrl = "http://www.youtube.com/xl"})
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Youtube"), QMHPlugin.Application, browserWindow), function() { this.visualElement.initialUrl = "http://www.youtube.com/xl"})
 
         weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
-        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Weather"), QMHPlugin.Weather, weatherWindow, "weather.jpg"))
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Weather"), QMHPlugin.Weather, weatherWindow, "weather.jpg"))
 
         var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
-        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("RemoteApp"), QMHPlugin.Application, remoteAppWindow))
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("RemoteApp"), QMHPlugin.Application, remoteAppWindow))
 
         systemInfoWindow = createQmlObjectFromFile("SystemInfoWindow.qml")
 
         var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
-        confluence.addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow, "carta_marina.jpg"))
+        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow, "carta_marina.jpg"))
 
         ticker = createQmlObjectFromFile("Ticker.qml")
         if (ticker) {
