@@ -75,6 +75,10 @@ FocusScope {
         }
     }
 
+    function showAboutWindow() {
+        show(aboutWindow)
+    }
+
     // obj has {name, role, visualElement, activationProperties, engine}
     function addToRootMenu(obj, activationHandler) {
         rootMenuModel.append(obj)

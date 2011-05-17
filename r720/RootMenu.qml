@@ -124,7 +124,7 @@ FocusScope {
             id: favouritesButton
             basePixmap: "home-favourites"
             focusedPixmap: "home-favourites-FO"
-            onClicked: confluence.show(aboutWindow)
+            onClicked: confluence.showAboutWindow()
 
             Keys.onPressed:
                 if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
