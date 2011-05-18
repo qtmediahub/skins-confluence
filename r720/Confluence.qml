@@ -89,7 +89,6 @@ FocusScope {
         var engine = rootMenuModel.get(index)
 
         if (!engine.visualElement) {
-            console.log('Creating on demand')
             engine.visualElement = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
         }
 
@@ -264,17 +263,18 @@ FocusScope {
         _browserWindow = createQmlObjectFromFile("WebWindow.qml")
         _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
 
+        // ## QML Bug : without background: <something> on the first item background breaks
         var rootMenuItems = [
-            { name: qsTr("App Store"), engine: "appstore", role: QMHPlugin.Store, sourceUrl: "AppStoreWindow.qml", background: null }, // ## QML Bug : without null, background breaks
+            { name: qsTr("App Store"), engine: "appstore", role: QMHPlugin.Store, sourceUrl: "AppStoreWindow.qml", background: null }, 
             { name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, sourceUrl: "DashboardWindow.qml", background: "programs.jpg" },
-            { name: qsTr("Remote App"), role: QMHPlugin.Application, sourceUrl: "RemoteAppWindow.qml" },
-            { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg" },
             { name: qsTr("Music"), engine: "music", role: QMHPlugin.Music, sourceUrl: "MusicWindow.qml", background: "music.jpg" },
-            { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg" },
             { name: qsTr("Picture"), engine: "picture", role: QMHPlugin.Picture, sourceUrl: "PictureWindow.qml", background: "pictures.jpg" },
+            { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg" },
             { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", visualElement: _weatherWindow, background: "weather.jpg" },
             { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", visualElement: _browserWindow, background: "web.jpg", 
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
+            { name: qsTr("Remote App"), role: QMHPlugin.Application, sourceUrl: "RemoteAppWindow.qml" },
+            { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg" },
             { name: qsTr("Google Maps"), role: QMHPlugin.Map, sourceUrl: "WebWindow.qml", visualElement: _browserWindow, background: "carta_marina.jpg", 
               onActivate: function() { this.initialUrl =  generalResourcePath + "/googlemaps/Nokia.html"; this.enableBrowserShortcuts = false } }
         ]
