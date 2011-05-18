@@ -24,7 +24,7 @@ import "./components/cursor.js" as Cursor
 import ActionMapper 1.0
 import "util.js" as Util
 import QMHPlugin 1.0
-import "rootmenumodelitem.js" as RootMenuModelItem
+import "confluence.js" as Confluence
 
 FocusScope {
     id: confluence
@@ -81,24 +81,23 @@ FocusScope {
         show(systemInfoWindow)
     }
 
-    // obj has {name, role, visualElement, activationProperties, engine}
-    function addToRootMenu(obj, activationHandler) {
-        rootMenuModel.append(obj)
-        RootMenuModelItem.activationHandlers[rootMenuModel.count-1] = activationHandler
-    }
-
-    function changeBackground(source) {
+    function setBackground(source) {
         background.source = source
     }
 
     function setActiveEngine(index) {
         var engine = rootMenuModel.get(index)
 
+        if (!engine.visualElement) {
+            console.log('Creating on demand')
+            engine.visualElement = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
+        }
+
         _selectedElement = engine.visualElement
 
         if (index != _selectedIndex) {
-            if (RootMenuModelItem.activationHandlers[index])
-                RootMenuModelItem.activationHandlers[index].call(engine)
+            if (Confluence.activationHandlers[index])
+                Confluence.activationHandlers[index].call(engine.visualElement)
         }
 
         _selectedIndex = index
@@ -236,49 +235,56 @@ FocusScope {
         return null
     }
 
+    function addRootMenuItem(obj, activationHandler) {
+        rootMenuModel.append(obj)
+        Confluence.activationHandlers[rootMenuModel.count-1] = activationHandler
+    }
+
+    function _addRootMenuItem(rootMenuItems) {
+        var engineNames = runtime.backend.loadedEngineNames()
+        for (var i = 0; i < rootMenuItems.length; i++) {
+            var item = rootMenuItems[i]
+            if (typeof item.engine != 'undefined') {
+                if (engineNames.indexOf(item.engine) == -1)
+                    continue
+            }
+
+            rootMenuModel.append(item)
+            if (item.onActivate)
+                Confluence.activationHandlers[rootMenuModel.count-1] = item.onActivate
+        }
+    }
+
     Component.onCompleted: {
         Cursor.initialize()
 
         runtime.backend.loadEngines()
         var engineNames = runtime.backend.loadedEngineNames()
 
-        if (engineNames.indexOf("appstore") != -1) {
-            var appStoreWindow = createQmlObjectFromFile("AppStoreWindow.qml")
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("App Store"), QMHPlugin.Store, appStoreWindow))
-        }
-
-        if (engineNames.indexOf("music") != -1) {
-            var musicWindow = createQmlObjectFromFile("MusicWindow.qml");
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, "music.jpg"))
-        }
-
-        if (engineNames.indexOf("video") != -1) {
-            var videoWindow = createQmlObjectFromFile("VideoWindow.qml");
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, "videos.jpg"))
-        }
-
-        if (engineNames.indexOf("picture") != -1) {
-            var pictureWindow = createQmlObjectFromFile("PictureWindow.qml")
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg"))
-        }
-
-        var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Dashboard"), QMHPlugin.Dashboard, dashboardWindow, "programs.jpg"))
-
         _browserWindow = createQmlObjectFromFile("WebWindow.qml")
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Web"), QMHPlugin.Web, _browserWindow, "web.jpg"), function() { this.visualElement.initialUrl = "http://www.google.com" })
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Google Maps"), QMHPlugin.Map, _browserWindow, "carta_marina.jpg"), function() { this.visualElement.initialUrl = confluence.generalResourcePath + "/googlemaps/Nokia.html"; this.visualElement.enableBrowserShortcuts = false })
-        if (runtime.config.isEnabled("wk-plugins", false))
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Youtube"), QMHPlugin.Application, _browserWindow), function() { this.visualElement.initialUrl = "http://www.youtube.com/xl"})
-
         _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Weather"), QMHPlugin.Weather, _weatherWindow, "weather.jpg"))
 
-        var remoteAppWindow = createQmlObjectFromFile("RemoteAppWindow.qml")
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("RemoteApp"), QMHPlugin.Application, remoteAppWindow))
+        var rootMenuItems = [
+            { name: qsTr("App Store"), engine: "appstore", role: QMHPlugin.Store, sourceUrl: "AppStoreWindow.qml", background: null }, // ## QML Bug : without null, background breaks
+            { name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, sourceUrl: "DashboardWindow.qml", background: "programs.jpg" },
+            { name: qsTr("Remote App"), role: QMHPlugin.Application, sourceUrl: "RemoteAppWindow.qml" },
+            { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg" },
+            { name: qsTr("Music"), engine: "music", role: QMHPlugin.Music, sourceUrl: "MusicWindow.qml", background: "music.jpg" },
+            { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg" },
+            { name: qsTr("Picture"), engine: "picture", role: QMHPlugin.Picture, sourceUrl: "PictureWindow.qml", background: "pictures.jpg" },
+            { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", visualElement: _weatherWindow, background: "weather.jpg" },
+            { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", visualElement: _browserWindow, background: "web.jpg", 
+              onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
+            { name: qsTr("Google Maps"), role: QMHPlugin.Map, sourceUrl: "WebWindow.qml", visualElement: _browserWindow, background: "carta_marina.jpg", 
+              onActivate: function() { this.initialUrl =  generalResourcePath + "/googlemaps/Nokia.html"; this.enableBrowserShortcuts = false } }
+        ]
 
-        var mapsWindow = createQmlObjectFromFile("MapsWindow.qml")
-        addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Ovi Maps"), QMHPlugin.Map, mapsWindow, "carta_marina.jpg"))
+        if (runtime.config.isEnabled("wk-plugins", false)) {
+            rootMenuItems.push({ name: qsTr("youtube"), role: QMHPlugin.Application, visualElement: _browserWindow, 
+                                 onActivate: function() { this.initialUrl = "http://www.youtube.com/xl" } })
+        }
+
+        _addRootMenuItem(rootMenuItems)
 
         avPlayer = createQmlObjectFromFile("AVPlayer.qml", { state: "background" }) || dummyItem
 

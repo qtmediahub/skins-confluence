@@ -70,7 +70,7 @@ FocusScope {
             RootMenuListItem { }
 
         onCurrentIndexChanged: {
-            confluence.changeBackground(currentItem.background)
+            confluence.setBackground(currentItem.background)
             if (menuSoundEffect) menuSoundEffect.play()
         }
 
