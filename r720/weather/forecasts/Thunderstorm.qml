@@ -50,7 +50,7 @@ ForecastView {
     RainItem {
         id: rain
         x: translateX(30)
-        y: translateY(300) - yOffset
+        y: translateY(300)// - yOffset
         visible: false
         rainType: "storm"
     }
