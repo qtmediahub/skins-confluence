@@ -258,7 +258,6 @@ FocusScope {
         Cursor.initialize()
 
         runtime.backend.loadEngines()
-        var engineNames = runtime.backend.loadedEngineNames()
 
         _browserWindow = createQmlObjectFromFile("WebWindow.qml")
         _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
