@@ -33,6 +33,9 @@ FocusScope {
     property bool hasMedia: !!mediaItem && mediaItem.source != ""
     property bool playing: hasMedia && mediaItem.playing
 
+    property variant musicEngine : runtime.backend.engine("music")
+    property variant videoEngine : runtime.backend.engine("video")
+
     QtObject {
         id: d
         property bool queuedShow: false
@@ -470,8 +473,8 @@ FocusScope {
         MediaSimpleListView {
             id: videoListPanel
             anchors.fill: parent
-            engineName: typeof confluence.videoEngine != "undefined" ? confluence.videoEngine.name : undefined
-            engineModel: typeof confluence.videoEngine != "undefined" ? confluence.videoEngine.model : undefined
+            engineName: root.videoEngine ? root.videoEngine.name : undefined
+            engineModel: root.videoEngine ? root.videoEngine.model : undefined
 
             onItemTriggered: {
                 root.play(itemData, Playlist.Replace, Playlist.Flat)
@@ -497,8 +500,8 @@ FocusScope {
         MediaSimpleListView {
             id: musicListPanel
             anchors.fill: parent
-            engineName: typeof confluence.musicEngine != "undefined" ? confluence.musicEngine.name : undefined
-            engineModel: typeof confluence.musicEngine != "undefined" ? confluence.musicEngine.model : undefined
+            engineName: root.musicEngine ? root.musicEngine.name : undefined
+            engineModel: root.musicEngine ? root.musicEngine.model : undefined
 
             onItemTriggered: {
                 root.play(itemData, Playlist.Replace, Playlist.Flat)

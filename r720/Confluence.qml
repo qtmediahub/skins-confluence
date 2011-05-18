@@ -43,8 +43,6 @@ FocusScope {
     property bool standardItemViewWraps: true
 
     property variant avPlayer
-    property variant musicEngine
-    property variant videoEngine
 
     property variant rootMenuModel: ListModel { }
 
@@ -250,21 +248,18 @@ FocusScope {
         }
 
         if (engineNames.indexOf("music") != -1) {
-            musicEngine = runtime.backend.engine("music")
             var musicWindow = createQmlObjectFromFile("MusicWindow.qml");
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, "music.jpg", musicEngine))
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Music"), QMHPlugin.Music, musicWindow, "music.jpg"))
         }
 
         if (engineNames.indexOf("video") != -1) {
-            videoEngine = runtime.backend.engine("video")
             var videoWindow = createQmlObjectFromFile("VideoWindow.qml");
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, "videos.jpg", videoEngine))
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Video"), QMHPlugin.Video, videoWindow, "videos.jpg"))
         }
 
         if (engineNames.indexOf("picture") != -1) {
             var pictureWindow = createQmlObjectFromFile("PictureWindow.qml")
-            var pictureEngine = runtime.backend.engine("picture")
-            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg", pictureEngine))
+            addToRootMenu(new RootMenuModelItem.RootMenuModelItem(qsTr("Picture"), QMHPlugin.Picture, pictureWindow, "pictures.jpg"))
         }
 
         var dashboardWindow = createQmlObjectFromFile("DashboardWindow.qml")
