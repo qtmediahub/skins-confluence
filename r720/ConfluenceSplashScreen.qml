@@ -24,7 +24,7 @@ Item {
 
     Timer {
         id: splashDelay
-        interval: runtime.config.value("splash-lead-time", 500)
+        interval: runtime.config.value("splash-lead-time", 1)
         onTriggered:
             confluenceEntry.load()
     }
@@ -63,7 +63,7 @@ Item {
 
         Behavior on bottomWidth {
             enabled: curtain.animated
-            SpringAnimation { easing.type: Easing.OutElastic; velocity: 1500; mass: 1.5; spring: 0.5; damping: 0.15}
+            SpringAnimation { easing.type: Easing.OutElastic; velocity: 4500; mass: .1; spring: 1; damping: 0.15}
         }
 
         SequentialAnimation on topWidth {
@@ -71,10 +71,10 @@ Item {
             loops: 1
             running: false
 
-            NumberAnimation { to: root.width - 50; duration: 700 }
-            PauseAnimation { duration: 500 }
-            NumberAnimation { to: root.width + 50; duration: 700 }
-            PauseAnimation { duration: 500 }
+            NumberAnimation { to: root.width - 50; duration: 500 }
+            PauseAnimation { duration: 300 }
+            NumberAnimation { to: root.width + 50; duration: 500 }
+            PauseAnimation { duration: 300 }
             ScriptAction { script: curtain.topWidth = 0; }
         }
 
