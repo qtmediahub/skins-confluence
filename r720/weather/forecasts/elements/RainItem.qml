@@ -48,7 +48,7 @@ Image {
 
     property string rainType: "rain";
 
-    source: "../../images" + folder + rainType + "_0" + rainItem.frame + ".png"
+    source: "../../images/" + rainType + "_0" + rainItem.frame + ".png"
 
     SequentialAnimation {
         id: rainAnim
@@ -69,6 +69,6 @@ Image {
     }
 
     Component.onCompleted: {
-        //rainAnim.running = true
+        rainAnim.running = true
     }
 }
