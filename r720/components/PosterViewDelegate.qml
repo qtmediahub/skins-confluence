@@ -23,6 +23,11 @@ Item {
             PathView.view.currentItem = delegateItem
     }
 
+    QtObject {
+        id: d
+        property string fallbackImagePath: themeResourcePath + "/media/DefaultMusicAlbums.png"
+    }
+
     BorderImage {
         id: border
         anchors.centerIn: parent
@@ -35,11 +40,13 @@ Item {
 
     Image {
         id: backgroundImage
-        source: model.previewUrl ? model.previewUrl : themeResourcePath + "/media/Fanart_Fallback_Music_Small.jpg"
+        source: model.previewUrl ? model.previewUrl : d.fallbackImagePath
         anchors.centerIn: parent
         width: (sourceSize.width > sourceSize.height ? delegateItem.width : (sourceSize.width / sourceSize.height) * delegateItem.width) - frameMargin*2
         height: (sourceSize.width <= sourceSize.height ? delegateItem.height : (sourceSize.height / sourceSize.width) * delegateItem.height) - frameMargin*2
-
+        onStatusChanged:
+            if ((status == Image.Error) && (source != d.fallbackImagePath))
+                source = d.fallbackImagePath
     }
 
     Image {
