@@ -74,6 +74,13 @@ Window {
         view.selectFirstItem()
     }
 
+    function setGroupBy(attribute) {
+        var index = blade.groupByAction.options.indexOf(attribute)
+        blade.groupByAction.currentOptionIndex = index
+        runtime.config.setValue(mediaWindow.mediaWindowName + "-group-by", attribute)
+        mediaEngine.model.groupBy(index)
+    }
+
     onItemActivated: {
         waveAnim.stop()
         var scenePos = confluence.mapFromItem(mediaItem.parent, mediaItem.x + mediaItem.width/2, mediaItem.y + mediaItem.height/2)
@@ -125,6 +132,7 @@ Window {
 
     bladeComponent: MediaWindowBlade {
         property alias viewAction: viewAction
+        property alias groupByAction: groupByAction
 
         parent: mediaWindow
         visible: true
@@ -151,8 +159,8 @@ Window {
             ConfluenceAction {
                 id: groupByAction
                 text: qsTr("GROUP BY")
-                options: mediaEngine.model.groupByOptions ? mediaEngine.model.groupByOptions() : ""
-                onTriggered: mediaEngine.model.groupBy(currentOptionIndex)
+                options: mediaEngine.model.groupByOptions ? mediaEngine.model.groupByOptions() : "None"
+                onTriggered: mediaWindow.setGroupBy(currentOption)
             },
             ConfluenceAction {
                 id: addNewSourceAction
@@ -227,5 +235,6 @@ Window {
 
     Component.onCompleted: {
         setCurrentView(runtime.config.value(mediaWindow.mediaWindowName + "-currentview", "POSTER"))
+        setGroupBy(runtime.config.value(mediaWindow.mediaWindowName + "-group-by", "None"))
     }
 }
