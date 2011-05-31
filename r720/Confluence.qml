@@ -391,7 +391,6 @@ FocusScope {
         id: deviceDialog
     }
 
-
     Connections {
         target: runtime.deviceManager
         onDeviceAdded: {
