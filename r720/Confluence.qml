@@ -105,7 +105,7 @@ FocusScope {
 
     function show(element) {
         if (_selectedElement && _selectedElement != element)
-            _selectedElement.state = ""
+            _selectedElement.close()
             if (_selectedElement.deleteOnClose) {
                 rootMenuModel.get(_selectedIndex).visualElement = null
                 _selectedElement = null
@@ -176,13 +176,13 @@ FocusScope {
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
             PropertyChanges { target: _ticker; state: "" }
-            PropertyChanges { target: _selectedElement; state: "visible" }
+            StateChangeScript { name: "showSelectedElement"; script: _selectedElement.show() }
             PropertyChanges { target: avPlayer; state: "background" }
         },
         State {
             name: "showingSelectedElementMaximized"
             extend: "showingSelectedElement"
-            PropertyChanges { target: _selectedElement; state: "maximized" }
+            StateChangeScript { name: "maximizeSelectedElement"; script: _selectedElement.showMaximized() }
             PropertyChanges { target: avPlayer; state: _selectedElement == transparentVideoOverlay ? "maximized" : "hidden" }
             PropertyChanges { target: dateTimeHeader; expanded: false; showDate: false }
         }
@@ -202,7 +202,7 @@ FocusScope {
                 }
                 // Move things in
                 ParallelAnimation {
-                    PropertyAction { target: _selectedElement; property: "state"; value: "visible" }
+                    ScriptAction { scriptName: "showSelectedElement" }
                 }
             }
         }

@@ -46,6 +46,19 @@ FocusScope {
 
     property bool deleteOnClose: false
 
+
+    function show() {
+        stateGroup.state = "visible"
+    }
+
+    function showMaximized() {
+        stateGroup.state = "maximized"
+    }
+
+    function close() {
+        stateGroup.state = "closed"
+    }
+
     function visibleTransitionFinished() {
         //no impl
     }
@@ -59,76 +72,80 @@ FocusScope {
     onMaximizedChanged:
         confluence.state = root.maximized ? "showingSelectedElementMaximized" : "showingSelectedElement"
 
-    states: [
-        State {
-            name: ""
-            StateChangeScript { name: "hideAdditionalItems"; script: { background.opacity = 0; blade.opacity = 0; if (root.deleteOnClose) root.destroy() } }
-        },
-        State {
-            name: "visible"
-            PropertyChanges {
-                target: root
-                visible: true
-                opacity: 1
-                scale: 1
-            }
-            StateChangeScript { name: "forceActiveFocus"; script: { if (focalWidget) focalWidget.forceActiveFocus() } }
-            StateChangeScript { name: "showAdditionalItems"; script: { background.opacity = 0.5; blade.opacity = 1 } }
-        },
-        State {
-            name: "maximized"
-            extend: "visible"
-            PropertyChanges {
-                target: root
-                width: maximizedWidth
-                height: maximizedHeight
-                anchors.horizontalCenterOffset: 0
-            }
-            PropertyChanges {
-                target: bladeLoader.item
-                state: "hidden"
-            }
-        }
-    ]
+    StateGroup {
+        id: stateGroup
 
-    transitions: [
-        Transition {
-            to: ""
-            SequentialAnimation {
-                PropertyAction { target: blade; property: "visible"; value: false }
-                ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: transitionDuration/2.0; easing.type: confluence.standardEasingCurve }
-                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+        states: [
+            State {
+                name: "closed"
+                StateChangeScript { name: "hideAdditionalItems"; script: { background.opacity = 0; blade.opacity = 0; if (root.deleteOnClose) root.destroy() } }
+            },
+            State {
+                name: "visible"
+                PropertyChanges {
+                    target: root
+                    visible: true
+                    opacity: 1
+                    scale: 1
                 }
-                PropertyAction { target: root; property: "visible"; value: false }
-                ScriptAction { scriptName: "hideAdditionalItems" }
+                StateChangeScript { name: "forceActiveFocus"; script: { if (focalWidget) focalWidget.forceActiveFocus() } }
+                StateChangeScript { name: "showAdditionalItems"; script: { background.opacity = 0.5; blade.opacity = 1 } }
+            },
+            State {
+                name: "maximized"
+                extend: "visible"
+                PropertyChanges {
+                    target: root
+                    width: maximizedWidth
+                    height: maximizedHeight
+                    anchors.horizontalCenterOffset: 0
+                }
+                PropertyChanges {
+                    target: bladeLoader.item
+                    state: "hidden"
+                }
             }
-        },
-        Transition {
-            from: ""
-            to: "visible"
-            SequentialAnimation {
-                PauseAnimation { duration: transitionDuration } // wait for main blade to be hidden
-                PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
-                PropertyAction { target: root; property: "visible"; value: true }
-                ParallelAnimation {
-                    NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
-                    NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: Easing.OutBack }
-                }
-                ScriptAction { scriptName: "forceActiveFocus" }
-                ScriptAction { scriptName: "showAdditionalItems" }
-                PropertyAction { target: blade; property: "visible"; value: true }
-                PropertyAction { target: blade; property: "state"; value: "" }
+        ]
 
-                ScriptAction { script: root.visibleTransitionFinished() }
+        transitions: [
+            Transition {
+                to: "closed"
+                SequentialAnimation {
+                    PropertyAction { target: blade; property: "visible"; value: false }
+                    ParallelAnimation {
+                        NumberAnimation { property: "opacity"; duration: transitionDuration/2.0; easing.type: confluence.standardEasingCurve }
+                        NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                    }
+                    PropertyAction { target: root; property: "visible"; value: false }
+                    ScriptAction { scriptName: "hideAdditionalItems" }
+                }
+            },
+            Transition {
+                from: ""
+                to: "visible"
+                SequentialAnimation {
+                    PauseAnimation { duration: transitionDuration } // wait for main blade to be hidden
+                    PropertyAction { target: root; property: "anchors.horizontalCenterOffset"; value: 0 }
+                    PropertyAction { target: root; property: "visible"; value: true }
+                    ParallelAnimation {
+                        NumberAnimation { property: "opacity"; duration: transitionDuration; easing.type: confluence.standardEasingCurve }
+                        NumberAnimation { property: "scale"; duration: transitionDuration; easing.type: Easing.OutBack }
+                    }
+                    ScriptAction { scriptName: "forceActiveFocus" }
+                    ScriptAction { scriptName: "showAdditionalItems" }
+                    PropertyAction { target: blade; property: "visible"; value: true }
+                    PropertyAction { target: blade; property: "state"; value: "" }
+
+                    ScriptAction { script: root.visibleTransitionFinished() }
+                }
+            },
+            Transition {
+                reversible: true
+                from: "visible"
+                to: "maximized"
             }
-        },
-        Transition {
-            reversible: true
-            from: "visible"
-            to: "maximized"
-        }
-    ]
+        ]
+    }
 
     Keys.onPressed:
         if (runtime.actionmap.eventMatch(event, ActionMapper.Context))
