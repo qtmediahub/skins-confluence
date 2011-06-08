@@ -59,11 +59,16 @@ Window {
 
     Keys.enabled: enableBrowserShortcuts
 
-    Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+    Keys.onPressed: {
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        if (action == ActionMapper.Up) {
             webViewport.contentY = Math.max(0, webViewport.contentY - 10)
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
+            event.accepted = true
+        } else if (action == ActionMapper.Down) {
             webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
+            event.accepted = true
+        }
+    }
 
     Panel {
         id: panel

@@ -220,10 +220,13 @@ FocusScope {
                     }
                 }
 
-                Keys.onPressed:
-                    if (runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
+                Keys.onPressed: {
+                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    if (action == ActionMapper.Left || action == ActionMapper.Right) {
                         appListView.gainFocus()
+                        event.accepted = true
                     }
+                }
 
                 MouseArea {
                     anchors.fill: parent;
@@ -325,15 +328,16 @@ FocusScope {
                         onClicked: activated()
                     }
                     Keys.onPressed: {
-                        if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+                        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter)
                             activated()
                     }
                 }
 
-                Keys.onPressed:
-                    if (runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
+                Keys.onPressed: {
+                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    if (action == ActionMapper.Left || action == ActionMapper.Right)
                         categoryListView.gainFocus()
-                    }
+                }
 
                 MouseArea {
                     anchors.fill: parent;

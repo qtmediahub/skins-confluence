@@ -87,18 +87,22 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed: {
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu) || runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
+    Keys.onPressed: { 
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        event.accepted = true
+        if (action = ActionMapper.Menu || action == ActionMapper.Enter) {
             root.running = false
             root.close()
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Context)) {
+        } else if (action == ActionMapper.Context) {
             root.running = !root.running
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Left)) {
+        } else if (action == ActionMapper.Left) {
             root.running = false
             root.previous()
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
+        } else if (action == ActionMapper.Right) {
             root.running = false
             root.next()
+        } else {
+            event.accepted = false
         }
     }
 

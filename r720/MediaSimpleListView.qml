@@ -44,6 +44,7 @@ Item {
             root.itemTriggered(currentItem.itemdata)
         }
         Keys.onPressed: {
+            var action = runtime.actionmap.mapKeyEventToAction(event)
             var itemType = sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.type : ""
             if (itemType == "SearchPath") {
                 if (event.key == Qt.Key_Delete) {
@@ -51,7 +52,7 @@ Item {
                     event.accepted = true
                 }
             } else if (itemType == "File") {
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
+                if (action == ActionMapper.Enter) {
                     root.itemTriggered(currentItem.itemdata)
                     event.accepted = true
                 }

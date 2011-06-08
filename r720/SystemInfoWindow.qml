@@ -26,11 +26,16 @@ import ActionMapper 1.0
 Window {
     id: root
 
-    Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+    Keys.onPressed: {
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        if (action == ActionMapper.Up) {
             infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
+            event.accepted = true
+        } else if (action == ActionMapper.Down) {
             infoViewport.contentY = Math.min(infoViewport.contentHeight - height, infoViewport.contentY + 20)
+            event.accepted = true
+        }
+    }
 
     NetworkInfo {
         id: networkInfo

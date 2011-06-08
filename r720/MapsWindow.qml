@@ -104,27 +104,24 @@ Window {
         }
 
         Keys.onPressed: {
-            if (runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
+            var action = runtime.actionmap.mapKeyEventToAction(event)
+            event.accepted = true
+            if (action == ActionMapper.Right) {
                 map.pan(100, 0)
-                event.accepted = true
-            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Left)) {
+            } else if (action == ActionMapper.Left) {
                 map.pan(-100, 0)
-                event.accepted = true
-            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Up)) {
+            } else if (action == ActionMapper.Up) {
                 map.pan(0, -100)
-                event.accepted = true
-            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Down)) {
+            } else if (action == ActionMapper.Down) {
                 map.pan(0, 100)
-                event.accepted = true
-            } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
+            } else if (action == ActionMapper.ContextualDown) {
                 map.zoomLevel = map.zoomLevel - 1
-                event.accepted = true
-            } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
+            } else if (action == ActionMapper.ContextualUp) {
                 map.zoomLevel = map.zoomLevel + 1
-                event.accepted = true
-            } else if (runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
+            } else if (action == ActionMapper.Enter) {
                 root.blade.open()
-                event.accepted = true
+            } else {
+                event.accepted = false
             }
         }
     }

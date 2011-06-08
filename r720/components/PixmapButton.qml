@@ -51,8 +51,10 @@ Item {
         depressed = false
 
     Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
             button.clicked()
+            event.accepted = true
+        }
 
     Image {
         id: pixmap

@@ -209,11 +209,20 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu)) {
-            if (_selectedElement && _selectedElement.maximized)
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        event.accepted = true
+        if (action == ActionMapper.Menu) {
+            if (_selectedElement && _selectedElement.maximized) {
                 _selectedElement.maximized = false
-            else
+            } else {
                 show(mainBlade)
+            }
+        } else if (action == ActionMapper.ContextualUp) {
+            avPlayer.increaseVolume()
+        } else if (action == ActionMapper.ContextualDown) {
+            avPlayer.decreaseVolume()
+        } else if (action == ActionMapper.MediaPlayPause) {
+            avPlayer.togglePlayPause()
         } else if (event.key == Qt.Key_F12) {
             if (_selectedElement && _selectedElement.maximizable && state == "showingSelectedElement")
                 _selectedElement.maximized = true
@@ -221,12 +230,8 @@ FocusScope {
             showAboutWindow()
         } else if (event.key == Qt.Key_F10) {
             showSystemInfoWindow()
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualUp)) {
-            avPlayer.increaseVolume()
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.ContextualDown)) {
-            avPlayer.decreaseVolume()
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.MediaPlayPause)) {
-            avPlayer.togglePlayPause()
+        } else {
+            event.accepted = false
         }
     }
 

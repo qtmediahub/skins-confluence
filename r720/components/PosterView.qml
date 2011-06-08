@@ -61,11 +61,16 @@ PathView {
     Component.onCompleted:
         setPathStyle("carousel")
 
-    Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
+    Keys.onPressed: {
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        if (action == ActionMapper.Right) {
             pathView.incrementCurrentIndex()
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
+            event.accepted = true
+        } else if (action == ActionMapper.Left) {
             pathView.decrementCurrentIndex()
+            event.accepted = true
+        }
+    }
 
     QtObject {
         id: paths

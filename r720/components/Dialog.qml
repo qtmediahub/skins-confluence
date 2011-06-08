@@ -151,12 +151,16 @@ FocusScope {
             onClicked: root.reject();
         }
         Keys.onPressed:
-            if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+            if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
                 root.reject()
+                event.accepted = true
+            }
     }
 
     Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
+        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Menu) {
             root.reject()
+            event.accepted = true
+        }
 }
 

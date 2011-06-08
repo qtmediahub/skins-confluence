@@ -34,9 +34,11 @@ Window {
         }
 
         Keys.onPressed: {
-            if (runtime.actionmap.eventMatch(event, ActionMapper.Right)
-                || runtime.actionmap.eventMatch(event, ActionMapper.Left))
+            var action = runtime.actionmap.mapKeyEventToAction(event)
+            if (action == ActionMapper.Right || action == ActionMapper.Left) {
                 sourceNameInput.focus = true
+                event.accepted = true
+            }
         }
     }
 
@@ -67,13 +69,18 @@ Window {
                 color: "white"
                 font.pointSize: 15
 
-                Keys.onPressed:
-                    if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                Keys.onPressed: {
+                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    event.accepted = true
+                    if (action == ActionMapper.Down)
                         reloadButton.focus = true
-                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+                    else if (action == ActionMapper.Up)
                         loader.focus = true
-                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+                    else if (action == ActionMapper.Enter)
                         loader.load()
+                    else
+                        event.accepted = false
+                }
             }
 
             MouseArea {
@@ -93,8 +100,10 @@ Window {
             onClicked: loader.load()
 
            Keys.onPressed:
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+                if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Up) {
                     sourceNameInput.focus = true
+                    event.accepted = true
+                }
         }
     }
 }

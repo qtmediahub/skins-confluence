@@ -68,9 +68,13 @@ Dialog {
             height: parent.height - browseLabel.height - buttonBox.height
             model: root.actionList
 
-            Keys.onPressed:
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right))
+            Keys.onPressed: {
+                var action = runtime.actionmap.mapKeyEventToAction(event)
+                if (action == ActionMapper.Left || action == ActionMapper.Right) {
                     buttonBox.focus = true
+                    event.accepted = true
+                }
+            }
         }
 
         DialogButtonBox {
@@ -99,9 +103,13 @@ Dialog {
                 root.reject()
             }
 
-            Keys.onPressed:
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Up) || runtime.actionmap.eventMatch(event, ActionMapper.Down) || runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right))
+            Keys.onPressed: {
+                var action = runtime.actionmap.mapKeyEventToAction(event)
+                if (action == ActionMapper.Up || action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right) {
                     listView.focus = true
+                    event.accepted = true
+                }
+            }
         }
     }
 }

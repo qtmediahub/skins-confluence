@@ -39,8 +39,10 @@ Image {
     }
 
     Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
            root.clicked()
+            event.accepted = true
+        }
 
     ConfluenceText {
         id: textLabel

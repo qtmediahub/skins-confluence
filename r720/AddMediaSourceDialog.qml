@@ -51,7 +51,8 @@ Dialog {
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
             Keys.onPressed: {
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right))
+                var action = runtime.actionmap.mapKeyEventToAction(event)
+                if (action == ActionMapper.Left || action == ActionMapper.Right)
                     sourceNameInput.focus = true
             }
         }
@@ -74,11 +75,13 @@ Dialog {
                 text: qsTr("Home")
                 color: "white"
 
-                Keys.onPressed:
-                    if (runtime.actionmap.eventMatch(event, ActionMapper.Down) || runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right)) 
+                Keys.onPressed: {
+                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
                         buttonBox.focus = true
-                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+                    else if (action == ActionMapper.Up)
                         fileSystemView.focus = true
+                }
             }
 
             MouseArea {
@@ -99,11 +102,13 @@ Dialog {
                 root.reject()
             }
 
-            Keys.onPressed:
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Down) || runtime.actionmap.eventMatch(event, ActionMapper.Left) || runtime.actionmap.eventMatch(event, ActionMapper.Right)) 
+            Keys.onPressed: {
+                var action = runtime.actionmap.mapKeyEventToAction(event)
+                if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
                     fileSystemView.focus = true
-                else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+                else if (action == ActionMapper.Up)
                     sourceNameInput.focus = true
+            }
         }
     }
 }

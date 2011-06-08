@@ -47,7 +47,10 @@ Item {
             onClicked: root.accept()
 
             Keys.onPressed:
-                runtime.actionmap.eventMatch(event, ActionMapper.Right) ? cancelButton.focus = true : 0
+                if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Right) {
+                    cancelButton.focus = true
+                    event.accepted = true
+                }
         }
 
         Item {
@@ -61,7 +64,10 @@ Item {
             text: qsTr("Cancel")
             onClicked: root.reject()
             Keys.onPressed:
-                runtime.actionmap.eventMatch(event, ActionMapper.Left) ? okButton.focus = true : 0
+                if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Left) {
+                    okButton.focus = true
+                    event.accepted = true
+                }
         }
     }
 }

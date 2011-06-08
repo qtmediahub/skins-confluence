@@ -35,10 +35,17 @@ Window {
             db.populateDashboard()
 
     Keys.onPressed: {
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Enter)) {
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        if (action == ActionMapper.Enter) {
             activate(grid.focusItem())
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Menu)) {
-            activatedItem != grid ? deactivate() : event.accepted = false
+            event.accepted = true
+        } else if (action == ActionMapper.Menu) {
+            if (activatedItem != grid) {
+                deactivate()
+                event.accepted = true
+            } else {
+                event.accepted = false
+            }
         }
     }
 

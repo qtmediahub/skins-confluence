@@ -91,8 +91,10 @@ FocusScope {
     ]
 
     Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
+        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Menu) {
             root.close()
+            event.accepted = true
+        }
 
     Item {
         id: blade

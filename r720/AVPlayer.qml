@@ -225,23 +225,27 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        event.accepted = true
+        if (action == ActionMapper.Menu)
             if (root.state == "targets")
                 root.state = "maximized"
             else
                 confluence.state = ""
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+        else if (action == ActionMapper.Enter)
             togglePlayPause()
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Context))
+        else if (action == ActionMapper.Context)
             showOSD()
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
-            playPrevious();
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
-            playNext();
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
-            increasePlaybackRate();
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
-            decreasePlaybackRate();
+        else if (action == ActionMapper.Up)
+            playPrevious()
+        else if (action == ActionMapper.Down)
+            playNext()
+        else if (action == ActionMapper.Right)
+            increasePlaybackRate()
+        else if (action == ActionMapper.Left)
+            decreasePlaybackRate()
+        else
+            event.accepted = false
     }
 
     MouseArea {
@@ -483,9 +487,11 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
+            var action = runtime.actionmap.mapKeyEventToAction(event)
+            if (action == ActionMapper.Menu) {
                 videoListDialog.close()
-            else if (runtime.actionmap.eventMatch(event, ActionMapper.Up) || runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                event.accepted = true
+            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
                 event.accepted = true
         }
     }
@@ -510,9 +516,11 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
+            var action = runtime.actionmap.mapKeyEventToAction(event)
+            if (action == ActionMapper.Menu) {
                 musicListDialog.close()
-            else if (runtime.actionmap.eventMatch(event, ActionMapper.Up) || runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                event.accepted = true
+            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
                 event.accepted = true
         }
     }
@@ -536,9 +544,11 @@ FocusScope {
             }
 
             Keys.onPressed: {
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Menu))
+                var action = runtime.actionmap.mapKeyEventToAction(event)
+                if (action == ActionMapper.Menu) {
                     playListDialog.close()
-                else if (runtime.actionmap.eventMatch(event, ActionMapper.Up) || runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                    event.accepted = true
+                } else if (action == ActionMapper.Up || action == ActionMapper.Down)
                     event.accepted = true
             }
         }

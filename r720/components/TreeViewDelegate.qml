@@ -82,7 +82,9 @@ Item {
     }
 
     Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Enter))
+        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
             delegateItem.activate()
+            event.accepted = true
+        }
 }
 

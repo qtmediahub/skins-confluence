@@ -32,12 +32,18 @@ Flow {
     signal lowerBoundExceeded
     signal upperBoundExceeded
 
-    Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Right)) {
-            if (flow == Flow.LeftToRight) adjustIndex(+1)
-        } else if (runtime.actionmap.eventMatch(event, ActionMapper.Left)) {
-            if (flow == Flow.LeftToRight) adjustIndex(-1)
+    Keys.onPressed: {
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        if (action == ActionMapper.Right) {
+            if (flow == Flow.LeftToRight) 
+                adjustIndex(+1)
+            event.accepted = true
+        } else if (action == ActionMapper.Left) {
+            if (flow == Flow.LeftToRight) 
+                adjustIndex(-1)
+            event.accepted = true
         }
+    }
 
     function adjustIndex(delta)
     {

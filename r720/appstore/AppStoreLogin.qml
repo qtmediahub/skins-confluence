@@ -53,11 +53,16 @@ Dialog {
                 text: "qtmediahub"
                 color: "white"
 
-                Keys.onPressed:
-                    if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+                Keys.onPressed: {
+                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    if (action == ActionMapper.Up) {
                         buttonBox.focus = true
-                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                        event.accepted = true
+                    } else if (action == ActionMapper.Down) {
                         sourcePasswordInput.focus = true
+                        event.accepted = true
+                    }
+                }
             }
 
             MouseArea {
@@ -87,11 +92,16 @@ Dialog {
                 echoMode: TextInput.Password
                 color: "white"
 
-                Keys.onPressed:
-                    if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+                Keys.onPressed: {
+                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    if (action == ActionMapper.Up) {
                         sourceNameInput.focus = true
-                    else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                        event.accepted = true
+                    } else if (action == ActionMapper.Down) {
                         buttonBox.focus = true
+                        event.accepted = true
+                    }
+                }
             }
 
             MouseArea {
@@ -111,11 +121,16 @@ Dialog {
                 root.reject()
             }
 
-            Keys.onPressed:
-                if (runtime.actionmap.eventMatch(event, ActionMapper.Up))
+            Keys.onPressed: {
+                var action = runtime.actionmap.mapKeyEventToAction(event)
+                if (action == ActionMapper.Up) {
                     sourcePasswordInput.focus = true
-                else if (runtime.actionmap.eventMatch(event, ActionMapper.Down))
+                    event.accepted = true
+                } else if (action == ActionMapper.Down) {
                     sourceNameInput.focus = true
+                    event.accepted = true
+                }
+            }
         }
     }
 

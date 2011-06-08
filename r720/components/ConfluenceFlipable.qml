@@ -47,9 +47,13 @@ Flipable {
     }
 
     Keys.onPressed:
-        if (runtime.actionmap.eventMatch(event, ActionMapper.Right))
+        var action = runtime.actionmap.mapKeyEventToAction(event)
+        if (action == ActionMapper.Right) {
             angle += 180
-        else if (runtime.actionmap.eventMatch(event, ActionMapper.Left))
+            event.accepted = true
+        } else if (action == ActionMapper.Left) {
             angle -= 180
+            event.accepted = true
+        }
 }
 
