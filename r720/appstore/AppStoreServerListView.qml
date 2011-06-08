@@ -221,7 +221,7 @@ FocusScope {
                 }
 
                 Keys.onPressed: {
-                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    var action = runtime.actionMapper.mapKeyEventToAction(event)
                     if (action == ActionMapper.Left || action == ActionMapper.Right) {
                         appListView.gainFocus()
                         event.accepted = true
@@ -328,13 +328,13 @@ FocusScope {
                         onClicked: activated()
                     }
                     Keys.onPressed: {
-                        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter)
+                        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter)
                             activated()
                     }
                 }
 
                 Keys.onPressed: {
-                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    var action = runtime.actionMapper.mapKeyEventToAction(event)
                     if (action == ActionMapper.Left || action == ActionMapper.Right)
                         categoryListView.gainFocus()
                 }

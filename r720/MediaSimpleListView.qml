@@ -44,7 +44,7 @@ Item {
             root.itemTriggered(currentItem.itemdata)
         }
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             var itemType = sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.type : ""
             if (itemType == "SearchPath") {
                 if (event.key == Qt.Key_Delete) {

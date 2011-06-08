@@ -209,7 +209,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        var action = runtime.actionmap.mapKeyEventToAction(event)
+        var action = runtime.actionMapper.mapKeyEventToAction(event)
         event.accepted = true
         if (action == ActionMapper.Menu) {
             if (_selectedElement && _selectedElement.maximized) {

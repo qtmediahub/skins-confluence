@@ -103,7 +103,7 @@ Window {
     }
 
     Keys.onPressed: {
-        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Menu) {
+        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
             event.accepted = true
             if (appStoreListView.state == "visible")
                 hideAppStore();

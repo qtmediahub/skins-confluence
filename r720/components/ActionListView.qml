@@ -118,7 +118,7 @@ ListView {
         }
 
         Keys.onPressed:
-            if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
+            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
                 if (model.modelData.enabled) 
                     delegateItem.activate()
                 event.accepted = true

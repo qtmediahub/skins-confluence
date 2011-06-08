@@ -27,7 +27,7 @@ Window {
     id: root
 
     Keys.onPressed: {
-        var action = runtime.actionmap.mapKeyEventToAction(event)
+        var action = runtime.actionMapper.mapKeyEventToAction(event)
         if (action == ActionMapper.Up) {
             infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
             event.accepted = true

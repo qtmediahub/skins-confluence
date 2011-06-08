@@ -35,7 +35,7 @@ Window {
             db.populateDashboard()
 
     Keys.onPressed: {
-        var action = runtime.actionmap.mapKeyEventToAction(event)
+        var action = runtime.actionMapper.mapKeyEventToAction(event)
         if (action == ActionMapper.Enter) {
             activate(grid.focusItem())
             event.accepted = true

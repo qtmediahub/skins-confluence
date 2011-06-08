@@ -70,7 +70,7 @@ Blade {
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             if (action == ActionMapper.Menu || action == ActionMapper.Left) {
                 subMenu.close()
                 event.accepted = true

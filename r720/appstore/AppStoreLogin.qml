@@ -54,7 +54,7 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed: {
-                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    var action = runtime.actionMapper.mapKeyEventToAction(event)
                     if (action == ActionMapper.Up) {
                         buttonBox.focus = true
                         event.accepted = true
@@ -93,7 +93,7 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed: {
-                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    var action = runtime.actionMapper.mapKeyEventToAction(event)
                     if (action == ActionMapper.Up) {
                         sourceNameInput.focus = true
                         event.accepted = true
@@ -122,7 +122,7 @@ Dialog {
             }
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Up) {
                     sourcePasswordInput.focus = true
                     event.accepted = true

@@ -69,7 +69,7 @@ Dialog {
             model: root.actionList
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Left || action == ActionMapper.Right) {
                     buttonBox.focus = true
                     event.accepted = true
@@ -104,7 +104,7 @@ Dialog {
             }
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Up || action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right) {
                     listView.focus = true
                     event.accepted = true

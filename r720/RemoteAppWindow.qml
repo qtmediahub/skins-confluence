@@ -34,7 +34,7 @@ Window {
         }
 
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             if (action == ActionMapper.Right || action == ActionMapper.Left) {
                 sourceNameInput.focus = true
                 event.accepted = true
@@ -70,7 +70,7 @@ Window {
                 font.pointSize: 15
 
                 Keys.onPressed: {
-                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    var action = runtime.actionMapper.mapKeyEventToAction(event)
                     event.accepted = true
                     if (action == ActionMapper.Down)
                         reloadButton.focus = true
@@ -100,7 +100,7 @@ Window {
             onClicked: loader.load()
 
            Keys.onPressed:
-                if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Up) {
+                if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Up) {
                     sourceNameInput.focus = true
                     event.accepted = true
                 }

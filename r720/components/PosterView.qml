@@ -62,7 +62,7 @@ PathView {
         setPathStyle("carousel")
 
     Keys.onPressed: {
-        var action = runtime.actionmap.mapKeyEventToAction(event)
+        var action = runtime.actionMapper.mapKeyEventToAction(event)
         if (action == ActionMapper.Right) {
             pathView.incrementCurrentIndex()
             event.accepted = true

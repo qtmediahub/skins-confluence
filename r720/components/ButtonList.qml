@@ -33,7 +33,7 @@ Flow {
     signal upperBoundExceeded
 
     Keys.onPressed: {
-        var action = runtime.actionmap.mapKeyEventToAction(event)
+        var action = runtime.actionMapper.mapKeyEventToAction(event)
         if (action == ActionMapper.Right) {
             if (flow == Flow.LeftToRight) 
                 adjustIndex(+1)

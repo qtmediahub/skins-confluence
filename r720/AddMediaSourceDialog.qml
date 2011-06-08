@@ -51,7 +51,7 @@ Dialog {
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Left || action == ActionMapper.Right)
                     sourceNameInput.focus = true
             }
@@ -76,7 +76,7 @@ Dialog {
                 color: "white"
 
                 Keys.onPressed: {
-                    var action = runtime.actionmap.mapKeyEventToAction(event)
+                    var action = runtime.actionMapper.mapKeyEventToAction(event)
                     if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
                         buttonBox.focus = true
                     else if (action == ActionMapper.Up)
@@ -103,7 +103,7 @@ Dialog {
             }
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
                     fileSystemView.focus = true
                 else if (action == ActionMapper.Up)

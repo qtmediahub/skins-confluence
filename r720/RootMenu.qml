@@ -75,7 +75,7 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             event.accepted = true
             if (action == ActionMapper.Enter)
                 currentItem.trigger()
@@ -108,7 +108,7 @@ FocusScope {
         width: parent.width
 
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             if (action == ActionMapper.Up || action == ActionMapper.Down) {
                 rootMenuList.focus = true
                 event.accepted = true
@@ -122,7 +122,7 @@ FocusScope {
             onClicked: confluence.show(avPlayer)
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Left) {
                     rootMenuList.focus = true
                     event.accepted = true
@@ -139,7 +139,7 @@ FocusScope {
             onClicked: confluence.showAboutWindow()
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Left) {
                     event.accepted = true
                     playMediaButton.focus = true
@@ -156,7 +156,7 @@ FocusScope {
             onClicked: confluence.showModal(exitDialog)
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Left) {
                     favouritesButton.focus = true
                     event.accepted = true

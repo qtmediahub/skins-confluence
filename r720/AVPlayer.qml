@@ -225,7 +225,7 @@ FocusScope {
     ]
 
     Keys.onPressed: {
-        var action = runtime.actionmap.mapKeyEventToAction(event)
+        var action = runtime.actionMapper.mapKeyEventToAction(event)
         event.accepted = true
         if (action == ActionMapper.Menu)
             if (root.state == "targets")
@@ -487,7 +487,7 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             if (action == ActionMapper.Menu) {
                 videoListDialog.close()
                 event.accepted = true
@@ -516,7 +516,7 @@ FocusScope {
         }
 
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             if (action == ActionMapper.Menu) {
                 musicListDialog.close()
                 event.accepted = true
@@ -544,7 +544,7 @@ FocusScope {
             }
 
             Keys.onPressed: {
-                var action = runtime.actionmap.mapKeyEventToAction(event)
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
                 if (action == ActionMapper.Menu) {
                     playListDialog.close()
                     event.accepted = true

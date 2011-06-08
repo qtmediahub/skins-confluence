@@ -36,7 +36,7 @@ FocusScope {
         model: engine ? engine.actionList : null
 
         Keys.onPressed:
-            if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
+            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
                 currentItem.trigger()
                 event.accepted = true
             }

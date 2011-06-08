@@ -104,7 +104,7 @@ Window {
         }
 
         Keys.onPressed: {
-            var action = runtime.actionmap.mapKeyEventToAction(event)
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
             event.accepted = true
             if (action == ActionMapper.Right) {
                 map.pan(100, 0)

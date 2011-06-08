@@ -51,7 +51,7 @@ Item {
         depressed = false
 
     Keys.onPressed:
-        if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
+        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
             button.clicked()
             event.accepted = true
         }

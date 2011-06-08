@@ -67,7 +67,7 @@ GridView {
         }
 
         Keys.onPressed: {
-            if (runtime.actionmap.mapKeyEventToAction(event) == ActionMapper.Enter) {
+            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
                 triggerItem()
                 event.accepted = true
             }
