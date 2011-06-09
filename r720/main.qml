@@ -59,7 +59,7 @@ Item {
 
     Component.onCompleted:
     if (runtime.config.isEnabled("splash", true)) {
-        splashLoader.source = "ConfluenceSplashScreen.qml"
+        splashLoader.source = "SplashScreen.qml"
     } else {
         confluenceEntry.load()
     }
