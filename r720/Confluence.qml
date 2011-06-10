@@ -265,9 +265,8 @@ FocusScope {
     }
 
     Component.onCompleted: {
-        Cursor.initialize()
-
         runtime.backend.loadEngines()
+        Cursor.initialize()
 
         _browserWindow = createQmlObjectFromFile("WebWindow.qml")
         _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
