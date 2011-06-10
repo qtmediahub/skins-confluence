@@ -143,7 +143,7 @@ Window {
                         id: thistext
                         anchors.verticalCenter: parent.verticalCenter
                         color: "white"
-                        font.pointSize: 16
+                        font.pointSize: root.height/80 //16
                         text: name
                     }
                     MouseArea {
@@ -218,7 +218,7 @@ Window {
                 ConfluenceText {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("WEATHER FORECAST")
-                    font.pixelSize: 40
+                    font.pixelSize: root.height/24  //40
                 }
 
                 Item {
