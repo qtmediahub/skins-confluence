@@ -114,8 +114,8 @@ Window {
         NumberAnimation on wave {
             id: waveAnim
             running: true
-            easing.type: "Linear"
-            from: 0.0000; to: 2.0000;
+            easing.type: "InQuad"
+            from: 0.0000; to: 1.0000;
             duration: 2500
         }
     }
