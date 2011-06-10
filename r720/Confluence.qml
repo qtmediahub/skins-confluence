@@ -50,8 +50,8 @@ FocusScope {
     property variant _browserWindow
     property variant _ticker
     property variant _weatherWindow
-    property int _selectedIndex : 0
-    property variant _selectedElement
+    property int _openWindowIndex : 0
+    property variant _openWindow
 
     anchors.fill: parent
     focus: true
@@ -92,24 +92,24 @@ FocusScope {
             engine.window = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
         }
 
-        _selectedElement = engine.window
+        _openWindow = engine.window
 
-        if (index != _selectedIndex) {
+        if (index != _openWindowIndex) {
             if (Confluence.activationHandlers[index])
                 Confluence.activationHandlers[index].call(engine.window)
         }
 
-        _selectedIndex = index
-        show(_selectedElement)
+        _openWindowIndex = index
+        show(_openWindow)
     }
 
     function show(element) {
-        if (_selectedElement && _selectedElement != element) {
-            _selectedElement.close()
-            if (_selectedElement.deleteOnClose) {
-                rootMenuModel.get(_selectedIndex).window = null
-                _selectedElement = null
-                _selectedIndex = 0
+        if (_openWindow && _openWindow != element) {
+            _openWindow.close()
+            if (_openWindow.deleteOnClose) {
+                rootMenuModel.get(_openWindowIndex).window = null
+                _openWindow = null
+                _openWindowIndex = 0
             }
         }
         if (element == mainBlade) {
@@ -124,10 +124,10 @@ FocusScope {
                 show(transparentVideoOverlay)
             }
         } else if (element == transparentVideoOverlay) {
-            _selectedElement = transparentVideoOverlay
+            _openWindow = transparentVideoOverlay
             state = "showingSelectedElementMaximized"
         } else {
-            _selectedElement = element
+            _openWindow = element
             state = "showingSelectedElement"
         }
     }
@@ -176,14 +176,14 @@ FocusScope {
             PropertyChanges { target: homeHeader; expanded: true }
             PropertyChanges { target: currentContextHeader; expanded: true }
             PropertyChanges { target: _ticker; state: "" }
-            StateChangeScript { name: "showSelectedElement"; script: _selectedElement.show() }
+            StateChangeScript { name: "showSelectedElement"; script: _openWindow.show() }
             PropertyChanges { target: avPlayer; state: "background" }
         },
         State {
             name: "showingSelectedElementMaximized"
             extend: "showingSelectedElement"
-            StateChangeScript { name: "maximizeSelectedElement"; script: _selectedElement.showMaximized() }
-            PropertyChanges { target: avPlayer; state: _selectedElement == transparentVideoOverlay ? "maximized" : "hidden" }
+            StateChangeScript { name: "maximizeSelectedElement"; script: _openWindow.showMaximized() }
+            PropertyChanges { target: avPlayer; state: _openWindow == transparentVideoOverlay ? "maximized" : "hidden" }
             PropertyChanges { target: dateTimeHeader; expanded: false; showDate: false }
         }
     ]
@@ -212,8 +212,8 @@ FocusScope {
         var action = runtime.actionMapper.mapKeyEventToAction(event)
         event.accepted = true
         if (action == ActionMapper.Menu) {
-            if (_selectedElement && _selectedElement.maximized) {
-                _selectedElement.maximized = false
+            if (_openWindow && _openWindow.maximized) {
+                _openWindow.maximized = false
             } else {
                 show(mainBlade)
             }
@@ -224,8 +224,8 @@ FocusScope {
         } else if (action == ActionMapper.MediaPlayPause) {
             avPlayer.togglePlayPause()
         } else if (event.key == Qt.Key_F12) {
-            if (_selectedElement && _selectedElement.maximizable && state == "showingSelectedElement")
-                _selectedElement.maximized = true
+            if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
+                _openWindow.maximized = true
         } else if (event.key == Qt.Key_F11) {
             showAboutWindow()
         } else if (event.key == Qt.Key_F10) {
@@ -351,7 +351,7 @@ FocusScope {
         ConfluenceText {
             id: contextText 
             anchors { right: parent.right; rightMargin: 25; verticalCenter: parent.verticalCenter }
-            text: _selectedIndex < rootMenuModel.count ? rootMenuModel.get(_selectedIndex).name : ""
+            text: _openWindowIndex < rootMenuModel.count ? rootMenuModel.get(_openWindowIndex).name : ""
             color: "white"
         }
     }
