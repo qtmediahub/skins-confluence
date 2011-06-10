@@ -113,7 +113,7 @@ Window {
 
         NumberAnimation on wave {
             id: waveAnim
-            running: true
+            running: false
             easing.type: "InQuad"
             from: 0.0000; to: 1.0000;
             duration: 2500
