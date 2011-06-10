@@ -60,8 +60,8 @@ FocusScope {
     }
 
     function playForeground(itemdata, role, depth) { // this now gets uri...
-        root.play(itemdata, role, depth);
         d.queuedShow = true
+        root.play(itemdata, role, depth);
     }
 
     function playBackground(item, role, depth) {
@@ -145,6 +145,10 @@ FocusScope {
 
     Connections {
         target: mediaItem
+        onPlayingChanged:
+            if (playing && d.queuedShow)
+                handlePendingShow()
+
         onStatusChanged:
             if (d.queuedShow && mediaItem.status == Video.Buffered)
                 handlePendingShow()
