@@ -121,7 +121,6 @@ FocusScope {
                 }
             },
             Transition {
-                from: ""
                 to: "visible"
                 SequentialAnimation {
                     PauseAnimation { duration: transitionDuration } // wait for main blade to be hidden
