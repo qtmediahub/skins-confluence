@@ -86,6 +86,7 @@ Window {
         var scenePos = confluence.mapFromItem(mediaItem.parent, mediaItem.x + mediaItem.width/2, mediaItem.y + mediaItem.height/2)
         waveLayer.waveOriginX = scenePos.x/confluence.width
         waveLayer.waveOriginY = scenePos.y/confluence.height
+        waveLayer.visible = true
         waveAnim.start()
     }
 
@@ -97,12 +98,13 @@ Window {
     ShaderEffectSource {
         id: viewSource
         sourceItem: view
-        live: true
+        live: false
         hideSource: true
     }
 
     RadialWaveEffect {
         id: waveLayer
+        visible: false
         anchors.fill: parent;
         source: viewSource
 
