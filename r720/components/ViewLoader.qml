@@ -40,7 +40,7 @@ FocusScope {
         loader.sourceComponent = internalSourceComponent = sourceComponent = component
         loader.state = "visible"
         loader.focus = true
-        load.item.visible = true
+        loader.item.visible = true
     }
 
     Loader {

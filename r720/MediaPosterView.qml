@@ -68,6 +68,8 @@ Item {
         focus: true
         posterModel: engineModel
 
+        onCurrentItemChanged:
+            mediaWindow.itemSelected(currentItem)
         onActivated: {
             mediaWindow.itemActivated(currentItem)
         }

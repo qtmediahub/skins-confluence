@@ -66,6 +66,8 @@ Item {
             treeModel: engineModel
             clip: true
             focus: true
+            onCurrentItemChanged:
+                mediaWindow.itemSelected(currentItem)
             onActivated:
                 mediaWindow.itemActivated(currentItem)
             Keys.onPressed: {

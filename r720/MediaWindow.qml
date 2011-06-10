@@ -30,6 +30,7 @@ Window {
     focalWidget: viewLoader
 
     signal itemActivated(variant mediaItem)
+    signal itemSelected(variant mediaItem)
     property alias view: viewLoader.item
     property variant mediaEngine
     property Item informationSheet
@@ -81,6 +82,9 @@ Window {
         mediaEngine.model.groupBy(index)
     }
 
+    onItemSelected:
+        waveLayer.visible = false
+
     onItemActivated: {
         waveAnim.stop()
         var scenePos = confluence.mapFromItem(mediaItem.parent, mediaItem.x + mediaItem.width/2, mediaItem.y + mediaItem.height/2)
@@ -115,7 +119,7 @@ Window {
 
         NumberAnimation on wave {
             id: waveAnim
-            running: false
+            running: waveLayer.visible
             easing.type: "InQuad"
             from: 0.0000; to: 1.0000;
             duration: 2500
