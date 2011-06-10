@@ -88,15 +88,15 @@ FocusScope {
     function setActiveEngine(index) {
         var engine = rootMenuModel.get(index)
 
-        if (!engine.visualElement) {
-            engine.visualElement = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
+        if (!engine.window) {
+            engine.window = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
         }
 
-        _selectedElement = engine.visualElement
+        _selectedElement = engine.window
 
         if (index != _selectedIndex) {
             if (Confluence.activationHandlers[index])
-                Confluence.activationHandlers[index].call(engine.visualElement)
+                Confluence.activationHandlers[index].call(engine.window)
         }
 
         _selectedIndex = index
@@ -107,7 +107,7 @@ FocusScope {
         if (_selectedElement && _selectedElement != element) {
             _selectedElement.close()
             if (_selectedElement.deleteOnClose) {
-                rootMenuModel.get(_selectedIndex).visualElement = null
+                rootMenuModel.get(_selectedIndex).window = null
                 _selectedElement = null
                 _selectedIndex = 0
             }
@@ -117,9 +117,9 @@ FocusScope {
         } else if(element == avPlayer) {
             if(!avPlayer.hasMedia) {
                 if (typeof runtime.videoEngine != "undefined")
-                    show(runtime.videoEngine.visualElement)
+                    show(runtime.videoEngine.window)
                 else if (typeof runtime.musicEngine != "undefined")
-                    show(runtime.musicEngine.visualElement)
+                    show(runtime.musicEngine.window)
             } else {
                 show(transparentVideoOverlay)
             }
@@ -279,17 +279,17 @@ FocusScope {
             { name: qsTr("Music"), engine: "music", role: QMHPlugin.Music, sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Picture"), engine: "picture", role: QMHPlugin.Picture, sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", visualElement: _weatherWindow, background: "weather.jpg" },
-            { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", visualElement: _browserWindow, background: "web.jpg", 
+            { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
+            { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg", 
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
             { name: qsTr("Remote App"), role: QMHPlugin.Application, sourceUrl: "RemoteAppWindow.qml", constructorArgs: { deleteOnClose: true }},
             { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Google Maps"), role: QMHPlugin.Map, sourceUrl: "WebWindow.qml", visualElement: _browserWindow, background: "carta_marina.jpg",
+            { name: qsTr("Google Maps"), role: QMHPlugin.Map, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "carta_marina.jpg",
               onActivate: function() { this.initialUrl =  generalResourcePath + "/googlemaps/Nokia.html"; this.enableBrowserShortcuts = false } }
         ]
 
         if (runtime.config.isEnabled("wk-plugins", false)) {
-            rootMenuItems.push({ name: qsTr("youtube"), role: QMHPlugin.Application, visualElement: _browserWindow, 
+            rootMenuItems.push({ name: qsTr("youtube"), role: QMHPlugin.Application, window: _browserWindow, 
                                  onActivate: function() { this.initialUrl = "http://www.youtube.com/xl" } })
         }
 
