@@ -75,7 +75,7 @@ Item {
         opacity: 0.5
         scale: 0.5
 
-        font.pixelSize: confluence.width/24 //60
+        font.pixelSize: confluence.width/30 //24 //60
         text: model.name
         horizontalAlignment: Text.AlignRight
         font.weight: Font.Bold
