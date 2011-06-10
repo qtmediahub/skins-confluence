@@ -104,14 +104,14 @@ FocusScope {
     }
 
     function show(element) {
-        if (_selectedElement && _selectedElement != element)
+        if (_selectedElement && _selectedElement != element) {
             _selectedElement.close()
             if (_selectedElement.deleteOnClose) {
                 rootMenuModel.get(_selectedIndex).visualElement = null
                 _selectedElement = null
                 _selectedIndex = 0
             }
-
+        }
         if (element == mainBlade) {
             state = ""
         } else if(element == avPlayer) {
