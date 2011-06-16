@@ -20,4 +20,5 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtMobility.systeminfo 1.1 as MobilitySysInfo
 
 MobilitySysInfo.ScreenSaver {
+    screenSaverDelayed: true
 }
