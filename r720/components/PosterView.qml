@@ -73,6 +73,8 @@ PathView {
         id: paths
         property PosterPath linearZoom: PosterPath {
             id: linearZoom
+            pathItemCount: (pathView.width+2*pathView.delegateWidth)/pathView.delegateWidth
+
             startX: -pathView.delegateWidth; startY: (pathView.height - pathView.delegateHeight)/2.0
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
