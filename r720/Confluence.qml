@@ -273,18 +273,13 @@ FocusScope {
 
         // ## QML Bug : without background: <something> on the first item background breaks
         var rootMenuItems = [
-            { name: qsTr("App Store"), engine: "appstore", role: QMHPlugin.Store, sourceUrl: "AppStoreWindow.qml", background: null, constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Dashboard"), role: QMHPlugin.Dashboard, sourceUrl: "DashboardWindow.qml", background: "programs.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Music"), engine: "music", role: QMHPlugin.Music, sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Picture"), engine: "picture", role: QMHPlugin.Picture, sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
             { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg", 
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
-            { name: qsTr("Remote App"), role: QMHPlugin.Application, sourceUrl: "RemoteAppWindow.qml", constructorArgs: { deleteOnClose: true }},
             { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Google Maps"), role: QMHPlugin.Map, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "carta_marina.jpg",
-              onActivate: function() { this.initialUrl =  generalResourcePath + "/googlemaps/Nokia.html"; this.enableBrowserShortcuts = false } }
         ]
 
         if (runtime.config.isEnabled("wk-plugins", false)) {
