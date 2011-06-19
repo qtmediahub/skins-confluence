@@ -27,7 +27,10 @@ Item {
     width: ListView.view.width - 30
     height: sourceText.height + 8
 
-    ListView.onAdd: NumberAnimation {
+    ListView.onAdd: if (confluence.shroomfluence) delegateItemAnim.restart()
+
+    NumberAnimation {
+        id: delegateItemAnim
         target: delegateItem
         properties: "scale, opacity"
         from: 0
