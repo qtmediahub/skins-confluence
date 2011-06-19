@@ -24,7 +24,7 @@ Item {
     id: delegateItem
 
     property variant itemdata : model
-    width: ListView.view.width
+    width: ListView.view.width - 30
     height: sourceText.height + 8
 
     ListView.onAdd: NumberAnimation {
@@ -48,6 +48,8 @@ Item {
         font.pointSize: 16
         font.weight: Font.Light
         color: "white"
+        width: parent.width
+        elide: Text.ElideRight
     }
 
     function activate() {
