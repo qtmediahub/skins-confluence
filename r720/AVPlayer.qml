@@ -80,6 +80,7 @@ FocusScope {
     function playModelIndex(idx) {
         mediaItem.stop();
         mediaItem.currentModelIndex = idx
+        mediaItem.playbackRate = 1
         mediaItem.source = playlist.data(idx, Media.FilePathRole)
         mediaItem.play();
     }
