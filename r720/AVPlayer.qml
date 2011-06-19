@@ -231,12 +231,12 @@ FocusScope {
     Keys.onPressed: {
         var action = runtime.actionMapper.mapKeyEventToAction(event)
         event.accepted = true
-        if (action == ActionMapper.Menu)
+        if (action == ActionMapper.Menu) {
             if (root.state == "targets")
                 root.state = "maximized"
             else
                 confluence.state = ""
-        else if (action == ActionMapper.Enter)
+        } else if (action == ActionMapper.Enter)
             togglePlayPause()
         else if (action == ActionMapper.Context)
             showOSD()
