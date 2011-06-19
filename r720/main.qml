@@ -59,7 +59,11 @@ Item {
 
     Component.onCompleted:
     if (runtime.config.isEnabled("splash", true)) {
-        splashLoader.source = "SplashScreen.qml"
+        if (runtime.config.isEnabled("shroom", false)) {
+            splashLoader.source = "ShaderSplashScreen.qml"
+        } else {
+            splashLoader.source = "SplashScreen.qml"
+        }
     } else {
         confluenceEntry.load()
     }

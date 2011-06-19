@@ -86,6 +86,8 @@ Window {
         waveLayer.visible = false
 
     onItemActivated: {
+        if (!confluence.shroomfluence)
+            return
         waveAnim.stop()
         var scenePos = confluence.mapFromItem(mediaItem.parent, mediaItem.x + mediaItem.width/2, mediaItem.y + mediaItem.height/2)
         waveLayer.waveOriginX = scenePos.x/confluence.width
