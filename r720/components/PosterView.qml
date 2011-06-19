@@ -58,9 +58,6 @@ PathView {
         }
     }
 
-    Component.onCompleted:
-        setPathStyle("carousel")
-
     Keys.onPressed: {
         var action = runtime.actionMapper.mapKeyEventToAction(event)
         if (action == ActionMapper.Right) {
