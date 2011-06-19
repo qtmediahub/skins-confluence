@@ -90,7 +90,7 @@ FocusScope {
     Keys.onPressed: { 
         var action = runtime.actionMapper.mapKeyEventToAction(event)
         event.accepted = true
-        if (action = ActionMapper.Menu || action == ActionMapper.Enter) {
+        if (action == ActionMapper.Menu || action == ActionMapper.Enter) {
             root.running = false
             root.close()
         } else if (action == ActionMapper.Context) {
