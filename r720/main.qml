@@ -57,14 +57,15 @@ Item {
         }
     }
 
-    Component.onCompleted:
-    if (runtime.config.isEnabled("splash", true)) {
-        if (runtime.config.isEnabled("shroom", false)) {
-            splashLoader.source = "ShaderSplashScreen.qml"
+    Component.onCompleted: {
+        if (runtime.config.isEnabled("splash", true)) {
+            if (runtime.config.isEnabled("shroom", false)) {
+                splashLoader.source = "ShaderSplashScreen.qml"
+            } else {
+                splashLoader.source = "SplashScreen.qml"
+            }
         } else {
-            splashLoader.source = "SplashScreen.qml"
+            confluenceEntry.load()
         }
-    } else {
-        confluenceEntry.load()
     }
 }
