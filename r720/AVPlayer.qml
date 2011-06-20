@@ -207,6 +207,10 @@ FocusScope {
                 target: targetsList
                 opacity: 1
             }
+            StateChangeScript {
+                name: "targetsListFocus"
+                script: targetsList.forceActiveFocus()
+            }
             PropertyChanges {
                 target: targetsText
                 opacity: 1
@@ -600,11 +604,17 @@ FocusScope {
             id: delegateItem
             width: ListView.view.width
             height: sourceText.height + 8
+
+            function action() {
+                rpcClient.send(model.address, model.port, mediaItem.source, mediaItem.position)
+            }
+
             Image {
                 id: backgroundImage
                 anchors.fill: parent;
                 source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
             }
+
             Text {
                 id: sourceText
                 anchors.verticalCenter: parent.verticalCenter
@@ -619,7 +629,25 @@ FocusScope {
                 anchors.fill: parent;
                 hoverEnabled: true
                 onEntered: delegateItem.ListView.view.currentIndex = index
-                onClicked: rpcClient.send(model.address, model.port, mediaItem.source, mediaItem.position)
+                onClicked: delegateItem.action()
+            }
+
+            Keys.onPressed: {
+                var action = runtime.actionMapper.mapKeyEventToAction(event)
+                if (action == ActionMapper.Enter) {
+                    delegateItem.action()
+                    event.accepted = true
+                }
+            }
+        }
+
+        Keys.onPressed: {
+            var action = runtime.actionMapper.mapKeyEventToAction(event)
+            if (action == ActionMapper.Menu) {
+                mediaItem.forceActiveFocus()
+                event.accepted = true
+            } else if (action == ActionMapper.Left || action == ActionMapper.Right || action == ActionMapper.Up || action == ActionMapper.Down) {
+                event.accepted = true
             }
         }
     }
