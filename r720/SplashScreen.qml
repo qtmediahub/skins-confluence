@@ -27,16 +27,22 @@ Item {
 
     Timer {
         id: settleTimer
-        interval: 1000
+        interval: runtime.config.value("splash-time", 2000)
         onTriggered: splash.opacity = 0
     }
 
-    Image {
+    Rectangle {
         id: splash
         width: root.width; height: root.height
         smooth: true
-        fillMode: Image.PreserveAspectCrop
-        source: "../3rdparty/splash/splash.jpg"
+        color: "black"
+
+        Image {
+            anchors.centerIn: parent
+            source: "../3rdparty/skin.confluence/media/Confluence_Logo.png"
+            asynchronous: true
+        }
+
         Behavior on opacity { PropertyAnimation{ duration: 1000 } }
         onOpacityChanged:
             if(splash.opacity == 0)
