@@ -71,10 +71,10 @@ Item {
         anchors.rightMargin: 20
 
         transformOrigin: Item.Right
-        opacity: 0.5
+        opacity: 0.3
         scale: 0.5
 
-        font.pixelSize: confluence.width/30 //24 //60
+        font.pixelSize: confluence.width/24 //60
         text: model.name
         horizontalAlignment: Text.AlignRight
         font.weight: Font.Bold
@@ -82,11 +82,12 @@ Item {
         states: [
             State {
                 name: 'highlighted'
+                //Scale of 1 actually results in jarring transition from scaled to unscaled
                 PropertyChanges { target: entry; scale: 0.9999; opacity: 1 }
             },
             State {
                 name: 'non-selected'
-                PropertyChanges { target: entry; opacity: 1 }
+                PropertyChanges { target: entry; opacity: 0 }
             }
         ]
 
