@@ -67,7 +67,8 @@ Item {
     ConfluenceText {
         id: entry
 
-        anchors { right: parent.right; rightMargin: 20 }
+        anchors.right: parent.right
+        anchors.rightMargin: 20
 
         transformOrigin: Item.Right
         opacity: 0.5
@@ -81,11 +82,11 @@ Item {
         states: [
             State {
                 name: 'highlighted'
-                PropertyChanges { target: entry; scale: 1; opacity: 1 }
+                PropertyChanges { target: entry; scale: 0.9999; opacity: 1 }
             },
             State {
                 name: 'non-selected'
-                PropertyChanges { target: entry; opacity: 0 }
+                PropertyChanges { target: entry; opacity: 1 }
             }
         ]
 
