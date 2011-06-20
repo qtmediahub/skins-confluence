@@ -66,7 +66,7 @@ Window {
         } else {
             //Default in case we remove their stored preference
             viewLoader.changeView(posterView)
-            view.setPathStyle("coverFlood")
+            view.setPathStyle("POSTER")
         }
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
@@ -155,7 +155,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")]
+                options: confluence.shroomfluence ? [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")] : [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER")]
                 onTriggered: mediaWindow.setCurrentView(currentOption)
             },
             ConfluenceAction {
