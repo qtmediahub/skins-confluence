@@ -5,30 +5,20 @@ Item {
 
     opacity: 1
 
-    function start() {
-        splashDelay.start()
-    }
+    function start() {}
 
-    function play() {}
+    function play() {
+        splash.opacity = 0
+    }
 
     signal finished
 
     anchors.fill: parent
 
-    onWidthChanged: {
-        settleTimer.start()
-    }
-
-    Timer {
-        id: splashDelay
-        interval: runtime.config.value("splash-lead-time", 500)
-        onTriggered: confluenceEntry.load()
-    }
-
     Timer {
         id: settleTimer
-        interval: runtime.config.value("splash-time", 2000)
-        onTriggered: splash.opacity = 0
+        interval: runtime.config.value("splash-time", 1)
+        onTriggered: confluenceEntry.load()
     }
 
     Rectangle {
@@ -43,9 +33,16 @@ Item {
             asynchronous: true
         }
 
-        Behavior on opacity { PropertyAnimation{ duration: 1000 } }
+        Behavior on opacity {
+            SequentialAnimation {
+                PauseAnimation { duration: 1000 }
+                PropertyAnimation{ duration: 1000 }
+            }
+        }
         onOpacityChanged:
-            if(splash.opacity == 0)
+            if(splash.opacity < 0.1)
                 root.finished()
     }
+    Component.onCompleted:
+        settleTimer.start()
 }
