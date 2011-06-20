@@ -21,6 +21,7 @@ import QtQuick 1.1
 import "components/"
 import "util.js" as Util
 import Playlist 1.0
+import Media 1.0
 
 Item {
     id: root
@@ -87,7 +88,7 @@ Item {
 
             Image {
                 id: thumbnail
-                source: media.currentIndex ? playlist.data(media.currentIndex, Playlist.PreviewUrlRole) : themeResourcePath + "/media/DefaultAlbumCover.png"
+                source: media.currentModelIndex ? playlist.data(media.currentModelIndex, Media.PreviewUrlRole) : themeResourcePath + "/media/DefaultAlbumCover.png"
                 anchors.fill: parent
                 anchors.margins: 6
 
