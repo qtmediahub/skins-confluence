@@ -66,12 +66,10 @@ Item {
 
     ConfluenceText {
         id: entry
-        property int angle: 0
 
         anchors { right: parent.right; rightMargin: 20 }
 
         transformOrigin: Item.Right
-        transform: Rotation { origin.x: width/2.0; origin.y: height/2.0; axis { x: 1; y: 0; z: 0 } angle: entry.angle }
         opacity: 0.5
         scale: 0.5
 
@@ -83,7 +81,7 @@ Item {
         states: [
             State {
                 name: 'highlighted'
-                PropertyChanges { target: entry; scale: 1; opacity: 1; angle: 360 }
+                PropertyChanges { target: entry; scale: 1; opacity: 1 }
             },
             State {
                 name: 'non-selected'
@@ -92,9 +90,7 @@ Item {
         ]
 
         transitions: Transition {
-            SequentialAnimation {
-                ConfluenceAnimation { properties: "scale, opacity"; }
-            }
+            NumberAnimation { properties: "scale, opacity" }
         }
     }
 
