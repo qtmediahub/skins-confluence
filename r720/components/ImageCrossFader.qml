@@ -23,11 +23,11 @@ Item {
     id: root
     property int fillMode: Image.PreserveAspectFit
     property string source
+    property bool centerAnchors : true
 
     QtObject {
         id: d
         property variant currentItem : primary
-        property bool centerAnchors : true
         property alias primary: primaryLoader.item
         property alias secondary: secondaryLoader.item
     }
@@ -42,8 +42,8 @@ Item {
             asynchronous: true
             opacity:  rootItem.status == Image.Ready && d.currentItem == rootItem ? 1 : 0
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: d.centerAnchors ? undefined: parent.bottom
-            anchors.verticalCenter: d.centerAnchors ? parent.verticalCenter : undefined
+            anchors.bottom: centerAnchors ? undefined: parent.bottom
+            anchors.verticalCenter: centerAnchors ? parent.verticalCenter : undefined
 
             Behavior on opacity {
                 ConfluenceAnimation { }
