@@ -29,28 +29,26 @@ Window {
         if (!visible && animationItem)
             animationItem.destroy()
 
-    Timer {
-        id: rotTimer
-        interval: 10
-        running: root.state == "visible" && confluence.active
-
-        repeat: true
-        onTriggered: rotation.angle += 10
+    RotationAnimation {
+        target: rotation
+        running: true
+        from: 0
+        to: 360
+        duration: 30000
+        properties: "angle"
+        loops: Animation.Infinite
     }
 
     Flipable {
         id: flipable
         anchors.centerIn: parent
         width: backPanel.width; height: backPanel.height
+        smooth: true
 
         transform: Rotation {
             id: rotation
             origin.x: flipable.width/2; origin.y: flipable.height/2
             axis { x: 0; y: 1; z: 0 }
-
-            Behavior on angle {
-                NumberAnimation {}
-            }
         }
 
         onSideChanged:
@@ -76,7 +74,7 @@ Window {
             Flow {
                 flow:  Flow.TopToBottom
                 Row {
-                    ConfluenceText { 
+                    ConfluenceText {
                         id: confTxt
                         text: qsTr("All resources and style from") 
                         height: confluenceImage.height
