@@ -3,6 +3,8 @@ import QtQuick 1.1
 Item {
     id: root
 
+    opacity: 1
+
     function start() {
         splashDelay.start()
     }
@@ -20,15 +22,13 @@ Item {
     Timer {
         id: splashDelay
         interval: runtime.config.value("splash-lead-time", 500)
-        onTriggered:
-            confluenceEntry.load()
+        onTriggered: confluenceEntry.load()
     }
 
     Timer {
         id: settleTimer
         interval: 1000
-        onTriggered:
-            splash.x = -splash.width
+        onTriggered: splash.opacity = 0
     }
 
     Image {
@@ -37,9 +37,9 @@ Item {
         smooth: true
         fillMode: Image.PreserveAspectCrop
         source: "../3rdparty/splash/splash.jpg"
-        Behavior on x { PropertyAnimation{ duration: 1000 } }
-        onXChanged:
-            if(x == -width)
+        Behavior on opacity { PropertyAnimation{ duration: 1000 } }
+        onOpacityChanged:
+            if(splash.opacity == 0)
                 root.finished()
     }
 }
