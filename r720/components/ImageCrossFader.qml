@@ -23,51 +23,49 @@ Item {
     id: root
     property int fillMode: Image.PreserveAspectFit
     property string source
-    property variant currentItem : primary
-    property bool centerAnchors : true
 
-    Image {
-        id: primary
-        cache: false
-        fillMode: root.fillMode
-        width: parent.width
-        //asynchronous: true
-        opacity:  primary.status == Image.Ready && currentItem == primary ? 1 : 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: centerAnchors ? undefined: parent.bottom
-        anchors.verticalCenter: centerAnchors ? parent.verticalCenter : undefined
+    QtObject {
+        id: d
+        property variant currentItem : primary
+        property bool centerAnchors : true
+        property alias primary: primaryLoader.item
+        property alias secondary: secondaryLoader.item
+    }
 
-        Behavior on opacity {
-            ConfluenceAnimation { }
+    Component {
+        id: swapBuffer
+        Image {
+            id: rootItem
+            cache: false
+            fillMode: root.fillMode
+            width: parent.width
+            asynchronous: true
+            opacity:  rootItem.status == Image.Ready && d.currentItem == rootItem ? 1 : 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: d.centerAnchors ? undefined: parent.bottom
+            anchors.verticalCenter: d.centerAnchors ? parent.verticalCenter : undefined
+
+            Behavior on opacity {
+                ConfluenceAnimation { }
+            }
         }
     }
 
-    Image {
-        id: secondary
-        cache: false
-        fillMode: root.fillMode
-        width: parent.width
-        //asynchronous: true
-        opacity:  secondary.status == Image.Ready && currentItem == secondary  ? 1 : 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: centerAnchors ? undefined: parent.bottom
-        anchors.verticalCenter: centerAnchors ? parent.verticalCenter : undefined
-
-        Behavior on opacity {
-            ConfluenceAnimation { }
-        }
-    }
+    Loader{ id: primaryLoader; anchors.fill: parent; sourceComponent: swapBuffer }
+    Loader{ id: secondaryLoader; anchors.fill: parent; sourceComponent: swapBuffer }
 
     Timer {
         id: staggeredTimer
-        interval: primary.source == "" ? 0 : 500;
+        interval: d.primary.source == "" ? 0 : 500;
         running: false; repeat: false
         onTriggered: SequentialAnimation {
             // This is not a PropertyAction because of QTBUG-16146
-            ScriptAction { script: {
-                    currentItem = currentItem == primary ? secondary : primary;
-                    currentItem.source = root.source;
-                } }
+            ScriptAction {
+                script: {
+                    d.currentItem = d.currentItem == d.primary ? d.secondary : d.primary;
+                    d.currentItem.source = root.source;
+                }
+            }
         }
     }
     onSourceChanged: staggeredTimer.start();
