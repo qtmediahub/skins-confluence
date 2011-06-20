@@ -16,7 +16,7 @@ Item {
         onInputIdle: {
             if (avPlayer.playing
                 || !runtime.config.isEnabled("screensaver", false)
-                || !Qt.application.active)
+                || !confluence.active)
                 return
             var list = file.findQmlModules(generalResourcePath + "/screensavers")
             var index = Math.floor(Math.random() * list.length)
@@ -24,8 +24,7 @@ Item {
             if (screensaverLoader.status == Component.Ready) {
                 screensaver = screensaverLoader.createObject(confluence)
                 screensaver.z = 10000
-            }
-            else if (screensaverLoader.status == Component.Error)
+            } else if (screensaverLoader.status == Component.Error)
                 console.log(screensaverLoader.errorString())
         }
     }

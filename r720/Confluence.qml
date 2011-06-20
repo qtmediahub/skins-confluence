@@ -43,6 +43,8 @@ FocusScope {
 
     property bool standardItemViewWraps: true
 
+    property bool active: Qt.application.active
+
     property variant avPlayer
 
     property variant rootMenuModel: ListModel { }

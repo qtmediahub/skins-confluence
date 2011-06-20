@@ -31,7 +31,7 @@ Window {
     Timer {
         id: rotTimer
         interval: 10
-        running: root.state == "visible" && Qt.application.active
+        running: root.state == "visible" && confluence.active
 
         repeat: true
         onTriggered: rotation.angle += 10
