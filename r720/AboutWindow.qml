@@ -26,7 +26,8 @@ Window {
     property Item animationItem
 
     onVisibleChanged:
-        !visible && animationItem && animationItem.destroy()
+        if (!visible && animationItem)
+            animationItem.destroy()
 
     Timer {
         id: rotTimer
