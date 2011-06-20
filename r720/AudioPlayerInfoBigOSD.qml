@@ -104,7 +104,7 @@ FocusScope {
         }
 
         Text {
-            text: media.metaData.title ? media.metaData.title : qsTr("Unknown Title")
+            text: media.currentModelIndex ? playlist.data(media.currentModelIndex, Media.TitleRole) : qsTr("Unknown Title")
             color: "white"
             font.bold: true
             font.pointSize: 20
