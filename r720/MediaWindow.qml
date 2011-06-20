@@ -157,6 +157,7 @@ Window {
                 text: qsTr("VIEW")
                 options: confluence.shroomfluence ? [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")] : [qsTr("POSTER")]
                 onTriggered: mediaWindow.setCurrentView(currentOption)
+                enabled: false
             },
             ConfluenceAction {
                 id: sortByAction
