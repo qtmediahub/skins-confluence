@@ -154,7 +154,7 @@ Window {
                         onClicked:
                             showCast(name)
                     }
-                    Keys.onReturnPressed: {
+                    Keys.onEnterPressed: {
                         showCast(name)
                         event.accepted = true
                     }

@@ -213,7 +213,7 @@ FocusScope {
                         onEntered: delegateItem.ListView.view.currentIndex = index
                         onClicked: categorySelected(id)
                     }
-                    Keys.onReturnPressed: {
+                    Keys.onEnterPressed: {
                         categorySelected(id)
                         event.accepted = true
                     }
