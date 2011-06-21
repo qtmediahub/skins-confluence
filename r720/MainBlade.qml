@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import "./components/uiconstants.js" as UIConstants
-import ActionMapper 1.0
 
 Blade {
     id: root
@@ -69,13 +68,13 @@ Blade {
 
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
-        Keys.onPressed: {
-            var action = runtime.actionMapper.mapKeyEventToAction(event)
-            if (action == ActionMapper.Menu || action == ActionMapper.Left) {
-                subMenu.close()
-                event.accepted = true
-            }
-        }
+//        Keys.onPressed: {
+//            var action = runtime.actionMapper.mapKeyEventToAction(event)
+//            if (action == ActionMapper.Menu || action == ActionMapper.Left) {
+//                subMenu.close()
+//                event.accepted = true
+//            }
+//        }
 
         SubBladeMenu {
             id: subMenuList

@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import ActionMapper 1.0
 
 Item {
     id: button
@@ -50,11 +49,11 @@ Item {
     onFocusChanged:
         depressed = false
 
-    Keys.onPressed:
-        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-            button.clicked()
-            event.accepted = true
-        }
+//    Keys.onPressed:
+//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
+//            button.clicked()
+//            event.accepted = true
+//        }
 
     Image {
         id: pixmap

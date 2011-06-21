@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import ActionMapper 1.0
 
 Item {
     id: root
@@ -46,11 +45,11 @@ Item {
             focus: true
             onClicked: root.accept()
 
-            Keys.onPressed:
-                if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Right) {
-                    cancelButton.focus = true
-                    event.accepted = true
-                }
+//            Keys.onPressed:
+//                if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Right) {
+//                    cancelButton.focus = true
+//                    event.accepted = true
+//                }
         }
 
         Item {

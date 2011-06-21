@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import DirModel 1.0
-import ActionMapper 1.0
 import QMHPlugin 1.0
 
 Dialog {
@@ -68,13 +67,13 @@ Dialog {
             height: parent.height - browseLabel.height - buttonBox.height
             model: root.actionList
 
-            Keys.onPressed: {
-                var action = runtime.actionMapper.mapKeyEventToAction(event)
-                if (action == ActionMapper.Left || action == ActionMapper.Right) {
-                    buttonBox.focus = true
-                    event.accepted = true
-                }
-            }
+//            Keys.onPressed: {
+//                var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                if (action == ActionMapper.Left || action == ActionMapper.Right) {
+//                    buttonBox.focus = true
+//                    event.accepted = true
+//                }
+//            }
         }
 
         DialogButtonBox {
@@ -103,13 +102,13 @@ Dialog {
                 root.reject()
             }
 
-            Keys.onPressed: {
-                var action = runtime.actionMapper.mapKeyEventToAction(event)
-                if (action == ActionMapper.Up || action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right) {
-                    listView.focus = true
-                    event.accepted = true
-                }
-            }
+//            Keys.onPressed: {
+//                var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                if (action == ActionMapper.Up || action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right) {
+//                    listView.focus = true
+//                    event.accepted = true
+//                }
+//            }
         }
     }
 }

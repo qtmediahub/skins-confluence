@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "components/"
-import ActionMapper 1.0
 
 Item {
     id: root
@@ -43,21 +42,21 @@ Item {
         onActivated: {
             root.itemTriggered(currentItem.itemdata)
         }
-        Keys.onPressed: {
-            var action = runtime.actionMapper.mapKeyEventToAction(event)
-            var itemType = sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.type : ""
-            if (itemType == "SearchPath") {
-                if (event.key == Qt.Key_Delete) {
-                    treeModel.removeSearchPath(currentIndex)
-                    event.accepted = true
-                }
-            } else if (itemType == "File") {
-                if (action == ActionMapper.Enter) {
-                    root.itemTriggered(currentItem.itemdata)
-                    event.accepted = true
-                }
-            }
-        }
+//        Keys.onPressed: {
+//            var action = runtime.actionMapper.mapKeyEventToAction(event)
+//            var itemType = sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.type : ""
+//            if (itemType == "SearchPath") {
+//                if (event.key == Qt.Key_Delete) {
+//                    treeModel.removeSearchPath(currentIndex)
+//                    event.accepted = true
+//                }
+//            } else if (itemType == "File") {
+//                if (action == ActionMapper.Enter) {
+//                    root.itemTriggered(currentItem.itemdata)
+//                    event.accepted = true
+//                }
+//            }
+//        }
     }
 }
 

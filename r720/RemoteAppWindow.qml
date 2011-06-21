@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "components/"
-import ActionMapper 1.0
 
 Window {
     id: root
@@ -33,13 +32,13 @@ Window {
             source = sourceNameInput.text
         }
 
-        Keys.onPressed: {
-            var action = runtime.actionMapper.mapKeyEventToAction(event)
-            if (action == ActionMapper.Right || action == ActionMapper.Left) {
-                sourceNameInput.focus = true
-                event.accepted = true
-            }
-        }
+//        Keys.onPressed: {
+//            var action = runtime.actionMapper.mapKeyEventToAction(event)
+//            if (action == ActionMapper.Right || action == ActionMapper.Left) {
+//                sourceNameInput.focus = true
+//                event.accepted = true
+//            }
+//        }
     }
 
     Text {

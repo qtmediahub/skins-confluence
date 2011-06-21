@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import QtMobility.location 1.2
 import "components/"
-import ActionMapper 1.0
 
 Window {
     id: root
@@ -103,27 +102,27 @@ Window {
             }
         }
 
-        Keys.onPressed: {
-            var action = runtime.actionMapper.mapKeyEventToAction(event)
-            event.accepted = true
-            if (action == ActionMapper.Right) {
-                map.pan(100, 0)
-            } else if (action == ActionMapper.Left) {
-                map.pan(-100, 0)
-            } else if (action == ActionMapper.Up) {
-                map.pan(0, -100)
-            } else if (action == ActionMapper.Down) {
-                map.pan(0, 100)
-            } else if (action == ActionMapper.ContextualDown) {
-                map.zoomLevel = map.zoomLevel - 1
-            } else if (action == ActionMapper.ContextualUp) {
-                map.zoomLevel = map.zoomLevel + 1
-            } else if (action == ActionMapper.Enter) {
-                root.blade.open()
-            } else {
-                event.accepted = false
-            }
-        }
+//        Keys.onPressed: {
+//            var action = runtime.actionMapper.mapKeyEventToAction(event)
+//            event.accepted = true
+//            if (action == ActionMapper.Right) {
+//                map.pan(100, 0)
+//            } else if (action == ActionMapper.Left) {
+//                map.pan(-100, 0)
+//            } else if (action == ActionMapper.Up) {
+//                map.pan(0, -100)
+//            } else if (action == ActionMapper.Down) {
+//                map.pan(0, 100)
+//            } else if (action == ActionMapper.ContextualDown) {
+//                map.zoomLevel = map.zoomLevel - 1
+//            } else if (action == ActionMapper.ContextualUp) {
+//                map.zoomLevel = map.zoomLevel + 1
+//            } else if (action == ActionMapper.Enter) {
+//                root.blade.open()
+//            } else {
+//                event.accepted = false
+//            }
+//        }
     }
 
     bladeComponent: MediaWindowBlade {

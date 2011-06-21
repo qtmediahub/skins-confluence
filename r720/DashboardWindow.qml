@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import Qt.labs.particles 1.0
-import ActionMapper 1.0
 import File 1.0
 
 import "components/"
@@ -34,20 +33,20 @@ Window {
         if (visible && !db.populated)
             db.populateDashboard()
 
-    Keys.onPressed: {
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        if (action == ActionMapper.Enter) {
-            activate(grid.focusItem())
-            event.accepted = true
-        } else if (action == ActionMapper.Menu) {
-            if (activatedItem != grid) {
-                deactivate()
-                event.accepted = true
-            } else {
-                event.accepted = false
-            }
-        }
-    }
+//    Keys.onPressed: {
+//        var action = runtime.actionMapper.mapKeyEventToAction(event)
+//        if (action == ActionMapper.Enter) {
+//            activate(grid.focusItem())
+//            event.accepted = true
+//        } else if (action == ActionMapper.Menu) {
+//            if (activatedItem != grid) {
+//                deactivate()
+//                event.accepted = true
+//            } else {
+//                event.accepted = false
+//            }
+//        }
+//    }
 
     function activate(item) {
         activatedItem = item

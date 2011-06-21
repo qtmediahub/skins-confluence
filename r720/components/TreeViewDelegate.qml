@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import ActionMapper 1.0
 
 Item {
     id: delegateItem
@@ -86,10 +85,10 @@ Item {
         }
     }
 
-    Keys.onPressed:
-        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-            delegateItem.activate()
-            event.accepted = true
-        }
+//    Keys.onPressed:
+//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
+//            delegateItem.activate()
+//            event.accepted = true
+//        }
 }
 

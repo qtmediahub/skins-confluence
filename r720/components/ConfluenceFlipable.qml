@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import ActionMapper 1.0
 
 Flipable {
     id: root
@@ -46,15 +45,15 @@ Flipable {
         }
     }
 
-    Keys.onPressed: {
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        if (action == ActionMapper.Right) {
-            angle += 180
-            event.accepted = true
-        } else if (action == ActionMapper.Left) {
-            angle -= 180
-            event.accepted = true
-        }
-    }
+//    Keys.onPressed: {
+//        var action = runtime.actionMapper.mapKeyEventToAction(event)
+//        if (action == ActionMapper.Right) {
+//            angle += 180
+//            event.accepted = true
+//        } else if (action == ActionMapper.Left) {
+//            angle -= 180
+//            event.accepted = true
+//        }
+//    }
 }
 

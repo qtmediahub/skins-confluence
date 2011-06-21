@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "fontmetrics.js" as FontMetrics
-import ActionMapper 1.0
 
 ListView {
     id: root
@@ -117,12 +116,12 @@ ListView {
             }
         }
 
-        Keys.onPressed:
-            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-                if (model.modelData.enabled) 
-                    delegateItem.activate()
-                event.accepted = true
-            }
+//        Keys.onPressed:
+//            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
+//                if (model.modelData.enabled)
+//                    delegateItem.activate()
+//                event.accepted = true
+//            }
     }
 }
 

@@ -21,7 +21,6 @@ import QtQuick 1.1
 import "components/"
 import "./components/uiconstants.js" as UIConstants
 import "./components/cursor.js" as Cursor
-import ActionMapper 1.0
 import "util.js" as Util
 import QMHPlugin 1.0
 import "confluence.js" as Confluence
@@ -211,32 +210,32 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed: {
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        event.accepted = true
-        if (action == ActionMapper.Menu) {
-            if (_openWindow && _openWindow.maximized) {
-                _openWindow.maximized = false
-            } else {
-                show(mainBlade)
-            }
-        } else if (action == ActionMapper.ContextualUp) {
-            avPlayer.increaseVolume()
-        } else if (action == ActionMapper.ContextualDown) {
-            avPlayer.decreaseVolume()
-        } else if (action == ActionMapper.MediaPlayPause) {
-            avPlayer.togglePlayPause()
-        } else if (event.key == Qt.Key_F12) {
-            if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
-                _openWindow.maximized = true
-        } else if (event.key == Qt.Key_F11) {
-            showAboutWindow()
-        } else if (event.key == Qt.Key_F10) {
-            showSystemInfoWindow()
-        } else {
-            event.accepted = false
-        }
-    }
+//    Keys.onPressed: {
+//        var action = runtime.actionMapper.mapKeyEventToAction(event)
+//        event.accepted = true
+//        if (action == ActionMapper.Menu) {
+//            if (_openWindow && _openWindow.maximized) {
+//                _openWindow.maximized = false
+//            } else {
+//                show(mainBlade)
+//            }
+//        } else if (action == ActionMapper.ContextualUp) {
+//            avPlayer.increaseVolume()
+//        } else if (action == ActionMapper.ContextualDown) {
+//            avPlayer.decreaseVolume()
+//        } else if (action == ActionMapper.MediaPlayPause) {
+//            avPlayer.togglePlayPause()
+//        } else if (event.key == Qt.Key_F12) {
+//            if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
+//                _openWindow.maximized = true
+//        } else if (event.key == Qt.Key_F11) {
+//            showAboutWindow()
+//        } else if (event.key == Qt.Key_F10) {
+//            showSystemInfoWindow()
+//        } else {
+//            event.accepted = false
+//        }
+//    }
 
     function createQmlObjectFromFile(file, properties) {
         var qmlComponent = Qt.createComponent(file)

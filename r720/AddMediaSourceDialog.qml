@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import DirModel 1.0
-import ActionMapper 1.0
 
 Dialog {
     id: root
@@ -50,11 +49,11 @@ Dialog {
             focus: true
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
-            Keys.onPressed: {
-                var action = runtime.actionMapper.mapKeyEventToAction(event)
-                if (action == ActionMapper.Left || action == ActionMapper.Right)
-                    sourceNameInput.focus = true
-            }
+//            Keys.onPressed: {
+//                var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                if (action == ActionMapper.Left || action == ActionMapper.Right)
+//                    sourceNameInput.focus = true
+//            }
         }
         Text {
             id: sourceNameLabel
@@ -75,13 +74,13 @@ Dialog {
                 text: qsTr("Home")
                 color: "white"
 
-                Keys.onPressed: {
-                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-                    if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
-                        buttonBox.focus = true
-                    else if (action == ActionMapper.Up)
-                        fileSystemView.focus = true
-                }
+//                Keys.onPressed: {
+//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                    if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
+//                        buttonBox.focus = true
+//                    else if (action == ActionMapper.Up)
+//                        fileSystemView.focus = true
+//                }
             }
 
             MouseArea {
@@ -102,13 +101,13 @@ Dialog {
                 root.reject()
             }
 
-            Keys.onPressed: {
-                var action = runtime.actionMapper.mapKeyEventToAction(event)
-                if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
-                    fileSystemView.focus = true
-                else if (action == ActionMapper.Up)
-                    sourceNameInput.focus = true
-            }
+//            Keys.onPressed: {
+//                var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
+//                    fileSystemView.focus = true
+//                else if (action == ActionMapper.Up)
+//                    sourceNameInput.focus = true
+//            }
         }
     }
 }

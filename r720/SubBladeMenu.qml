@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "components/"
-import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -35,11 +34,11 @@ FocusScope {
         scrollbar: false
         model: engine ? engine.actionList : null
 
-        Keys.onPressed:
-            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-                currentItem.trigger()
-                event.accepted = true
-            }
+//        Keys.onPressed:
+//            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
+//                currentItem.trigger()
+//                event.accepted = true
+//            }
 
         delegate: Item {
             id: delegate

@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import ActionMapper 1.0
 
 PathView {
     id: pathView
@@ -58,16 +57,16 @@ PathView {
         }
     }
 
-    Keys.onPressed: {
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        if (action == ActionMapper.Right) {
-            pathView.incrementCurrentIndex()
-            event.accepted = true
-        } else if (action == ActionMapper.Left) {
-            pathView.decrementCurrentIndex()
-            event.accepted = true
-        }
-    }
+//    Keys.onPressed: {
+//        var action = runtime.actionMapper.mapKeyEventToAction(event)
+//        if (action == ActionMapper.Right) {
+//            pathView.incrementCurrentIndex()
+//            event.accepted = true
+//        } else if (action == ActionMapper.Left) {
+//            pathView.decrementCurrentIndex()
+//            event.accepted = true
+//        }
+//    }
 
     QtObject {
         id: paths

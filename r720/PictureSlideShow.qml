@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import Playlist 1.0
-import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -87,24 +86,24 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed: { 
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        event.accepted = true
-        if (action == ActionMapper.Menu || action == ActionMapper.Enter) {
-            root.running = false
-            root.close()
-        } else if (action == ActionMapper.Context) {
-            root.running = !root.running
-        } else if (action == ActionMapper.Left) {
-            root.running = false
-            root.previous()
-        } else if (action == ActionMapper.Right) {
-            root.running = false
-            root.next()
-        } else {
-            event.accepted = false
-        }
-    }
+//    Keys.onPressed: {
+//        var action = runtime.actionMapper.mapKeyEventToAction(event)
+//        event.accepted = true
+//        if (action == ActionMapper.Menu || action == ActionMapper.Enter) {
+//            root.running = false
+//            root.close()
+//        } else if (action == ActionMapper.Context) {
+//            root.running = !root.running
+//        } else if (action == ActionMapper.Left) {
+//            root.running = false
+//            root.previous()
+//        } else if (action == ActionMapper.Right) {
+//            root.running = false
+//            root.next()
+//        } else {
+//            event.accepted = false
+//        }
+//    }
 
     Timer {
         id: timer

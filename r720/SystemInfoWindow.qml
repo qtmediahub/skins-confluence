@@ -21,21 +21,20 @@ import QtQuick 1.1
 import QtMobility.systeminfo 1.1
 import "components/"
 import File 1.0
-import ActionMapper 1.0
 
 Window {
     id: root
 
-    Keys.onPressed: {
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        if (action == ActionMapper.Up) {
-            infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
-            event.accepted = true
-        } else if (action == ActionMapper.Down) {
-            infoViewport.contentY = Math.min(infoViewport.contentHeight - height, infoViewport.contentY + 20)
-            event.accepted = true
-        }
-    }
+//    Keys.onPressed: {
+//        var action = runtime.actionMapper.mapKeyEventToAction(event)
+//        if (action == ActionMapper.Up) {
+//            infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
+//            event.accepted = true
+//        } else if (action == ActionMapper.Down) {
+//            infoViewport.contentY = Math.min(infoViewport.contentHeight - height, infoViewport.contentY + 20)
+//            event.accepted = true
+//        }
+//    }
 
     NetworkInfo {
         id: networkInfo

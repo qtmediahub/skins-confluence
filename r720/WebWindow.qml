@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import QtWebKit 1.0
-import ActionMapper 1.0
 import "components/"
 
 //TODO:
@@ -59,16 +58,16 @@ Window {
 
     Keys.enabled: enableBrowserShortcuts
 
-    Keys.onPressed: {
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        if (action == ActionMapper.Up) {
-            webViewport.contentY = Math.max(0, webViewport.contentY - 10)
-            event.accepted = true
-        } else if (action == ActionMapper.Down) {
-            webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
-            event.accepted = true
-        }
-    }
+//    Keys.onPressed: {
+//        var action = runtime.actionMapper.mapKeyEventToAction(event)
+//        if (action == ActionMapper.Up) {
+//            webViewport.contentY = Math.max(0, webViewport.contentY - 10)
+//            event.accepted = true
+//        } else if (action == ActionMapper.Down) {
+//            webViewport.contentY = Math.min(webViewport.contentHeight - height, webViewport.contentY + 10)
+//            event.accepted = true
+//        }
+//    }
 
     Panel {
         id: panel

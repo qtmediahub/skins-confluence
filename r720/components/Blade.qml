@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "uiconstants.js" as UIConstants
-import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -90,11 +89,11 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed:
-        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
-            root.close()
-            event.accepted = true
-        }
+//    Keys.onPressed:
+//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
+//            root.close()
+//            event.accepted = true
+//        }
 
     Item {
         id: blade

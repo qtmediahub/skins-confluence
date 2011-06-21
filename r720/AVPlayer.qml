@@ -21,7 +21,6 @@ import QtQuick 1.1
 import QtMultimediaKit 1.1
 import "components/"
 import Playlist 1.0
-import ActionMapper 1.0
 import RpcConnection 1.0
 import Media 1.0
 import "./components/uiconstants.js" as UIConstants
@@ -233,29 +232,15 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed: {
-        var action = runtime.actionMapper.mapKeyEventToAction(event)
-        event.accepted = true
-        if (action == ActionMapper.Menu) {
-            if (root.state == "targets")
-                root.state = "maximized"
-            else
-                confluence.state = ""
-        } else if (action == ActionMapper.Enter)
-            togglePlayPause()
-        else if (action == ActionMapper.Context)
-            showOSD()
-        else if (action == ActionMapper.Up)
-            playPrevious()
-        else if (action == ActionMapper.Down)
-            playNext()
-        else if (action == ActionMapper.Right)
-            increasePlaybackRate()
-        else if (action == ActionMapper.Left)
-            decreasePlaybackRate()
-        else
-            event.accepted = false
-    }
+    Keys.onMenuPressed:
+        root.state == "targets" ? root.state = "maximized" : confluence.state = ""
+    Keys.onEnterPressed:  togglePlayPause()
+    Keys.onContext1Pressed: showOSD()
+    Keys.onUpPressed: playPrevious()
+    Keys.onDownPressed: playNext()
+    Keys.onLeftPressed: decreasePlaybackRate()
+    Keys.onRightPressed: increasePlaybackRate()
+
 
     MouseArea {
         anchors.fill: parent
@@ -495,14 +480,14 @@ FocusScope {
             }
         }
 
-        Keys.onPressed: {
-            var action = runtime.actionMapper.mapKeyEventToAction(event)
-            if (action == ActionMapper.Menu) {
-                videoListDialog.close()
-                event.accepted = true
-            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
-                event.accepted = true
-        }
+//        Keys.onPressed: {
+//            var action = runtime.actionMapper.mapKeyEventToAction(event)
+//            if (action == ActionMapper.Menu) {
+//                videoListDialog.close()
+//                event.accepted = true
+//            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
+//                event.accepted = true
+//        }
     }
 
     Dialog {
@@ -524,14 +509,14 @@ FocusScope {
             }
         }
 
-        Keys.onPressed: {
-            var action = runtime.actionMapper.mapKeyEventToAction(event)
-            if (action == ActionMapper.Menu) {
-                musicListDialog.close()
-                event.accepted = true
-            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
-                event.accepted = true
-        }
+//        Keys.onPressed: {
+//            var action = runtime.actionMapper.mapKeyEventToAction(event)
+//            if (action == ActionMapper.Menu) {
+//                musicListDialog.close()
+//                event.accepted = true
+//            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
+//                event.accepted = true
+//        }
     }
 
     Dialog {
@@ -552,14 +537,14 @@ FocusScope {
                 playListDialog.close()
             }
 
-            Keys.onPressed: {
-                var action = runtime.actionMapper.mapKeyEventToAction(event)
-                if (action == ActionMapper.Menu) {
-                    playListDialog.close()
-                    event.accepted = true
-                } else if (action == ActionMapper.Up || action == ActionMapper.Down)
-                    event.accepted = true
-            }
+//            Keys.onPressed: {
+//                var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                if (action == ActionMapper.Menu) {
+//                    playListDialog.close()
+//                    event.accepted = true
+//                } else if (action == ActionMapper.Up || action == ActionMapper.Down)
+//                    event.accepted = true
+//            }
         }
     }
 
@@ -641,15 +626,15 @@ FocusScope {
             }
         }
 
-        Keys.onPressed: {
-            var action = runtime.actionMapper.mapKeyEventToAction(event)
-            if (action == ActionMapper.Menu) {
-                mediaItem.forceActiveFocus()
-                event.accepted = true
-            } else if (action == ActionMapper.Left || action == ActionMapper.Right || action == ActionMapper.Up || action == ActionMapper.Down) {
-                event.accepted = true
-            }
-        }
+//        Keys.onPressed: {
+//            var action = runtime.actionMapper.mapKeyEventToAction(event)
+//            if (action == ActionMapper.Menu) {
+//                mediaItem.forceActiveFocus()
+//                event.accepted = true
+//            } else if (action == ActionMapper.Left || action == ActionMapper.Right || action == ActionMapper.Up || action == ActionMapper.Down) {
+//                event.accepted = true
+//            }
+//        }
     }
 }
 

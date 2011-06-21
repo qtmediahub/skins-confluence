@@ -21,7 +21,6 @@ import QtQuick 1.1
 import AppStore 1.0
 import "../components/"
 import "JSONBackend.js" as JSONBackend
-import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -220,13 +219,13 @@ FocusScope {
                     }
                 }
 
-                Keys.onPressed: {
-                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-                    if (action == ActionMapper.Left || action == ActionMapper.Right) {
-                        appListView.gainFocus()
-                        event.accepted = true
-                    }
-                }
+//                Keys.onPressed: {
+//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                    if (action == ActionMapper.Left || action == ActionMapper.Right) {
+//                        appListView.gainFocus()
+//                        event.accepted = true
+//                    }
+//                }
 
                 MouseArea {
                     anchors.fill: parent;
@@ -327,17 +326,17 @@ FocusScope {
                         onEntered: delegateItem.ListView.view.currentIndex = index
                         onClicked: activated()
                     }
-                    Keys.onPressed: {
-                        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter)
-                            activated()
-                    }
+//                    Keys.onPressed: {
+//                        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter)
+//                            activated()
+//                    }
                 }
 
-                Keys.onPressed: {
-                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-                    if (action == ActionMapper.Left || action == ActionMapper.Right)
-                        categoryListView.gainFocus()
-                }
+//                Keys.onPressed: {
+//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                    if (action == ActionMapper.Left || action == ActionMapper.Right)
+//                        categoryListView.gainFocus()
+//                }
 
                 MouseArea {
                     anchors.fill: parent;

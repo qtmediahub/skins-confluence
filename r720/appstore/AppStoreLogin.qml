@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "../components/"
-import ActionMapper 1.0
 
 Dialog {
     id: root
@@ -53,16 +52,16 @@ Dialog {
                 text: "qtmediahub"
                 color: "white"
 
-                Keys.onPressed: {
-                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-                    if (action == ActionMapper.Up) {
-                        buttonBox.focus = true
-                        event.accepted = true
-                    } else if (action == ActionMapper.Down) {
-                        sourcePasswordInput.focus = true
-                        event.accepted = true
-                    }
-                }
+//                Keys.onPressed: {
+//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                    if (action == ActionMapper.Up) {
+//                        buttonBox.focus = true
+//                        event.accepted = true
+//                    } else if (action == ActionMapper.Down) {
+//                        sourcePasswordInput.focus = true
+//                        event.accepted = true
+//                    }
+//                }
             }
 
             MouseArea {
@@ -92,16 +91,16 @@ Dialog {
                 echoMode: TextInput.Password
                 color: "white"
 
-                Keys.onPressed: {
-                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-                    if (action == ActionMapper.Up) {
-                        sourceNameInput.focus = true
-                        event.accepted = true
-                    } else if (action == ActionMapper.Down) {
-                        buttonBox.focus = true
-                        event.accepted = true
-                    }
-                }
+//                Keys.onPressed: {
+//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                    if (action == ActionMapper.Up) {
+//                        sourceNameInput.focus = true
+//                        event.accepted = true
+//                    } else if (action == ActionMapper.Down) {
+//                        buttonBox.focus = true
+//                        event.accepted = true
+//                    }
+//                }
             }
 
             MouseArea {
@@ -121,16 +120,16 @@ Dialog {
                 root.reject()
             }
 
-            Keys.onPressed: {
-                var action = runtime.actionMapper.mapKeyEventToAction(event)
-                if (action == ActionMapper.Up) {
-                    sourcePasswordInput.focus = true
-                    event.accepted = true
-                } else if (action == ActionMapper.Down) {
-                    sourceNameInput.focus = true
-                    event.accepted = true
-                }
-            }
+//            Keys.onPressed: {
+//                var action = runtime.actionMapper.mapKeyEventToAction(event)
+//                if (action == ActionMapper.Up) {
+//                    sourcePasswordInput.focus = true
+//                    event.accepted = true
+//                } else if (action == ActionMapper.Down) {
+//                    sourceNameInput.focus = true
+//                    event.accepted = true
+//                }
+//            }
         }
     }
 

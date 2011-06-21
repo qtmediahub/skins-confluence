@@ -21,7 +21,6 @@ import QtQuick 1.1
 import AppStore 1.0
 import "../components/"
 import "JSONBackend.js" as JSONBackend
-import ActionMapper 1.0
 
 GridView {
     id: root
@@ -66,12 +65,12 @@ GridView {
             onEntered: delegateItem.GridView.view.currentIndex = index
         }
 
-        Keys.onPressed: {
-            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-                triggerItem()
-                event.accepted = true
-            }
-        }
+//        Keys.onPressed: {
+//            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
+//                triggerItem()
+//                event.accepted = true
+//            }
+//        }
 
         Behavior on scale {
             NumberAnimation {}

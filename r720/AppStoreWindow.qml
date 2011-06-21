@@ -21,7 +21,6 @@ import QtQuick 1.1
 import "components/"
 import "appstore/"
 import "appstore/JSONBackend.js" as JSONBackend
-import ActionMapper 1.0
 
 Window {
     id: root
@@ -102,15 +101,15 @@ Window {
         }
     }
 
-    Keys.onPressed: {
-        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
-            event.accepted = true
-            if (appStoreListView.state == "visible")
-                hideAppStore();
-            else if (app.active)
-                closeApp();
-            else
-                event.accepted = false;
-        }
-    }
+//    Keys.onPressed: {
+//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
+//            event.accepted = true
+//            if (appStoreListView.state == "visible")
+//                hideAppStore();
+//            else if (app.active)
+//                closeApp();
+//            else
+//                event.accepted = false;
+//        }
+//    }
 }

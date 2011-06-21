@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
-import ActionMapper 1.0
 
 FocusScope {
     id: root
@@ -150,17 +149,17 @@ FocusScope {
 
             onClicked: root.reject();
         }
-        Keys.onPressed:
-            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-                root.reject()
-                event.accepted = true
-            }
+//        Keys.onPressed:
+//            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
+//                root.reject()
+//                event.accepted = true
+//            }
     }
 
-    Keys.onPressed:
-        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
-            root.reject()
-            event.accepted = true
-        }
+//    Keys.onPressed:
+//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
+//            root.reject()
+//            event.accepted = true
+//        }
 }
 
