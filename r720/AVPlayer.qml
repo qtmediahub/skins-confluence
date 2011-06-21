@@ -607,7 +607,7 @@ FocusScope {
 
         Keys.onMenuPressed: mediaItem.forceActiveFocus()
         Keys.onLeftPressed: {}
-        Keys.onRighPressed: {}
+        Keys.onRightPressed: {}
         Keys.onUpPressed: {}
         Keys.onDownPressed: {}
     }

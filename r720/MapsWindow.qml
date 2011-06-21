@@ -113,7 +113,7 @@ Window {
             }
         }
 
-        Keys.EnterPressed: root.blade.open()
+        Keys.onEnterPressed: root.blade.open()
         Keys.onUpPressed: map.pan(0, -100)
         Keys.onDownPressed: map.pan(0, 100)
         Keys.onLeftPressed: map.pan(-100, 0)
