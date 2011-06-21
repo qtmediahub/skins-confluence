@@ -32,7 +32,7 @@ MediaWindow {
 
         slideShow.state = "visible"
         slideShow.focus = true
-        slideShow.running = running
+        slideShow.run()
     }
 
     onItemActivated:

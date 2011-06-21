@@ -24,16 +24,19 @@ import Playlist 1.0
 FocusScope {
     id: root
 
-    property bool running: visible && d.slide
-    property variant currentModelIndex: 0
-    property int interval: 3000
-
     QtObject {
         id: d
+        property bool running: root.visible && slide
         property bool slide: false
+        property variant currentModelIndex: 0
+        property int interval: 3000
     }
 
     signal closed()
+
+    function run() {
+        d.slide = true
+    }
 
     function setModelIndex(modelIndex) {
         var idx = imagePlayList.add(modelIndex, Playlist.Replace, Playlist.Flat)
@@ -41,16 +44,16 @@ FocusScope {
     }
 
     function showModelIndex(modelIndex) {
-        root.currentModelIndex = modelIndex
+        d.currentModelIndex = modelIndex
         listView.currentIndex = imagePlayList.row(modelIndex)
     }
 
     function next() {
-        showModelIndex(imagePlayList.playNextIndex(root.currentModelIndex));
+        showModelIndex(imagePlayList.playNextIndex(d.currentModelIndex));
     }
 
     function previous() {
-        showModelIndex(imagePlayList.playPreviousIndex(root.currentModelIndex));
+        showModelIndex(imagePlayList.playPreviousIndex(d.currentModelIndex));
     }
 
     function close() {
@@ -99,9 +102,9 @@ FocusScope {
 
     Timer {
         id: timer
-        running: root.running && confluence.active
+        running: d.running && confluence.active
         repeat: true
-        interval: root.interval
+        interval: d.interval
         triggeredOnStart: true
         onTriggered: root.next()
     }
