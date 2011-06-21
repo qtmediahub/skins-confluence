@@ -24,9 +24,14 @@ import Playlist 1.0
 FocusScope {
     id: root
 
-    property bool running : false
-    property variant currentModelIndex : 0
-    property int interval : 3000
+    property bool running: visible && d.slide
+    property variant currentModelIndex: 0
+    property int interval: 3000
+
+    QtObject {
+        id: d
+        property bool slide: false
+    }
 
     signal closed()
 
@@ -86,24 +91,11 @@ FocusScope {
         }
     ]
 
-//    Keys.onPressed: {
-//        var action = runtime.actionMapper.mapKeyEventToAction(event)
-//        event.accepted = true
-//        if (action == ActionMapper.Menu || action == ActionMapper.Enter) {
-//            root.running = false
-//            root.close()
-//        } else if (action == ActionMapper.Context) {
-//            root.running = !root.running
-//        } else if (action == ActionMapper.Left) {
-//            root.running = false
-//            root.previous()
-//        } else if (action == ActionMapper.Right) {
-//            root.running = false
-//            root.next()
-//        } else {
-//            event.accepted = false
-//        }
-//    }
+    Keys.onContext1Pressed: d.slide = !d.slide
+    Keys.onLeftPressed: root.previous()
+    Keys.onRightPressed: root.next()
+    Keys.onMenuPressed: root.close()
+    Keys.onEnterPressed: root.close()
 
     Timer {
         id: timer
