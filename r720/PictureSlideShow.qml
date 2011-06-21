@@ -34,8 +34,8 @@ FocusScope {
 
     signal closed()
 
-    function run() {
-        d.slide = true
+    function run(running) {
+        d.slide = running
     }
 
     function setModelIndex(modelIndex) {
