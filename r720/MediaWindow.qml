@@ -157,19 +157,21 @@ Window {
                 text: qsTr("VIEW")
                 options: confluence.shroomfluence ? [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")] : [qsTr("POSTER")]
                 onTriggered: mediaWindow.setCurrentView(currentOption)
-                enabled: false
+                enabled: options.length > 1
             },
             ConfluenceAction {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
                 onTriggered: mediaEngine.model.sort(view.rootIndex, currentOption)
+                enabled: options.length > 1
             },
             ConfluenceAction {
                 id: groupByAction
                 text: qsTr("GROUP BY")
-                options: mediaEngine.model.groupByOptions ? mediaEngine.model.groupByOptions() : "None"
+                options: mediaEngine.model.groupByOptions ? mediaEngine.model.groupByOptions() : ["None"]
                 onTriggered: mediaWindow.setGroupBy(currentOption)
+                enabled: options.length > 1
             },
             ConfluenceAction {
                 id: addNewSourceAction
