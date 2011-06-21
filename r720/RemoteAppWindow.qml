@@ -68,18 +68,9 @@ Window {
                 color: "white"
                 font.pointSize: 15
 
-                Keys.onPressed: {
-                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-                    event.accepted = true
-                    if (action == ActionMapper.Down)
-                        reloadButton.focus = true
-                    else if (action == ActionMapper.Up)
-                        loader.focus = true
-                    else if (action == ActionMapper.Enter)
-                        loader.load()
-                    else
-                        event.accepted = false
-                }
+                Keys.onEnterPressed: loader.load()
+                Keys.onUpPressed: loader.focus = true
+                Keys.onDownPressed: reloadButton.focus = true
             }
 
             MouseArea {

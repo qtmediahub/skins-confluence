@@ -71,13 +71,10 @@ Dialog {
                 text: qsTr("Home")
                 color: "white"
 
-//                Keys.onPressed: {
-//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                    if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
-//                        buttonBox.focus = true
-//                    else if (action == ActionMapper.Up)
-//                        fileSystemView.focus = true
-//                }
+                Keys.onLeftPressed: buttonBox.focus = true
+                Keys.onRightPressed: buttonBox.focus = true
+                Keys.onDownPressed: buttonBox.focus = true
+                Keys.onUpPressed: fileSystemView.focus = true
             }
 
             MouseArea {
@@ -98,13 +95,10 @@ Dialog {
                 root.reject()
             }
 
-//            Keys.onPressed: {
-//                var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                if (action == ActionMapper.Down || action == ActionMapper.Left || action == ActionMapper.Right)
-//                    fileSystemView.focus = true
-//                else if (action == ActionMapper.Up)
-//                    sourceNameInput.focus = true
-//            }
+            Keys.onLeftPressed: fileSystemView.focus = true
+            Keys.onRightPressed: fileSystemView.focus = true
+            Keys.onDownPressed: fileSystemView.focus = true
+            Keys.onUpPressed: sourceNameInput.focus = true
         }
     }
 }

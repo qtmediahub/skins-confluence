@@ -102,27 +102,22 @@ Window {
             }
         }
 
-//        Keys.onPressed: {
-//            var action = runtime.actionMapper.mapKeyEventToAction(event)
-//            event.accepted = true
-//            if (action == ActionMapper.Right) {
-//                map.pan(100, 0)
-//            } else if (action == ActionMapper.Left) {
-//                map.pan(-100, 0)
-//            } else if (action == ActionMapper.Up) {
-//                map.pan(0, -100)
-//            } else if (action == ActionMapper.Down) {
-//                map.pan(0, 100)
-//            } else if (action == ActionMapper.ContextualDown) {
-//                map.zoomLevel = map.zoomLevel - 1
-//            } else if (action == ActionMapper.ContextualUp) {
-//                map.zoomLevel = map.zoomLevel + 1
-//            } else if (action == ActionMapper.Enter) {
-//                root.blade.open()
-//            } else {
-//                event.accepted = false
-//            }
-//        }
+        Keys.onPressed: {
+            event.accepted = true
+            if (event.key == Qt.Key_PageDown) {
+                map.zoomLevel = map.zoomLevel - 1
+            } else if (event.key == Qt.Key_PageUp) {
+                map.zoomLevel = map.zoomLevel + 1
+            } else {
+                event.accepted = false
+            }
+        }
+
+        Keys.EnterPressed: root.blade.open()
+        Keys.onUpPressed: map.pan(0, -100)
+        Keys.onDownPressed: map.pan(0, 100)
+        Keys.onLeftPressed: map.pan(-100, 0)
+        Keys.onRightPressed: map.pan(100, 0)
     }
 
     bladeComponent: MediaWindowBlade {
