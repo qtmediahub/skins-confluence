@@ -89,6 +89,8 @@ FocusScope {
         }
     ]
 
+    Keys.onRightPressed: root.close()
+    Keys.onLeftPressed: root.close()
     Keys.onMenuPressed: root.close()
 
     Item {
