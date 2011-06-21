@@ -40,8 +40,8 @@ Item {
             id: waveAnim
             running: waveLayer.visible
             easing.type: "InQuad"
-            from: 0.0000; to: 1.0000;
-            duration: 9500
+            from: 0.0000; to: 0.2000;
+            duration: 1500
         }
     }
 
@@ -62,12 +62,18 @@ Item {
 
     Timer {
         id: splashDelay
-        interval: 2500
+        interval: 1500
         onTriggered:
             confluenceEntry.load()
     }
 
-    Behavior on opacity { PropertyAnimation{ duration: 1000 } }
+    Behavior on opacity {
+        SequentialAnimation {
+            ScriptAction { script: waveLayer.visible = false }
+            PauseAnimation { duration: 500 }
+            PropertyAnimation{ duration: 1000 }
+        }
+    }
     onOpacityChanged:
         if(root.opacity == 0)
             root.finished()
