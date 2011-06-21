@@ -37,11 +37,7 @@ Image {
         onClicked: root.clicked()
     }
 
-//    Keys.onPressed:
-//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-//           root.clicked()
-//            event.accepted = true
-//        }
+    Keys.onEnterPressed: root.clicked()
 
     ConfluenceText {
         id: textLabel

@@ -210,32 +210,25 @@ FocusScope {
         }
     ]
 
-//    Keys.onPressed: {
-//        var action = runtime.actionMapper.mapKeyEventToAction(event)
-//        event.accepted = true
-//        if (action == ActionMapper.Menu) {
-//            if (_openWindow && _openWindow.maximized) {
-//                _openWindow.maximized = false
-//            } else {
-//                show(mainBlade)
-//            }
-//        } else if (action == ActionMapper.ContextualUp) {
-//            avPlayer.increaseVolume()
-//        } else if (action == ActionMapper.ContextualDown) {
-//            avPlayer.decreaseVolume()
-//        } else if (action == ActionMapper.MediaPlayPause) {
-//            avPlayer.togglePlayPause()
-//        } else if (event.key == Qt.Key_F12) {
-//            if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
-//                _openWindow.maximized = true
-//        } else if (event.key == Qt.Key_F11) {
-//            showAboutWindow()
-//        } else if (event.key == Qt.Key_F10) {
-//            showSystemInfoWindow()
-//        } else {
-//            event.accepted = false
-//        }
-//    }
+    Keys.onPressed: {
+        event.accepted = true
+        if (event.key == Qt.Key_MediaTogglePlayPause) {
+            avPlayer.togglePlayPause()
+        } else if (event.key == Qt.Key_Context1) {
+            if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
+                _openWindow.maximized = true
+        } else if (event.key == Qt.Key_Context2) {
+            showAboutWindow()
+        } else if (event.key == Qt.Key_Context3) {
+            showSystemInfoWindow()
+        } else {
+            event.accepted = false
+        }
+    }
+
+    Keys.onMenuPressed: _openWindow && _openWindow.maximized ? _openWindow.maximized = false : show(mainBlade)
+    Keys.onVolumeDownPressed: avPlayer.decreaseVolume()
+    Keys.onVolumeUpPressed: avPlayer.increaseVolume()
 
     function createQmlObjectFromFile(file, properties) {
         var qmlComponent = Qt.createComponent(file)

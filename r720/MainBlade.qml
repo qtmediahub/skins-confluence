@@ -68,13 +68,10 @@ Blade {
 
         bladePixmap: themeResourcePath + "/media/MediaBladeSub.png"
 
-//        Keys.onPressed: {
-//            var action = runtime.actionMapper.mapKeyEventToAction(event)
-//            if (action == ActionMapper.Menu || action == ActionMapper.Left) {
-//                subMenu.close()
-//                event.accepted = true
-//            }
-//        }
+        Keys.onLeftPressed:
+            subMenu.close()
+        Keys.onMenuPressed:
+            subMenu.close()
 
         SubBladeMenu {
             id: subMenuList

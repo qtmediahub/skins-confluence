@@ -49,11 +49,8 @@ Dialog {
             focus: true
             onRootIndexChanged: sourceNameInput.text = treeModel.baseName(rootIndex)
 
-//            Keys.onPressed: {
-//                var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                if (action == ActionMapper.Left || action == ActionMapper.Right)
-//                    sourceNameInput.focus = true
-//            }
+            Keys.onLeftPressed: sourceNameInput.focus = true
+            Keys.onRightPressed: sourceNameInput.focus = true
         }
         Text {
             id: sourceNameLabel

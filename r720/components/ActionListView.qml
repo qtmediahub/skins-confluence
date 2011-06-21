@@ -116,12 +116,7 @@ ListView {
             }
         }
 
-//        Keys.onPressed:
-//            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-//                if (model.modelData.enabled)
-//                    delegateItem.activate()
-//                event.accepted = true
-//            }
+        Keys.onEnterPressed: model.modelData.enabled ? delegateItem.activate() : undefined
     }
 }
 

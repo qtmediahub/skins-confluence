@@ -31,12 +31,7 @@ Flow {
     signal lowerBoundExceeded
     signal upperBoundExceeded
 
-//    Keys.onPressed: {
-//        var action = runtime.actionMapper.mapKeyEventToAction(event)
-//        if (action == ActionMapper.Right) {
-//            if (flow == Flow.LeftToRight)
-//                adjustIndex(+1)
-//            event.accepted = true
+    Keys.onRightPressed: flow == Flow.LeftToRight ? adjustIndex(+1) : undefined
 //        } else if (action == ActionMapper.Left) {
 //            if (flow == Flow.LeftToRight)
 //                adjustIndex(-1)

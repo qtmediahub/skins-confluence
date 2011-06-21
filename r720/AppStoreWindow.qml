@@ -101,15 +101,9 @@ Window {
         }
     }
 
-//    Keys.onPressed: {
-//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
-//            event.accepted = true
-//            if (appStoreListView.state == "visible")
-//                hideAppStore();
-//            else if (app.active)
-//                closeApp();
-//            else
-//                event.accepted = false;
-//        }
-//    }
+    Keys.onMenuPressed:
+        if (appStoreListView.state == "visible")
+            hideAppStore();
+        else if (app.active)
+            closeApp()
 }
