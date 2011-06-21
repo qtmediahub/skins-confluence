@@ -25,16 +25,8 @@ import File 1.0
 Window {
     id: root
 
-//    Keys.onPressed: {
-//        var action = runtime.actionMapper.mapKeyEventToAction(event)
-//        if (action == ActionMapper.Up) {
-//            infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
-//            event.accepted = true
-//        } else if (action == ActionMapper.Down) {
-//            infoViewport.contentY = Math.min(infoViewport.contentHeight - height, infoViewport.contentY + 20)
-//            event.accepted = true
-//        }
-//    }
+    Keys.onUpPressed: infoViewport.contentY = Math.max(0, infoViewport.contentY - 20)
+    Keys.onDownPressed: infoViewport.contentY = Math.min(infoViewport.contentHeight - height, infoViewport.contentY + 20)
 
     NetworkInfo {
         id: networkInfo

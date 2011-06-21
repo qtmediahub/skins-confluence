@@ -95,13 +95,8 @@ FocusScope {
         spacing: 2
         width: parent.width
 
-//        Keys.onPressed: {
-//            var action = runtime.actionMapper.mapKeyEventToAction(event)
-//            if (action == ActionMapper.Up || action == ActionMapper.Down) {
-//                rootMenuList.focus = true
-//                event.accepted = true
-//            }
-//        }
+        Keys.onUpPressed: rootMenuList.focus = true
+        Keys.onDownPressed: rootMenuList.focus = true
 
         ConfluencePixmapButton {
             id: playMediaButton
@@ -109,16 +104,8 @@ FocusScope {
             focusedPixmap: "home-playmedia-FO"
             onClicked: confluence.show(avPlayer)
 
-//            Keys.onPressed: {
-//                var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                if (action == ActionMapper.Left) {
-//                    rootMenuList.focus = true
-//                    event.accepted = true
-//                } else if (action == ActionMapper.Right) {
-//                    favouritesButton.focus = true
-//                    event.accepted = true
-//                }
-//            }
+            Keys.onLeftPressed: rootMenuList.focus = true
+            Keys.onRightPressed: favouritesButton.focus = true
         }
         ConfluencePixmapButton {
             id: favouritesButton
@@ -126,16 +113,8 @@ FocusScope {
             focusedPixmap: "home-favourites-FO"
             onClicked: confluence.showAboutWindow()
 
-//            Keys.onPressed: {
-//                var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                if (action == ActionMapper.Left) {
-//                    event.accepted = true
-//                    playMediaButton.focus = true
-//                } else if (action == ActionMapper.Right) {
-//                    powerButton.focus = true
-//                    event.accepted = true
-//                }
-//            }
+            Keys.onLeftPressed: playMediaButton.focus = true
+            Keys.onRightPressed: powerButton.focus = true
         }
         ConfluencePixmapButton {
             id: powerButton
@@ -143,16 +122,8 @@ FocusScope {
             focusedPixmap: "home-power-FO";
             onClicked: confluence.showModal(exitDialog)
 
-//            Keys.onPressed: {
-//                var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                if (action == ActionMapper.Left) {
-//                    favouritesButton.focus = true
-//                    event.accepted = true
-//                } else if (action == ActionMapper.Right) {
-//                    rootMenuList.focus = true
-//                    event.accepted = true
-//                }
-//            }
+            Keys.onLeftPressed: favouritesButton.focus = true
+            Keys.onRightPressed: rootMenuList.focus = true
         }
     }
 }

@@ -57,16 +57,8 @@ PathView {
         }
     }
 
-//    Keys.onPressed: {
-//        var action = runtime.actionMapper.mapKeyEventToAction(event)
-//        if (action == ActionMapper.Right) {
-//            pathView.incrementCurrentIndex()
-//            event.accepted = true
-//        } else if (action == ActionMapper.Left) {
-//            pathView.decrementCurrentIndex()
-//            event.accepted = true
-//        }
-//    }
+    Keys.onRightPressed: pathView.incrementCurrentIndex()
+    Keys.onLeftPressed: pathView.decrementCurrentIndex()
 
     QtObject {
         id: paths

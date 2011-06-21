@@ -49,11 +49,7 @@ Item {
     onFocusChanged:
         depressed = false
 
-//    Keys.onPressed:
-//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-//            button.clicked()
-//            event.accepted = true
-//        }
+    Keys.onEnterPressed: button.clicked()
 
     Image {
         id: pixmap

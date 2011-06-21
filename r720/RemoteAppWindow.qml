@@ -32,13 +32,8 @@ Window {
             source = sourceNameInput.text
         }
 
-//        Keys.onPressed: {
-//            var action = runtime.actionMapper.mapKeyEventToAction(event)
-//            if (action == ActionMapper.Right || action == ActionMapper.Left) {
-//                sourceNameInput.focus = true
-//                event.accepted = true
-//            }
-//        }
+        Keys.onLeftPressed: sourceNameInput.focus = true
+        Keys.onRightPressed: sourceNameInput.focus = true
     }
 
     Text {
@@ -89,11 +84,7 @@ Window {
 
             onClicked: loader.load()
 
-           Keys.onPressed:
-                if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Up) {
-                    sourceNameInput.focus = true
-                    event.accepted = true
-                }
+            Keys.onUpPressed: sourceNameInput.focus = true
         }
     }
 }

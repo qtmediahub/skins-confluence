@@ -32,12 +32,7 @@ Flow {
     signal upperBoundExceeded
 
     Keys.onRightPressed: flow == Flow.LeftToRight ? adjustIndex(+1) : undefined
-//        } else if (action == ActionMapper.Left) {
-//            if (flow == Flow.LeftToRight)
-//                adjustIndex(-1)
-//            event.accepted = true
-//        }
-//    }
+    Keys.onLeftPressed: flow == Flow.LeftToRight ? adjustIndex(-1) : undefined
 
     function adjustIndex(delta)
     {

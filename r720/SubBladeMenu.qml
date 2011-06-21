@@ -34,11 +34,7 @@ FocusScope {
         scrollbar: false
         model: engine ? engine.actionList : null
 
-//        Keys.onPressed:
-//            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-//                currentItem.trigger()
-//                event.accepted = true
-//            }
+        Keys.onEnterPressed: currentItem.trigger()
 
         delegate: Item {
             id: delegate

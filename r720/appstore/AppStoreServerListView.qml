@@ -219,13 +219,8 @@ FocusScope {
                     }
                 }
 
-//                Keys.onPressed: {
-//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                    if (action == ActionMapper.Left || action == ActionMapper.Right) {
-//                        appListView.gainFocus()
-//                        event.accepted = true
-//                    }
-//                }
+                Keys.onRightPressed: appListView.gainFocus()
+                Keys.onLeftPressed: appListView.gainFocus()
 
                 MouseArea {
                     anchors.fill: parent;
@@ -326,17 +321,11 @@ FocusScope {
                         onEntered: delegateItem.ListView.view.currentIndex = index
                         onClicked: activated()
                     }
-//                    Keys.onPressed: {
-//                        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter)
-//                            activated()
-//                    }
+                    Keys.onEnterPressed: activated()
                 }
 
-//                Keys.onPressed: {
-//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                    if (action == ActionMapper.Left || action == ActionMapper.Right)
-//                        categoryListView.gainFocus()
-//                }
+                Keys.onLeftPressed: categoryListView.gainFocus()
+                Keys.onRightPressed: categoryListView.gainFocus()
 
                 MouseArea {
                     anchors.fill: parent;

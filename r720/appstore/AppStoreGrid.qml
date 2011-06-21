@@ -65,12 +65,7 @@ GridView {
             onEntered: delegateItem.GridView.view.currentIndex = index
         }
 
-//        Keys.onPressed: {
-//            if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Enter) {
-//                triggerItem()
-//                event.accepted = true
-//            }
-//        }
+        Keys.onEnterPressed: triggerItem()
 
         Behavior on scale {
             NumberAnimation {}

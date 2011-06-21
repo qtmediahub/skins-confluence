@@ -102,10 +102,6 @@ FocusScope {
         }
     }
 
-//    Keys.onPressed:
-//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Menu) {
-//            root.close()
-//            event.accepted = true
-//        }
+    Keys.onPressed: root.close()
 }
 

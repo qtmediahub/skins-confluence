@@ -145,11 +145,7 @@ FocusScope {
         ]
     }
 
-//    Keys.onPressed:
-//        if (runtime.actionMapper.mapKeyEventToAction(event) == ActionMapper.Context) {
-//            blade.open()
-//            event.accepted = true
-//        }
+    Keys.onContext1Pressed: blade.open()
 
     Loader {
         id: bladeLoader

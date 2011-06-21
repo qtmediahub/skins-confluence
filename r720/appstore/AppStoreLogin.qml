@@ -52,16 +52,8 @@ Dialog {
                 text: "qtmediahub"
                 color: "white"
 
-//                Keys.onPressed: {
-//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                    if (action == ActionMapper.Up) {
-//                        buttonBox.focus = true
-//                        event.accepted = true
-//                    } else if (action == ActionMapper.Down) {
-//                        sourcePasswordInput.focus = true
-//                        event.accepted = true
-//                    }
-//                }
+                Keys.onUpPressed: buttonBox.focus = true
+                Keys.onDownPressed: sourcePasswordInput.focus = true
             }
 
             MouseArea {
@@ -91,16 +83,8 @@ Dialog {
                 echoMode: TextInput.Password
                 color: "white"
 
-//                Keys.onPressed: {
-//                    var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                    if (action == ActionMapper.Up) {
-//                        sourceNameInput.focus = true
-//                        event.accepted = true
-//                    } else if (action == ActionMapper.Down) {
-//                        buttonBox.focus = true
-//                        event.accepted = true
-//                    }
-//                }
+                Keys.onUpPressed: sourceNameInput.focus = true
+                Keys.onDownPressed: buttonBox.focus = true
             }
 
             MouseArea {
@@ -120,16 +104,8 @@ Dialog {
                 root.reject()
             }
 
-//            Keys.onPressed: {
-//                var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                if (action == ActionMapper.Up) {
-//                    sourcePasswordInput.focus = true
-//                    event.accepted = true
-//                } else if (action == ActionMapper.Down) {
-//                    sourceNameInput.focus = true
-//                    event.accepted = true
-//                }
-//            }
+            Keys.onUpPressed: sourcePasswordInput.focus = true
+            Keys.onDownPressed: sourceNameInput.focus = true
         }
     }
 

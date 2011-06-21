@@ -480,14 +480,9 @@ FocusScope {
             }
         }
 
-//        Keys.onPressed: {
-//            var action = runtime.actionMapper.mapKeyEventToAction(event)
-//            if (action == ActionMapper.Menu) {
-//                videoListDialog.close()
-//                event.accepted = true
-//            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
-//                event.accepted = true
-//        }
+        Keys.onMenuPressed: videoListDialog.close()
+        Keys.onUpPressed: {}
+        Keys.onDownPressed: {}
     }
 
     Dialog {
@@ -509,14 +504,9 @@ FocusScope {
             }
         }
 
-//        Keys.onPressed: {
-//            var action = runtime.actionMapper.mapKeyEventToAction(event)
-//            if (action == ActionMapper.Menu) {
-//                musicListDialog.close()
-//                event.accepted = true
-//            } else if (action == ActionMapper.Up || action == ActionMapper.Down)
-//                event.accepted = true
-//        }
+        Keys.onMenuPressed: musicListDialog.close()
+        Keys.onUpPressed: {}
+        Keys.onDownPressed: {}
     }
 
     Dialog {
@@ -537,14 +527,9 @@ FocusScope {
                 playListDialog.close()
             }
 
-//            Keys.onPressed: {
-//                var action = runtime.actionMapper.mapKeyEventToAction(event)
-//                if (action == ActionMapper.Menu) {
-//                    playListDialog.close()
-//                    event.accepted = true
-//                } else if (action == ActionMapper.Up || action == ActionMapper.Down)
-//                    event.accepted = true
-//            }
+            Keys.onMenuPressed: playListDialog.close()
+            Keys.onUpPressed: {}
+            Keys.onDownPressed: {}
         }
     }
 
@@ -617,24 +602,14 @@ FocusScope {
                 onClicked: delegateItem.action()
             }
 
-            Keys.onPressed: {
-                var action = runtime.actionMapper.mapKeyEventToAction(event)
-                if (action == ActionMapper.Enter) {
-                    delegateItem.action()
-                    event.accepted = true
-                }
-            }
+            Keys.onEnterPressed: delegateItem.action()
         }
 
-//        Keys.onPressed: {
-//            var action = runtime.actionMapper.mapKeyEventToAction(event)
-//            if (action == ActionMapper.Menu) {
-//                mediaItem.forceActiveFocus()
-//                event.accepted = true
-//            } else if (action == ActionMapper.Left || action == ActionMapper.Right || action == ActionMapper.Up || action == ActionMapper.Down) {
-//                event.accepted = true
-//            }
-//        }
+        Keys.onMenuPressed: mediaItem.forceActiveFocus()
+        Keys.onLeftPressed: {}
+        Keys.onRighPressed: {}
+        Keys.onUpPressed: {}
+        Keys.onDownPressed: {}
     }
 }
 
