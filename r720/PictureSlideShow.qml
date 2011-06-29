@@ -66,7 +66,6 @@ FocusScope {
     height: parent.height
     width: parent.width
     opacity: 0
-    scale: 1
     anchors.topMargin: -height
 
     states:  [
@@ -75,7 +74,6 @@ FocusScope {
             PropertyChanges {
                 target: root
                 opacity: 1
-                scale: 1
             }
             PropertyChanges {
                 target: root.anchors
@@ -86,10 +84,18 @@ FocusScope {
 
     transitions: [
         Transition {
-            NumberAnimation {
-                properties: "opacity, scale, topMargin"
-                duration: confluence.standardAnimationDuration
-                easing.type: confluence.standardEasingCurve
+            reversible: true
+            ParallelAnimation {
+                NumberAnimation {
+                    properties: "topMargin"
+                    duration: confluence.standardAnimationDuration
+                    easing.type: confluence.standardEasingCurve
+                }
+                NumberAnimation {
+                    properties: "opacity"
+                    duration: confluence.standardAnimationDuration
+                    easing.type: Easing.InOutSine
+                }
             }
         }
     ]
