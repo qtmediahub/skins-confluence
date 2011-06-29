@@ -53,7 +53,7 @@ Item {
         Image {
             anchors.centerIn: parent
             source: "../3rdparty/skin.confluence/media/Confluence_Logo.png"
-            asynchronous: true
+            asynchronous: false
         }
     }
 
