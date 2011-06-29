@@ -230,10 +230,10 @@ FocusScope {
     Keys.onVolumeDownPressed: avPlayer.decreaseVolume()
     Keys.onVolumeUpPressed: avPlayer.increaseVolume()
 
-    function createQmlObjectFromFile(file, properties) {
+    function createQmlObjectFromFile(file, properties, parent) {
         var qmlComponent = Qt.createComponent(file)
         if (qmlComponent.status == Component.Ready) {
-            return qmlComponent.createObject(confluence, properties ? properties : {})
+            return qmlComponent.createObject(parent ? parent : confluence, properties ? properties : {})
         }
         runtime.backend.log(qmlComponent.errorString())
         return null

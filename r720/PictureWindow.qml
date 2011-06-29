@@ -44,7 +44,7 @@ MediaWindow {
 
     PictureSlideShow {
         id: slideShow
-        z: parent.z + 1
+        z: parent.z + 10
 
         onClosed: {
             focalWidget.focus = true

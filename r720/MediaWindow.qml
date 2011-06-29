@@ -21,9 +21,6 @@ import QtQuick 1.1
 import "components/"
 import Playlist 1.0
 
-import Qt.labs.shaders 1.0
-import Qt.labs.shaders.effects 1.0
-
 Window {
     id: mediaWindow
 
@@ -32,6 +29,7 @@ Window {
     signal itemActivated(variant mediaItem)
     signal itemSelected(variant mediaItem)
     property alias view: viewLoader.item
+    property variant mediaWindowRipple
     property variant mediaEngine
     property Item informationSheet
     property string mediaWindowName: "genericMediaWindow"
@@ -82,50 +80,12 @@ Window {
         mediaEngine.model.groupBy(index)
     }
 
-    onItemSelected:
-        waveLayer.visible = false
-
-    onItemActivated: {
-        if (!confluence.shroomfluence)
-            return
-        waveAnim.stop()
-        var scenePos = confluence.mapFromItem(mediaItem.parent, mediaItem.x + mediaItem.width/2, mediaItem.y + mediaItem.height/2)
-        waveLayer.waveOriginX = scenePos.x/confluence.width
-        waveLayer.waveOriginY = scenePos.y/confluence.height
-        waveLayer.visible = true
-        waveAnim.start()
-    }
+    onItemSelected: confluence.shroomfluence ? mediaWindowRipple.stop() : undefined
+    onItemActivated: confluence.shroomfluence ? mediaWindowRipple.ripple(mediaItem) : undefined
 
     function visibleTransitionFinished() {
         if (mediaEngine.model.rowCount() < 1) 
             confluence.showModal(addMediaSourceDialog)
-    }
-
-    ShaderEffectSource {
-        id: viewSource
-        sourceItem: view
-        live: false
-        hideSource: true
-    }
-
-    RadialWaveEffect {
-        id: waveLayer
-        visible: false
-        anchors.fill: parent;
-        source: viewSource
-
-        wave: 0.0
-        waveOriginX: 0.5
-        waveOriginY: 0.5
-        waveWidth: 0.01
-
-        NumberAnimation on wave {
-            id: waveAnim
-            running: waveLayer.visible
-            easing.type: "InQuad"
-            from: 0.0000; to: 1.0000;
-            duration: 2500
-        }
     }
 
     Connections {
@@ -247,5 +207,6 @@ Window {
     Component.onCompleted: {
         setCurrentView(runtime.config.value(mediaWindow.mediaWindowName + "-currentview", "POSTER"))
         setGroupBy(runtime.config.value(mediaWindow.mediaWindowName + "-group-by", "None"))
+        mediaWindowRipple = confluence.createQmlObjectFromFile("MediaWindowRipple.qml", {}, mediaWindow)
     }
 }
