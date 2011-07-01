@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import Playlist 1.0
+import MediaModel 1.0
 
 Window {
     id: mediaWindow
@@ -30,10 +31,15 @@ Window {
     signal itemSelected(variant mediaItem)
     property alias view: viewLoader.item
     property variant mediaWindowRipple
-    property variant mediaEngine
     property Item informationSheet
-    property string mediaWindowName: "genericMediaWindow"
     property alias mediaScanPath: mediaScanInfo.currentPath
+
+    property alias mediaType: mediaModel.mediaType
+
+    MediaModel {
+        id: mediaModel
+        structure: "artist|title"
+    }
 
     function play() {
         var currentItemData = view.currentItem.itemdata
@@ -68,7 +74,7 @@ Window {
         }
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
-        runtime.config.setValue(mediaWindow.mediaWindowName + "-currentview", viewType)
+        runtime.config.setValue(mediaModel.mediaType + "-currentview", viewType)
         view.rootIndex = rootIndex
         view.selectFirstItem()
     }
@@ -76,33 +82,33 @@ Window {
     function setGroupBy(attribute) {
         var index = blade.groupByAction.options.indexOf(attribute)
         blade.groupByAction.currentOptionIndex = index
-        runtime.config.setValue(mediaWindow.mediaWindowName + "-group-by", attribute)
-        mediaEngine.model.groupBy(index)
+        runtime.config.setValue(mediaModel.mediaType + "-group-by", attribute)
+        //mediaModel.groupBy(index)
     }
 
     onItemSelected: confluence.shroomfluence ? mediaWindowRipple.stop() : undefined
     onItemActivated: confluence.shroomfluence ? mediaWindowRipple.ripple(mediaItem) : undefined
 
     function visibleTransitionFinished() {
-        if (mediaEngine.model.rowCount() < 1) 
+        if (mediaModel.rowCount() < 1) 
             confluence.showModal(addMediaSourceDialog)
     }
 
     Connections {
         target: addMediaSourceDialog
-        onRejected: if (mediaEngine.model.rowCount() < 1) confluence.show(mainBlade)
+        onRejected: if (mediaModel.rowCount() < 1) confluence.show(mainBlade)
     }
 
     MediaScanInfo {
         id: mediaScanInfo
-        currentPath: mediaEngine.model.currentScanPath
+        //currentPath: mediaModel.currentScanPath
     }
 
     bladeComponent: MediaWindowBlade {
         property alias viewAction: viewAction
         property alias groupByAction: groupByAction
 
-        parent: mediaWindow
+        parent: root
         visible: true
         defaultBladeActionIndex: 1
 
@@ -123,13 +129,13 @@ Window {
                 id: sortByAction
                 text: qsTr("SORT BY")
                 options: [qsTr("NAME"), qsTr("SIZE"), qsTr("DATE")]
-                onTriggered: mediaEngine.model.sort(view.rootIndex, currentOption)
+                onTriggered: mediaModel.sort(view.rootIndex, currentOption)
                 enabled: options.length > 1
             },
             ConfluenceAction {
                 id: groupByAction
                 text: qsTr("GROUP BY")
-                options: mediaEngine.model.groupByOptions ? mediaEngine.model.groupByOptions() : ["None"]
+                options: mediaModel.groupByOptions ? mediaModel.groupByOptions() : ["None"]
                 onTriggered: mediaWindow.setGroupBy(currentOption)
                 enabled: options.length > 1
             },
@@ -141,19 +147,19 @@ Window {
             ConfluenceAction {
                 id: removeAction
                 text: qsTr("Remove Source")
-                onTriggered: mediaEngine.model.removeSearchPath(view.currentIndex)
+                onTriggered: mediaModel.removeSearchPath(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
             ConfluenceAction {
                 id: rescanAction;
                 text: qsTr("Rescan Source");
-                onTriggered: mediaEngine.model.rescan(view.currentIndex)
+                onTriggered: mediaModel.rescan(view.currentIndex)
                 enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
             },
             ConfluenceAction {
                 id: playAction;
                 text: qsTr("Play");
-                onTriggered: root.play()
+                onTriggered: mediaWindow.play()
             },
             ConfluenceAction {
                 id: informationAction
@@ -167,8 +173,7 @@ Window {
     Component {
         id: thumbnailView
         MediaThumbnailView {
-            engineName: mediaEngine.name
-            engineModel: mediaEngine.model
+            engineModel: mediaModel
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -176,8 +181,7 @@ Window {
     Component {
         id: listView
         MediaListView {
-            engineName: mediaEngine.name
-            engineModel: mediaEngine.model
+            engineModel: mediaModel
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -185,8 +189,7 @@ Window {
     Component {
         id: posterView
         MediaPosterView {
-            engineName: mediaEngine.name
-            engineModel: mediaEngine.model
+            engineModel: mediaModel
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -200,13 +203,13 @@ Window {
     AddMediaSourceDialog {
         id: addMediaSourceDialog
         focalWidget: viewLoader
-        engineModel: root.mediaEngine.model
-        title: qsTr("Add %1 source").arg(root.mediaEngine.name)
+        engineModel: mediaModel
+        title: qsTr("Add %1 source").arg(mediaModel.mediaType)
     }
 
     Component.onCompleted: {
-        setCurrentView(runtime.config.value(mediaWindow.mediaWindowName + "-currentview", "POSTER"))
-        setGroupBy(runtime.config.value(mediaWindow.mediaWindowName + "-group-by", "None"))
-        mediaWindowRipple = confluence.createQmlObjectFromFile("MediaWindowRipple.qml", {}, mediaWindow)
+        setCurrentView(runtime.config.value(mediaModel.mediaType + "-currentview", "POSTER"))
+        setGroupBy(runtime.config.value(mediaModel.mediaType + "-group-by", "None"))
+        mediaWindowRipple = confluence.createQmlObjectFromFile("MediaWindowRipple.qml", {}, root)
     }
 }

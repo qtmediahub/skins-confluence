@@ -24,8 +24,7 @@ import Playlist 1.0
 MediaWindow {
     id: root
 
-    mediaWindowName: "videowindow"
-    mediaEngine: runtime.backend.engine("video")
+    mediaType: "video"
 
     onItemActivated:
         avPlayer.playForeground(mediaItem.itemdata, Playlist.Replace, Playlist.Flat);

@@ -23,8 +23,7 @@ import "components/"
 MediaWindow {
     id: root
 
-    mediaWindowName: "picture"
-    mediaEngine: runtime.backend.engine("picture")
+    mediaType: "video"
     informationSheet: PictureInformationSheet { id: pictureInformationSheet }
 
     function showSlideShow(running) {

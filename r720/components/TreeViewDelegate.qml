@@ -61,6 +61,8 @@ Item {
             delegateItem.ListView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
             delegateItem.ListView.view.currentIndex = 0
             delegateItem.ListView.view.currentItem.forceActiveFocus()
+        } else if (!model.isLeaf && visualDataModel.model && visualDataModel.model.enter) {
+            visualDataModel.model.enter(index)
         } else {
             delegateItem.ListView.view.currentIndex = index;
             delegateItem.ListView.view.activated()

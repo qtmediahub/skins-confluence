@@ -73,6 +73,8 @@ Item {
             GridView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
             GridView.view.currentIndex = 0
             GridView.view.currentItem.forceActiveFocus()
+        } else if (!model.isLeaf && visualDataModel.model && visualDataModel.model.enter) {
+            visualDataModel.model.enter(index)
         } else {
             GridView.view.currentIndex = index;
             GridView.view.activated()

@@ -23,7 +23,6 @@ import "components/"
 Item {
     id: root
 
-    property variant engineName
     property variant engineModel
     property variant informationSheet
     property bool hidePreview: false
