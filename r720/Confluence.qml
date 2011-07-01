@@ -28,7 +28,7 @@ import "confluence.js" as Confluence
 FocusScope {
     id: confluence
 
-    property bool shroomfluence: runtime.config.isEnabled("shroom")
+    property bool shroomfluence: runtime.config.isEnabled("shroom", false)
     property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
 
     property string generalResourcePath: runtime.backend.resourcePath
@@ -403,6 +403,10 @@ FocusScope {
         onDeviceRemoved: {
             deviceDialog.close()
         }
+    }
+
+    FPSItem {
+        visible: runtime.config.isEnabled("fps", false)
     }
 }
 
