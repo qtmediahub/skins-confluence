@@ -21,7 +21,6 @@ import QtQuick 1.1
 import "components/"
 import "util.js" as Util
 import Playlist 1.0
-import Media 1.0
 
 Item {
     id: root
@@ -51,20 +50,20 @@ Item {
                 anchors.right: parent.right
             }
             Text {
-                text: media.metaData.albumArtist ? media.metaData.albumArtist : qsTr("Unknown Artist")
+                text: media.artist
                 color: "white"
                 font.bold: true
                 font.pointSize: 18
                 anchors.right: parent.right
             }
             Text {
-                text: media.metaData.albumTitle ? media.metaData.albumTitle : qsTr("Unknown Album")
+                text: media.album
                 color: "white"
                 font.pointSize: 16
                 anchors.right: parent.right
             }
             Text {
-                text: media.currentModelIndex ? playlist.data(media.currentModelIndex, Media.TitleRole) : qsTr("Unknown Title")
+                text: media.title
                 color: "white"
                 font.bold: true
                 font.pointSize: 20
@@ -88,7 +87,7 @@ Item {
 
             Image {
                 id: thumbnail
-                source: media.currentModelIndex ? playlist.data(media.currentModelIndex, Media.PreviewUrlRole) : themeResourcePath + "/media/DefaultAlbumCover.png"
+                source: media.thumbnail
                 anchors.fill: parent
                 anchors.margins: 6
 

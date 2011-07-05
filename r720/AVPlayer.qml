@@ -22,7 +22,6 @@ import QtMultimediaKit 1.1
 import "components/"
 import Playlist 1.0
 import RpcConnection 1.0
-import Media 1.0
 import "./components/uiconstants.js" as UIConstants
 
 //This serves to isolate import failures if QtMultimedia is not present
@@ -53,7 +52,7 @@ FocusScope {
 
     function play(itemdata, role, depth) {
         if(itemdata != null) {
-            mediaItem.currentModelIndex = playlist.add(itemdata.modelIndex, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+            mediaItem.currentModelIndex = playlist.add(itemdata, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
             playModelIndex(mediaItem.currentModelIndex)
         }
     }
@@ -80,7 +79,7 @@ FocusScope {
         mediaItem.stop();
         mediaItem.currentModelIndex = idx
         mediaItem.playbackRate = 1
-        mediaItem.source = playlist.data(idx, Media.FilePathRole)
+        mediaItem.source = mediaItem.getMetaData("filepath", "file://")
         mediaItem.play();
     }
 
@@ -328,6 +327,11 @@ FocusScope {
         volume: runtime.config.value("media-volume", 0.1)
 
         property variant currentModelIndex
+        property string thumbnail: getThumbnail()
+        property string artist: getMetaData("artist", qsTr("Unknown Artist"))
+        property string album: getMetaData("album", qsTr("Unknown Album"))
+        property string title: getMetaData("title", qsTr("Unknown Title"))
+        property string track: getMetaData("track", "")
 
         x: 0
         y: 0
@@ -341,6 +345,26 @@ FocusScope {
                 position = _seekPos
                 _seekPos = -1
             }
+        }
+
+        function getMetaData(role, defaultValue)
+        {
+            var tmp = playlist.data(mediaItem.currentModelIndex, playlist.getRoleByName(role))
+            if (tmp) return tmp;
+            else return defaultValue;
+        }
+
+        function getThumbnail()
+        {
+            if (mediaItem.currentModelIndex) {
+                var thumbnail = playlist.data(mediaItem.currentModelIndex, playlist.getRoleByName("thumbnail"))
+                if (thumbnail !== "")
+                    return thumbnail;
+            }
+            if (hasVideo)
+                return themeResourcePath + "DefaultVideo.png";
+            else
+                return themeResourcePath + "DefaultAudio.png";
         }
 
         function seek(pos) {

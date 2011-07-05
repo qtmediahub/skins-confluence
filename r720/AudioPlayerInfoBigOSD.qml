@@ -21,7 +21,6 @@ import QtQuick 1.1
 import "components/"
 import "util.js" as Util
 import Playlist 1.0
-import Media 1.0
 
 FocusScope {
     id: root
@@ -57,7 +56,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: media.currentModelIndex ? playlist.data(media.currentModelIndex, Media.PreviewUrlRole) : themeResourcePath + "/media/DefaultAlbumCover.png"
+            source: media.thumbnail
             anchors.fill: parent
             anchors.margins: 6
 
@@ -84,9 +83,7 @@ FocusScope {
             height: childrenRect.height
 
             Text {
-                property string artist : media.metaData.albumArtist ? media.metaData.albumArtist : qsTr("Unknown Artist")
-                property string album : media.metaData.albumTitle ? media.metaData.albumTitle : qsTr("Unknown Album")
-                text: artist + "  -  " + album
+                text: media.artist + "  -  " + media.album
                 color: "white"
                 font.bold: false
                 font.pointSize: 16
@@ -104,7 +101,7 @@ FocusScope {
         }
 
         Text {
-            text: media.currentModelIndex ? playlist.data(media.currentModelIndex, Media.TitleRole) : qsTr("Unknown Title")
+            text: media.title
             color: "white"
             font.bold: true
             font.pointSize: 20
@@ -121,11 +118,7 @@ FocusScope {
             height: childrenRect.height
 
             Text {
-                text: media.metaData.trackNumber
-                      ? qsTr("TRACK:")
-                        + (media.metaData.trackNumber ? media.metaData.trackNumber : "" )
-                        + (media.metaData.trackCount ? "/" + media.metaData.trackCount : "")
-                      : ""
+                text: media.track ? qsTr("TRACK:") + media.track : ""
                 color: "gray"
                 font.pointSize: 14
                 anchors.left: parent.left
