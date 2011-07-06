@@ -31,3 +31,4 @@ ConfluenceAnimation 1.0 ConfluenceAnimation.qml
 VideoPreview 1.0 VideoPreview.qml
 ViewLoader 1.0 ViewLoader.qml
 ConfluencePixmapButton 1.0 ConfluencePixmapButton.qml
+ConfluenceListViewDelegate 1.0 ConfluenceListViewDelegate.qml

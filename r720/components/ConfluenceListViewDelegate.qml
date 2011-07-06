@@ -19,43 +19,69 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 
-ListView {
-    id: listView
+Item {
+    id: delegateItem
 
-    signal clicked()
-    signal rightClicked(int mouseX, int mouseY)
-    signal activated()
+    property variant itemdata : model
+    width: ListView.view.width - 30
+    height: sourceText.height + 8
 
-    property bool scrollbar: true
-    property alias scrollbarItem: verticalScrollBar
+    ListView.onAdd: if (confluence.shroomfluence) delegateItemAnim.restart()
 
-    keyNavigationWraps: confluence.standardItemViewWraps
-
-    highlightRangeMode: confluence.standardHighlightRangeMode
-    highlightMoveDuration: confluence.standardHighlightMoveDuration
-
-    ScrollBar {
-        id: verticalScrollBar
-        visible: scrollbar
-        flickable: listView
+    NumberAnimation {
+        id: delegateItemAnim
+        target: delegateItem
+        properties: "scale, opacity"
+        from: 0
+        to: 1
+        duration: 200+index*40
     }
 
-    Keys.onPressed: {
-        if (event.key == Qt.Key_PageDown) {
-            var newIdx = listView.indexAt(contentX, contentY + height)
-            if (newIdx != -1) {
-                positionViewAtIndex(newIdx+1, ListView.Beginning)
-                currentIndex = newIdx+1
-            }
-            event.accepted = true
-        } else if (event.key == Qt.Key_PageUp) {
-            var newIdx = Math.max(0, listView.indexAt(contentX, contentY)-1)
-            positionViewAtIndex(newIdx, ListView.End)
-            currentIndex = newIdx
-            event.accepted = true
+    Image {
+        id: backgroundImage
+        anchors.fill: parent; 
+        source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem && delegateItem.activeFocus ? "MenuItemFO.png" : "MenuItemNF.png");
+    }
+    Text {
+        id: sourceText
+        anchors.verticalCenter: parent.verticalCenter
+        z: 1 // ensure it is above the background
+        text: model.display
+        font.pointSize: 16
+        font.weight: Font.Light
+        color: "white"
+        width: parent.width
+        elide: Text.ElideRight
+    }
+
+    function activate() {
+        var mediaModel = delegateItem.ListView.view.model
+        if (!model.isLeaf) {
+            mediaModel.enter(index)
+        } else {
+            delegateItem.ListView.view.currentIndex = index;
+            delegateItem.ListView.view.activated()
         }
     }
 
-    delegate: ConfluenceListViewDelegate { }
+    MouseArea {
+        anchors.fill: parent;
+        hoverEnabled: true
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onEntered: {
+            delegateItem.ListView.view.currentIndex = index
+            currentItem.focus = true
+        }
+        onClicked: {
+            if (mouse.button == Qt.LeftButton) {
+                delegateItem.ListView.view.clicked()
+                delegateItem.activate()
+            } else {
+                delegateItem.ListView.view.rightClicked(delegateItem.x + mouseX, delegateItem.y + mouseY)
+            }
+        }
+    }
+
+    Keys.onEnterPressed: delegateItem.activate()
 }
 

@@ -26,7 +26,6 @@ Item {
     property variant engineModel
     property variant informationSheet
     property bool hidePreview: false
-    property alias rootIndex: sourcesListView.rootIndex
     property alias currentIndex: sourcesListView.currentIndex
     property alias currentItem: sourcesListView.currentItem
 
@@ -58,28 +57,16 @@ Item {
         width: root.hidePreview ? root.width*0.8 : root.width*0.5
         height: root.height*0.9
 
-        TreeView {
+        ConfluenceListView {
             id: sourcesListView
-
-            anchors.fill: parent;
-            treeModel: engineModel
+            anchors.fill: parent
+            model: engineModel
             clip: true
             focus: true
             onCurrentItemChanged:
                 mediaWindow.itemSelected(currentItem)
             onActivated:
                 mediaWindow.itemActivated(currentItem)
-            Keys.onPressed: {
-                if (!currentItem)
-                    return;
-                var itemType = sourcesListView.currentItem.itemdata.type
-                if (itemType == "SearchPath") {
-                    if (event.key == Qt.Key_Delete) {
-                        treeModel.removeSearchPath(currentIndex)
-                        event.accepted = true
-                    }
-                }
-            }
         }
     }
 
