@@ -269,7 +269,7 @@ FocusScope {
         running: controlOSD.state == "visible"
 
         repeat: false
-        onTriggered: controlOSD.state = ""
+        onTriggered: controlOSD.close()
     }
 
     Timer {

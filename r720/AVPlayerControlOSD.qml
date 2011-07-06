@@ -40,6 +40,10 @@ FocusScope {
     width: parent.width
     height: content.height
 
+    function close() {
+        root.state = ""
+    }
+
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
@@ -90,6 +94,8 @@ FocusScope {
                 onClicked: playlist.playMode == Playlist.Normal ? playlist.playMode = Playlist.Shuffle : playlist.playMode = Playlist.Normal;
             }
             ConfluencePixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
+            Keys.onUpPressed: root.close()
+            Keys.onDownPressed: root.close()
         }
     }
 
