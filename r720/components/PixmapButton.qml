@@ -20,44 +20,43 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 
 Item {
-    id: button
+    id: root
     //property real pixmapCorrectionRatio: pixmap.sourceSize.width/pixmap.sourceSize.height
+    property bool disabled: false
     property string resourcePath: ""
-    property real defaultWidth: pixmap.sourceSize.width * confluence.scalingCorrection
-    property real defaultHeight: pixmap.sourceSize.width * confluence.scalingCorrection
 
-    width: defaultWidth; height: defaultHeight
+    width: d.defaultWidth; height: d.defaultHeight
 
     property string basePixmap
     property string focusedPixmap
     property string depressedPixmap
 
-    property bool depressed: false
+    QtObject {
+        id: d
+        property bool depressed: false
+
+        property real defaultWidth: pixmap.sourceSize.width * confluence.scalingCorrection
+        property real defaultHeight: pixmap.sourceSize.width * confluence.scalingCorrection
+    }
 
     signal pressed
     signal clicked
     signal released
 
-    onPressed: {
-        depressed = true
-    }
+    onPressed: d.depressed = true
+    onReleased: d.depressed = false
+    onFocusChanged: d.depressed = false
 
-    onReleased: {
-        depressed = false
-    }
-
-    onFocusChanged:
-        depressed = false
-
-    Keys.onEnterPressed: button.clicked()
+    Keys.onEnterPressed: root.clicked()
 
     Image {
         id: pixmap
+        opacity: root.disabled ? 0.2 : 1.0
         anchors.fill: parent
         source: resourcePath
-                + (depressed && depressedPixmap != ""
+                + (d.depressed && (depressedPixmap != "")
                    ? depressedPixmap
-                   : (button.activeFocus && focusedPixmap != "" ? focusedPixmap : basePixmap))
+                   : (root.activeFocus && (focusedPixmap != "") ? focusedPixmap : basePixmap))
                 + ".png"
     }
 
@@ -67,16 +66,16 @@ Item {
         anchors.fill: parent
 
         onPressed: {
-            button.pressed()
+            root.pressed()
         }
         onClicked: {
-            button.clicked()
+            root.clicked()
         }
         onEntered:  {
-            button.forceActiveFocus()
+            root.forceActiveFocus()
         }
         onReleased: {
-            button.released()
+            root.released()
         }
     }
 }

@@ -76,7 +76,7 @@ FocusScope {
             ConfluencePixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
             Item { width: 100; height: 1; }
             ConfluencePixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: root.playPrevious(); }
-            ConfluencePixmapButton { basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.seekBackward() }
+            ConfluencePixmapButton { disabled: !mediaItem.seekable; basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.seekBackward() }
             ConfluencePixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: root.stop();}
             ConfluencePixmapButton {
                 id: playPauseButton
@@ -84,7 +84,7 @@ FocusScope {
                 focusedPixmap: !media.playing || media.paused ? "OSDPlayFO" : "OSDPauseFO"
                 onClicked: media.togglePlayPause()
             }
-            ConfluencePixmapButton { basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.seekForward() }
+            ConfluencePixmapButton { disabled: !mediaItem.seekable; basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.seekForward() }
             ConfluencePixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }

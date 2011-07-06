@@ -51,8 +51,11 @@ Flow {
             focusedIndex = wrapping ? 0 : upperThreshold
             exceededUpper = true
         }
-        //Propagate beyond spacers
-        children[focusedIndex].children.length == 0 && !exceededUpper && !exceededLower
+
+        //Propagate beyond spacers && deactivated items
+        (children[focusedIndex].disabled || children[focusedIndex].children.length == 0)
+                && !exceededUpper
+                && !exceededLower
             ? adjustIndex(delta)
             : children[focusedIndex].forceActiveFocus() 
 
