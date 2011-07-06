@@ -40,6 +40,9 @@ PathView {
         pathView.preferredHighlightBegin = paths[style].highlightPos
         pathView.pathItemCount = paths[style].pathItemCount
         pathView.path = paths[style]
+
+        // ## QML Bug: PathView doesn't seem to load items when the path changes
+        posterModel.reset()
     }
 
     model: visualDataModel
