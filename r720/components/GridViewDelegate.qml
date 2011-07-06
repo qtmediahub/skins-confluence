@@ -68,7 +68,7 @@ Item {
 
     function activate() {
         var mediaModel = GridView.view.model
-        if (!mediaModel.isLeaf) {
+        if (!model.isLeaf) {
             mediaModel.enter(index)
         } else {
             GridView.view.currentIndex = index;
