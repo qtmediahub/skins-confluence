@@ -23,7 +23,7 @@ import "components/"
 
 BorderImage {
     id: root
-    property string currentPath
+    property string currentPath: runtime.mediaScanner.currentScanPath
 
     clip: true
     border { top: 17; right: 14; bottom: 17; left: 14 }
@@ -65,7 +65,7 @@ BorderImage {
             color: "white"
             text: root.currentPath
             width: parent.width
-            elide: Text.ElideLeft
+            elide: Text.ElideRight
         }
     }
 }

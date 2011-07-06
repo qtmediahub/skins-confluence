@@ -32,7 +32,6 @@ Window {
     property alias view: viewLoader.item
     property variant mediaWindowRipple
     property Item informationSheet
-    property alias mediaScanPath: mediaScanInfo.currentPath
 
     property variant groupByOptions : [qsTr("None")]
     property variant structures : [""]
@@ -102,7 +101,6 @@ Window {
 
     MediaScanInfo {
         id: mediaScanInfo
-        //currentPath: mediaModel.currentScanPath
     }
 
     bladeComponent: MediaWindowBlade {
