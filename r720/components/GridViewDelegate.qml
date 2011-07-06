@@ -63,7 +63,6 @@ Item {
         font.pointSize: 10
         font.weight: Font.Light
         color: "white"
-        visible: model.type != "File"
     }
 
     function activate() {
