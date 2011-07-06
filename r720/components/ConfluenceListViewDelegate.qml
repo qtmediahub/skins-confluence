@@ -70,7 +70,7 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onEntered: {
             delegateItem.ListView.view.currentIndex = index
-            currentItem.focus = true
+            delegateItem.focus = true
         }
         onClicked: {
             if (mouse.button == Qt.LeftButton) {
