@@ -25,7 +25,6 @@ Item {
     property variant engineModel
     property variant informationSheet
     property bool hidePreview: false
-    property alias rootIndex: sourcesListView.rootIndex
     property alias currentIndex: sourcesListView.currentIndex
     property alias currentItem: sourcesListView.currentItem
 
@@ -61,7 +60,7 @@ Item {
             id: sourcesListView
 
             anchors.fill: parent;
-            treeModel: engineModel
+            model: engineModel
             clip: true
             focus: true;
             onCurrentItemChanged:

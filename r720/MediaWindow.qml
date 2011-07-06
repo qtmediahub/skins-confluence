@@ -47,8 +47,6 @@ Window {
     }
 
     function setCurrentView(viewType) {
-        var rootIndex
-        view ? rootIndex = view.rootIndex : undefined
         if (viewType == qsTr("BIG GRID") || viewType == qsTr("GRID")) {
             viewLoader.changeView(thumbnailView)
             view.hidePreview = viewType == qsTr("BIG GRID")
@@ -75,7 +73,6 @@ Window {
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         runtime.config.setValue(mediaModel.mediaType + "-currentview", viewType)
-        view.rootIndex = rootIndex
         view.selectFirstItem()
     }
 
@@ -116,7 +113,6 @@ Window {
             ConfluenceAction {
                 id: rootAction
                 text: qsTr("Go to root")
-                onTriggered: view.rootIndex = undefined
             },
             ConfluenceAction {
                 id: viewAction

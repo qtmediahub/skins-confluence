@@ -22,35 +22,23 @@ import QtQuick 1.1
 GridView {
     id: gridView
 
-    property alias treeModel : visualDataModel.model
-    property alias rootIndex : visualDataModel.rootIndex
-
     signal clicked()
     signal rightClicked(int mouseX, int mouseY)
     signal activated()
-    signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
+
+    clip: true
+    cellWidth: 154
+    cellHeight: 154
 
     highlightRangeMode: confluence.standardHighlightRangeMode
     highlightMoveDuration: confluence.standardHighlightMoveDuration
     keyNavigationWraps: confluence.standardItemViewWraps
-
-    function currentModelIndex() {
-        return visualDataModel.modelIndex(currentIndex);
-    }
 
     ScrollBar {
         id: verticalScrollbar
         flickable: gridView
     }
 
-    model : visualDataModel
-    clip: true
-
-    cellWidth: 154; cellHeight: 154
-
-    VisualDataModel {
-        id: visualDataModel
-        delegate : GridViewDelegate { }
-    }
+    delegate: GridViewDelegate { }
 }
 
