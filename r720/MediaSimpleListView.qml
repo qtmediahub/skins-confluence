@@ -22,41 +22,22 @@ import "components/"
 
 Item {
     id: root
-    property variant engineName
     property variant engineModel
-    property variant informationSheetComponent
-    property bool hidePreview: false
-    property alias rootIndex: sourcesListView.rootIndex
     property alias currentIndex: sourcesListView.currentIndex
 
     signal itemTriggered(variant itemData)
 
     anchors.centerIn: parent
 
-    TreeView {
+    ConfluenceListView {
         id: sourcesListView
 
         anchors.fill: parent;
-        treeModel: engineModel
+        model: engineModel
         clip: true
         focus: true;
         onActivated: {
             root.itemTriggered(currentItem.itemdata)
-        }
-
-        Keys.onPressed: {
-            var itemType = sourcesListView.currentItem ? sourcesListView.currentItem.itemdata.type : ""
-            if (itemType == "SearchPath") {
-                if (event.key == Qt.Key_Delete) {
-                    treeModel.removeSearchPath(currentIndex)
-                    event.accepted = true
-                }
-            } else if (itemType == "File") {
-                if (event.key == Qt.Key_Enter) {
-                    root.itemTriggered(currentItem.itemdata)
-                    event.accepted = true
-                }
-            }
         }
     }
 }

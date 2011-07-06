@@ -487,7 +487,6 @@ FocusScope {
         MediaSimpleListView {
             id: videoListPanel
             anchors.fill: parent
-            engineName: root.videoEngine ? root.videoEngine.name : undefined
             engineModel: root.videoEngine ? root.videoEngine.model : undefined
 
             onItemTriggered: {
@@ -511,7 +510,6 @@ FocusScope {
         MediaSimpleListView {
             id: musicListPanel
             anchors.fill: parent
-            engineName: root.musicEngine ? root.musicEngine.name : undefined
             engineModel: root.musicEngine ? root.musicEngine.model : undefined
 
             onItemTriggered: {
@@ -535,7 +533,6 @@ FocusScope {
         MediaSimpleListView {
             id: playListPanel
             anchors.fill: parent
-            engineName: qsTr("Playlist")
             engineModel: playlist
 
             onItemTriggered: {

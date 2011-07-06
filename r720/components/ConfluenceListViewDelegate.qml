@@ -56,7 +56,7 @@ Item {
 
     function activate() {
         var mediaModel = delegateItem.ListView.view.model
-        if (!model.isLeaf) {
+        if (!model.isLeaf && mediaModel.enter) {
             mediaModel.enter(index)
         } else {
             delegateItem.ListView.view.currentIndex = index;
