@@ -24,7 +24,9 @@ import Playlist 1.0
 MediaWindow {
     id: root
 
-    mediaType: "video"
+    mediaModel.mediaType: "video"
+    groupByOptions : [ qsTr("Title") ]
+    structures : [ "title" ]
 
     onItemActivated: avPlayer.playForeground(mediaItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
 }
