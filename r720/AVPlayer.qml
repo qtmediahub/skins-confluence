@@ -76,6 +76,7 @@ FocusScope {
     }
 
     function playIndex(idx) {
+        playlist.currentIndex = idx
         mediaItem.stop();
         mediaItem.playbackRate = 1
         mediaItem.source = mediaItem.getMetaData("filepath", "file://")
@@ -538,7 +539,7 @@ FocusScope {
             engineModel: playlist
 
             onItemTriggered: {
-                root.playModelIndex(itemData.modelIndex)
+                root.playIndex(currentIndex)
                 playListDialog.close()
             }
 
