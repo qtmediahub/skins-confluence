@@ -355,7 +355,7 @@ FocusScope {
                 if (thumbnail !== "")
                     return thumbnail;
             }
-            return hasVideo ? themeResourcePath + "DefaultVideo.png" : themeResourcePath + "DefaultAudio.png";
+            return hasVideo ? themeResourcePath + "/media/DefaultVideo.png" : themeResourcePath + "/media/DefaultAudio.png";
         }
 
         function seek(pos) {
