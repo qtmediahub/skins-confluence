@@ -34,11 +34,13 @@ Window {
     property Item informationSheet
     property alias mediaScanPath: mediaScanInfo.currentPath
 
-    property alias mediaType: mediaModel.mediaType
+    property variant groupByOptions : [qsTr("None")]
+    property variant structures : [""]
+
+    property alias mediaModel: mediaModel
 
     MediaModel {
         id: mediaModel
-        structure: "artist|title"
     }
 
     function play() {
@@ -78,9 +80,11 @@ Window {
 
     function setGroupBy(attribute) {
         var index = blade.groupByAction.options.indexOf(attribute)
+        if (index == -1)
+            index = 0
         blade.groupByAction.currentOptionIndex = index
         runtime.config.setValue(mediaModel.mediaType + "-group-by", attribute)
-        //mediaModel.groupBy(index)
+        mediaModel.structure = structures[index]
     }
 
     onItemSelected: confluence.shroomfluence ? mediaWindowRipple.stop() : undefined
@@ -131,7 +135,7 @@ Window {
             ConfluenceAction {
                 id: groupByAction
                 text: qsTr("GROUP BY")
-                options: mediaModel.groupByOptions ? mediaModel.groupByOptions() : ["None"]
+                options: mediaWindow.groupByOptions
                 onTriggered: mediaWindow.setGroupBy(currentOption)
                 enabled: options.length > 1
             },

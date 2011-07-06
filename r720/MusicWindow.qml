@@ -25,7 +25,9 @@ MediaWindow {
     id: root
 
     informationSheet: MusicInformationSheet { id: musicInformationSheet }
-    mediaType: "music"
+    mediaModel.mediaType: "music"
+    groupByOptions : [ qsTr("Album"), qsTr("Artist"), qsTr("Genre"), qsTr("Song") ]
+    structures : [ "album,artist|title", "artist|album|title", "genre|album,artist|title", "title" ]
 
     onItemActivated: avPlayer.playForeground(mediaItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
 }
