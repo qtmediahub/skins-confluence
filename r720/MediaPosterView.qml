@@ -26,7 +26,6 @@ Item {
     id: root
     property variant engineModel
     property variant informationSheet
-    property alias rootIndex: posterView.rootIndex
     property alias currentIndex: posterView.currentIndex
     property alias currentItem: posterView.currentItem
 
@@ -59,7 +58,7 @@ Item {
         id: posterView
         anchors.fill: parent
         focus: true
-        posterModel: engineModel
+        model: root.engineModel
 
         onCurrentItemChanged:
             mediaWindow.itemSelected(currentItem)

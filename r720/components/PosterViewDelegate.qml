@@ -59,13 +59,9 @@ Item {
 
     function activate()
     {
-        var visualDataModel = PathView.view.model
-        if (model.hasModelChildren) {
-            visualDataModel.rootIndex = visualDataModel.modelIndex(index)
-            PathView.view.rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
-            visualDataModel.model.layoutChanged() // Workaround for QTBUG-16366
-        } else if (!model.isLeaf && visualDataModel.model && visualDataModel.model.enter) {
-            visualDataModel.model.enter(index)
+        var mediaModel = PathView.view.model
+        if (!model.isLeaf) {
+            mediaModel.enter(index)
         } else {
             PathView.view.currentIndex = index;
             PathView.view.activated()

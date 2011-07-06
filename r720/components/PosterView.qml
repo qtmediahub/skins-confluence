@@ -22,9 +22,6 @@ import QtQuick 1.1
 PathView {
     id: pathView
 
-    property variant posterModel // Not an alias because of QTBUG-16357
-    property alias rootIndex : visualDataModel.rootIndex
-    signal rootIndexChanged() // Fire signals of aliases manually, QTBUG-14089
     property int delegateWidth : confluence.width/6.4
     property int delegateHeight : confluence.width/6.4
     property variant currentItem // QTBUG-16347
@@ -42,26 +39,16 @@ PathView {
         pathView.path = paths[style]
 
         // ## QML Bug: PathView doesn't seem to load items when the path changes
-        posterModel.reset()
+        model.reset()
     }
 
-    model: visualDataModel
     preferredHighlightEnd: pathView.preferredHighlightBegin
     dragMargin: width
 
-    VisualDataModel {
-        id: visualDataModel
-        delegate : PosterViewDelegate { }
-        Component.onCompleted: {
-            model = pathView.posterModel // Workaround for QTBUG-16357
-            var oldRootIndex = rootIndex
-            rootIndex = modelIndex(0)
-            rootIndex = oldRootIndex // Workaround for QTBUG-16365
-        }
-    }
-
     Keys.onRightPressed: pathView.incrementCurrentIndex()
     Keys.onLeftPressed: pathView.decrementCurrentIndex()
+
+    delegate: PosterViewDelegate { }
 
     QtObject {
         id: paths
