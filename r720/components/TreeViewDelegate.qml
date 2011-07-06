@@ -46,7 +46,7 @@ Item {
         id: sourceText
         anchors.verticalCenter: parent.verticalCenter
         z: 1 // ensure it is above the background
-        text: model.display
+        text: model.display ? model.display : ""
         font.pointSize: 16
         font.weight: Font.Light
         color: "white"
