@@ -28,7 +28,6 @@ FocusScope {
         id: d
         property bool running: root.visible && slide
         property bool slide: false
-        property variant currentModelIndex: 0
         property int interval: 3000
     }
 
@@ -38,22 +37,25 @@ FocusScope {
         d.slide = running
     }
 
-    function setModelIndex(modelIndex) {
-        var idx = imagePlayList.add(modelIndex, Playlist.Replace, Playlist.Flat)
-        showModelIndex(idx)
+    Playlist {
+        id: imagePlayList
+        playMode: Playlist.Normal
     }
 
-    function showModelIndex(modelIndex) {
-        d.currentModelIndex = modelIndex
-        listView.currentIndex = imagePlayList.row(modelIndex)
+    function setModelIndex(modelIndex) {
+        var idx = imagePlayList.add(modelIndex, Playlist.Replace, Playlist.Flat)
+        imagePlayList.currentIndex = idx
+        listView.currentIndex = idx
     }
 
     function next() {
-        showModelIndex(imagePlayList.playNextIndex(d.currentModelIndex));
+        imagePlayList.next()
+        listView.currentIndex = imagePlayList.currentIndex
     }
 
     function previous() {
-        showModelIndex(imagePlayList.playPreviousIndex(d.currentModelIndex));
+        imagePlayList.previous()
+        listView.currentIndex = imagePlayList.currentIndex
     }
 
     function close() {
@@ -115,11 +117,6 @@ FocusScope {
         onTriggered: root.next()
     }
 
-    Playlist {
-        id: imagePlayList
-        playMode: Playlist.Normal
-    }
-
     Rectangle {
         id: blackout
         color: "black"
@@ -144,7 +141,7 @@ FocusScope {
                 sourceSize.width: imageThumbnail.width > imageThumbnail.height ? parent.width : 0
                 sourceSize.height: imageThumbnail.width <= imageThumbnail.height ? parent.height : 0
                 anchors.fill: parent
-                source: filePath
+                source: model.filepath
                 asynchronous: true
             }
             Image {
@@ -153,7 +150,7 @@ FocusScope {
                 anchors.fill: image
                 fillMode: Image.PreserveAspectFit
                 visible: image.status != Image.Ready
-                source: previewUrl
+                source: model.previewUrl
             }
         }
 

@@ -29,6 +29,6 @@ MediaWindow {
     groupByOptions : [ qsTr("Album"), qsTr("Artist"), qsTr("Genre"), qsTr("Song") ]
     structures : [ "album,artist|title", "artist|album|title", "genre|album,artist|title", "title" ]
 
-    onItemActivated: avPlayer.playForeground(mediaItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
+    onItemActivated: avPlayer.playForeground(root.view.currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
 }
 

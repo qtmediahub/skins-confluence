@@ -28,6 +28,6 @@ MediaWindow {
     groupByOptions : [ qsTr("Title") ]
     structures : [ "title" ]
 
-    onItemActivated: avPlayer.playForeground(mediaItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
+    onItemActivated: avPlayer.playForeground(root.view.currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
 }
 

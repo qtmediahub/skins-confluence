@@ -51,9 +51,9 @@ FocusScope {
     }
 
     function play(itemdata, role, depth) {
-        if(itemdata != null) {
-            mediaItem.currentModelIndex = playlist.add(itemdata, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
-            playModelIndex(mediaItem.currentModelIndex)
+        if (itemdata != null) {
+            playlist.currentIndex = playlist.add(itemdata, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
+            playIndex(playlist.currentIndex)
         }
     }
 
@@ -68,16 +68,15 @@ FocusScope {
     }
 
     function playNext() {
-        playModelIndex(playlist.playNextIndex(mediaItem.currentModelIndex));
+        playIndex(playlist.next())
     }
 
     function playPrevious() {
-        playModelIndex(playlist.playPreviousIndex(mediaItem.currentModelIndex));
+        playIndex(playlist.previous())
     }
 
-    function playModelIndex(idx) {
+    function playIndex(idx) {
         mediaItem.stop();
-        mediaItem.currentModelIndex = idx
         mediaItem.playbackRate = 1
         mediaItem.source = mediaItem.getMetaData("filepath", "file://")
         mediaItem.play();
@@ -326,7 +325,6 @@ FocusScope {
 
         volume: runtime.config.value("media-volume", 0.1)
 
-        property variant currentModelIndex
         property string thumbnail: getThumbnail()
         property string artist: getMetaData("artist", qsTr("Unknown Artist"))
         property string album: getMetaData("album", qsTr("Unknown Album"))
@@ -347,24 +345,17 @@ FocusScope {
             }
         }
 
-        function getMetaData(role, defaultValue)
-        {
-            var tmp = playlist.data(mediaItem.currentModelIndex, playlist.getRoleByName(role))
-            if (tmp) return tmp;
-            else return defaultValue;
+        function getMetaData(role, defaultValue) {
+            return playlist.data(playlist.currentIndex, role) || defaultValue
         }
 
-        function getThumbnail()
-        {
-            if (mediaItem.currentModelIndex) {
-                var thumbnail = playlist.data(mediaItem.currentModelIndex, playlist.getRoleByName("thumbnail"))
+        function getThumbnail() {
+            if (playlist.currentIndex != -1) {
+                var thumbnail = playlist.data(playlist.currentIndex, "thumbnail")
                 if (thumbnail !== "")
                     return thumbnail;
             }
-            if (hasVideo)
-                return themeResourcePath + "DefaultVideo.png";
-            else
-                return themeResourcePath + "DefaultAudio.png";
+            return hasVideo ? themeResourcePath + "DefaultVideo.png" : themeResourcePath + "DefaultAudio.png";
         }
 
         function seek(pos) {
@@ -415,8 +406,8 @@ FocusScope {
         onShowVideoMenu: showDialog(videoListDialog);
         onShowMusicMenu: showDialog(musicListDialog);
         onStop: mediaItem.stop();
-        onPlayNext: playModelIndex(playlist.playNextIndex(mediaItem.currentModelIndex));
-        onPlayPrevious: playModelIndex(playlist.playPreviousIndex(mediaItem.currentModelIndex));
+        onPlayNext: root.playNext()
+        onPlayPrevious: root.playPrevious()
         onSeekBackward: decreasePlaybackRate();
         onSeekForward: increasePlaybackRate();
         onShowTargets: root.state = "targets"
