@@ -28,19 +28,9 @@ MediaWindow {
     groupByOptions : [ qsTr("Title"), qsTr("Date") ]
     structures : [ "title", "year|month|title" ]
 
-    function showSlideShow(running) {
-        slideShow.setModelIndex(root.view.currentItem.itemdata.modelIndex)
-
-        slideShow.state = "visible"
-        slideShow.focus = true
-        slideShow.run(running)
-    }
-
-    onItemActivated:
-        root.showSlideShow(false)
-
     function play() {
-        root.showSlideShow(true)
+        slideShow.setModelIndex(root.view.currentItem.itemdata.modelIndex)
+        slideShow.show()
     }
 
     PictureSlideShow {
@@ -48,7 +38,7 @@ MediaWindow {
         z: parent.z + 10
 
         onClosed: {
-            focalWidget.focus = true
+            focalWidget.forceActiveFocus()
         }
     }
 }

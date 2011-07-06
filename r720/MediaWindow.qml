@@ -87,7 +87,10 @@ Window {
     }
 
     onItemSelected: confluence.shroomfluence ? mediaWindowRipple.stop() : undefined
-    onItemActivated: confluence.shroomfluence ? mediaWindowRipple.ripple(mediaItem) : undefined
+    onItemActivated: {
+        confluence.shroomfluence ? mediaWindowRipple.ripple(mediaItem) : undefined
+        root.play()
+    }
 
     function visibleTransitionFinished() {
         if (mediaModel.rowCount() < 1) 

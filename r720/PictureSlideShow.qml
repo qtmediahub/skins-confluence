@@ -33,13 +33,15 @@ FocusScope {
 
     signal closed()
 
-    function run(running) {
-        d.slide = running
+    function show() {
+        state = "visible"
+        forceActiveFocus();
     }
 
-    Playlist {
-        id: imagePlayList
-        playMode: Playlist.Normal
+    function close() {
+        root.state = ""
+        root.closed();
+        d.slide = false
     }
 
     function setModelIndex(modelIndex) {
@@ -56,11 +58,6 @@ FocusScope {
     function previous() {
         imagePlayList.previous()
         listView.currentIndex = imagePlayList.currentIndex
-    }
-
-    function close() {
-        root.state = ""
-        root.closed();
     }
 
     anchors.top: parent.top
@@ -101,6 +98,11 @@ FocusScope {
             }
         }
     ]
+
+    Playlist {
+        id: imagePlayList
+        playMode: Playlist.Normal
+    }
 
     Keys.onContext1Pressed: d.slide = !d.slide
     Keys.onLeftPressed: root.previous()
