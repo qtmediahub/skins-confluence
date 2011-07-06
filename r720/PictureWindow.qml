@@ -23,8 +23,10 @@ import "components/"
 MediaWindow {
     id: root
 
-    mediaType: "video"
     informationSheet: PictureInformationSheet { id: pictureInformationSheet }
+    mediaModel.mediaType: "picture"
+    groupByOptions : [ qsTr("Title"), qsTr("Date") ]
+    structures : [ "title", "year|month|title" ]
 
     function showSlideShow(running) {
         slideShow.setModelIndex(root.view.currentItem.itemdata.modelIndex)
