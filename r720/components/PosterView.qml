@@ -29,10 +29,6 @@ PathView {
     signal activated()
     signal rightClicked(int mouseX, int mouseY)
 
-    function currentModelIndex() {
-        return visualDataModel.modelIndex(currentIndex);
-    }
-
     function setPathStyle(style) {
         pathView.preferredHighlightBegin = paths[style].highlightPos
         pathView.pathItemCount = paths[style].pathItemCount
@@ -72,6 +68,29 @@ PathView {
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.2 }
+        }
+        property PosterPath sidlingZoom: PosterPath {
+            id: sidlingZoom
+            pathItemCount: 15//(pathView.width+2*pathView.delegateWidth)/pathView.delegateWidth
+
+            startX: -pathView.delegateWidth; startY: (pathView.height - pathView.delegateHeight)/2.0
+            PathAttribute { name: "scale"; value: 1 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "opacity"; value: 0.1 }
+            PathLine { x: pathView.width/2.5; y: sidlingZoom.startY }
+            PathAttribute { name: "scale"; value: 1.0 }
+            PathAttribute { name: "opacity"; value: 0.3 }
+            PathLine { x: pathView.width/2.0; y: sidlingZoom.startY }
+            PathAttribute { name: "scale"; value: 1.5 }
+            PathAttribute { name: "z"; value: 2 }
+            PathAttribute { name: "opacity"; value: 1.0 }
+            PathLine { x: pathView.width/1.5; y: sidlingZoom.startY }
+            PathAttribute { name: "scale"; value: 1.0 }
+            PathAttribute { name: "opacity"; value: 0.3 }
+            PathLine { x: pathView.width+pathView.delegateWidth; y: sidlingZoom.startY }
+            PathAttribute { name: "scale"; value: 1 }
+            PathAttribute { name: "z"; value: 1 }
+            PathAttribute { name: "opacity"; value: 0.1 }
         }
         property PosterPath amphitheatreZoom: PosterPath {
             id: amphitheatreZoom

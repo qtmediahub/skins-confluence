@@ -57,6 +57,9 @@ Window {
         } else if (viewType == qsTr("POSTER")) {
             viewLoader.changeView(posterView)
             view.setPathStyle("linearZoom")
+        } else if (viewType == qsTr("SIDLING")) {
+            viewLoader.changeView(posterView)
+            view.setPathStyle("sidlingZoom")
         } else if (viewType == qsTr("AMPHI")) {
             viewLoader.changeView(posterView)
             view.setPathStyle("amphitheatreZoom")
@@ -122,7 +125,7 @@ Window {
             ConfluenceAction {
                 id: viewAction
                 text: qsTr("VIEW")
-                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")]
+                options: [qsTr("LIST"), qsTr("BIG LIST"), qsTr("GRID"), qsTr("BIG GRID"), qsTr("POSTER"), qsTr("SIDLING"), qsTr("AMPHI"), qsTr("CAROUSEL"), qsTr("FLOW")]
                 onTriggered: mediaWindow.setCurrentView(currentOption)
                 enabled: options.length > 1
             },
