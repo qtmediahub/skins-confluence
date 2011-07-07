@@ -111,20 +111,14 @@ FocusScope {
         mediaItem.togglePlayPause()
     }
 
-    function increasePlaybackRate()
+    function seekForward()
     {
-        if (mediaItem.playbackRate <= 1)
-            mediaItem.playbackRate = 2
-        else if (mediaItem.playbackRate != 16)
-            mediaItem.playbackRate *= 2
+        mediaItem.position += 1000
     }
 
-    function decreasePlaybackRate()
+    function seekBackward()
     {
-        if (mediaItem.playbackRate >= 1)
-            mediaItem.playbackRate = -2
-        else if (mediaItem.playbackRate != -16)
-            mediaItem.playbackRate *= 2
+        mediaItem.position -= 1000
     }
 
     function showDialog(item) {
@@ -237,8 +231,8 @@ FocusScope {
     Keys.onContext1Pressed: showOSD()
     Keys.onUpPressed: playPrevious()
     Keys.onDownPressed: playNext()
-    Keys.onLeftPressed: decreasePlaybackRate()
-    Keys.onRightPressed: increasePlaybackRate()
+    Keys.onLeftPressed: seekBackward()
+    Keys.onRightPressed: seekForward()
 
 
     MouseArea {
@@ -371,17 +365,10 @@ FocusScope {
             runtime.config.setValue("media-volume", mediaItem.volume)
 
         function togglePlayPause() {
-            if (Math.abs(mediaItem.playbackRate) != 1) {
+            if (!mediaItem.playing || mediaItem.paused) {
                 mediaItem.play()
-                mediaItem.playbackRate = 1
             } else {
-                if (!mediaItem.playing || mediaItem.paused) {
-                    mediaItem.play()
-                    mediaItem.playbackRate = 1
-                } else {
-                    mediaItem.pause()
-                    mediaItem.playbackRate = 1
-                }
+                mediaItem.pause()
             }
         }
 
