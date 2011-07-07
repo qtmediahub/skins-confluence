@@ -37,6 +37,7 @@ FocusScope {
     QtObject {
         id: d
         property bool queuedShow: false
+        property bool seeking: false
     }
 
     function showOSD() {
@@ -111,13 +112,15 @@ FocusScope {
         mediaItem.togglePlayPause()
     }
 
-    function seekForward()
-    {
+    function seekForward() {
+        d.seeking = true
+        osdInfoTimer.start()
         mediaItem.position += 1000
     }
 
-    function seekBackward()
-    {
+    function seekBackward() {
+        d.seeking = true
+        osdInfoTimer.start()
         mediaItem.position -= 1000
     }
 
@@ -276,6 +279,14 @@ FocusScope {
         onTriggered: volumeOSD.state = ""
     }
 
+    Timer {
+        id: osdInfoTimer
+        interval: runtime.config.value("osd-timeout", 3000)
+
+        repeat: false
+        onTriggered: d.seeking = false
+    }
+
     Rectangle {
         id: backgroundFiller
         anchors.fill: parent
@@ -404,7 +415,7 @@ FocusScope {
     AVPlayerInfoOSD {
         id: infoOSD
         media: mediaItem
-        state: mediaItem.hasVideo && (mediaItem.paused || mediaItem.playbackRate != 1) && root.state == "maximized" ? "visible" : ""
+        state: mediaItem.hasVideo && (mediaItem.paused || d.seeking) && root.state == "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoSmallOSD {
