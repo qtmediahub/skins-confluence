@@ -346,7 +346,7 @@ FocusScope {
 
         function getThumbnail() {
             if (playlist.currentIndex != -1) {
-                var thumbnail = playlist.data(playlist.currentIndex, "thumbnail")
+                var thumbnail = playlist.data(playlist.currentIndex, "previewUrl")
                 if (thumbnail !== "")
                     return thumbnail;
             }
