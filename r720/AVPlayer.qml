@@ -358,7 +358,7 @@ FocusScope {
         function getThumbnail() {
             if (playlist.currentIndex != -1) {
                 var thumbnail = playlist.data(playlist.currentIndex, "previewUrl")
-                if (thumbnail !== "")
+                if (thumbnail != "")
                     return thumbnail;
             }
             return hasVideo ? themeResourcePath + "/media/DefaultVideo.png" : themeResourcePath + "/media/DefaultAudio.png";
