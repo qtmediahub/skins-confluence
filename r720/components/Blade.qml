@@ -50,6 +50,7 @@ FocusScope {
 
     function open() {
         if (content.children.length > 0) {
+            root.state = "open"
             root.forceActiveFocus()
         }
     }
@@ -58,11 +59,10 @@ FocusScope {
         if (associatedWindow.focalWidget && associatedWindow.focalWidget.visible) {
             associatedWindow.focalWidget.forceActiveFocus()
             if (associatedWindow.maximized)
-                hide()
+                state = "hidden"
+            else
+                state = ""
         }
-    }
-    function hide() {
-        state = "hidden"
     }
 
     onVisibleChanged:
@@ -83,7 +83,6 @@ FocusScope {
         },
         State {
             name: "open"
-            when: activeFocus
             PropertyChanges { target: blade; visibleWidth: width }
             StateChangeScript { script: root.opened() }
         }
