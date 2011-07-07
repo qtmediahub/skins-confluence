@@ -46,10 +46,6 @@ Item {
         informationSheet.currentItem = posterView.currentItem
     }
 
-    function selectFirstItem() {
-        posterView.currentIndex = 0
-    }
-
     function setPathStyle(style) {
         posterView.setPathStyle(style)
     }

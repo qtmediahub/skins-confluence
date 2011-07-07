@@ -37,10 +37,6 @@ Item {
         informationSheet.currentItem = sourcesListView.currentItem
     }
 
-    function selectFirstItem() {
-        sourcesListView.currentIndex = 0
-    }
-
     Image {
         id: reflectionImage
         source: themeResourcePath + "/media/ContentPanel4.png"

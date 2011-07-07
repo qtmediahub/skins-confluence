@@ -48,6 +48,7 @@ Window {
     }
 
     function setCurrentView(viewType) {
+        var currentIndex = typeof view != "undefined" ? view.currentIndex : 0
         if (viewType == qsTr("BIG GRID") || viewType == qsTr("GRID")) {
             viewLoader.changeView(thumbnailView)
             view.hidePreview = viewType == qsTr("BIG GRID")
@@ -77,7 +78,7 @@ Window {
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         runtime.config.setValue(mediaModel.mediaType + "-currentview", viewType)
-        view.selectFirstItem()
+        view.currentIndex = currentIndex
     }
 
     function setGroupBy(attribute) {
