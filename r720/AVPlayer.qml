@@ -396,8 +396,8 @@ FocusScope {
         onStop: mediaItem.stop();
         onPlayNext: root.playNext()
         onPlayPrevious: root.playPrevious()
-        onSeekBackward: decreasePlaybackRate();
-        onSeekForward: increasePlaybackRate();
+        onSeekBackward: root.seekBackward();
+        onSeekForward: root.seekForward();
         onShowTargets: root.state = "targets"
     }
 

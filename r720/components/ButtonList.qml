@@ -31,12 +31,20 @@ Flow {
     signal lowerBoundExceeded
     signal upperBoundExceeded
 
-    Keys.onRightPressed: flow == Flow.LeftToRight ? adjustIndex(+1) : undefined
-    Keys.onLeftPressed: flow == Flow.LeftToRight ? adjustIndex(-1) : undefined
+    Keys.onPressed: {
+        root.activity()
+
+        if (event.key == Qt.Key_Left) {
+            adjustIndex(-1)
+            event.accepted = true;
+        } else if (event.key == Qt.Key_Right) {
+            adjustIndex(+1)
+            event.accepted = true;
+        }
+    }
 
     function adjustIndex(delta)
     {
-        activity()
         var exceededLower = false
         var exceededUpper = false
 
