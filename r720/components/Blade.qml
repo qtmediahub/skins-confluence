@@ -89,9 +89,10 @@ FocusScope {
         }
     ]
 
-    Keys.onRightPressed: root.close()
-    Keys.onLeftPressed: root.close()
-    Keys.onMenuPressed: root.close()
+    Keys.onPressed: {
+        root.close()
+        event.accepted = true
+    }
 
     Item {
         id: blade
