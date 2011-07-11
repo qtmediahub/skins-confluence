@@ -23,6 +23,7 @@ import "components/"
 import Playlist 1.0
 import RpcConnection 1.0
 import "./components/uiconstants.js" as UIConstants
+import MediaModel 1.0
 
 //This serves to isolate import failures if QtMultimedia is not present
 FocusScope {
@@ -475,6 +476,12 @@ FocusScope {
         }
     }
 
+    MediaModel {
+        id: videoModel
+        mediaType: "video"
+        structure: "title"
+    }
+
     Dialog {
         id: videoListDialog
         width: parent.width/1.5
@@ -482,13 +489,15 @@ FocusScope {
         title: qsTr("Videos")
         opacity: 0
 
-        MediaSimpleListView {
+        ConfluenceListView {
             id: videoListPanel
-            anchors.fill: parent
-            engineModel: root.videoEngine ? root.videoEngine.model : undefined
 
-            onItemTriggered: {
-                root.play(itemData, Playlist.Replace, Playlist.Flat)
+            anchors.fill: parent;
+            model: videoModel
+            clip: true
+            focus: true;
+            onActivated: {
+                root.play(currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat)
                 videoListDialog.close()
             }
         }
@@ -498,6 +507,12 @@ FocusScope {
         Keys.onDownPressed: {}
     }
 
+    MediaModel {
+        id: musicModel
+        mediaType: "music"
+        structure: "artist|album|title"
+    }
+
     Dialog {
         id: musicListDialog
         width: parent.width/1.5
@@ -505,14 +520,16 @@ FocusScope {
         title: qsTr("Music")
         opacity: 0
 
-        MediaSimpleListView {
+        ConfluenceListView {
             id: musicListPanel
-            anchors.fill: parent
-            engineModel: root.musicEngine ? root.musicEngine.model : undefined
 
-            onItemTriggered: {
-                root.play(itemData, Playlist.Replace, Playlist.Flat)
-                musicListDialog.close()
+            anchors.fill: parent;
+            model: musicModel
+            clip: true
+            focus: true;
+            onActivated: {
+                root.play(currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat)
+                videoListDialog.close()
             }
         }
 
@@ -528,12 +545,12 @@ FocusScope {
         title: qsTr("Playlist")
         opacity: 0
 
-        MediaSimpleListView {
+        ConfluenceListView {
             id: playListPanel
             anchors.fill: parent
-            engineModel: playlist
+            model: playlist
 
-            onItemTriggered: {
+            onActivated: {
                 root.playIndex(currentIndex)
                 playListDialog.close()
             }
