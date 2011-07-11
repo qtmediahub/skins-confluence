@@ -44,7 +44,7 @@ Window {
 
     function play() {
         var currentItemData = view.currentItem.itemdata
-        avPlayer.playForeground(currentItemData, Playlist.Replace, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);
+        avPlayer.playForeground(currentItemData.modelIndex, Playlist.Replace, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);
     }
 
     function setCurrentView(viewType) {

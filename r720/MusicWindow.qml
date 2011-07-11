@@ -28,9 +28,5 @@ MediaWindow {
     mediaModel.mediaType: "music"
     groupByOptions : [ qsTr("Album"), qsTr("Artist"), qsTr("Genre"), qsTr("Song") ]
     structures : [ "album,artist|title", "artist|album|title", "genre|album,artist|title", "title" ]
-
-    function play() {
-        avPlayer.playForeground(root.view.currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
-    }
 }
 

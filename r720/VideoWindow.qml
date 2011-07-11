@@ -27,9 +27,5 @@ MediaWindow {
     mediaModel.mediaType: "video"
     groupByOptions : [ qsTr("Title") ]
     structures : [ "title" ]
-
-    function play() {
-        avPlayer.playForeground(root.view.currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat);
-    }
 }
 
