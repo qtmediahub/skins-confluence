@@ -122,7 +122,9 @@ Window {
             ConfluenceAction {
                 id: rootAction
                 text: qsTr("Go to root")
-                onTriggered: mediaModel.enter(0)
+                //Number.MAX_VALUE
+                //JS maxInt?
+                onTriggered: mediaModel.back(100)
             },
             ConfluenceAction {
                 id: viewAction

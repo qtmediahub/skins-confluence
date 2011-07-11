@@ -43,7 +43,7 @@ PathView {
 
     Keys.onRightPressed: root.incrementCurrentIndex()
     Keys.onLeftPressed: root.decrementCurrentIndex()
-    Keys.onUpPressed: root.model.enter(-1)
+    Keys.onUpPressed: root.model.back()
     Keys.onDownPressed: root.currentItem.activate()
 
     delegate: PosterViewDelegate { }
