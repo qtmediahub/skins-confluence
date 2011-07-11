@@ -271,6 +271,7 @@ FocusScope {
             { name: qsTr("Music"), engine: "music", role: QMHPlugin.Music, sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Picture"), engine: "picture", role: QMHPlugin.Picture, sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Radio"), engine: "radio", role: QMHPlugin.Radio, sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
             { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg", 
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
