@@ -85,5 +85,7 @@ Item {
                 else
                     sourcesListView.currentItem.itemdata.previewUrl || themeResourcePath + "/media/Fanart_Fallback_Music_Small.jpg"
     }
+    Keys.onLeftPressed: root.engineModel.enter(-1)
+    Keys.onRightPressed: root.currentItem.activate()
 }
 

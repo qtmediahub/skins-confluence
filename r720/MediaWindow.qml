@@ -122,6 +122,7 @@ Window {
             ConfluenceAction {
                 id: rootAction
                 text: qsTr("Go to root")
+                onTriggered: mediaModel.enter(0)
             },
             ConfluenceAction {
                 id: viewAction

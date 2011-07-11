@@ -20,7 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 
 PathView {
-    id: pathView
+    id: root
 
     property int delegateWidth : confluence.width/6.4
     property int delegateHeight : confluence.width/6.4
@@ -30,19 +30,21 @@ PathView {
     signal rightClicked(int mouseX, int mouseY)
 
     function setPathStyle(style) {
-        pathView.preferredHighlightBegin = paths[style].highlightPos
-        pathView.pathItemCount = paths[style].pathItemCount
-        pathView.path = paths[style]
+        root.preferredHighlightBegin = paths[style].highlightPos
+        root.pathItemCount = paths[style].pathItemCount
+        root.path = paths[style]
 
         // ## QML Bug: PathView doesn't seem to load items when the path changes
         model.reset()
     }
 
-    preferredHighlightEnd: pathView.preferredHighlightBegin
+    preferredHighlightEnd: root.preferredHighlightBegin
     dragMargin: width
 
-    Keys.onRightPressed: pathView.incrementCurrentIndex()
-    Keys.onLeftPressed: pathView.decrementCurrentIndex()
+    Keys.onRightPressed: root.incrementCurrentIndex()
+    Keys.onLeftPressed: root.decrementCurrentIndex()
+    Keys.onUpPressed: root.model.enter(-1)
+    Keys.onDownPressed: root.currentItem.activate()
 
     delegate: PosterViewDelegate { }
 
@@ -50,44 +52,44 @@ PathView {
         id: paths
         property PosterPath linearZoom: PosterPath {
             id: linearZoom
-            pathItemCount: (pathView.width+2*pathView.delegateWidth)/pathView.delegateWidth
+            pathItemCount: (root.width+2*root.delegateWidth)/root.delegateWidth
 
-            startX: -pathView.delegateWidth; startY: (pathView.height - pathView.delegateHeight)/2.0
+            startX: -root.delegateWidth; startY: (root.height - root.delegateHeight)/2.0
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.2 }
-            PathLine { x: pathView.width/2.5; y: linearZoom.startY }
+            PathLine { x: root.width/2.5; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1.0 }
-            PathLine { x: pathView.width/2.0; y: linearZoom.startY }
+            PathLine { x: root.width/2.0; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1.5 }
             PathAttribute { name: "z"; value: 2 }
             PathAttribute { name: "opacity"; value: 1.0 }
-            PathLine { x: pathView.width/1.5; y: linearZoom.startY }
+            PathLine { x: root.width/1.5; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1.0 }
-            PathLine { x: pathView.width+pathView.delegateWidth; y: linearZoom.startY }
+            PathLine { x: root.width+root.delegateWidth; y: linearZoom.startY }
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.2 }
         }
         property PosterPath sidlingZoom: PosterPath {
             id: sidlingZoom
-            pathItemCount: 15//(pathView.width+2*pathView.delegateWidth)/pathView.delegateWidth
+            pathItemCount: 15//(root.width+2*root.delegateWidth)/root.delegateWidth
 
-            startX: -pathView.delegateWidth; startY: (pathView.height - pathView.delegateHeight)/2.0
+            startX: -root.delegateWidth; startY: (root.height - root.delegateHeight)/2.0
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.1 }
-            PathLine { x: pathView.width/2.5; y: sidlingZoom.startY }
+            PathLine { x: root.width/2.5; y: sidlingZoom.startY }
             PathAttribute { name: "scale"; value: 1.0 }
             PathAttribute { name: "opacity"; value: 0.3 }
-            PathLine { x: pathView.width/2.0; y: sidlingZoom.startY }
+            PathLine { x: root.width/2.0; y: sidlingZoom.startY }
             PathAttribute { name: "scale"; value: 1.5 }
             PathAttribute { name: "z"; value: 2 }
             PathAttribute { name: "opacity"; value: 1.0 }
-            PathLine { x: pathView.width/1.5; y: sidlingZoom.startY }
+            PathLine { x: root.width/1.5; y: sidlingZoom.startY }
             PathAttribute { name: "scale"; value: 1.0 }
             PathAttribute { name: "opacity"; value: 0.3 }
-            PathLine { x: pathView.width+pathView.delegateWidth; y: sidlingZoom.startY }
+            PathLine { x: root.width+root.delegateWidth; y: sidlingZoom.startY }
             PathAttribute { name: "scale"; value: 1 }
             PathAttribute { name: "z"; value: 1 }
             PathAttribute { name: "opacity"; value: 0.1 }
@@ -95,14 +97,14 @@ PathView {
         property PosterPath amphitheatreZoom: PosterPath {
             id: amphitheatreZoom
             pathItemCount: 10
-            startX: 0; startY: (pathView.height - pathView.delegateHeight)*6.0/7.0
+            startX: 0; startY: (root.height - root.delegateHeight)*6.0/7.0
             PathAttribute { name: "rotation"; value: 90 }
             PathAttribute { name: "scale"; value: 0.5 }
             PathAttribute { name: "z"; value: 1 }
-            PathQuad { x: pathView.width/2; y: (pathView.height - pathView.delegateHeight)/2.0; controlX: pathView.width/4.0; controlY: amphitheatreZoom.startY/2 }
+            PathQuad { x: root.width/2; y: (root.height - root.delegateHeight)/2.0; controlX: root.width/4.0; controlY: amphitheatreZoom.startY/2 }
             PathAttribute { name: "scale"; value: 1.4 }
             PathAttribute { name: "z"; value: 10 }
-            PathQuad { x: pathView.width; y: amphitheatreZoom.startY; controlX: pathView.width*3.0/4.0; controlY: amphitheatreZoom.startY/2 }
+            PathQuad { x: root.width; y: amphitheatreZoom.startY; controlX: root.width*3.0/4.0; controlY: amphitheatreZoom.startY/2 }
             PathAttribute { name: "rotation"; value: -90 }
             PathAttribute { name: "scale"; value: 0.5 }
             PathAttribute { name: "z"; value: 1 }
@@ -110,23 +112,23 @@ PathView {
         property PosterPath coverFlood: PosterPath {
             id: coverFlood
             pathItemCount: 10
-            startX: 0; startY: (pathView.height - pathView.delegateHeight)/2.0
+            startX: 0; startY: (root.height - root.delegateHeight)/2.0
             PathAttribute { name: "rotation"; value: 60 }
             PathAttribute { name: "z"; value: 1.0 }
             PathAttribute { name: "scale"; value: 2.0 }
-            PathLine { x: pathView.width/2 - pathView.delegateHeight/2.0 - 1; y: coverFlood.startY }
+            PathLine { x: root.width/2 - root.delegateHeight/2.0 - 1; y: coverFlood.startY }
             PathAttribute { name: "rotation"; value: 60 }
             PathAttribute { name: "z"; value: 20.0 }
             PathAttribute { name: "scale"; value: 2.0 }
-            PathLine { x: pathView.width/2; y: coverFlood.startY }
+            PathLine { x: root.width/2; y: coverFlood.startY }
             PathAttribute { name: "rotation"; value: 0 }
             PathAttribute { name: "z"; value: 40 }
             PathAttribute { name: "scale"; value: 2.0 }
-            PathLine { x: pathView.width/2 + pathView.delegateHeight/2.0 + 1; y: coverFlood.startY }
+            PathLine { x: root.width/2 + root.delegateHeight/2.0 + 1; y: coverFlood.startY }
             PathAttribute { name: "rotation"; value: -60 }
             PathAttribute { name: "z"; value: 20.0 }
             PathAttribute { name: "scale"; value: 2.0 }
-            PathLine { x: pathView.width; y: coverFlood.startY }
+            PathLine { x: root.width; y: coverFlood.startY }
             PathAttribute { name: "rotation"; value: -60 }
             PathAttribute { name: "z"; value: 1.0 }
             PathAttribute { name: "scale"; value: 2.0 }
@@ -136,12 +138,12 @@ PathView {
             highlightPos: 0.75
             pathItemCount: 15
 
-            property double horizCenter: pathView.width/2
-            property double vertCenter: (pathView.height - pathView.delegateHeight)/2.0
+            property double horizCenter: root.width/2
+            property double vertCenter: (root.height - root.delegateHeight)/2.0
 
             property double perspectiveFlatteningFactor: 1.6
-            property double offsetWidth: pathView.delegateWidth * 2
-            property double offsetHeight: pathView.delegateHeight/perspectiveFlatteningFactor
+            property double offsetWidth: root.delegateWidth * 2
+            property double offsetHeight: root.delegateHeight/perspectiveFlatteningFactor
 
             property double horizHypot: offsetWidth/Math.sqrt(2)
             property double vertHypot: offsetHeight/Math.sqrt(2)
