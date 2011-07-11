@@ -31,7 +31,7 @@ FocusScope {
     anchors.centerIn: parent
 
     property alias title : titleBarText.text
-    default property alias content : contentItem.children
+    default property alias content : contentItem.data
     signal accepted
     signal rejected
     signal opened
