@@ -81,7 +81,7 @@ FocusScope {
         playlist.currentIndex = idx
         mediaItem.stop();
         mediaItem.playbackRate = 1
-        mediaItem.source = mediaItem.getMetaData("filepath", "file://")
+        mediaItem.source = mediaItem.getMetaData("uri", "file://")
         mediaItem.play();
     }
 
