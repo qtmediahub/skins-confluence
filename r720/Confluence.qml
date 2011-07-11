@@ -24,6 +24,7 @@ import "./components/cursor.js" as Cursor
 import "util.js" as Util
 import QMHPlugin 1.0
 import "confluence.js" as Confluence
+import MediaModel 1.0
 
 FocusScope {
     id: confluence
@@ -273,13 +274,13 @@ FocusScope {
             { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Radio"), engine: "radio", role: QMHPlugin.Radio, sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
-            { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg", 
+            { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg",
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
             { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg", constructorArgs: { deleteOnClose: true } },
         ]
 
         if (runtime.config.isEnabled("wk-plugins", false)) {
-            rootMenuItems.push({ name: qsTr("youtube"), role: QMHPlugin.Application, window: _browserWindow, 
+            rootMenuItems.push({ name: qsTr("youtube"), role: QMHPlugin.Application, window: _browserWindow,
                                  onActivate: function() { this.initialUrl = "http://www.youtube.com/xl" } })
         }
 
@@ -310,7 +311,7 @@ FocusScope {
         visible: !avPlayer.playing
     }
 
-    MainBlade { 
+    MainBlade {
         id: mainBlade;
         state: "open"
         focus: true
@@ -339,7 +340,7 @@ FocusScope {
 
         width: contextText.width + homeHeader.width + 25
         ConfluenceText {
-            id: contextText 
+            id: contextText
             anchors { right: parent.right; rightMargin: 25; verticalCenter: parent.verticalCenter }
             text: _openWindowIndex < rootMenuModel.count ? rootMenuModel.get(_openWindowIndex).name : ""
             color: "white"
@@ -403,6 +404,11 @@ FocusScope {
         }
         onDeviceRemoved: {
             deviceDialog.close()
+            var d = runtime.deviceManager.getDeviceByPath(device)
+            runtime.backend.removeMediaSearchPath("music", device.uuid)
+            runtime.backend.removeMediaSearchPath("video", device.uuid)
+            runtime.backend.removeMediaSearchPath("picture", device.uuid)
+            runtime.backend.removeMediaSearchPath("radio", device.uuid)
         }
     }
 

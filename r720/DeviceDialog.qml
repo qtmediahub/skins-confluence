@@ -42,6 +42,11 @@ Dialog {
             id: pictureAction
             text: qsTr("PICTURE")
             options: [qsTr("off"), qsTr("on")]
+        },
+        ConfluenceAction {
+            id: radioAction
+            text: qsTr("RADIO")
+            options: [qsTr("off"), qsTr("on")]
         }]
 
     title: device && device.label != "" ? device.label : qsTr("DEVICE")
@@ -76,19 +81,16 @@ Dialog {
             anchors.horizontalCenter: parent.horizontalCenter
             onAccepted: {
                 if (musicAction.currentOptionIndex) {
-                    var engine = runtime.backend.engine("music")
-                    if (engine)
-                        engine.model.addSearchPath(device.mountPoint, root.device.label);
+                    runtime.backend.addMediaSearchPath("music", root.device.uuid, device.mountPoint);
                 }
                 if (videoAction.currentOptionIndex) {
-                    var engine = runtime.backend.engine("video")
-                    if (engine)
-                        engine.model.addSearchPath(device.mountPoint, root.device.label);
+                    runtime.backend.addMediaSearchPath("video", root.device.uuid, device.mountPoint);
                 }
                 if (pictureAction.currentOptionIndex) {
-                    var engine = runtime.backend.engine("picture")
-                    if (engine)
-                        engine.model.addSearchPath(device.mountPoint, root.device.label);
+                    runtime.backend.addMediaSearchPath("picture", root.device.uuid, device.mountPoint);
+                }
+                if (radioAction.currentOptionIndex) {
+                    runtime.backend.addMediaSearchPath("radio", root.device.uuid, device.mountPoint);
                 }
 
                 root.accept()
