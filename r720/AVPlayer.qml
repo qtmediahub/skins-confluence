@@ -85,6 +85,12 @@ FocusScope {
         mediaItem.play();
     }
 
+    function playUri(uri) {
+        mediaItem.stop();
+        mediaItem.source = uri;
+        mediaItem.play();
+    }
+
     function increaseVolume() {
         mediaItem.volume = (mediaItem.volume + 0.02 > 1) ? 1.0 : mediaItem.volume + 0.02
         showVolumeOSD();
@@ -162,7 +168,7 @@ FocusScope {
         onPreviousRequested: root.playPrevious()
         onVolumeUpRequested: root.increaseVolume()
         onVolumeDownRequested: root.decreaseVolume()
-        onPlayRemoteSourceRequested: { root.playForeground(uri); mediaItem.seek(position) }
+        onPlayRemoteSourceRequested: root.playUri(uri)
     }
 
     anchors.fill: parent
