@@ -611,7 +611,10 @@ FocusScope {
             height: sourceText.height + 8
 
             function action() {
-                rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + mediaItem.mediaId, mediaItem.position)
+                if (mediaItem.hasVideo)
+                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + mediaItem.mediaId, mediaItem.position)
+                else
+                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/music/" + mediaItem.mediaId, mediaItem.position)
             }
 
             Image {
