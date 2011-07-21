@@ -122,13 +122,19 @@ FocusScope {
     function seekForward() {
         d.seeking = true
         osdInfoTimer.start()
-        mediaItem.position += 1000
+        if (mediaItem.hasVideo)
+            mediaItem.position += 10000
+        else
+            mediaItem.position += 1000
     }
 
     function seekBackward() {
         d.seeking = true
         osdInfoTimer.start()
-        mediaItem.position -= 1000
+        if (mediaItem.hasVideo)
+            mediaItem.position -= 10000
+        else
+            mediaItem.position -= 1000
     }
 
     function showDialog(item) {
@@ -237,7 +243,7 @@ FocusScope {
 
     Keys.onMenuPressed:
         root.state == "targets" ? root.state = "maximized" : confluence.state = ""
-    Keys.onEnterPressed:  togglePlayPause()
+    Keys.onEnterPressed: togglePlayPause()
     Keys.onContext1Pressed: showOSD()
     Keys.onUpPressed: playPrevious()
     Keys.onDownPressed: playNext()
