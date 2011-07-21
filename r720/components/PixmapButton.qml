@@ -47,7 +47,24 @@ Item {
     onReleased: d.depressed = false
     onFocusChanged: d.depressed = false
 
+    onActiveFocusChanged: if (confluence.shroomfluence && root.activeFocus) enterAnim.restart()
+
     Keys.onEnterPressed: root.clicked()
+
+    SequentialAnimation {
+        id: enterAnim
+
+        NumberAnimation {
+            target: root
+            properties: "scale"
+            to: 1.3
+        }
+        NumberAnimation {
+            target: root
+            properties: "scale"
+            to: 1
+        }
+    }
 
     Image {
         id: pixmap
