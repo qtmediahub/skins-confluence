@@ -81,11 +81,10 @@ FocusScope {
             width: parent.width
             height: childrenRect.height
 
-            Text {
+            ConfluenceText {
                 text: media.artist + "  -  " + media.album
                 color: "white"
                 font.bold: false
-                font.pointSize: 16
                 anchors.left: parent.left
             }
 
@@ -94,47 +93,43 @@ FocusScope {
             }
         }
 
-        Item {
-            width: parent.width
-            height: 10
-        }
+//        Item {
+//            width: parent.width
+//            height: 10
+//        }
 
-        Text {
+        ConfluenceText {
             text: media.title
             color: "white"
             font.bold: true
-            font.pointSize: 20
             anchors.left: parent.left
         }
 
-        Item {
-            width: parent.width
-            height: 10
-        }
+//        Item {
+//            width: parent.width
+//            height: 10
+//        }
 
         Item {
             width: parent.width
             height: childrenRect.height
 
-            Text {
+            ConfluenceText {
                 text: media.track ? qsTr("TRACK:") + media.track : ""
                 color: "gray"
-                font.pointSize: 14
                 anchors.left: parent.left
             }
 
-            Text {
+            ConfluenceText {
                 text: qsTr("NEXT") + ": "
                 color: "steelblue"
-                font.pointSize: 14
                 anchors.right: nextTitleText.left
             }
 
-            Text {
+            ConfluenceText {
                 id: nextTitleText
                 text: "Unknown Artist - Unknown Title"
                 color: "gray"
-                font.pointSize: 14
                 anchors.right: parent.right
             }
         }
@@ -148,19 +143,17 @@ FocusScope {
             width: parent.width
             height: childrenRect.height
 
-            Text {
+            ConfluenceText {
                 text: Util.ms2string(media.position)
                 color: "white"
                 font.bold: true
-                font.pointSize: 16
                 anchors.left:  parent.left
             }
 
-            Text {
+            ConfluenceText {
                 text: Util.ms2string(media.duration)
                 color: "white"
                 font.bold: true
-                font.pointSize: 16
                 anchors.right: parent.right
             }
         }

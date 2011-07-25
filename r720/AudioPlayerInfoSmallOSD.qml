@@ -41,37 +41,33 @@ Item {
             anchors.bottom: parent.bottom
 
             // TODO should all use real MetaData from our database
-            Text {
+            ConfluenceText {
                 text: media.playbackRate == 0 ? qsTr("Now Paused") : qsTr("Now Playing")
                 color: "steelblue"
                 font.bold: true
-                font.pointSize: 16
                 anchors.right: parent.right
             }
-            Text {
+            ConfluenceText {
                 text: media.artist
                 color: "white"
                 font.bold: true
-                font.pointSize: 18
                 anchors.right: parent.right
             }
-            Text {
+            ConfluenceText {
                 text: media.album
                 color: "white"
                 font.pointSize: 16
                 anchors.right: parent.right
             }
-            Text {
+            ConfluenceText {
                 text: media.title
                 color: "white"
                 font.bold: true
-                font.pointSize: 20
                 anchors.right: parent.right
             }
-            Text {
+            ConfluenceText {
                 text: Util.ms2string(media.position) + " / " + Util.ms2string(media.duration)
                 color: "white"
-                font.pointSize: 16
                 anchors.right: parent.right
             }
         }
