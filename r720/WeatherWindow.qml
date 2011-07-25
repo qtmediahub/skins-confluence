@@ -139,11 +139,10 @@ Window {
                         anchors.fill: parent;
                         source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
                     }
-                    Text {
+                    ConfluenceText {
                         id: thistext
                         anchors.verticalCenter: parent.verticalCenter
                         color: "white"
-                        font.pointSize: root.height/80 //16
                         text: name
                     }
                     MouseArea {
@@ -266,10 +265,9 @@ Window {
                             anchors.top: dayofweek.bottom
                             anchors.horizontalCenter: parent.horizontalCenter
                             height: childrenRect.height; width: childrenRect.width
-                            Text {
+                            ConfluenceText {
                                 id: hightemptext
                                 smooth: true
-                                font.pointSize: 20
                                 color: "grey"
                                 text: qsTr("High: ")
                             }
@@ -283,11 +281,10 @@ Window {
                                       ? root.fahrenheit2celsius(weatherForecast.get(index).high_f) + " °C"
                                       : ""
                             }
-                            Text {
+                            ConfluenceText {
                                 id: lowtemptext
                                 anchors.left: hightempvalue.right; anchors.leftMargin: 25
                                 smooth: true
-                                font.pointSize: 20
                                 color: "grey"
                                 text: qsTr("Low: ")
                             }
