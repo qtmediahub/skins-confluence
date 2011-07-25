@@ -92,7 +92,12 @@ FocusScope {
         var engine = rootMenuModel.get(index)
 
         if (!engine.window) {
-            engine.window = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
+            if (engine.sourceUrl) {
+                engine.window = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
+            } else if (engine.appUrl) {
+                engine.window = createQmlObjectFromFile("components/Window.qml")
+                createQmlObjectFromFile(engine.appUrl, engine.constructorArgs || {}, engine.window) || { }
+            }
         }
 
         _openWindow = engine.window
@@ -276,8 +281,16 @@ FocusScope {
             { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
             { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg",
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
-            { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Ovi Maps"), role: QMHPlugin.Map, sourceUrl: "MapsWindow.qml", background: "carta_marina.jpg", constructorArgs: { deleteOnClose: true } }
         ]
+
+        var apps = runtime.backend.findApplications()
+        for (var idx in apps) {
+            var path = apps[idx]
+                console.log(path)
+            var manifest = createQmlObjectFromFile(path + "qmhmanifest.qml")
+            rootMenuItems.push({ name: manifest.name, role: QMHPlugin.Application, appUrl: path + manifest.ui, background: path + manifest.background })
+        }
 
         if (runtime.config.isEnabled("wk-plugins", false)) {
             rootMenuItems.push({ name: qsTr("youtube"), role: QMHPlugin.Application, window: _browserWindow,

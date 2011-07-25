@@ -30,6 +30,11 @@ Item {
         fillMode: Image.PreserveAspectCrop
         property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
         anchors.fill: parent;
-        source: themeResourcePath && root.source ? backgroundPath + root.source : backgroundPath + "media-overlay.png"
+        source: if (themeResourcePath && root.source) {
+                    // check if source is an absolute path
+                    root.source[0] == '/' ? root.source : backgroundPath + root.source 
+                } else {
+                    backgroundPath + "media-overlay.png"
+                }
     }
 }
