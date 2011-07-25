@@ -291,6 +291,9 @@ FocusScope {
             var uiType = manifest.ui.substring(manifest.ui.lastIndexOf('.')+1)
             if (uiType == "qml") {
                 rootMenuItems.push({ name: manifest.name, role: QMHPlugin.Application, appUrl: path + manifest.ui, background: path + manifest.background })
+            } else if (uiType == "html") {
+                rootMenuItems.push({ name: manifest.name, role: QMHPlugin.Application, window: _browserWindow, background: path + manifest.background,
+                                     onActivate: function() { this.initialUrl = path + manifest.ui } })
             } else {
                 console.log('Application ' + manifest.name + ' at ' + path + ' with ui:' + manifest.ui + ' could not be loaded.')
             }
