@@ -287,9 +287,13 @@ FocusScope {
         var apps = runtime.backend.findApplications()
         for (var idx in apps) {
             var path = apps[idx]
-                console.log(path)
             var manifest = createQmlObjectFromFile(path + "qmhmanifest.qml")
-            rootMenuItems.push({ name: manifest.name, role: QMHPlugin.Application, appUrl: path + manifest.ui, background: path + manifest.background })
+            var uiType = manifest.ui.substring(manifest.ui.lastIndexOf('.')+1)
+            if (uiType == "qml") {
+                rootMenuItems.push({ name: manifest.name, role: QMHPlugin.Application, appUrl: path + manifest.ui, background: path + manifest.background })
+            } else {
+                console.log('Application ' + manifest.name + ' at ' + path + ' with ui:' + manifest.ui + ' could not be loaded.')
+            }
         }
 
         if (runtime.config.isEnabled("wk-plugins", false)) {
