@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import "components/"
 import DirModel 1.0
-import QMHPlugin 1.0
 
 Dialog {
     id: root

@@ -22,7 +22,6 @@ import "components/"
 import "./components/uiconstants.js" as UIConstants
 import "./components/cursor.js" as Cursor
 import "util.js" as Util
-import QMHPlugin 1.0
 import "confluence.js" as Confluence
 import MediaModel 1.0
 
@@ -274,12 +273,12 @@ FocusScope {
 
         // ## QML Bug : without background: <something> on the first item background breaks
         var rootMenuItems = [
-            { name: qsTr("Music"), engine: "music", role: QMHPlugin.Music, sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Picture"), engine: "picture", role: QMHPlugin.Picture, sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Video"), engine: "video", role: QMHPlugin.Video, sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Radio"), engine: "radio", role: QMHPlugin.Radio, sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Weather"), role: QMHPlugin.Weather, sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
-            { name: qsTr("Web"), role: QMHPlugin.Web, sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg",
+            { name: qsTr("Music"), engine: "music", sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Picture"), engine: "picture", sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Video"), engine: "video", sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Radio"), engine: "radio", sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Weather"), sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
+            { name: qsTr("Web"), sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg",
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
         ]
 
@@ -289,10 +288,10 @@ FocusScope {
             var manifest = createQmlObjectFromFile(path + "qmhmanifest.qml")
             var uiType = manifest.ui.substring(manifest.ui.lastIndexOf('.')+1)
             if (uiType == "qml") {
-                rootMenuItems.push({ name: manifest.name, role: QMHPlugin.Application, appUrl: path + manifest.ui, background: path + manifest.background })
+                rootMenuItems.push({ name: manifest.name, appUrl: path + manifest.ui, background: path + manifest.background })
             } else if (uiType == "html") {
                 var url = path + manifest.ui 
-                rootMenuItems.push({ name: manifest.name, role: QMHPlugin.Application, window: _browserWindow, background: path + manifest.background,
+                rootMenuItems.push({ name: manifest.name, window: _browserWindow, background: path + manifest.background,
                                      onActivate: function() { this.initialUrl = url } })
             } else {
                 console.log('Application ' + manifest.name + ' at ' + path + ' with ui:' + manifest.ui + ' could not be loaded.')
@@ -300,7 +299,7 @@ FocusScope {
         }
 
         if (runtime.config.isEnabled("wk-plugins", false)) {
-            rootMenuItems.push({ name: qsTr("youtube"), role: QMHPlugin.Application, window: _browserWindow,
+            rootMenuItems.push({ name: qsTr("youtube"), window: _browserWindow,
                                  onActivate: function() { this.initialUrl = "http://www.youtube.com/xl" } })
         }
 
