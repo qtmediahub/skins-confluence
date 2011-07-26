@@ -32,9 +32,6 @@ FocusScope {
     property bool hasMedia: !!mediaItem && mediaItem.source != ""
     property bool playing: hasMedia && mediaItem.playing
 
-    property variant musicEngine : runtime.backend.engine("music")
-    property variant videoEngine : runtime.backend.engine("video")
-
     QtObject {
         id: d
         property bool queuedShow: false
