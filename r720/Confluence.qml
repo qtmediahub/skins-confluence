@@ -250,13 +250,13 @@ FocusScope {
     }
 
     function _addRootMenuItem(rootMenuItems) {
-        var engineNames = runtime.backend.loadedEngineNames()
+        // var engineNames = runtime.backend.loadedEngineNames()
         for (var i = 0; i < rootMenuItems.length; i++) {
             var item = rootMenuItems[i]
-            if (typeof item.engine != 'undefined') {
-                if (engineNames.indexOf(item.engine) == -1)
-                    continue
-            }
+            // if (typeof item.engine != 'undefined') {
+            //    if (engineNames.indexOf(item.engine) == -1)
+            //        continue
+            // }
 
             rootMenuModel.append(item)
             if (item.onActivate)
