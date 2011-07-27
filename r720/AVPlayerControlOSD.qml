@@ -25,6 +25,7 @@ FocusScope {
     id: root
 
     property variant media
+    property variant player
 
     signal showPlayList()
     signal showMusicMenu()
@@ -82,16 +83,16 @@ FocusScope {
                 id: playPauseButton
                 basePixmap: !media.playing || media.paused ? "OSDPlayNF" : "OSDPauseNF"
                 focusedPixmap: !media.playing || media.paused ? "OSDPlayFO" : "OSDPauseFO"
-                onClicked: media.togglePlayPause()
+                onClicked: player.togglePlayPause()
             }
             ConfluencePixmapButton { disabled: !mediaItem.seekable; basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.seekForward() }
             ConfluencePixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
             ConfluencePixmapButton {
-                basePixmap: playlist.playMode == Playlist.Normal ? "OSDRandomOffNF" : "OSDRandomOnNF"
-                focusedPixmap: playlist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
-                onClicked: playlist.playMode == Playlist.Normal ? playlist.playMode = Playlist.Shuffle : playlist.playMode = Playlist.Normal;
+                basePixmap: player.mediaPlaylist.playMode == Playlist.Normal ? "OSDRandomOffNF" : "OSDRandomOnNF"
+                focusedPixmap: player.mediaPlaylist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
+                onClicked: player.mediaPlaylist.playMode == Playlist.Normal ? player.mediaPlaylist.playMode = Playlist.Shuffle : player.mediaPlaylist.playMode = Playlist.Normal;
             }
             ConfluencePixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
             Keys.onUpPressed: root.close()
