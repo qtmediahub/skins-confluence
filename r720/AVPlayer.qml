@@ -20,10 +20,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import QtMultimediaKit 1.1
 import "components/"
-import Playlist 1.0
 import RpcConnection 1.0
 import "./components/uiconstants.js" as UIConstants
 import MediaModel 1.0
+import QtMediaHub.components.media 1.0
+import Playlist 1.0
 
 //This serves to isolate import failures if QtMultimedia is not present
 FocusScope {
@@ -49,89 +50,60 @@ FocusScope {
         volumeOSDTimer.restart();
     }
 
-    function play(itemdata, role, depth) {
-        if (itemdata != null) {
-            playlist.currentIndex = playlist.add(itemdata, role ? role : Playlist.Replace, depth ? depth : Playlist.Recursive)
-            playIndex(playlist.currentIndex)
-        }
-    }
-
     function playForeground(itemdata, role, depth) { // this now gets uri...
         d.queuedShow = true
-        root.play(itemdata, role, depth);
+        mediaPlayer.play(itemdata, role, depth)
     }
 
     function playBackground(item, role, depth) {
         root.state = "background";
-        root.play(item, role, depth);
+        mediaPlayer.play(item, role, depth);
     }
 
-    function playNext() {
-        playIndex(playlist.next())
+    function stop() {
+        mediaPlayer.stop()
     }
 
-    function playPrevious() {
-        playIndex(playlist.previous())
-    }
-
-    function playIndex(idx) {
-        playlist.currentIndex = idx
-        mediaItem.stop();
-        mediaItem.playbackRate = 1
-        mediaItem.source = mediaItem.getMetaData("uri", "file://")
-        mediaItem.play();
+    function play(itemdata, role, depth) {
+        mediaPlayer.play(itemdata, role, depth)
     }
 
     function playUri(uri) {
-        mediaItem.stop();
-        mediaItem.source = uri;
-        mediaItem.play();
+        mediaPlayer.playUri(uri);
+    }
+
+    function playNext() {
+        mediaPlayer.playNext();
+    }
+
+    function playPrevious() {
+        mediaPlayer.playPrevious();
+    }
+
+    function togglePlayPause() {
+        mediaPlayer.togglePlayPause();
     }
 
     function increaseVolume() {
-        mediaItem.volume = (mediaItem.volume + 0.02 > 1) ? 1.0 : mediaItem.volume + 0.02
+        mediaPlayer.increaseVolume();
         showVolumeOSD();
     }
 
     function decreaseVolume() {
-        mediaItem.volume = (mediaItem.volume - 0.02 < 0) ? 0.0 : mediaItem.volume - 0.02
+        mediaPlayer.decreaseVolume();
         showVolumeOSD();
-    }
-
-    function stop() {
-        mediaItem.stop();
-    }
-
-    function pause() {
-        mediaItem.pause()
-        mediaItem.playbackRate = 1
-    }
-
-    function resume() {
-        mediaItem.play()
-        mediaItem.playbackRate = 1
-    }
-
-    function togglePlayPause() {
-        mediaItem.togglePlayPause()
     }
 
     function seekForward() {
         d.seeking = true
         osdInfoTimer.start()
-        if (mediaItem.hasVideo)
-            mediaItem.position += 10000
-        else
-            mediaItem.position += 1000
+        mediaPlayer.seekForward();
     }
 
     function seekBackward() {
         d.seeking = true
         osdInfoTimer.start()
-        if (mediaItem.hasVideo)
-            mediaItem.position -= 10000
-        else
-            mediaItem.position -= 1000
+        mediaPlayer.seekBackward();
     }
 
     function showDialog(item) {
@@ -158,20 +130,6 @@ FocusScope {
         onStatusChanged:
             if (d.queuedShow && mediaItem.status == Video.Buffered)
                 handlePendingShow()
-    }
-
-    // RPC requests
-    Connections {
-        target: runtime.mediaPlayerRpc
-        onStopRequested: root.stop()
-        onPauseRequested: root.pause()
-        onResumeRequested: root.resume()
-        onTogglePlayPauseRequested: root.togglePlayPause()
-        onNextRequested: root.playNext()
-        onPreviousRequested: root.playPrevious()
-        onVolumeUpRequested: root.increaseVolume()
-        onVolumeDownRequested: root.decreaseVolume()
-        onPlayRemoteSourceRequested: root.playUri(uri)
     }
 
     anchors.fill: parent
@@ -247,6 +205,9 @@ FocusScope {
     Keys.onLeftPressed: seekBackward()
     Keys.onRightPressed: seekForward()
 
+    QMHPlayer {
+        id: mediaPlayer
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -264,11 +225,6 @@ FocusScope {
         }
         onClicked: root.state == "maximized" && controlOSD.state != "visible" ? showOSD() : undefined;
         onPressed: lastX = mouseX
-    }
-
-    Playlist {
-        id: playlist
-        playMode: Playlist.Normal
     }
 
     Timer {
@@ -341,12 +297,12 @@ FocusScope {
 
         volume: runtime.config.value("media-volume", 0.1)
 
-        property string thumbnail: getThumbnail()
-        property string artist: getMetaData("artist", qsTr("Unknown Artist"))
-        property string album: getMetaData("album", qsTr("Unknown Album"))
-        property string title: getMetaData("title", qsTr("Unknown Title"))
-        property string track: getMetaData("track", "")
-        property string mediaId: getMetaData("id", "0")
+        property string thumbnail: mediaPlayer.getThumbnail(themeResourcePath + "/media/DefaultAudio.png", themeResourcePath + "/media/DefaultVideo.png")
+        property string artist: mediaPlayer.getMetaData("artist", qsTr("Unknown Artist"))
+        property string album: mediaPlayer.getMetaData("album", qsTr("Unknown Album"))
+        property string title: mediaPlayer.getMetaData("title", qsTr("Unknown Title"))
+        property string track: mediaPlayer.getMetaData("track", "")
+        property string mediaId: mediaPlayer.getMetaData("id", "0")
 
         x: 0
         y: 0
@@ -362,19 +318,6 @@ FocusScope {
             }
         }
 
-        function getMetaData(role, defaultValue) {
-            return playlist.data(playlist.currentIndex, role) || defaultValue
-        }
-
-        function getThumbnail() {
-            if (playlist.currentIndex != -1) {
-                var thumbnail = playlist.data(playlist.currentIndex, "previewUrl")
-                if (thumbnail != "")
-                    return thumbnail;
-            }
-            return hasVideo ? themeResourcePath + "/media/DefaultVideo.png" : themeResourcePath + "/media/DefaultAudio.png";
-        }
-
         function seek(pos) {
             _seekPos = pos
         }
@@ -385,14 +328,6 @@ FocusScope {
 
         onVolumeChanged:
             runtime.config.setValue("media-volume", mediaItem.volume)
-
-        function togglePlayPause() {
-            if (!mediaItem.playing || mediaItem.paused) {
-                mediaItem.play()
-            } else {
-                mediaItem.pause()
-            }
-        }
 
         onStatusChanged: {
             if (status == Video.EndOfMedia)
@@ -561,7 +496,7 @@ FocusScope {
             model: playlist
 
             onActivated: {
-                root.playIndex(currentIndex)
+                mediaPlayer.playIndex(currentIndex)
                 playListDialog.close()
             }
 
@@ -651,6 +586,16 @@ FocusScope {
         Keys.onRightPressed: {}
         Keys.onUpPressed: {}
         Keys.onDownPressed: {}
+    }
+
+    Playlist {
+        id: playlist
+        playMode: Playlist.Normal
+    }
+
+    Component.onCompleted: {
+        mediaPlayer.mediaItem = mediaItem
+        mediaPlayer.playlist = playlist
     }
 }
 
