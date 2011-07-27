@@ -281,6 +281,7 @@ FocusScope {
             var uiType = manifest.ui.substring(manifest.ui.lastIndexOf('.')+1)
             if (uiType == "qml") {
                 rootMenuItems.push({ name: manifest.name, appUrl: path + manifest.ui, background: path + manifest.background })
+                runtime.frontend.addImportPath(path + "imports")
             } else if (uiType == "html") {
                 var url = path + manifest.ui 
                 rootMenuItems.push({ name: manifest.name, window: _browserWindow, background: path + manifest.background,
