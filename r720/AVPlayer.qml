@@ -27,11 +27,13 @@ import QtMediaHub.components.media 1.0
 import Playlist 1.0
 
 //This serves to isolate import failures if QtMultimedia is not present
-FocusScope {
+QMHPlayer {
     id: root
 
     property bool hasMedia: !!mediaItem && mediaItem.source != ""
     property bool playing: hasMedia && mediaItem.playing
+
+    mediaItem: mediaItem
 
     QtObject {
         id: d
@@ -52,58 +54,12 @@ FocusScope {
 
     function playForeground(itemdata, role, depth) { // this now gets uri...
         d.queuedShow = true
-        mediaPlayer.play(itemdata, role, depth)
+        root.play(itemdata, role, depth)
     }
 
     function playBackground(item, role, depth) {
         root.state = "background";
-        mediaPlayer.play(item, role, depth);
-    }
-
-    function stop() {
-        mediaPlayer.stop()
-    }
-
-    function play(itemdata, role, depth) {
-        mediaPlayer.play(itemdata, role, depth)
-    }
-
-    function playUri(uri) {
-        mediaPlayer.playUri(uri);
-    }
-
-    function playNext() {
-        mediaPlayer.playNext();
-    }
-
-    function playPrevious() {
-        mediaPlayer.playPrevious();
-    }
-
-    function togglePlayPause() {
-        mediaPlayer.togglePlayPause();
-    }
-
-    function increaseVolume() {
-        mediaPlayer.increaseVolume();
-        showVolumeOSD();
-    }
-
-    function decreaseVolume() {
-        mediaPlayer.decreaseVolume();
-        showVolumeOSD();
-    }
-
-    function seekForward() {
-        d.seeking = true
-        osdInfoTimer.start()
-        mediaPlayer.seekForward();
-    }
-
-    function seekBackward() {
-        d.seeking = true
-        osdInfoTimer.start()
-        mediaPlayer.seekBackward();
+        root.play(item, role, depth);
     }
 
     function showDialog(item) {
@@ -205,10 +161,6 @@ FocusScope {
     Keys.onLeftPressed: seekBackward()
     Keys.onRightPressed: seekForward()
 
-    QMHPlayer {
-        id: mediaPlayer
-    }
-
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
@@ -297,12 +249,12 @@ FocusScope {
 
         volume: runtime.config.value("media-volume", 0.1)
 
-        property string thumbnail: mediaPlayer.getThumbnail(themeResourcePath + "/media/DefaultAudio.png", themeResourcePath + "/media/DefaultVideo.png")
-        property string artist: mediaPlayer.getMetaData("artist", qsTr("Unknown Artist"))
-        property string album: mediaPlayer.getMetaData("album", qsTr("Unknown Album"))
-        property string title: mediaPlayer.getMetaData("title", qsTr("Unknown Title"))
-        property string track: mediaPlayer.getMetaData("track", "")
-        property string mediaId: mediaPlayer.getMetaData("id", "0")
+        property string thumbnail: root.getThumbnail(themeResourcePath + "/media/DefaultAudio.png", themeResourcePath + "/media/DefaultVideo.png")
+        property string artist: root.getMetaData("artist", qsTr("Unknown Artist"))
+        property string album: root.getMetaData("album", qsTr("Unknown Album"))
+        property string title: root.getMetaData("title", qsTr("Unknown Title"))
+        property string track: root.getMetaData("track", "")
+        property string mediaId: root.getMetaData("id", "0")
 
         x: 0
         y: 0
@@ -326,8 +278,10 @@ FocusScope {
             audioVisualisationPlaceholder.metronomTick()
         }
 
-        onVolumeChanged:
+        onVolumeChanged: {
             runtime.config.setValue("media-volume", mediaItem.volume)
+            root.showVolumeOSD();
+        }
 
         onStatusChanged: {
             if (status == Video.EndOfMedia)
@@ -345,7 +299,7 @@ FocusScope {
     AVPlayerControlOSD {
         id: controlOSD
         media: mediaItem
-        player: mediaPlayer
+        player: root
         onActivity: osdTimer.restart();
 
         onShowPlayList: showDialog(playListDialog);
@@ -494,10 +448,10 @@ FocusScope {
         ConfluenceListView {
             id: playListPanel
             anchors.fill: parent
-            model: mediaPlayer.mediaPlaylist
+            model: root.mediaPlaylist
 
             onActivated: {
-                mediaPlayer.playIndex(currentIndex)
+                root.playIndex(currentIndex)
                 playListDialog.close()
             }
 
@@ -587,10 +541,6 @@ FocusScope {
         Keys.onRightPressed: {}
         Keys.onUpPressed: {}
         Keys.onDownPressed: {}
-    }
-
-    Component.onCompleted: {
-        mediaPlayer.mediaItem = mediaItem
     }
 }
 
