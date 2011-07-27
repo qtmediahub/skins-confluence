@@ -112,7 +112,7 @@ FocusScope {
 
     Timer {
         id: timer
-        running: d.running && confluence.active
+        running: d.running && Qt.application.active
         repeat: true
         interval: d.interval
         triggeredOnStart: true

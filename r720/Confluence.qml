@@ -32,7 +32,7 @@ FocusScope {
     property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
 
     property string generalResourcePath: runtime.backend.resourcePath
-    property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence"
+    property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence/"
 
     property int standardEasingCurve: Easing.InQuad
     property int standardAnimationDuration: 350
@@ -41,8 +41,6 @@ FocusScope {
     property int standardHighlightMoveDuration: 400
 
     property bool standardItemViewWraps: true
-
-    property bool active: Qt.application.active
 
     property variant avPlayer
 

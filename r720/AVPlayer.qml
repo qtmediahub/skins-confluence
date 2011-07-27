@@ -335,7 +335,7 @@ FocusScope {
         }
     }
 
-    AudioVisualisation {
+    ParticleVisualization {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
         visible: !mediaItem.hasVideo

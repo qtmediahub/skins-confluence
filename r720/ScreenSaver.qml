@@ -16,7 +16,7 @@ Item {
         onInputIdle: {
             if (avPlayer.playing
                 || !runtime.config.isEnabled("screensaver", false)
-                || !confluence.active)
+                || !Qt.application.active)
                 return
             var list = file.findQmlModules(generalResourcePath + "/screensavers")
             var index = Math.floor(Math.random() * list.length)
