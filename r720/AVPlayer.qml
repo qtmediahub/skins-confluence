@@ -493,7 +493,7 @@ FocusScope {
         ConfluenceListView {
             id: playListPanel
             anchors.fill: parent
-            model: playlist
+            model: mediaPlayer.mediaPlaylist
 
             onActivated: {
                 mediaPlayer.playIndex(currentIndex)
@@ -588,14 +588,8 @@ FocusScope {
         Keys.onDownPressed: {}
     }
 
-    Playlist {
-        id: playlist
-        playMode: Playlist.Normal
-    }
-
     Component.onCompleted: {
         mediaPlayer.mediaItem = mediaItem
-        mediaPlayer.playlist = playlist
     }
 }
 
