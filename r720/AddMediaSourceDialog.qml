@@ -88,7 +88,7 @@ Dialog {
             id: buttonBox
             anchors.horizontalCenter: parent.horizontalCenter
             onAccepted: {
-                root.engineModel.addSearchPath(fileSystemView.treeModel.filePath(fileSystemView.rootIndex), sourceNameInput.text);
+                runtime.backend.addMediaSearchPath(engineModel.mediaType, fileSystemView.treeModel.filePath(fileSystemView.rootIndex), sourceNameInput.text);
                 root.accept()
             }
             onRejected: {
