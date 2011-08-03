@@ -38,7 +38,7 @@ Dialog {
         for(var i = 0; i < sources.length; ++i) {
             var component = Qt.createComponent("components/ConfluenceAction.qml");
             if (component.status == Component.Ready) {
-                var action = component.createObject(root, {text: sources[i], options: [qsTr(""), qsTr("remove")] });
+                var action = component.createObject(root, {text: sources[i], options: [qsTr("Keep"), qsTr("Remove")] });
                 newList.push(action);
             }
         }
@@ -72,7 +72,7 @@ Dialog {
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
             height: 350
-            model: actionList//runtime.mediaScanner.searchPaths(mediaType)
+            model: actionList
             focus: true
 
             Keys.onLeftPressed: buttonBox.focus = true
