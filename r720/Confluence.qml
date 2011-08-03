@@ -145,7 +145,7 @@ FocusScope {
 
     function showModal(item) {
         mouseGrabber.opacity = 0.9 // FIXME: this should probably become a confluence state
-        var currentFocusedItem = runtime.utils.focusItem();
+        var currentFocusedItem = runtime.frontend.focusItem();
         var onClosedHandler = function() {
             mouseGrabber.opacity = 0;
             if (currentFocusedItem)
