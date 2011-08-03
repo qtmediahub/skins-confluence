@@ -104,8 +104,6 @@ Window {
                 Behavior on opacity {
                     NumberAnimation{}
                 }
-
-                Component.onCompleted: runtime.utils.applyWebViewFocusFix(webView) // https://bugs.webkit.org/show_bug.cgi?id=51094
             }
 
             Behavior on width {
