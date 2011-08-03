@@ -155,8 +155,7 @@ Window {
             ConfluenceAction {
                 id: removeAction
                 text: qsTr("Remove Source")
-                onTriggered: mediaModel.removeSearchPath(view.currentIndex)
-                enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
+                onTriggered: confluence.showModal(removeMediaSourceDialog)
             },
             ConfluenceAction {
                 id: rescanAction;
@@ -213,6 +212,13 @@ Window {
         focalWidget: viewLoader
         engineModel: mediaModel
         title: qsTr("Add %1 source").arg(mediaModel.mediaType)
+    }
+
+    RemoveMediaSourceDialog {
+        id: removeMediaSourceDialog
+        focalWidget: viewLoader
+        mediaType: mediaModel.mediaType
+        title: qsTr("Remove %1 source").arg(mediaModel.mediaType)
     }
 
     Component.onCompleted: {
