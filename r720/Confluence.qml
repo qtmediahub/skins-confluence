@@ -238,7 +238,7 @@ FocusScope {
         if (qmlComponent.status == Component.Ready) {
             return qmlComponent.createObject(parent ? parent : confluence, properties ? properties : {})
         }
-        runtime.backend.log(qmlComponent.errorString())
+        console.log(qmlComponent.errorString())
         return null
     }
 

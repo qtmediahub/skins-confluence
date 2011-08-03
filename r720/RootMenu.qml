@@ -39,7 +39,7 @@ FocusScope {
                 menuSoundEffect = menuSoundEffectLoader.createObject(parent)
                 menuSoundEffect.source = themeResourcePath + "/sounds/click.wav"
             } else if (menuSoundEffectLoader.status == Component.Error) {
-                runtime.backend.log(menuSoundEffectLoader.errorString())
+                console.log(menuSoundEffectLoader.errorString())
             }
         }
     }
