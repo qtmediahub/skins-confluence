@@ -7,12 +7,12 @@ Item {
         id: file
     }
     Connections {
-        target: runtime.backend
+        target: runtime.frontend
         onInputActive:
             if (screensaver) screensaver.destroy()
     }
     Connections {
-        target: runtime.backend
+        target: runtime.frontend
         onInputIdle: {
             if (avPlayer.playing
                 || !runtime.config.isEnabled("screensaver", false)
