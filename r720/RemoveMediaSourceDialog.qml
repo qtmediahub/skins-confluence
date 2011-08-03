@@ -70,14 +70,15 @@ Dialog {
             id: searchPathListView
             clip: true
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width
-            height: 350
             model: actionList
             focus: true
+            maxWidth: parent.width - parent.spacing*2
+            maxHeight: 350
 
             Keys.onLeftPressed: buttonBox.focus = true
             Keys.onRightPressed: buttonBox.focus = true
         }
+
         DialogButtonBox {
             id: buttonBox
             anchors.horizontalCenter: parent.horizontalCenter

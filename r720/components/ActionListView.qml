@@ -29,6 +29,9 @@ ListView {
     property int itemHeight
     property int itemWidth
 
+    property int maxWidth: -1
+    property int maxHeight: -1
+
     onModelChanged: {
         // synchronize calculation with ConfluenceText
         var pixelSize = confluence.width/60
@@ -48,8 +51,17 @@ ListView {
         itemHeight = h + 20
         if (itemWidth <= 200)
             itemWidth = 250
-        width = itemWidth
-        height = itemHeight * model.length
+
+        // check if max width/height is set if, yes check if we exceed it
+        if (root.maxWidth < 0)
+            root.width = root.itemWidth
+        else
+            root.width = root.itemWidth > root.maxWidth ? root.maxWidth : root.itemWidth
+
+        if (root.maxHeight < 0)
+            root.height = root.itemHeight * root.model.length
+        else
+            root.height = (root.itemHeight * root.model.length) > root.maxHeight ? root.maxHeight : (root.itemHeight * root.model.length)
     }
 
     delegate: Item {
@@ -65,30 +77,34 @@ ListView {
             model.modelData.activateNextOption()
         }
 
-        Image {
+        BorderImage {
             id: delegateBackground
             source: themeResourcePath + "/media/button-nofocus.png"
             anchors.fill: parent
             visible: !root.hideItemBackground
+            border { left: 10; top: 10; right: 10; bottom: 10 }
         }
 
-        Image {
+        BorderImage {
             id: delegateImage
             source: themeResourcePath + "/media/button-focus.png"
             anchors.centerIn: parent
             width: parent.width-4
             height: parent.height
             opacity: delegateItem.focus && root.focus ? 1 : 0
+            border { left: 10; top: 10; right: 10; bottom: 10 }
         }
 
         ConfluenceText {
             id: delegateText
             color: model.modelData.enabled ? "white" : "gray"
             text: model.modelData.text
-            horizontalAlignment: Text.AlignRight
+            horizontalAlignment: Text.AlignLeft
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: delegateImage.left
-            anchors.leftMargin: 15
+            anchors.leftMargin: 10
+            width: delegateImage.width - delegateValue.width - anchors.leftMargin - delegateValue.anchors.rightMargin
+            elide: Text.ElideLeft
         }
 
         ConfluenceText {
