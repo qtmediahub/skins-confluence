@@ -80,16 +80,16 @@ Dialog {
             anchors.horizontalCenter: parent.horizontalCenter
             onAccepted: {
                 if (musicAction.currentOptionIndex) {
-                    runtime.backend.addMediaSearchPath("music", root.device.uuid, device.mountPoint);
+                    runtime.mediaScanner.addSearchPath("music", root.device.uuid, device.mountPoint);
                 }
                 if (videoAction.currentOptionIndex) {
-                    runtime.backend.addMediaSearchPath("video", root.device.uuid, device.mountPoint);
+                    runtime.mediaScanner.addSearchPath("video", root.device.uuid, device.mountPoint);
                 }
                 if (pictureAction.currentOptionIndex) {
-                    runtime.backend.addMediaSearchPath("picture", root.device.uuid, device.mountPoint);
+                    runtime.mediaScanner.addSearchPath("picture", root.device.uuid, device.mountPoint);
                 }
                 if (radioAction.currentOptionIndex) {
-                    runtime.backend.addMediaSearchPath("radio", root.device.uuid, device.mountPoint);
+                    runtime.mediaScanner.addSearchPath("radio", root.device.uuid, device.mountPoint);
                 }
 
                 root.accept()

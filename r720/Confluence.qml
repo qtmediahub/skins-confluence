@@ -416,10 +416,10 @@ FocusScope {
         onDeviceRemoved: {
             deviceDialog.close()
             var d = runtime.deviceManager.getDeviceByPath(device)
-            runtime.backend.removeMediaSearchPath("music", device.uuid)
-            runtime.backend.removeMediaSearchPath("video", device.uuid)
-            runtime.backend.removeMediaSearchPath("picture", device.uuid)
-            runtime.backend.removeMediaSearchPath("radio", device.uuid)
+            runtime.mediaScanner.removeSearchPath("music", device.uuid)
+            runtime.mediaScanner.removeSearchPath("video", device.uuid)
+            runtime.mediaScanner.removeSearchPath("picture", device.uuid)
+            runtime.mediaScanner.removeSearchPath("radio", device.uuid)
         }
     }
 
