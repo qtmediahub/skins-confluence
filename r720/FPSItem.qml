@@ -8,7 +8,7 @@ Rectangle {
     width: childrenRect.width; height: childrenRect.height
     anchors { top: dateTimeHeader.bottom; right: confluence.right }
     ConfluenceText {
-        text: (descriptive ? "Max FPS is: " : "") + runtime.frontend.framerateCap
+        text: (descriptive ? "Max FPS is: " : "") + runtime.view.fps
         font.pixelSize: 60
     }
 }
