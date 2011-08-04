@@ -92,8 +92,8 @@ FocusScope {
             if (engine.sourceUrl) {
                 engine.window = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
             } else if (engine.appUrl) {
-                engine.window = createQmlObjectFromFile("components/Window.qml")
-                createQmlObjectFromFile(engine.appUrl, engine.constructorArgs || {}, engine.window) || { }
+                engine.window = createQmlObjectFromFile("components/Window.qml", engine.constructorArgs || {})
+                createQmlObjectFromFile(engine.appUrl, {}, engine.window) || { }
             }
         }
 
@@ -279,7 +279,8 @@ FocusScope {
             var manifest = createQmlObjectFromFile(path + "qmhmanifest.qml")
             var uiType = manifest.ui.substring(manifest.ui.lastIndexOf('.')+1)
             if (uiType == "qml") {
-                rootMenuItems.push({ name: manifest.name, appUrl: path + manifest.ui, background: path + manifest.background })
+                rootMenuItems.push({ name: manifest.name, appUrl: path + manifest.ui, background: path + manifest.background,
+                                   constructorArgs: { deleteOnClose: true }})
                 runtime.frontend.addImportPath(path + "imports")
             } else if (uiType == "html") {
                 var url = path + manifest.ui 
