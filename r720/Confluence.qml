@@ -67,7 +67,7 @@ FocusScope {
             _browserWindow.loadPage(link)
             confluence.show(_browserWindow)
         } else {
-            runtime.backend.openUrlExternally(link)
+            runtime.frontend.openUrlExternally(link)
         }
     }
 
