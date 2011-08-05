@@ -14,7 +14,7 @@ Item {
                 || !runtime.config.isEnabled("screensaver", false)
                 || !Qt.application.active)
                 return
-            var list = runtime.file.findQmlModules(runtime.skin.path + "/screensavers")
+            var list = runtime.file.findFiles(runtime.skin.path + "/screensavers", ["*.qml"])
             var index = Math.floor(Math.random() * list.length)
             var screensaverLoader = Qt.createComponent(list[index])
             if (screensaverLoader.status == Component.Ready) {
