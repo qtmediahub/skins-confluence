@@ -38,13 +38,12 @@
 **
 ****************************************************************************/
 
-import Qt 4.7
+import QtQuick 1.1
 import Qt3D 1.0
 import Qt3D.Shapes 1.0
+import QtMediaHub.components.media 1.0
 
-import "../../../skins/confluence/r720" as ConfluenceResources
-
-ConfluenceResources.AudioVisualisation {
+ParticleVisualization {
     running: true
     width: parent.width; height: parent.height
     Viewport {
