@@ -67,7 +67,7 @@ FocusScope {
             _browserWindow.loadPage(link)
             confluence.show(_browserWindow)
         } else {
-            runtime.frontend.openUrlExternally(link)
+            console.log('No browser present to open ' + link)
         }
     }
 
