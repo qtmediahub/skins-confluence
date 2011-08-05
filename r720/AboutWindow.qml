@@ -100,7 +100,7 @@ Window {
                 }
                 ConfluenceText { text: "<br/>http://xbmc.org/"}
                 ConfluenceText { text: "<br/> <br/> <br/>" + qsTr("QtMediaHub is hosted at %1.").arg("http://gitorious.org/qtmediahub")}
-                ConfluenceText { text: "<br/> <br/> " + qsTr("Developed by Nokia and ForwardBias") }
+                ConfluenceText { text: "<br/> <br/> " + qsTr("Developed by Girish Ramakrishnan and Donald Carr") }
             }
         }
     }
