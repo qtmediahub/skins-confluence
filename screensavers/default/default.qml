@@ -1,7 +1,7 @@
-import QtQuick 1.0
-import "../../../skins/confluence/r720" as ConfluenceResources
+import QtQuick 1.1
+import QtMediaHub.components.media 1.0
 
-ConfluenceResources.AudioVisualisation {
+ParticleVisualization {
     running: true
     width: parent.width; height: parent.height
     ConfluenceResources.AboutWindow { state: "visible" }
