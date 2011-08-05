@@ -495,7 +495,7 @@ QMHPlayer {
         anchors.left: mediaItem.right
         anchors.leftMargin: 25
         anchors.verticalCenter: mediaItem.verticalCenter
-        model: runtime.frontend.targetsModel
+        model: runtime.remoteSessionsModel
         opacity: 0
 
         delegate: Item {
