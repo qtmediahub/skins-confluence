@@ -45,7 +45,8 @@ FocusScope {
     }
 
     function setModelIndex(modelIndex) {
-        var idx = imagePlayList.add(modelIndex, Playlist.Replace, Playlist.Flat)
+        imagePlayList.clear()
+        var idx = imagePlayList.append(modelIndex, Playlist.Flat)
         imagePlayList.currentIndex = idx
         listView.currentIndex = idx
     }

@@ -52,14 +52,14 @@ QMHPlayer {
         volumeOSDTimer.restart();
     }
 
-    function playForeground(itemdata, role, depth) { // this now gets uri...
+    function playForeground(itemdata, depth) { // this now gets uri...
         d.queuedShow = true
-        root.play(itemdata, role, depth)
+        root.play(itemdata, depth)
     }
 
-    function playBackground(item, role, depth) {
+    function playBackground(item, depth) {
         root.state = "background";
-        root.play(item, role, depth);
+        root.play(item, depth);
     }
 
     function showDialog(item) {
@@ -397,7 +397,7 @@ QMHPlayer {
             clip: true
             focus: true;
             onActivated: {
-                root.play(currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat)
+                root.play(currentItem.itemdata.modelIndex, Playlist.Flat)
                 videoListDialog.close()
             }
         }
@@ -428,7 +428,7 @@ QMHPlayer {
             clip: true
             focus: true;
             onActivated: {
-                root.play(currentItem.itemdata.modelIndex, Playlist.Replace, Playlist.Flat)
+                root.play(currentItem.itemdata.modelIndex, Playlist.Flat)
                 videoListDialog.close()
             }
         }
