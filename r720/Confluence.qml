@@ -31,7 +31,7 @@ FocusScope {
     property bool shroomfluence: runtime.config.isEnabled("shroom", false)
     property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
 
-    property string generalResourcePath: runtime.frontend.resourcePath
+    property string generalResourcePath: runtime.skin.resourcePath
     property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence/"
 
     property int standardEasingCurve: Easing.InQuad
