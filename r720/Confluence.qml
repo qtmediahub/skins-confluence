@@ -273,7 +273,7 @@ FocusScope {
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
         ]
 
-        var apps = runtime.frontend.findApplications()
+        var apps = runtime.file.findApplications()
         for (var idx in apps) {
             var path = apps[idx]
             var manifest = createQmlObjectFromFile(path + "qmhmanifest.qml")
