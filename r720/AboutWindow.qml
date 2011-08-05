@@ -52,9 +52,8 @@ Window {
         }
 
         onSideChanged:
-            if(flipable.side == Flipable.Back && !animationItem)
-            {
-                var component = Qt.createComponent(generalResourcePath + "/qml-startup/startup.qml");
+            if (flipable.side == Flipable.Back && !animationItem) {
+                var component = Qt.createComponent("qml-startup/startup.qml");
                 if (component.status == Component.Ready) {
                     animationItem = component.createObject(placeHolder);
                 }
