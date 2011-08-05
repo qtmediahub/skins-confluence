@@ -24,6 +24,11 @@ Item {
 
     anchors.fill: parent
 
+    Connections {
+        target: runtime.window
+        onResetUI: reset()
+    }
+
     function reset() {
         loader.item.resetFocus()
     }
