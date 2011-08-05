@@ -1,11 +1,7 @@
 import QtQuick 1.1
-import File 1.0
 
 Item {
     property Item screensaver
-    File {
-        id: file
-    }
     Connections {
         target: runtime.window
         onInputActive:
@@ -18,7 +14,7 @@ Item {
                 || !runtime.config.isEnabled("screensaver", false)
                 || !Qt.application.active)
                 return
-            var list = file.findQmlModules(generalResourcePath + "/screensavers")
+            var list = runtime.file.findQmlModules(generalResourcePath + "/screensavers")
             var index = Math.floor(Math.random() * list.length)
             var screensaverLoader = Qt.createComponent(list[index])
             if (screensaverLoader.status == Component.Ready) {

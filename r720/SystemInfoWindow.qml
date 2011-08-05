@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 import QtMobility.systeminfo 1.1
 import "components/"
-import File 1.0
 
 Window {
     id: root
@@ -31,10 +30,6 @@ Window {
     NetworkInfo {
         id: networkInfo
         mode: NetworkInfo.EthernetMode
-    }
-
-    File {
-        id: fileProbe
     }
 
     Panel {
@@ -58,12 +53,12 @@ Window {
                 ConfluenceText { text: "Network status: " + networkInfo.networkStatus }
                 ConfluenceText { text: "Network name: " + networkInfo.networkName }
                 ConfluenceText { text: "Network signal strength: " + networkInfo.networkSignalStrength }
-                //ConfluenceText { text: "cpu: " + fileProbe.readAllLines("/proc/cpuinfo") }
+                //ConfluenceText { text: "cpu: " + runtime.file.readLines("/proc/cpuinfo") }
                 Item { width: heading.width; height: heading.height }
                 ConfluenceText { text: "CPU Information"; horizontalAlignment: Qt.AlignHCenter; width: parent.width; font.weight: Font.Bold }
 
                 Repeater {
-                    model: fileProbe.readAllLines("/proc/cpuinfo")
+                    model: runtime.file.readLines("/proc/cpuinfo")
                     ConfluenceText { font.pointSize: 12; text: modelData; wrapMode: Text.WordWrap; width: textFlow.width }
                 }
             }
