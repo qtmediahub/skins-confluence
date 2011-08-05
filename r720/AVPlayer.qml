@@ -52,9 +52,9 @@ QMHPlayer {
         volumeOSDTimer.restart();
     }
 
-    function playForeground(itemdata, depth) { // this now gets uri...
+    function playForeground(modelIndex, depth) { // this now gets uri...
         d.queuedShow = true
-        root.play(itemdata, depth)
+        root.play(modelIndex, depth)
     }
 
     function playBackground(item, depth) {
