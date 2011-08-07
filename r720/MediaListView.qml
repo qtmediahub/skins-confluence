@@ -23,7 +23,7 @@ import "components/"
 Item {
     id: root
 
-    property variant engineModel
+    property variant mediaModel
     property variant informationSheet
     property bool hidePreview: false
     property alias currentIndex: sourcesListView.currentIndex
@@ -56,7 +56,7 @@ Item {
         ConfluenceListView {
             id: sourcesListView
             anchors.fill: parent
-            model: engineModel
+            model: mediaModel 
             clip: true
             focus: true
             onCurrentItemChanged:
@@ -85,7 +85,7 @@ Item {
                 else
                     sourcesListView.currentItem.itemdata.previewUrl || themeResourcePath + "/media/Fanart_Fallback_Music_Small.jpg"
     }
-    Keys.onLeftPressed: root.engineModel.back()
+    Keys.onLeftPressed: root.mediaModel.back()
     Keys.onRightPressed: root.currentItem.activate()
 }
 

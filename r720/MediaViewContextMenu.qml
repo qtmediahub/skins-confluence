@@ -30,11 +30,11 @@ ContextMenu {
         onTriggered: mediaWindow.play()
     }
     ConfluenceAction { id: rootAction; text: qsTr("Go to root"); onTriggered: view.rootIndex = undefined; }
-    ConfluenceAction { id: removeAction; text: qsTr("Remove"); onTriggered: engineModel.removeSearchPath(view.currentIndex)
+    ConfluenceAction { id: removeAction; text: qsTr("Remove"); onTriggered: mediaModel.removeSearchPath(view.currentIndex)
                        enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath" }
     ConfluenceAction { id: informationAction; text: qsTr("Show Information"); onTriggered: root.showInformationSheet()
                        enabled: !!view.currentItem && view.currentItem.itemdata.type == "File" }
-    ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onTriggered: engineModel.rescan(view.currentIndex)
+    ConfluenceAction { id: rescanAction; text: qsTr("Rescan this item"); onTriggered: mediaModel.rescan(view.currentIndex)
                        enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath" }
     ConfluenceAction { id: addSourceAction; text: qsTr("Add Source Path"); onTriggered: confluence.showModal(addMediaSourceDialog) }
 

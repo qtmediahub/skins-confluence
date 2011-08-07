@@ -24,7 +24,7 @@ import "util.js" as Util
 
 Item {
     id: root
-    property variant engineModel
+    property variant mediaModel
     property variant informationSheet
     property alias currentIndex: posterView.currentIndex
     property alias currentItem: posterView.currentItem
@@ -54,7 +54,7 @@ Item {
         id: posterView
         anchors.fill: parent
         focus: true
-        model: root.engineModel
+        model: root.mediaModel
 
         onCurrentItemChanged:
             mediaWindow.itemSelected(currentItem)

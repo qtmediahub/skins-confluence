@@ -22,7 +22,7 @@ import "components/"
 
 Item {
     id: root
-    property variant engineModel
+    property variant mediaModel
     property variant informationSheet
     property bool hidePreview: false
     property alias currentIndex: sourcesListView.currentIndex
@@ -56,7 +56,7 @@ Item {
             id: sourcesListView
 
             anchors.fill: parent;
-            model: engineModel
+            model: mediaModel
             clip: true
             focus: true;
             onCurrentItemChanged:

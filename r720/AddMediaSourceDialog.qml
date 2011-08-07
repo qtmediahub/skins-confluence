@@ -24,7 +24,7 @@ import DirModel 1.0
 Dialog {
     id: root
 
-    property variant engineModel
+    property variant mediaModel
 
     onOpened: fileSystemView.focus = true
 
@@ -88,7 +88,7 @@ Dialog {
             id: buttonBox
             anchors.horizontalCenter: parent.horizontalCenter
             onAccepted: {
-                runtime.mediaScanner.addSearchPath(engineModel.mediaType, fileSystemView.treeModel.filePath(fileSystemView.rootIndex), sourceNameInput.text);
+                runtime.mediaScanner.addSearchPath(mediaModel.mediaType, fileSystemView.treeModel.filePath(fileSystemView.rootIndex), sourceNameInput.text);
                 root.accept()
             }
             onRejected: {

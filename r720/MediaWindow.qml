@@ -180,7 +180,7 @@ Window {
     Component {
         id: thumbnailView
         MediaThumbnailView {
-            engineModel: mediaModel
+            mediaModel: mediaWindow.mediaModel
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -188,7 +188,7 @@ Window {
     Component {
         id: listView
         MediaListView {
-            engineModel: mediaModel
+            mediaModel: mediaWindow.mediaModel
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -196,7 +196,7 @@ Window {
     Component {
         id: posterView
         MediaPosterView {
-            engineModel: mediaModel
+            mediaModel: mediaWindow.mediaModel
             informationSheet: mediaWindow.informationSheet
         }
     }
@@ -210,7 +210,7 @@ Window {
     AddMediaSourceDialog {
         id: addMediaSourceDialog
         focalWidget: viewLoader
-        engineModel: mediaModel
+        mediaModel: mediaWindow.mediaModel
         title: qsTr("Add %1 source").arg(mediaModel.mediaType)
     }
 
