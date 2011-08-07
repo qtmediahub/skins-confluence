@@ -156,10 +156,9 @@ Window {
                 onTriggered: confluence.showModal(removeMediaSourceDialog)
             },
             ConfluenceAction {
-                id: rescanAction;
-                text: qsTr("Rescan Source");
-                onTriggered: mediaModel.rescan(view.currentIndex)
-                enabled: !!view.currentItem && view.currentItem.itemdata.type == "SearchPath"
+                id: addToPlaylistAction
+                text: qsTr("Add to Playlist");
+                onTriggered: { avPlayer.mediaPlaylist.add(mediaWindow.mediaModel, view.currentIndex); avPlayer.playIndex(0) }
             },
             ConfluenceAction {
                 id: playAction;
