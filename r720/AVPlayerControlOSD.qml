@@ -90,9 +90,9 @@ FocusScope {
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
             ConfluencePixmapButton {
-                basePixmap: player.mediaPlaylist.playMode == Playlist.Normal ? "OSDRandomOffNF" : "OSDRandomOnNF"
-                focusedPixmap: player.mediaPlaylist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
-                onClicked: player.mediaPlaylist.playMode == Playlist.Normal ? player.mediaPlaylist.playMode = Playlist.Shuffle : player.mediaPlaylist.playMode = Playlist.Normal;
+                basePixmap:    player.playlist && player.playlist.playMode == Playlist.Normal ? "OSDRandomOffNF" : "OSDRandomOnNF"
+                focusedPixmap: player.playlist && player.playlist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
+                onClicked: player.playlist.playMode == Playlist.Normal ? player.playlist.playMode = Playlist.Shuffle : player.playlist.playMode = Playlist.Normal;
             }
             ConfluencePixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
             Keys.onUpPressed: root.close()

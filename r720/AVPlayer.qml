@@ -43,23 +43,23 @@ QMHPlayer {
 
     function showOSD() {
         if (root.state == "maximized") {
-            controlOSD.state = "visible";
+            controlOSD.state = "visible"
         }
     }
 
     function showVolumeOSD() {
-        volumeOSD.state = "visible";
-        volumeOSDTimer.restart();
+        volumeOSD.state = "visible"
+        volumeOSDTimer.restart()
     }
 
-    function playForeground(modelIndex, depth) { // this now gets uri...
+    function playForeground(mediaModel, row) { // this now gets uri...
         d.queuedShow = true
-        root.play(modelIndex, depth)
+        root.play(mediaModel, row)
     }
 
-    function playBackground(item, depth) {
-        root.state = "background";
-        root.play(item, depth);
+    function playBackground(mediaModel, row) {
+        root.state = "background"
+        root.play(mediaModel, row)
     }
 
     function showDialog(item) {
@@ -397,7 +397,7 @@ QMHPlayer {
             clip: true
             focus: true;
             onActivated: {
-                root.play(currentItem.itemdata.modelIndex, Playlist.Flat)
+                root.play(currentItem.itemdata.modelIndex, Playlist.Flat) // ## FIMXE
                 videoListDialog.close()
             }
         }
@@ -428,7 +428,7 @@ QMHPlayer {
             clip: true
             focus: true;
             onActivated: {
-                root.play(currentItem.itemdata.modelIndex, Playlist.Flat)
+                root.play(currentItem.itemdata.modelIndex, Playlist.Flat) // ## FIXME
                 videoListDialog.close()
             }
         }
@@ -448,7 +448,7 @@ QMHPlayer {
         ConfluenceListView {
             id: playListPanel
             anchors.fill: parent
-            model: root.mediaPlaylist
+            model: root.playlist
 
             onActivated: {
                 root.playIndex(currentIndex)

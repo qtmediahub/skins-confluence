@@ -19,7 +19,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "components/"
-import Playlist 1.0
 import MediaModel 1.0
 
 Window {
@@ -37,14 +36,13 @@ Window {
     property variant structures : [""]
 
     property alias mediaModel: mediaModel
-
+    
     MediaModel {
         id: mediaModel
     }
 
     function play() {
-        var currentItemData = view.currentItem.itemdata
-        avPlayer.playForeground(currentItemData.modelIndex, (currentItemData.type == "File") ? Playlist.Flat : Playlist.Recursive);
+        avPlayer.playForeground(mediaModel, view.currentIndex)
     }
 
     function setCurrentView(viewType) {
