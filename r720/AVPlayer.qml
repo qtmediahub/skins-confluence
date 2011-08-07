@@ -397,7 +397,7 @@ QMHPlayer {
             clip: true
             focus: true;
             onActivated: {
-                root.play(currentItem.itemdata.modelIndex, Playlist.Flat) // ## FIMXE
+                root.play(videoModel, videoListPanel.currentIndex)
                 videoListDialog.close()
             }
         }
@@ -428,7 +428,7 @@ QMHPlayer {
             clip: true
             focus: true;
             onActivated: {
-                root.play(currentItem.itemdata.modelIndex, Playlist.Flat) // ## FIXME
+                root.play(musicModel, musicListPanel.currentIndex)
                 videoListDialog.close()
             }
         }
