@@ -448,7 +448,7 @@ QMHPlayer {
         ConfluenceListView {
             id: playListPanel
             anchors.fill: parent
-            model: root.playlist
+            model: root.mediaPlaylist
 
             onActivated: {
                 root.playIndex(currentIndex)
