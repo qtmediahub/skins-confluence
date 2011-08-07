@@ -23,6 +23,7 @@ import Playlist 1.0
 
 FocusScope {
     id: root
+    property variant playlist
 
     QtObject {
         id: d
@@ -44,21 +45,12 @@ FocusScope {
         d.slide = false
     }
 
-    function setModelIndex(modelIndex) {
-        imagePlayList.clear()
-        var idx = imagePlayList.append(modelIndex, Playlist.Flat)
-        imagePlayList.currentIndex = idx
-        listView.currentIndex = idx
-    }
-
     function next() {
-        imagePlayList.next()
-        listView.currentIndex = imagePlayList.currentIndex
+        playlist.next()
     }
 
     function previous() {
-        imagePlayList.previous()
-        listView.currentIndex = imagePlayList.currentIndex
+        playlist.previous()
     }
 
     anchors.top: parent.top
@@ -100,11 +92,6 @@ FocusScope {
         }
     ]
 
-    Playlist {
-        id: imagePlayList
-        playMode: Playlist.Normal
-    }
-
     Keys.onContext1Pressed: d.slide = !d.slide
     Keys.onLeftPressed: root.previous()
     Keys.onRightPressed: root.next()
@@ -133,7 +120,8 @@ FocusScope {
         snapMode: ListView.SnapToItem
         highlightRangeMode: ListView.StrictlyEnforceRange
         highlightMoveDuration: 1000
-        model: imagePlayList
+        model: playlist
+        currentIndex: playlist.currentIndex
         delegate: Item {
             width: listView.width
             height: listView.height

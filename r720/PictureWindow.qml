@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ****************************************************************************/
 
 import QtQuick 1.1
+import Playlist 1.0
 import "components/"
 
 MediaWindow {
@@ -29,16 +30,22 @@ MediaWindow {
     structures : [ "title", "year|month|title" ]
 
     function play() {
-        slideShow.setModelIndex(root.view.currentItem.itemdata.modelIndex)
+        playlist.clear()
+        playlist.addCurrentLevel(root.mediaModel)
+        playlist.currentIndex = root.view.currentIndex
         slideShow.show()
+    }
+
+    Playlist {
+        id : playlist
+        mediaType: "picture"
+        playMode: Playlist.Normal
     }
 
     PictureSlideShow {
         id: slideShow
         z: parent.z + 10
-
-        onClosed: {
-            focalWidget.forceActiveFocus()
-        }
+        playlist: playlist
+        onClosed: focalWidget.forceActiveFocus()
     }
 }
