@@ -25,6 +25,7 @@ FocusScope {
     id: root
 
     property variant media
+    property variant mediaInfo
 
     width: parent.width
     height: 300
@@ -55,7 +56,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: media.thumbnail
+            source: mediaInfo.thumbnail
             anchors.fill: parent
             anchors.margins: 6
 
@@ -82,7 +83,7 @@ FocusScope {
             height: childrenRect.height
 
             ConfluenceText {
-                text: media.artist + "  -  " + media.album
+                text: mediaInfo.artist + "  -  " + mediaInfo.album
                 color: "white"
                 font.bold: false
                 anchors.left: parent.left
@@ -99,7 +100,7 @@ FocusScope {
 //        }
 
         ConfluenceText {
-            text: media.title
+            text: mediaInfo.title
             color: "white"
             font.bold: true
             anchors.left: parent.left
@@ -115,7 +116,7 @@ FocusScope {
             height: childrenRect.height
 
             ConfluenceText {
-                text: media.track ? qsTr("TRACK:") + media.track : ""
+                text: mediaInfo.track ? qsTr("TRACK:") + mediaInfo.track : ""
                 color: "gray"
                 anchors.left: parent.left
             }

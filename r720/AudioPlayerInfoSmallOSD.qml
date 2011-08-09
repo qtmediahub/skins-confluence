@@ -25,6 +25,7 @@ Item {
     id: root
 
     property variant media
+    property variant mediaInfo
 
     width: childrenRect.width
     height: childrenRect.height
@@ -48,19 +49,19 @@ Item {
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: media.artist
+                text: mediaInfo.artist
                 color: "white"
                 font.bold: true
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: media.album
+                text: mediaInfo.album
                 color: "white"
                 font.pointSize: 16
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: media.title
+                text: mediaInfo.title
                 color: "white"
                 font.bold: true
                 anchors.right: parent.right
@@ -82,7 +83,7 @@ Item {
 
             Image {
                 id: thumbnail
-                source: media.thumbnail
+                source: mediaInfo.thumbnail
                 anchors.fill: parent
                 anchors.margins: 6
 

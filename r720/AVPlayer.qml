@@ -249,13 +249,6 @@ QMHPlayer {
 
         volume: runtime.config.value("media-volume", 0.1)
 
-        property string thumbnail: root.getThumbnail(themeResourcePath + "/media/DefaultAudio.png", themeResourcePath + "/media/DefaultVideo.png")
-        property string artist: root.getMetaData("artist", qsTr("Unknown Artist"))
-        property string album: root.getMetaData("album", qsTr("Unknown Album"))
-        property string title: root.getMetaData("title", qsTr("Unknown Title"))
-        property string track: root.getMetaData("track", "")
-        property string mediaId: root.getMetaData("id", "0")
-
         x: 0
         y: 0
         width: root.width
@@ -322,12 +315,14 @@ QMHPlayer {
     AudioPlayerInfoSmallOSD {
         id: audioInfoSmallOSD
         media: mediaItem
+        mediaInfo: root.mediaInfo
         state: !mediaItem.hasVideo && mediaItem.playing && root.state != "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoBigOSD {
         id: audioInfoBigOSD
         media: mediaItem
+        mediaInfo: root.mediaInfo
         state: !mediaItem.hasVideo && mediaItem.playing && root.state == "maximized" ? "visible" : ""
     }
 
@@ -520,7 +515,7 @@ QMHPlayer {
                 id: sourceText
                 anchors.verticalCenter: parent.verticalCenter
                 z: 1 // ensure it is above the background
-                text: model.display
+                text: model.display ? model.display : ""
                 font.pointSize: 16
                 font.weight: Font.Light
                 color: "white"

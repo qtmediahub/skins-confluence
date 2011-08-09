@@ -58,7 +58,7 @@ Item {
         anchors.bottom: sourceImg.bottom
         z: 2 // ensure it is above the background
         width:  sourceImg.width
-        text: model.display
+        text: model.display ? model.display : ""
         elide: Text.ElideRight
         horizontalAlignment: Text.AlignHCenter
         font.pointSize: 10
