@@ -19,23 +19,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import QtQuick 1.1
 import "components/"
-import Playlist 1.0
 
 FocusScope {
     id: root
 
-    property variant media
-    property variant player
-
     signal showPlayList()
     signal showMusicMenu()
     signal showVideoMenu()
-    signal playNext()
-    signal playPrevious()
     signal activity()
-    signal seekForward()
-    signal seekBackward()
-    signal stop()
     signal showTargets()
 
     width: parent.width
@@ -76,23 +67,23 @@ FocusScope {
             ConfluencePixmapButton { basePixmap: "OSDAudioNF"; focusedPixmap: "OSDAudioFO"; onClicked: root.showMusicMenu(); }
             ConfluencePixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
             Item { width: 100; height: 1; }
-            ConfluencePixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: root.playPrevious(); }
-            ConfluencePixmapButton { disabled: !mediaItem.seekable; basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: root.seekBackward() }
-            ConfluencePixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: root.stop();}
+            ConfluencePixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: avPlayer.playPrevious(); }
+            ConfluencePixmapButton { disabled: !avPlayer.seekable; basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: avPlayer.seekBackward() }
+            ConfluencePixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: avPlayer.stop();}
             ConfluencePixmapButton {
                 id: playPauseButton
-                basePixmap: !media.playing || media.paused ? "OSDPlayNF" : "OSDPauseNF"
-                focusedPixmap: !media.playing || media.paused ? "OSDPlayFO" : "OSDPauseFO"
-                onClicked: player.togglePlayPause()
+                basePixmap: avPlayer.paused ? "OSDPlayNF" : "OSDPauseNF"
+                focusedPixmap: avPlayer.paused ? "OSDPlayFO" : "OSDPauseFO"
+                onClicked: avPlayer.togglePlayPause()
             }
-            ConfluencePixmapButton { disabled: !mediaItem.seekable; basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: root.seekForward() }
-            ConfluencePixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: root.playNext(); }
+            ConfluencePixmapButton { disabled: !avPlayer.seekable; basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: avPlayer.seekForward() }
+            ConfluencePixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: avPlayer.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
             ConfluencePixmapButton {
-                basePixmap:    player.playlist && player.playlist.playMode == Playlist.Normal ? "OSDRandomOffNF" : "OSDRandomOnNF"
-                focusedPixmap: player.playlist && player.playlist.playMode == Playlist.Normal ? "OSDRandomOffFO" : "OSDRandomOnFO"
-                onClicked: player.playlist.playMode == Playlist.Normal ? player.playlist.playMode = Playlist.Shuffle : player.playlist.playMode = Playlist.Normal;
+                basePixmap:    !avPlayer.shuffle ? "OSDRandomOffNF" : "OSDRandomOnNF"
+                focusedPixmap: !avPlayer.shuffle ? "OSDRandomOffFO" : "OSDRandomOnFO"
+                onClicked: avPlayer.shuffle = !avPlayer.shuffle
             }
             ConfluencePixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
             Keys.onUpPressed: root.close()

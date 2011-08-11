@@ -24,8 +24,6 @@ import "util.js" as Util
 FocusScope {
     id: root
 
-    property variant media
-
     width: 450
     height: 100
     anchors.bottom: parent.bottom
@@ -54,16 +52,16 @@ FocusScope {
                 anchors.verticalCenter: seekOSD.verticalCenter
 
                 Text {
-                    text: media.playbackRate == 0 ? qsTr("Paused") : qsTr("Playing")
+                    text: avPlayer.paused ? qsTr("Paused") : qsTr("Playing")
                     color: "steelblue"
                 }
                 Text {
-                    text: Util.ms2string(media.position) + " - " + Util.ms2string(media.duration)
+                    text: Util.ms2string(avPlayer.position) + " - " + Util.ms2string(avPlayer.duration)
                     color: "white"
                 }
                 ProgressBar {
                     width: 200
-                    mProgress: media.position/media.duration
+                    mProgress: avPlayer.position/avPlayer.duration
                 }
             }
 
@@ -77,7 +75,7 @@ FocusScope {
                     source:  themeResourcePath + "/media/OSDSeekRewind.png"
                     anchors.left: parent.left
                     anchors.verticalCenter: seekOSDCentral.verticalCenter
-                    opacity: media.playbackRate < 0 ? 1 : 0.2
+                    opacity: avPlayer.playbackRate < 0 ? 1 : 0.2
                 }
 
                 Image {
@@ -94,7 +92,7 @@ FocusScope {
                     anchors.left: seekOSDCentral.right
                     anchors.leftMargin: -10
                     anchors.verticalCenter: seekOSDCentral.verticalCenter
-                    opacity: media.playbackRate > 1 ? 1 : 0.2
+                    opacity: avPlayer.playbackRate > 1 ? 1 : 0.2
                 }
 
                 Image {
@@ -103,49 +101,49 @@ FocusScope {
 
                     states: [
                         State {
-                            when: media.playing && !media.paused && media.playbackRate == 1
+                            when: avPlayer.playing && media.playbackRate == 1
                             PropertyChanges {
                                 target: statusIcon
                                 source: themeResourcePath + "/media/OSDPlay.png"
                             }
                         },
                         State {
-                            when: media.paused
+                            when: avPlayer.paused
                             PropertyChanges {
                                 target: statusIcon
                                 source: themeResourcePath + "/media/OSDPause.png"
                             }
                         },
                         State {
-                            when: media.playing && !media.paused && Math.abs(media.playbackRate) == 2
+                            when: avPlayer.playing && Math.abs(avPlayer.playbackRate) == 2
                             PropertyChanges {
                                 target: statusIcon
                                 source: themeResourcePath + "/media/OSD2x.png"
                             }
                         },
                         State {
-                            when: media.playing && !media.paused && Math.abs(media.playbackRate) == 4
+                            when: avPlayer.playing && Math.abs(avPlayer.playbackRate) == 4
                             PropertyChanges {
                                 target: statusIcon
                                 source: themeResourcePath + "/media/OSD4x.png"
                             }
                         },
                         State {
-                            when: media.playing && !media.paused && Math.abs(media.playbackRate) == 8
+                            when: avPlayer.playing && Math.abs(avPlayer.playbackRate) == 8
                             PropertyChanges {
                                 target: statusIcon
                                 source: themeResourcePath + "/media/OSD8x.png"
                             }
                         },
                         State {
-                            when: media.playing && !media.paused && Math.abs(media.playbackRate) == 16
+                            when: avPlayer.playing && Math.abs(avPlayer.playbackRate) == 16
                             PropertyChanges {
                                 target: statusIcon
                                 source: themeResourcePath + "/media/OSD16x.png"
                             }
                         },
                         State {
-                            when: media.playing && !media.paused && Math.abs(media.playbackRate) == 32
+                            when: avPlayer.playing && Math.abs(avPlayer.playbackRate) == 32
                             PropertyChanges {
                                 target: statusIcon
                                 source: themeResourcePath + "/media/OSD32x.png"

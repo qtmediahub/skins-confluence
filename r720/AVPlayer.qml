@@ -30,17 +30,6 @@ import Playlist 1.0
 QMHPlayer {
     id: root
 
-    property bool hasMedia: !!mediaItem && mediaItem.source != ""
-    property bool playing: hasMedia && mediaItem.playing
-
-    mediaItem: mediaItem
-
-    QtObject {
-        id: d
-        property bool queuedShow: false
-        property bool seeking: false
-    }
-
     function showOSD() {
         if (root.state == "maximized") {
             controlOSD.state = "visible"
@@ -64,7 +53,7 @@ QMHPlayer {
 
     function showDialog(item) {
         var onClosedHandler = function() {
-            mediaItem.forceActiveFocus()
+            root.forceActiveFocus()
             item.closed.disconnect(onClosedHandler)
         }
         item.closed.connect(onClosedHandler)
@@ -77,18 +66,24 @@ QMHPlayer {
         confluence.show(root)
     }
 
-    Connections {
-        target: mediaItem
-        onPlayingChanged:
-            if (playing && d.queuedShow)
-                handlePendingShow()
-
-        onStatusChanged:
-            if (d.queuedShow && mediaItem.status == Video.Buffered)
-                handlePendingShow()
+    onPositionChanged: {
+        audioVisualisationPlaceholder.metronomTick()
     }
-
-    anchors.fill: parent
+    onVolumeChanged: {
+        runtime.config.setValue("media-volume", root.volume)
+        root.showVolumeOSD();
+    }
+    onStatusChanged: {
+        if (d.queuedShow && root.status == Video.Buffered) {
+            handlePendingShow()
+        } else if (status == Video.EndOfMedia) {
+            playNext();
+        }
+    }
+    onPlayingChanged: {
+        if (root.playing && d.queuedShow)
+            handlePendingShow()
+    }
 
     states: [
         State {
@@ -135,11 +130,11 @@ QMHPlayer {
                 opacity: 1
             }
             PropertyChanges {
-                target: mediaItem
+                target: mediaElement
                 width: root.width/2.0
                 height: root.height/2.0
                 x: 0
-                y: root.height/2.0 - mediaItem.height/2.0
+                y: root.height/2.0 - mediaElement.height/2.0
             }
         }
     ]
@@ -160,6 +155,12 @@ QMHPlayer {
     Keys.onDownPressed: playNext()
     Keys.onLeftPressed: seekBackward()
     Keys.onRightPressed: seekForward()
+
+    QtObject {
+        id: d
+        property bool queuedShow: false
+        property bool seeking: false
+    }
 
     MouseArea {
         anchors.fill: parent
@@ -209,6 +210,8 @@ QMHPlayer {
         id: backgroundFiller
         anchors.fill: parent
         color: "black"
+        visible: !runtime.config.isEnabled("shine-through", false) && avPlayer.hasVideo
+        z: -1
     }
 
     Row {
@@ -240,90 +243,40 @@ QMHPlayer {
         ProgressBar {
             anchors.verticalCenter: volumeImage.verticalCenter
             width: confluence.width/10
-            mProgress: mediaItem.volume
-        }
-    }
-
-    Video {
-        id: mediaItem
-
-        volume: runtime.config.value("media-volume", 0.1)
-
-        x: 0
-        y: 0
-        width: root.width
-        height: root.height
-
-        property int _seekPos : -1
-
-        onSeekableChanged : {
-            if (seekable && _seekPos != -1) {
-                position = _seekPos
-                _seekPos = -1
-            }
-        }
-
-        function seek(pos) {
-            _seekPos = pos
-        }
-
-        onPositionChanged: {
-            audioVisualisationPlaceholder.metronomTick()
-        }
-
-        onVolumeChanged: {
-            runtime.config.setValue("media-volume", mediaItem.volume)
-            root.showVolumeOSD();
-        }
-
-        onStatusChanged: {
-            if (status == Video.EndOfMedia)
-                playNext();
+            mProgress: root.volume
         }
     }
 
     ParticleVisualization {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
-        visible: !mediaItem.hasVideo
-        running: visible && !mediaItem.paused && mediaItem.playing
+        visible: !root.hasVideo
+        running: visible && root.playing
     }
 
     AVPlayerControlOSD {
         id: controlOSD
-        media: mediaItem
-        player: root
         onActivity: osdTimer.restart();
 
         onShowPlayList: showDialog(playListDialog);
         onShowVideoMenu: showDialog(videoListDialog);
         onShowMusicMenu: showDialog(musicListDialog);
-        onStop: mediaItem.stop();
-        onPlayNext: root.playNext()
-        onPlayPrevious: root.playPrevious()
-        onSeekBackward: root.seekBackward();
-        onSeekForward: root.seekForward();
         onShowTargets: root.state = "targets"
     }
 
     AVPlayerInfoOSD {
         id: infoOSD
-        media: mediaItem
-        state: mediaItem.hasVideo && (mediaItem.paused || d.seeking) && root.state == "maximized" ? "visible" : ""
+        state: root.hasVideo && (root.paused || d.seeking) && root.state == "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoSmallOSD {
         id: audioInfoSmallOSD
-        media: mediaItem
-        mediaInfo: root.mediaInfo
-        state: !mediaItem.hasVideo && mediaItem.playing && root.state != "maximized" ? "visible" : ""
+        state: !root.hasVideo && root.playing && root.state != "maximized" ? "visible" : ""
     }
 
     AudioPlayerInfoBigOSD {
         id: audioInfoBigOSD
-        media: mediaItem
-        mediaInfo: root.mediaInfo
-        state: !mediaItem.hasVideo && mediaItem.playing && root.state == "maximized" ? "visible" : ""
+        state: !root.hasVideo && root.playing && root.state == "maximized" ? "visible" : ""
     }
 
     Image {
@@ -460,8 +413,8 @@ QMHPlayer {
         id: targetsText
         text: qsTr("Send current Movie to Device")
         opacity: 0
-        anchors.horizontalCenter: mediaItem.horizontalCenter
-        anchors.bottom: mediaItem.top
+        anchors.horizontalCenter: mediaElement.horizontalCenter
+        anchors.bottom: mediaElement.top
         anchors.bottomMargin: 50
     }
 
@@ -484,12 +437,12 @@ QMHPlayer {
 
     ConfluenceListView {
         id: targetsList
-        width: root.width - mediaItem.width - 50
+        width: root.width - mediaElement.width - 50
         height: root.height-100
         anchors.centerIn: undefined
-        anchors.left: mediaItem.right
+        anchors.left: mediaElement.right
         anchors.leftMargin: 25
-        anchors.verticalCenter: mediaItem.verticalCenter
+        anchors.verticalCenter: mediaElement.verticalCenter
         model: runtime.remoteSessionsModel
         opacity: 0
 
@@ -499,10 +452,10 @@ QMHPlayer {
             height: sourceText.height + 8
 
             function action() {
-                if (mediaItem.hasVideo)
-                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + mediaInfo.mediaId, mediaItem.position)
+                if (root.hasVideo)
+                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + avPlayer.mediaInfo.mediaId, root.position)
                 else
-                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/music/" + mediaInfo.mediaId, mediaItem.position)
+                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/music/" + avPlayer.mediaInfo.mediaId, root.position)
             }
 
             Image {
@@ -531,7 +484,7 @@ QMHPlayer {
             Keys.onEnterPressed: delegateItem.action()
         }
 
-        Keys.onMenuPressed: mediaItem.forceActiveFocus()
+        Keys.onMenuPressed: root.forceActiveFocus()
         Keys.onLeftPressed: {}
         Keys.onRightPressed: {}
         Keys.onUpPressed: {}

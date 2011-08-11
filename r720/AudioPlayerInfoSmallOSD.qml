@@ -24,9 +24,6 @@ import "util.js" as Util
 Item {
     id: root
 
-    property variant media
-    property variant mediaInfo
-
     width: childrenRect.width
     height: childrenRect.height
     anchors.bottom: parent.bottom
@@ -43,31 +40,31 @@ Item {
 
             // TODO should all use real MetaData from our database
             ConfluenceText {
-                text: media.playbackRate == 0 ? qsTr("Now Paused") : qsTr("Now Playing")
+                text: avPlayer.playbackRate == 0 ? qsTr("Now Paused") : qsTr("Now Playing")
                 color: "steelblue"
                 font.bold: true
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: mediaInfo.artist
+                text: avPlayer.mediaInfo.artist
                 color: "white"
                 font.bold: true
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: mediaInfo.album
+                text: avPlayer.mediaInfo.album
                 color: "white"
                 font.pointSize: 16
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: mediaInfo.title
+                text: avPlayer.mediaInfo.title
                 color: "white"
                 font.bold: true
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: Util.ms2string(media.position) + " / " + Util.ms2string(media.duration)
+                text: Util.ms2string(avPlayer.position) + " / " + Util.ms2string(avPlayer.duration)
                 color: "white"
                 anchors.right: parent.right
             }
@@ -83,7 +80,7 @@ Item {
 
             Image {
                 id: thumbnail
-                source: mediaInfo.thumbnail
+                source: avPlayer.mediaInfo.thumbnail
                 anchors.fill: parent
                 anchors.margins: 6
 

@@ -24,9 +24,6 @@ import "util.js" as Util
 FocusScope {
     id: root
 
-    property variant media
-    property variant mediaInfo
-
     width: parent.width
     height: 300
     anchors.bottom: parent.bottom
@@ -56,7 +53,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: mediaInfo.thumbnail
+            source: avPlayer.mediaInfo.thumbnail
             anchors.fill: parent
             anchors.margins: 6
 
@@ -83,7 +80,7 @@ FocusScope {
             height: childrenRect.height
 
             ConfluenceText {
-                text: mediaInfo.artist + "  -  " + mediaInfo.album
+                text: avPlayer.mediaInfo.artist + "  -  " + avPlayer.mediaInfo.album
                 color: "white"
                 font.bold: false
                 anchors.left: parent.left
@@ -100,7 +97,7 @@ FocusScope {
 //        }
 
         ConfluenceText {
-            text: mediaInfo.title
+            text: avPlayer.mediaInfo.title
             color: "white"
             font.bold: true
             anchors.left: parent.left
@@ -116,7 +113,7 @@ FocusScope {
             height: childrenRect.height
 
             ConfluenceText {
-                text: mediaInfo.track ? qsTr("TRACK:") + mediaInfo.track : ""
+                text: avPlayer.mediaInfo.track ? qsTr("TRACK:") + avPlayer.mediaInfo.track : ""
                 color: "gray"
                 anchors.left: parent.left
             }
@@ -137,7 +134,7 @@ FocusScope {
 
         ProgressBar {
             width: parent.width
-            mProgress: media.duration != 0 ? media.position/media.duration : 1.0
+            mProgress: avPlayer.duration != 0 ? avPlayer.position/avPlayer.duration : 1.0
         }
 
         Item {
@@ -145,14 +142,14 @@ FocusScope {
             height: childrenRect.height
 
             ConfluenceText {
-                text: Util.ms2string(media.position)
+                text: Util.ms2string(avPlayer.position)
                 color: "white"
                 font.bold: true
                 anchors.left:  parent.left
             }
 
             ConfluenceText {
-                text: Util.ms2string(media.duration)
+                text: Util.ms2string(avPlayer.duration)
                 color: "white"
                 font.bold: true
                 anchors.right: parent.right
