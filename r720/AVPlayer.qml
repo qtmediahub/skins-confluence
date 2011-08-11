@@ -500,9 +500,9 @@ QMHPlayer {
 
             function action() {
                 if (mediaItem.hasVideo)
-                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + mediaItem.mediaId, mediaItem.position)
+                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + mediaInfo.mediaId, mediaItem.position)
                 else
-                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/music/" + mediaItem.mediaId, mediaItem.position)
+                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/music/" + mediaInfo.mediaId, mediaItem.position)
             }
 
             Image {
