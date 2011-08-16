@@ -221,6 +221,7 @@ Window {
     Component.onCompleted: {
         setCurrentView(runtime.config.value(mediaModel.mediaType + "-currentview", "POSTER"))
         setGroupBy(runtime.config.value(mediaModel.mediaType + "-group-by", "None"))
-        mediaWindowRipple = confluence.createQmlObjectFromFile("MediaWindowRipple.qml", {}, root)
+        if (confluence.shroomfluence)
+            mediaWindowRipple = confluence.createQmlObjectFromFile("MediaWindowRipple.qml", {}, root)
     }
 }
