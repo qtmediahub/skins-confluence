@@ -41,8 +41,6 @@ FocusScope {
 
     property bool standardItemViewWraps: true
 
-    property variant avPlayer
-
     property variant rootMenuModel: ListModel { }
 
     // private
@@ -297,8 +295,6 @@ FocusScope {
 
         _addRootMenuItem(rootMenuItems)
 
-        avPlayer = createQmlObjectFromFile("AVPlayer.qml", { state: "background" }) || dummyItem
-
         _ticker = createQmlObjectFromFile("Ticker.qml", { z: UIConstants.screenZValues.header, state: "visible" })
         if (_ticker) {
             _ticker.linkClicked.connect(confluence.openLink)
@@ -310,6 +306,11 @@ FocusScope {
         createQmlObjectFromFile("SystemScreenSaverControl.qml")
     }
 
+    AVPlayer {
+        id: avPlayer
+        state: "background"
+    }
+
     // dummyItem useful to avoid error ouput on component loader failures
     Item {
         id: dummyItem
@@ -319,7 +320,7 @@ FocusScope {
     Background {
         id: background
         anchors.fill: parent;
-        visible: !avPlayer.playing
+        visible: !avPlayer.playing && !runtime.config.isEnabled("shine-through", false)
     }
 
     MainBlade {
