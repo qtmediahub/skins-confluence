@@ -210,7 +210,7 @@ QMHPlayer {
         id: backgroundFiller
         anchors.fill: parent
         color: "black"
-        visible: !runtime.config.isEnabled("shine-through", false) && avPlayer.hasVideo
+        visible: !runtime.window.overlayMode && avPlayer.hasVideo
         z: -1
     }
 

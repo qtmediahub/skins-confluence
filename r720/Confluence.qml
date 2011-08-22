@@ -320,7 +320,7 @@ FocusScope {
     Background {
         id: background
         anchors.fill: parent;
-        visible: !avPlayer.playing && !runtime.config.isEnabled("shine-through", false)
+        visible: !avPlayer.playing && !runtime.window.overlayMode
     }
 
     MainBlade {
