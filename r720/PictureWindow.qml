@@ -38,7 +38,6 @@ MediaWindow {
 
     Playlist {
         id : playlist
-        mediaType: "picture"
         playMode: Playlist.Normal
     }
 
