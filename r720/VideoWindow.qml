@@ -25,7 +25,7 @@ MediaWindow {
     id: root
 
     mediaModel.mediaType: "video"
-    groupByOptions : [ qsTr("Title") ]
-    structures : [ "title" ]
+    groupByOptions : [ qsTr("Show") ]
+    structures : [ "show|season|title" ]
 }
 
