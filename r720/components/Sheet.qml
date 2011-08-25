@@ -102,6 +102,9 @@ FocusScope {
         }
     }
 
-    Keys.onPressed: root.close()
+    Keys.onPressed: {
+        root.close()
+        event.accepted = true
+    }
 }
 
