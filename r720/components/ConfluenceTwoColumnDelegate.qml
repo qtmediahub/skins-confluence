@@ -31,7 +31,7 @@ Item {
     Image {
         id: backgroundImage
         anchors.fill: parent;
-        source: themeResourcePath + "/media/" + (ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+        source: themeResourcePath + "/media/" + (root.ListView.isCurrentItem && root.activeFocus ? "MenuItemFO.png" : "MenuItemNF.png");
     }
     Row {
         id: row
