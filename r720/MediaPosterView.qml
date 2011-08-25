@@ -25,7 +25,6 @@ import "util.js" as Util
 Item {
     id: root
     property variant mediaModel
-    property variant informationSheet
     property alias currentIndex: posterView.currentIndex
     property alias currentItem: posterView.currentItem
 
@@ -37,13 +36,6 @@ Item {
         anchors.fill: parent
         border.left: 5; border.top: 5
         border.right: 5; border.bottom: 5
-    }
-
-    function showInformationSheet() {
-        if (!informationSheet)
-            return
-        confluence.showModal(informationSheet)
-        informationSheet.currentItem = posterView.currentItem
     }
 
     function setPathStyle(style) {

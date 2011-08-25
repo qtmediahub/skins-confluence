@@ -88,7 +88,9 @@ Window {
         mediaModel.structure = structures[index]
     }
 
-    onItemSelected: confluence.shroomfluence ? mediaWindowRipple.stop() : undefined
+    onItemSelected: {
+        confluence.shroomfluence ? mediaWindowRipple.stop() : undefined
+    }
     onItemActivated: {
         confluence.shroomfluence ? mediaWindowRipple.ripple(mediaItem) : undefined
         root.play()
@@ -97,6 +99,11 @@ Window {
     function visibleTransitionFinished() {
         if (mediaModel.rowCount() < 1) 
             confluence.showModal(addMediaSourceDialog)
+    }
+
+    function showInformationSheet() {
+        informationSheet.currentItem = viewLoader.item.currentItem
+        confluence.showModal(informationSheet)
     }
 
     Connections {
@@ -168,8 +175,8 @@ Window {
             ConfluenceAction {
                 id: informationAction
                 text: qsTr("Show Info")
-                onTriggered: viewLoader.item.showInformationSheet()
-                enabled: !!view.currentItem && view.currentItem.itemdata.type == "File"
+                onTriggered: showInformationSheet()
+                enabled: informationSheet && view.currentItem && view.currentItem.itemdata.isLeaf ? true : false
             }
         ]
     }
@@ -178,7 +185,6 @@ Window {
         id: thumbnailView
         MediaThumbnailView {
             mediaModel: mediaWindow.mediaModel
-            informationSheet: mediaWindow.informationSheet
         }
     }
 
@@ -186,7 +192,6 @@ Window {
         id: listView
         MediaListView {
             mediaModel: mediaWindow.mediaModel
-            informationSheet: mediaWindow.informationSheet
         }
     }
 
@@ -194,7 +199,6 @@ Window {
         id: posterView
         MediaPosterView {
             mediaModel: mediaWindow.mediaModel
-            informationSheet: mediaWindow.informationSheet
         }
     }
 

@@ -20,6 +20,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import QtQuick 1.1
 
 Item {
+    id: root
     property variant itemdata : model
     property alias column1Text : column1.text
     property alias column2Text : column2.text
@@ -60,8 +61,7 @@ Item {
     MouseArea {
         anchors.fill: parent;
         hoverEnabled: true
-        onEntered:
-            ListView.view.currentIndex = index
+        onEntered: root.ListView.view.currentIndex = index
     }
 }
 

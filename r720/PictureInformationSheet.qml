@@ -39,40 +39,35 @@ Sheet {
         listModel.clear()
         var item = currentItem.itemdata
         // First add items that are guaranteed to be present
-        listModel.append({key: qsTr("File name"), value: item.fileName})
-        listModel.append({key: qsTr("File path"), value: item.filePath})
-        listModel.append({key: qsTr("File size"), value: Util.toHumanReadableBytes(item.fileSize)})
-        listModel.append({key: qsTr("File date/time"), value: item.fileDateTime})
-        listModel.append({key: qsTr("Resolution"), value: item.resolution.width + 'x' + item.resolution.height})
+        listModel.append({key: qsTr("Title"), value: item.title})
+        listModel.append({key: qsTr("File path"), value: item.filepath})
+        listModel.append({key: qsTr("File size"), value: Util.toHumanReadableBytes(item.filesize)})
         // Exif information may or may not be present
         var translations = { // FIXME: make global
-            "userComments" : qsTr("User comments"),
-            "imageDescription" : qsTr("Image description"),
-            "creationTime" : qsTr("Creation time"),
-            "cameraModel" : qsTr("Camera model"),
-            "cameraMake" : qsTr("Camera make"),
-            "latitude" : qsTr("Latitude"),
-            "longitude" : qsTr("Longitude"),
-            "altitude" : qsTr("Altitude"),
-            "orientation" : qsTr("Orientation"),
-            "aperture" : qsTr("Aperture"),
-            "focalLength" : qsTr("Focal length"),
-            "exposureMode" : qsTr("Exposure Mode"),
-            "whiteBalance" : qsTr("White Balance"),
-            "lightSource" : qsTr("Light Source"),
-            "isoSpeed" : qsTr("ISO"),
-            "digitalZoomRatio" : qsTr("Digital Zoom"),
-            "flashUsage" : qsTr("Flash Usage"),
-            "exposureTime" : qsTr("Exposure Time"),
-            "colorSpace" : qsTr("Colour/B&W")
+            comments : qsTr("Comments"),
+            description : qsTr("Description"),
+            camera_model : qsTr("Camera model"),
+            camera_make : qsTr("Camera make"),
+            latitude : qsTr("Latitude"),
+            longitude : qsTr("Longitude"),
+            altitude : qsTr("Altitude"),
+            orientation : qsTr("Orientation"),
+            aperture : qsTr("Aperture"),
+            focal_length : qsTr("Focal length"),
+            exposure_mode : qsTr("Exposure Mode"),
+            white_balance : qsTr("White Balance"),
+            light_source : qsTr("Light Source"),
+            iso_speed : qsTr("ISO"),
+            digital_zoom_ratio : qsTr("Digital Zoom"),
+            flash_usage : qsTr("Flash Usage"),
+            exposure_time : qsTr("Exposure Time"),
+            color_space : qsTr("Colour/B&W")
         }
-        for (var k in item.exifProperties) {
-            var v = item.exifProperties[k];
-            if (v == "" || !(k in translations))
-                continue;
-            listModel.append({key: translations[k], value: v})
+        for (var role in translations) {
+            if (role in item)
+                listModel.append({key: translations[role], value: item[role]})
         }
-                           }
+    }
 
     ConfluenceListView {
         id: listView

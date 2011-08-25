@@ -39,13 +39,11 @@ Sheet {
         listModel.clear()
         var item = currentItem.itemdata
         // First add items that are guaranteed to be present
-        listModel.append({key: qsTr("File name"), value: item.fileName})
-        listModel.append({key: qsTr("File path"), value: item.filePath})
-        listModel.append({key: qsTr("File size"), value: Util.toHumanReadableBytes(item.fileSize)})
-        listModel.append({key: qsTr("File date/time"), value: item.fileDateTime})
+        listModel.append({key: qsTr("Title"), value: item.title})
+        listModel.append({key: qsTr("File path"), value: item.filepath})
+        listModel.append({key: qsTr("File size"), value: Util.toHumanReadableBytes(item.filesize)})
         // Tag information may or may not be present
         var translations = { // FIXME: make global
-            title: qsTr("Title"),
             artist: qsTr("Artist"),
             album: qsTr("Album"),
             comment: qsTr("Comment"),
@@ -54,16 +52,13 @@ Sheet {
             track: qsTr("Track"),
             length: qsTr("Length"),
             bitrate: qsTr("Bitrate"),
-            sampleRate: qsTr("Sample Rate"),
-            channels: qsTr("Channels")
+            samplerate: qsTr("Sample Rate")
         }
-        for (var k in item.tagProperties) {
-            var v = item.tagProperties[k];
-            if (v == "" || !(k in translations))
-                continue;
-            listModel.append({key: translations[k], value: v})
+        for (var role in translations) {
+            if (role in item)
+                listModel.append({key: translations[role], value: item[role]})
         }
-                           }
+    }
 
     ConfluenceListView {
         id: listView

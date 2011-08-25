@@ -24,19 +24,11 @@ Item {
     id: root
 
     property variant mediaModel
-    property variant informationSheet
     property bool hidePreview: false
     property alias currentIndex: sourcesListView.currentIndex
     property alias currentItem: sourcesListView.currentItem
 
     anchors.fill: parent
-
-    function showInformationSheet() {
-        if (!informationSheet)
-            return
-        confluence.showModal(informationSheet)
-        informationSheet.currentItem = sourcesListView.currentItem
-    }
 
     Image {
         id: reflectionImage
