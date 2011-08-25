@@ -250,7 +250,8 @@ QMHPlayer {
     ParticleVisualization {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
-        visible: !root.hasVideo
+        //Removing particles until backends report video content correctly
+        visible: !root.hasVideo && !runtime.window.overlayMode
         running: visible && root.playing
     }
 
