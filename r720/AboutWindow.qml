@@ -53,7 +53,7 @@ Window {
 
         onSideChanged:
             if (flipable.side == Flipable.Back && !animationItem) {
-                var component = Qt.createComponent("qml-startup/startup.qml");
+                var component = Qt.createComponent("qtlogo-animation/startup.qml");
                 if (component.status == Component.Ready) {
                     animationItem = component.createObject(placeHolder);
                 }
