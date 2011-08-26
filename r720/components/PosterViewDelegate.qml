@@ -40,7 +40,7 @@ Item {
     Image {
         id: backgroundImage
         source: model.dotdot ? themeResourcePath + "/media/DefaultFolderBack.png" : 
-                             (model.previewUrl != "" ? model.previewUrl : d.fallbackImagePath)
+                             (model.previewUrl ? model.previewUrl : d.fallbackImagePath)
         anchors.centerIn: parent
         width: (sourceSize.width > sourceSize.height ? delegateItem.width : (sourceSize.width / sourceSize.height) * delegateItem.width) - frameMargin*2
         height: (sourceSize.width <= sourceSize.height ? delegateItem.height : (sourceSize.height / sourceSize.width) * delegateItem.height) - frameMargin*2
