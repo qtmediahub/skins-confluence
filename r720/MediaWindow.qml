@@ -47,12 +47,15 @@ Window {
 
     function setCurrentView(viewType) {
         var currentIndex = typeof view != "undefined" ? view.currentIndex : 0
+        var dotDotPosition = MediaModel.End
         if (viewType == qsTr("BIG GRID") || viewType == qsTr("GRID")) {
             viewLoader.changeView(thumbnailView)
             view.hidePreview = viewType == qsTr("BIG GRID")
+            dotDotPosition = MediaModel.Beginning
         } else if (viewType == qsTr("LIST") || viewType == qsTr("BIG LIST")) {
             viewLoader.changeView(listView)
             view.hidePreview = viewType == qsTr("BIG LIST")
+            dotDotPosition = MediaModel.Beginning
         } else if (viewType == qsTr("POSTER")) {
             viewLoader.changeView(posterView)
             view.setPathStyle("linearZoom")
@@ -73,6 +76,8 @@ Window {
             viewLoader.changeView(posterView)
             view.setPathStyle("POSTER")
         }
+
+        mediaModel.dotDotPosition = dotDotPosition
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
         runtime.config.setValue(mediaModel.mediaType + "-currentview", viewType)
