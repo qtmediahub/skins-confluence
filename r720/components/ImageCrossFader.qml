@@ -54,6 +54,12 @@ Item {
     Loader{ id: primaryLoader; anchors.fill: parent; sourceComponent: swapBuffer }
     Loader{ id: secondaryLoader; anchors.fill: parent; sourceComponent: swapBuffer }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        z: -1
+    }
+
     Timer {
         id: staggeredTimer
         interval: d.primary.source == "" ? 0 : 500;
