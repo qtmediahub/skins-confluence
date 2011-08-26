@@ -40,5 +40,7 @@ GridView {
     }
 
     delegate: GridViewDelegate { }
+
+    onCountChanged: if (currentIndex == -1) currentIndex = 0
 }
 

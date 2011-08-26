@@ -63,8 +63,9 @@ Item {
         var mediaModel = PathView.view.model
         if (!model.isLeaf) {
             mediaModel.enter(index)
+            PathView.view.currentIndex = -1 // QTBUG-21144
         } else {
-            PathView.view.currentIndex = index;
+            PathView.view.currentIndex = index
             PathView.view.activated()
         }
     }

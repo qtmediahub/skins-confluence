@@ -165,5 +165,7 @@ PathView {
             PathQuad { x: carousel.startX; y: carousel.startY; controlX: carousel.horizCenter - carousel.horizHypot; controlY: carousel.vertCenter + carousel.vertHypot }
         }
     }
+
+    onCountChanged: if (currentIndex == -1) currentIndex = 0
 }
 

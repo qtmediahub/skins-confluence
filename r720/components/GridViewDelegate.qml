@@ -70,6 +70,7 @@ Item {
         var mediaModel = GridView.view.model
         if (!model.isLeaf) {
             mediaModel.enter(index)
+            delegateItem.GridView.view.currentIndex = -1 // QTBUG-21144
         } else {
             GridView.view.currentIndex = index;
             GridView.view.activated()

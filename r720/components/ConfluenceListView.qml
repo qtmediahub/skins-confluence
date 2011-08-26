@@ -57,5 +57,7 @@ ListView {
     }
 
     delegate: ConfluenceListViewDelegate { }
+
+    onCountChanged: if (currentIndex == -1) currentIndex = 0
 }
 

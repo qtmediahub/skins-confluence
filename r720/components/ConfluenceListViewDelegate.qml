@@ -58,8 +58,9 @@ Item {
         var mediaModel = delegateItem.ListView.view.model
         if (!model.isLeaf && mediaModel.enter) {
             mediaModel.enter(index)
+            delegateItem.ListView.view.currentIndex = -1 // QTBUG-21144
         } else {
-            delegateItem.ListView.view.currentIndex = index;
+            delegateItem.ListView.view.currentIndex = index
             delegateItem.ListView.view.activated()
         }
     }
