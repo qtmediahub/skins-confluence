@@ -206,6 +206,8 @@ QMHPlayer {
         onTriggered: d.seeking = false
     }
 
+    // fill the viewport with 'black' for small resolution movies (so that the background 
+    // doesn't appear)
     Rectangle {
         id: backgroundFiller
         anchors.fill: parent
