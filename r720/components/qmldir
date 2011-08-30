@@ -13,7 +13,7 @@ PixmapButton 1.0 PixmapButton.qml
 Sheet 1.0 Sheet.qml
 ConfluenceGridView 1.0 ConfluenceGridView.qml
 PosterView 1.0 PosterView.qml
-QMHAudio 1.0 QMHAudio.qml
+ConfluenceAudio 1.0 ConfluenceAudio.qml
 ProgressBar 1.0 ProgressBar.qml
 GridViewDelegate 1.0 GridViewDelegate.qml
 ConfluenceText 1.0 ConfluenceText.qml

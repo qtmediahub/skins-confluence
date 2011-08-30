@@ -34,7 +34,7 @@ FocusScope {
 
     Component.onCompleted: {
         if (runtime.config.isEnabled("menu-soundeffects", false)) {
-            var menuSoundEffectLoader = Qt.createComponent("./components/QMHAudio.qml");
+            var menuSoundEffectLoader = Qt.createComponent("./components/ConfluenceAudio.qml");
             if (menuSoundEffectLoader.status == Component.Ready) {
                 menuSoundEffect = menuSoundEffectLoader.createObject(parent)
                 menuSoundEffect.source = themeResourcePath + "/sounds/click.wav"
