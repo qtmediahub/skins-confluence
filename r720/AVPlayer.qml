@@ -210,7 +210,7 @@ QMHPlayer {
         id: backgroundFiller
         anchors.fill: parent
         color: "black"
-        visible: !runtime.window.overlayMode && avPlayer.hasVideo
+        visible: !runtime.config.value("overlay-mode", false) && avPlayer.hasVideo
         z: -1
     }
 
@@ -251,7 +251,7 @@ QMHPlayer {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
         //Removing particles until backends report video content correctly
-        visible: !root.hasVideo && !runtime.window.overlayMode
+        visible: !root.hasVideo && !runtime.config.value("overlay-mode", false)
         running: visible && root.playing
     }
 
