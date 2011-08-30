@@ -24,7 +24,7 @@ import "./components/uiconstants.js" as UIConstants
 import MediaModel 1.0
 import QtMediaHub.components.media 1.0
 import Playlist 1.0
-import MediaBackendInterface 1.0
+import AbstractMediaPlayer 1.0
 
 //This serves to isolate import failures if QtMultimedia is not present
 QMHPlayer {
@@ -74,9 +74,9 @@ QMHPlayer {
         root.showVolumeOSD();
     }
     onStatusChanged: {
-        if (d.queuedShow && root.status == MediaBackendInterface.Buffered) {
+        if (d.queuedShow && root.status == AbstractMediaPlayer.Buffered) {
             handlePendingShow()
-        } else if (status == MediaBackendInterface.EndOfMedia) {
+        } else if (status == AbstractMediaPlayer.EndOfMedia) {
             playNext();
         }
     }
