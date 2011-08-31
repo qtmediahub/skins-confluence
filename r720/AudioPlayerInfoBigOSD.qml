@@ -54,7 +54,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: avPlayer.mediaInfo.thumbnail
+            source: avPlayer.mediaInfo.thumbnail === "" ? themeResourcePath + "/media/" + "DefaultAlbumCover.png" : avPlayer.mediaInfo.thumbnail
             anchors.fill: parent
             anchors.margins: 6
 
