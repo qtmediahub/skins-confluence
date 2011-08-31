@@ -21,6 +21,7 @@ import QtQuick 1.1
 import "components/"
 import "util.js" as Util
 
+// This OSD is shown when audio is playing and media window is visible
 FocusScope {
     id: root
 

@@ -21,6 +21,7 @@ import QtQuick 1.1
 import "components/"
 import "util.js" as Util
 
+// This OSD is displayed when video is paused or being forwarded
 FocusScope {
     id: root
 

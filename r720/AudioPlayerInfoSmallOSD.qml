@@ -21,6 +21,7 @@ import QtQuick 1.1
 import "components/"
 import "util.js" as Util
 
+// This OSD shows up when audio is playing and root menu is shown
 Item {
     id: root
 
