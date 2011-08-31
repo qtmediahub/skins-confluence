@@ -58,6 +58,7 @@ ListView {
 
     delegate: ConfluenceListViewDelegate { }
 
-    onCountChanged: if (currentIndex == -1) currentIndex = 0
+    // ## This breaks the TreeView in AddMediaSourceDialog
+    // onCountChanged: if (currentIndex == -1) currentIndex = 0
 }
 

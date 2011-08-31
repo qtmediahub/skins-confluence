@@ -55,6 +55,10 @@ Item {
                 mediaWindow.itemSelected(currentItem)
             onActivated:
                 mediaWindow.itemActivated(currentItem)
+
+            // ## This should be in ConfluenceListView but it breaks
+            // the TreeView in AddMediaSourceDialog
+            onCountChanged: if (currentIndex == -1) currentIndex = 0
         }
     }
 
