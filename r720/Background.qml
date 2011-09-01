@@ -36,5 +36,12 @@ Item {
                 } else {
                     backgroundPath + "media-overlay.png"
                 }
+
+        Rectangle {
+            anchors.fill: parent
+            visible: runtime.config.value("overlay-mode", true)
+            color: "black"
+            z: -1
+        }
     }
 }
