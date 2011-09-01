@@ -239,14 +239,12 @@ FocusScope {
         return null
     }
 
-    function addRootMenuItem(obj, activationHandler) {
-        rootMenuModel.append(obj)
-        Confluence.activationHandlers[rootMenuModel.count-1] = activationHandler
-    }
-
-    function _addRootMenuItem(rootMenuItems) {
+    function _addRootMenuItems(rootMenuItems) {
+        var mediaPlugins = runtime.mediaScanner.availableParserPlugins()
         for (var i = 0; i < rootMenuItems.length; i++) {
             var item = rootMenuItems[i]
+            if (item.mediaPlugin && mediaPlugins.indexOf(item.mediaPlugin) == -1)
+                continue
             rootMenuModel.append(item)
             if (item.onActivate)
                 Confluence.activationHandlers[rootMenuModel.count-1] = item.onActivate
@@ -259,12 +257,11 @@ FocusScope {
         _browserWindow = createQmlObjectFromFile("WebWindow.qml")
         _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
 
-        // ## QML Bug : without background: <something> on the first item background breaks
         var rootMenuItems = [
-            { name: qsTr("Music"), engine: "music", sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Picture"), engine: "picture", sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Video"), engine: "video", sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
-            { name: qsTr("Radio"), engine: "radio", sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Music"), mediaPlugin: "music", sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Picture"), mediaPlugin: "picture", sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Video"), mediaPlugin: "video", sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Radio"), mediaPlugin: "radio", sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Weather"), sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
             { name: qsTr("Web"), sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg",
               onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
@@ -293,7 +290,7 @@ FocusScope {
                                  onActivate: function() { this.initialUrl = "http://www.youtube.com/xl" } })
         }
 
-        _addRootMenuItem(rootMenuItems)
+        _addRootMenuItems(rootMenuItems)
 
         _ticker = createQmlObjectFromFile("Ticker.qml", { z: UIConstants.screenZValues.header, state: "visible" })
         if (_ticker) {
