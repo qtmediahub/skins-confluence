@@ -27,7 +27,7 @@ Window {
 
     anchors.fill: parent
 
-    property string city: runtime.config.value("weather-city", "Munich")
+    property string city: runtime.config.value("weather-city", "Amsterdam")
 
     function fahrenheit2celsius(f) {
         return ((f-32)*5/9.0).toFixed(0);
@@ -367,7 +367,9 @@ Window {
 
     ListModel {
         id: cityList
+        ListElement { name: "Amsterdam" }
         ListElement { name: "Atlanta" }
+        ListElement { name: "Bangalore" }
         ListElement { name: "Bangkok" }
         ListElement { name: "Barcelona" }
         ListElement { name: "Beijing" }
