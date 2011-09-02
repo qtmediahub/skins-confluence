@@ -214,6 +214,12 @@ FocusScope {
         event.accepted = true
         if (event.key == Qt.Key_MediaTogglePlayPause) {
             avPlayer.togglePlayPause()
+        } else if (event.key == Qt.Key_MediaStop) {
+            avPlayer.stop()
+        } else if (event.key == Qt.Key_MediaPrevious) {
+            avPlayer.playPrevious()
+        } else if (event.key == Qt.Key_MediaNext) {
+            avPlayer.playNext()
         } else if (event.key == Qt.Key_Context1) {
             if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
                 _openWindow.maximized = true
