@@ -90,7 +90,14 @@ FocusScope {
                 engine.window = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
             } else if (engine.appUrl) {
                 engine.window = createQmlObjectFromFile("components/Window.qml", engine.constructorArgs || {})
-                createQmlObjectFromFile(engine.appUrl, {}, engine.window) || { }
+                var panel = createQmlObjectFromFile("components/Panel.qml", {decorateFrame: true, decorateTitleBar: true}, engine.window)
+                panel.anchors.centerIn = engine.window
+                var app = createQmlObjectFromFile(engine.appUrl, {})
+                var item = Qt.createQmlObject("import QtQuick 1.0; Item { }", panel.contentItem)
+                item.width = engine.window.width - 60
+                item.height = engine.window.height - 60
+                app.parent = item
+                app.forceActiveFocus()
             }
         }
 
