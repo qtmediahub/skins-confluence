@@ -90,7 +90,14 @@ FocusScope {
                 engine.window = createQmlObjectFromFile(engine.sourceUrl, engine.constructorArgs || {}) || { }
             } else if (engine.appUrl) {
                 engine.window = createQmlObjectFromFile("components/Window.qml", engine.constructorArgs || {})
-                createQmlObjectFromFile(engine.appUrl, {}, engine.window) || { }
+                var panel = createQmlObjectFromFile("components/Panel.qml", {decorateFrame: true, decorateTitleBar: true}, engine.window)
+                panel.anchors.centerIn = engine.window
+                var app = createQmlObjectFromFile(engine.appUrl, {})
+                var item = Qt.createQmlObject("import QtQuick 1.0; Item { }", panel.contentItem)
+                item.width = (function() { return engine.window.width - 60 })
+                item.height = (function() { return engine.window.height - 60 })
+                app.parent = item
+                app.forceActiveFocus()
             }
         }
 
@@ -214,6 +221,12 @@ FocusScope {
         event.accepted = true
         if (event.key == Qt.Key_MediaTogglePlayPause) {
             avPlayer.togglePlayPause()
+        } else if (event.key == Qt.Key_MediaStop) {
+            avPlayer.stop()
+        } else if (event.key == Qt.Key_MediaPrevious) {
+            avPlayer.playPrevious()
+        } else if (event.key == Qt.Key_MediaNext) {
+            avPlayer.playNext()
         } else if (event.key == Qt.Key_Context1) {
             if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
                 _openWindow.maximized = true
@@ -264,7 +277,7 @@ FocusScope {
             { name: qsTr("Radio"), mediaPlugin: "radio", sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Weather"), sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
             { name: qsTr("Web"), sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg",
-              onActivate: function() { this.initialUrl = "http://www.google.com"; this.enableBrowserShortcuts = true } },
+                onActivate: function() { this.initialUrl = "http://wikitravel.org/en/Amsterdam"; this.enableBrowserShortcuts = true } },
         ]
 
         var apps = runtime.file.findApplications()

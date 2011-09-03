@@ -34,7 +34,7 @@ Window {
     property bool enableBrowserShortcuts : true
     property alias url: webView.url
     property string initialUrl: defaultUrl
-    property string defaultUrl: "http://www.google.com"
+    property string defaultUrl: "http://wikitravel.org/en/Amsterdam"
 
     function loadPage(url) {
         webView.url = url
@@ -95,15 +95,10 @@ Window {
                 settings.pluginsEnabled: runtime.config.isEnabled("wk-plugins", false)
                 settings.autoLoadImages: runtime.config.isEnabled("wk-auto-load-images", true)
 
-                opacity: progress == 1 ? 1 : 0.5
                 preferredWidth: webViewport.width
                 //Need a default/initial value in excess of what I eventually require
                 //or we see unintialized pixmap in the Flickable
                 preferredHeight: confluence.height
-
-                Behavior on opacity {
-                    NumberAnimation{}
-                }
             }
 
             Behavior on width {
@@ -114,12 +109,6 @@ Window {
                 ConfluenceAnimation { }
             }
         }
-
-        BusyIndicator {
-            anchors.centerIn: webViewport
-            on: webView.progress != 1
-        }
-
     }
 
     //FIXME: need to explicitly disable when background
