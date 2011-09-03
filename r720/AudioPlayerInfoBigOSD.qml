@@ -119,18 +119,18 @@ FocusScope {
                 anchors.left: parent.left
             }
 
-            ConfluenceText {
-                text: qsTr("NEXT") + ": "
-                color: "steelblue"
-                anchors.right: nextTitleText.left
-            }
+//            ConfluenceText {
+//                text: qsTr("NEXT") + ": "
+//                color: "steelblue"
+//                anchors.right: nextTitleText.left
+//            }
 
-            ConfluenceText {
-                id: nextTitleText
-                text: "Unknown Artist - Unknown Title"
-                color: "gray"
-                anchors.right: parent.right
-            }
+//            ConfluenceText {
+//                id: nextTitleText
+//                text: "Unknown Artist - Unknown Title"
+//                color: "gray"
+//                anchors.right: parent.right
+//            }
         }
 
         ProgressBar {
