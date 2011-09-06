@@ -79,7 +79,7 @@ FocusScope {
     }
 
     function setBackground(source) {
-        background.source = source
+        background.setBackground(source)
     }
 
     function setActiveEngine(index) {

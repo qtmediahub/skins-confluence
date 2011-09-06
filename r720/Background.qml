@@ -24,18 +24,37 @@ import "./components/uiconstants.js" as UIConstants
 Item {
     id: root
     z: UIConstants.screenZValues.background
-    property string source
+
+    function setBackground(source) {
+        if (visible) {
+            d.source = source
+        } else {
+            d.pendingSource = source
+        }
+    }
+
+    QtObject {
+        id: d
+        property string source
+        property string pendingSource
+    }
 
     ImageCrossFader {
+        id: fader
         fillMode: Image.PreserveAspectCrop
         property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
         anchors.fill: parent;
-        source: if (themeResourcePath && root.source) {
+        source: if (themeResourcePath && d.source) {
                     // check if source is an absolute path
-                    root.source[0] == '/' ? root.source : backgroundPath + root.source 
+                    d.source[0] == '/' ? d.source : backgroundPath + d.source
                 } else {
                     backgroundPath + "media-overlay.png"
                 }
+        onVisibleChanged:
+            if (visible && (d.pendingSource != "")) {
+                fader.source = d.pendingSource
+                d.pendingSource = ""
+            }
 
         Rectangle {
             anchors.fill: parent
