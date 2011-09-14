@@ -275,6 +275,7 @@ FocusScope {
             { name: qsTr("Picture"), mediaPlugin: "picture", sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Video"), mediaPlugin: "video", sourceUrl: "VideoWindow.qml", background: "videos.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Radio"), mediaPlugin: "radio", sourceUrl: "RadioWindow.qml", background: "music.jpg", constructorArgs: { deleteOnClose: true } },
+            { name: qsTr("Snes"), mediaPlugin: "snes", sourceUrl: "SnesWindow.qml", background: "snes.jpg", constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Weather"), sourceUrl: "WeatherWindow.qml", window: _weatherWindow, background: "weather.jpg" },
             { name: qsTr("Web"), sourceUrl: "WebWindow.qml", window: _browserWindow, background: "web.jpg",
                 onActivate: function() { this.initialUrl = "http://wikitravel.org/en/Amsterdam"; this.enableBrowserShortcuts = true } },
