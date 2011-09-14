@@ -38,7 +38,8 @@ Item {
             id: rootItem
             cache: false
             fillMode: root.fillMode
-            width: parent.width
+            width: confluence.scalingAllowed ? parent.width : sourceSize.width;
+            height: confluence.scalingAllowed ? undefined : sourceSize.height
             asynchronous: true
             opacity:  rootItem.status == Image.Ready && d.currentItem == rootItem ? 1 : 0
             anchors.horizontalCenter: parent.horizontalCenter

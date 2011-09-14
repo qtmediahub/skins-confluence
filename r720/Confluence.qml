@@ -29,6 +29,7 @@ FocusScope {
     id: confluence
 
     property bool shroomfluence: runtime.config.isEnabled("shroom", false)
+    property bool scalingAllowed: runtime.config.isEnabled("pixmap-scaling", true)
     property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
 
     property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence/"
