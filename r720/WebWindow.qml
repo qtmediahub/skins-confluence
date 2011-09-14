@@ -79,6 +79,7 @@ Window {
                 id: webView
                 url: defaultUrl
                 focus: true
+                opacity: 0.7
                 settings.sansSerifFontFamily : "DejaVu Sans"
                 settings.javaEnabled: runtime.config.isEnabled("wk-java", false)
                 settings.javascriptCanAccessClipboard: runtime.config.isEnabled("wk-js-clipboard", false)
