@@ -22,7 +22,6 @@ import QtQuick 1.1
 Item {
     id: root
     //property real pixmapCorrectionRatio: pixmap.sourceSize.width/pixmap.sourceSize.height
-    property bool disabled: false
     property string resourcePath: ""
 
     width: d.defaultWidth; height: d.defaultHeight
@@ -68,7 +67,7 @@ Item {
 
     Image {
         id: pixmap
-        opacity: root.disabled ? 0.2 : 1.0
+        opacity: root.enabled ? 1.0 : 0.2
         anchors.fill: parent
         source: resourcePath
                 + (d.depressed && (depressedPixmap != "")

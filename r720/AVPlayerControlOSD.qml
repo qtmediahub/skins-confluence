@@ -69,7 +69,7 @@ FocusScope {
             ConfluencePixmapButton { basePixmap: "OSDVideoNF"; focusedPixmap: "OSDVideoFO"; onClicked: root.showVideoMenu(); }
             Item { width: 100; height: 1; }
             ConfluencePixmapButton { basePixmap: "OSDPrevTrackNF"; focusedPixmap: "OSDPrevTrackFO"; onClicked: avPlayer.playPrevious(); }
-            ConfluencePixmapButton { disabled: !avPlayer.seekable; basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: avPlayer.seekBackward() }
+            ConfluencePixmapButton { enabled: avPlayer.seekable; basePixmap: "OSDRewindNF"; focusedPixmap: "OSDRewindFO"; onClicked: avPlayer.seekBackward() }
             ConfluencePixmapButton { basePixmap: "OSDStopNF"; focusedPixmap: "OSDStopFO"; onClicked: avPlayer.stop();}
             ConfluencePixmapButton {
                 id: playPauseButton
@@ -77,7 +77,7 @@ FocusScope {
                 focusedPixmap: avPlayer.paused ? "OSDPlayFO" : "OSDPauseFO"
                 onClicked: avPlayer.togglePlayPause()
             }
-            ConfluencePixmapButton { disabled: !avPlayer.seekable; basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: avPlayer.seekForward() }
+            ConfluencePixmapButton { enabled: avPlayer.seekable; basePixmap: "OSDForwardNF"; focusedPixmap: "OSDForwardFO"; onClicked: avPlayer.seekForward() }
             ConfluencePixmapButton { basePixmap: "OSDNextTrackNF"; focusedPixmap: "OSDNextTrackFO"; onClicked: avPlayer.playNext(); }
             Item { width: 100; height: 1; }
             Item { width: playPauseButton.width; height: 1; }
@@ -86,7 +86,7 @@ FocusScope {
                 focusedPixmap: !avPlayer.shuffle ? "OSDRandomOffFO" : "OSDRandomOnFO"
                 onClicked: avPlayer.shuffle = !avPlayer.shuffle
             }
-            ConfluencePixmapButton { basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
+            ConfluencePixmapButton { enabled: targetsList.count > 0; basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
             Keys.onUpPressed: root.close()
             Keys.onDownPressed: root.close()
         }

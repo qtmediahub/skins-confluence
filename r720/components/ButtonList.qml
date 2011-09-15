@@ -61,7 +61,7 @@ Flow {
         }
 
         //Propagate beyond spacers && deactivated items
-        (children[focusedIndex].disabled || children[focusedIndex].children.length == 0)
+        (!children[focusedIndex].enabled || children[focusedIndex].children.length == 0)
                 && !exceededUpper
                 && !exceededLower
             ? adjustIndex(delta)
