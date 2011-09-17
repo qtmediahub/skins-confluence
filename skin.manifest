@@ -1,0 +1,19 @@
+{
+    "resolutions": {
+        "720p": {
+            "file": "r720/main.qml"
+        }
+    },
+    
+    "default_resolution": "720p",
+
+    "screenshot": "screenshot.png",
+
+    "website": "http://www.qtmediahub.com/trac/Skins/Confluence",
+
+    "authors": [
+        { "name": "Girish Ramakrishnan", "email": "girish@forwardbias.in" },
+        { "name": "Donald Carr", "email": "sirspudd@gmail.com" }
+    ]
+}
+
