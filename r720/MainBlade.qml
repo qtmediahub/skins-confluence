@@ -54,6 +54,7 @@ Blade {
                 subMenuList.engine = null
             }
         }
+        onActivated: { console.log('activated'); confluence.setActiveEngine(index) }
     }
 
     children: Blade {

@@ -31,6 +31,7 @@ FocusScope {
     property alias buttonGridX : buttonGrid.x
 
     signal openSubMenu
+    signal activated(int index)
 
     Component.onCompleted: {
         if (runtime.config.isEnabled("menu-soundeffects", false)) {
@@ -73,7 +74,7 @@ FocusScope {
             if (menuSoundEffect) menuSoundEffect.play()
         }
 
-        Keys.onEnterPressed: currentItem.trigger()
+        Keys.onEnterPressed: rootMenu.activated(currentIndex)
         Keys.onLeftPressed:  playMediaButton.forceActiveFocus()
         Keys.onRightPressed: playMediaButton.forceActiveFocus()
     }

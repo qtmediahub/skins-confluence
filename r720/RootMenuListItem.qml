@@ -46,10 +46,6 @@ Item {
         }
     ]
 
-    function trigger() {
-        confluence.setActiveEngine(index)
-    }
-
     MouseArea {
         id: mr
         anchors.fill: menuItem
@@ -59,9 +55,7 @@ Item {
             rootMenuList.currentIndex = index
             rootMenuList.forceActiveFocus()
         }
-        onClicked: {
-            trigger()
-        }
+        onClicked: menuItem.ListView.view.activated(index)
     }
 
     ConfluenceText {
