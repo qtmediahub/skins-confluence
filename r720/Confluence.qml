@@ -95,8 +95,8 @@ FocusScope {
                 panel.anchors.centerIn = engine.window
                 var app = createQmlObjectFromFile(engine.appUrl, {})
                 var item = Qt.createQmlObject("import QtQuick 1.0; Item { }", panel.contentItem)
-                item.width = (function() { return engine.window.width - 60 })
-                item.height = (function() { return engine.window.height - 60 })
+                item.width = (function() { return engine.window ? engine.window.width - 60 : undefined })
+                item.height = (function() { return engine.window ? engine.window.height - 60 : undefined })
                 app.parent = item
                 app.forceActiveFocus()
             }
