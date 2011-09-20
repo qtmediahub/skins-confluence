@@ -86,6 +86,11 @@ FocusScope {
                 focusedPixmap: !avPlayer.shuffle ? "OSDRandomOffFO" : "OSDRandomOnFO"
                 onClicked: avPlayer.shuffle = !avPlayer.shuffle
             }
+            ConfluencePixmapButton {
+                basePixmap:    avPlayer.mediaPlaylist.wrapAround ? "OSDRepeatAllNF" : "OSDRepeatOneNF"
+                focusedPixmap: avPlayer.mediaPlaylist.wrapAround ? "OSDRepeatAllFO" : "OSDRepeatOneFO"
+                onClicked: avPlayer.mediaPlaylist.wrapAround = !avPlayer.mediaPlaylist.wrapAround
+            }
             ConfluencePixmapButton { enabled: targetsList.count > 0; basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
             Keys.onUpPressed: root.close()
             Keys.onDownPressed: root.close()
