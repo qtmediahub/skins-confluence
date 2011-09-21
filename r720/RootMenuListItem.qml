@@ -29,6 +29,8 @@ Item {
     property alias textColor: entry.color
     property alias text: entry.text
 
+    signal activated(int index)
+
     anchors.right: parent.right
     states: [
         State {
@@ -55,8 +57,10 @@ Item {
             rootMenuList.currentIndex = index
             rootMenuList.forceActiveFocus()
         }
-        onClicked: menuItem.ListView.view.activated(index)
+        onClicked: menuItem.activated(index)
     }
+
+    Keys.onEnterPressed: menuItem.activated(index)
 
     ConfluenceText {
         id: entry

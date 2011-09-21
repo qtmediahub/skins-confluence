@@ -66,15 +66,15 @@ FocusScope {
         }
 
         model: confluence.rootMenuModel
-        delegate:
-            RootMenuListItem { }
+        delegate: RootMenuListItem {
+            onActivated: rootMenu.activated(index)
+        }
 
         onCurrentIndexChanged: {
             if (currentItem) confluence.setBackground(currentItem.background)
             if (menuSoundEffect) menuSoundEffect.play()
         }
 
-        Keys.onEnterPressed: rootMenu.activated(currentIndex)
         Keys.onLeftPressed:  playMediaButton.forceActiveFocus()
         Keys.onRightPressed: playMediaButton.forceActiveFocus()
     }
