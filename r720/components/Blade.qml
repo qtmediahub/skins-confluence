@@ -88,10 +88,8 @@ FocusScope {
         }
     ]
 
-    Keys.onPressed: {
-        root.close()
-        event.accepted = true
-    }
+    Keys.onContext1Pressed: root.close()
+    Keys.onMenuPressed: root.close()
 
     Item {
         id: blade
