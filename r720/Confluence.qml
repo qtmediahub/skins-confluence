@@ -230,10 +230,6 @@ FocusScope {
         } else if (event.key == Qt.Key_Context1) {
             if (_openWindow && _openWindow.maximizable && state == "showingSelectedElement")
                 _openWindow.maximized = true
-        } else if (event.key == Qt.Key_Context2) {
-            showAboutWindow()
-        } else if (event.key == Qt.Key_Context3) {
-            showSystemInfoWindow()
         } else {
             event.accepted = false
         }
