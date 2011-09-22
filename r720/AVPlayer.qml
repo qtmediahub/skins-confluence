@@ -116,25 +116,6 @@ QMHPlayer {
                 opacity: 1
                 z: 5000
             }
-            PropertyChanges {
-                target: targetsList
-                opacity: 1
-            }
-            StateChangeScript {
-                name: "targetsListFocus"
-                script: targetsList.forceActiveFocus()
-            }
-            PropertyChanges {
-                target: targetsText
-                opacity: 1
-            }
-            PropertyChanges {
-                target: mediaElement
-                width: root.width/2.0
-                height: root.height/2.0
-                x: 0
-                y: root.height/2.0 - mediaElement.height/2.0
-            }
         }
     ]
 
@@ -263,7 +244,7 @@ QMHPlayer {
         onShowPlayList: showDialog(playListDialog);
         onShowVideoMenu: showDialog(videoListDialog);
         onShowMusicMenu: showDialog(musicListDialog);
-        onShowTargets: root.state = "targets"
+        onShowTargets: showDialog(targetsListDialog);
     }
 
     AVPlayerInfoOSD {
@@ -411,86 +392,73 @@ QMHPlayer {
         }
     }
 
-    ConfluenceText {
-        id: targetsText
-        text: qsTr("Send current Movie to Device")
-        opacity: 0
-        anchors.horizontalCenter: mediaElement.horizontalCenter
-        anchors.bottom: mediaElement.top
-        anchors.bottomMargin: 50
-    }
-
-    RpcConnection {
-        id: rpcClient
-        property string source
-        property int position
-
-        onClientConnected: {
-            rpcClient.call("qmhmediaplayer.playRemoteSource", source, position)
-            disconnectFromHost();
-        }
-
-        function send(ip, port, src, pos) {
-            source = src
-            position = pos
-            connectToHost(ip, port);
-        }
-    }
-
-    ConfluenceListView {
-        id: targetsList
-        width: root.width - mediaElement.width - 50
-        height: root.height-100
-        anchors.centerIn: undefined
-        anchors.left: mediaElement.right
-        anchors.leftMargin: 25
-        anchors.verticalCenter: mediaElement.verticalCenter
-        model: runtime.remoteSessionsModel
+    Dialog {
+        id: targetsListDialog
+        width: parent.width/1.5
+        height: parent.height/1.5
+        title: qsTr("Send current Movie to Device")
         opacity: 0
 
-        delegate: Item {
-            id: delegateItem
-            width: ListView.view.width
-            height: sourceText.height + 8
+        ConfluenceListView {
+            id: targetsList
+            anchors.fill: parent
+            model: runtime.remoteSessionsModel
 
-            function action() {
-                if (root.hasVideo)
-                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + avPlayer.mediaInfo.mediaId, root.position)
-                else
-                    rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/music/" + avPlayer.mediaInfo.mediaId, root.position)
+            delegate: Item {
+                id: delegateItem
+                width: ListView.view.width
+                height: sourceText.height + 8
+
+                function action() {
+                    if (root.hasVideo)
+                        rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/video/" + avPlayer.mediaInfo.mediaId, root.position)
+                    else
+                        rpcClient.send(model.address, model.port, "http://" + runtime.httpServer.address + ":" + runtime.httpServer.port + "/music/" + avPlayer.mediaInfo.mediaId, root.position)
+                }
+
+                Image {
+                    id: backgroundImage
+                    anchors.fill: parent;
+                    source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
+                }
+
+                ConfluenceText {
+                    id: sourceText
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: model.display ? model.display : ""
+                }
+
+                MouseArea {
+                    anchors.fill: parent;
+                    hoverEnabled: true
+                    onEntered: delegateItem.ListView.view.currentIndex = index
+                    onClicked: delegateItem.action()
+                }
+
+                Keys.onEnterPressed: delegateItem.action()
             }
-
-            Image {
-                id: backgroundImage
-                anchors.fill: parent;
-                source: themeResourcePath + "/media/" + (delegateItem.ListView.isCurrentItem ? "MenuItemFO.png" : "MenuItemNF.png");
-            }
-
-            Text {
-                id: sourceText
-                anchors.verticalCenter: parent.verticalCenter
-                z: 1 // ensure it is above the background
-                text: model.display ? model.display : ""
-                font.pointSize: 16
-                font.weight: Font.Light
-                color: "white"
-            }
-
-            MouseArea {
-                anchors.fill: parent;
-                hoverEnabled: true
-                onEntered: delegateItem.ListView.view.currentIndex = index
-                onClicked: delegateItem.action()
-            }
-
-            Keys.onEnterPressed: delegateItem.action()
         }
 
-        Keys.onMenuPressed: root.forceActiveFocus()
-        Keys.onLeftPressed: {}
-        Keys.onRightPressed: {}
+        Keys.onMenuPressed: musicListDialog.close()
         Keys.onUpPressed: {}
         Keys.onDownPressed: {}
+
+        RpcConnection {
+            id: rpcClient
+            property string source
+            property int position
+
+            onClientConnected: {
+                rpcClient.call("qmhmediaplayer.playRemoteSource", source, position)
+                disconnectFromHost();
+            }
+
+            function send(ip, port, src, pos) {
+                source = src
+                position = pos
+                connectToHost(ip, port);
+            }
+        }
     }
 }
 
