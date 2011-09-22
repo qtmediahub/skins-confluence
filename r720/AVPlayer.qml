@@ -332,10 +332,6 @@ QMHPlayer {
                 videoListDialog.close()
             }
         }
-
-        Keys.onMenuPressed: videoListDialog.close()
-        Keys.onUpPressed: {}
-        Keys.onDownPressed: {}
     }
 
     MediaModel {
@@ -363,10 +359,6 @@ QMHPlayer {
                 videoListDialog.close()
             }
         }
-
-        Keys.onMenuPressed: musicListDialog.close()
-        Keys.onUpPressed: {}
-        Keys.onDownPressed: {}
     }
 
     Dialog {
@@ -385,10 +377,6 @@ QMHPlayer {
                 root.playIndex(currentIndex)
                 playListDialog.close()
             }
-
-            Keys.onMenuPressed: playListDialog.close()
-            Keys.onUpPressed: {}
-            Keys.onDownPressed: {}
         }
     }
 
@@ -438,10 +426,6 @@ QMHPlayer {
                 Keys.onEnterPressed: delegateItem.action()
             }
         }
-
-        Keys.onMenuPressed: musicListDialog.close()
-        Keys.onUpPressed: {}
-        Keys.onDownPressed: {}
 
         RpcConnection {
             id: rpcClient

@@ -153,5 +153,9 @@ FocusScope {
     }
 
     Keys.onMenuPressed: root.reject()
+    Keys.onUpPressed: {}
+    Keys.onDownPressed: {}
+    Keys.onLeftPressed: {}
+    Keys.onRightPressed: {}
 }
 
