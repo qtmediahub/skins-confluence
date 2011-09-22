@@ -245,7 +245,7 @@ QMHPlayer {
         ProgressBar {
             anchors.verticalCenter: volumeImage.verticalCenter
             width: confluence.width/10
-            mProgress: root.volume
+            progress: root.volume
         }
     }
 

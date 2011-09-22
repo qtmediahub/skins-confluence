@@ -135,7 +135,7 @@ FocusScope {
 
         ProgressBar {
             width: parent.width
-            mProgress: avPlayer.duration != 0 ? avPlayer.position/avPlayer.duration : 1.0
+            progress: avPlayer.duration != 0 ? avPlayer.position/avPlayer.duration : 1.0
         }
 
         Item {

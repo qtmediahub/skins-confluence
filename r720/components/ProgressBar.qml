@@ -22,7 +22,7 @@ import QtQuick 1.1
 BorderImage {
     id: root
 
-    property real mProgress : 0.3
+    property real progress : 0.3
 
     source: themeResourcePath + "/media/OSDProgressBack.png"
     border { left: 8; top: 8; right: 8; bottom: 8 }
@@ -33,7 +33,7 @@ BorderImage {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
-        width: parent.width*mProgress < 16 ? 16 : parent.width*mProgress
+        width: parent.width*progress < 16 ? 16 : parent.width*progress
 
         source: themeResourcePath + "/media/OSDProgressMid.png"
         border { left: 8; top: 8; right: 8; bottom: 8 }

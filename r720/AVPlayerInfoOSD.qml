@@ -62,7 +62,7 @@ FocusScope {
                 }
                 ProgressBar {
                     width: 200
-                    mProgress: avPlayer.position/avPlayer.duration
+                    progress: avPlayer.position/avPlayer.duration
                 }
             }
 
