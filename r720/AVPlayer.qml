@@ -307,26 +307,25 @@ QMHPlayer {
         }
     }
 
-    MediaModel {
-        id: videoModel
-        mediaType: "video"
-        structure: "title"
-    }
 
     Dialog {
         id: videoListDialog
         width: parent.width/1.5
         height: parent.height/1.5
         title: qsTr("Videos")
-        opacity: 0
+
+        MediaModel {
+            id: videoModel
+            mediaType: "video"
+            structure: "show|season|title"
+        }
 
         ConfluenceListView {
             id: videoListPanel
-
-            anchors.fill: parent;
+            anchors.fill: parent
             model: videoModel
-            clip: true
-            focus: true;
+            focus: true
+
             onActivated: {
                 root.play(videoModel, videoListPanel.currentIndex)
                 videoListDialog.close()
@@ -334,29 +333,27 @@ QMHPlayer {
         }
     }
 
-    MediaModel {
-        id: musicModel
-        mediaType: "music"
-        structure: "artist|album|title"
-    }
-
     Dialog {
         id: musicListDialog
         width: parent.width/1.5
         height: parent.height/1.5
         title: qsTr("Music")
-        opacity: 0
+
+        MediaModel {
+            id: musicModel
+            mediaType: "music"
+            structure: "artist|album|title"
+        }
 
         ConfluenceListView {
             id: musicListPanel
-
-            anchors.fill: parent;
+            anchors.fill: parent
             model: musicModel
-            clip: true
-            focus: true;
+            focus: true
+
             onActivated: {
                 root.play(musicModel, musicListPanel.currentIndex)
-                videoListDialog.close()
+                musicListDialog.close()
             }
         }
     }
@@ -366,12 +363,12 @@ QMHPlayer {
         width: parent.width/1.5
         height: parent.height/1.5
         title: qsTr("Playlist")
-        opacity: 0
 
         ConfluenceListView {
             id: playListPanel
             anchors.fill: parent
             model: root.mediaPlaylist
+            focus: true
 
             onActivated: {
                 root.playIndex(currentIndex)
@@ -385,7 +382,6 @@ QMHPlayer {
         width: parent.width/1.5
         height: parent.height/1.5
         title: qsTr("Send current Movie to Device")
-        opacity: 0
 
         ConfluenceListView {
             id: targetsList
