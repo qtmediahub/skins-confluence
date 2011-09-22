@@ -128,7 +128,6 @@ Window {
 
                 scrollbar: false
                 focus: true
-                clip: true
                 model: cityList
 
                 delegate: Item {

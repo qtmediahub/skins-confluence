@@ -48,8 +48,7 @@ Item {
         ConfluenceListView {
             id: sourcesListView
             anchors.fill: parent
-            model: mediaModel 
-            clip: true
+            model: mediaModel
             focus: true
             onCurrentItemChanged:
                 mediaWindow.itemSelected(currentItem)

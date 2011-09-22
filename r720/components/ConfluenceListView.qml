@@ -30,7 +30,7 @@ ListView {
     property alias scrollbarItem: verticalScrollBar
 
     keyNavigationWraps: confluence.standardItemViewWraps
-
+    clip: true
     highlightRangeMode: confluence.standardHighlightRangeMode
     highlightMoveDuration: confluence.standardHighlightMoveDuration
 

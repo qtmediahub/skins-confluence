@@ -32,12 +32,11 @@ ConfluenceListView {
         return visualDataModel.modelIndex(currentIndex);
     }
 
-    model : visualDataModel
-    clip: true
+    model: visualDataModel
 
     VisualDataModel {
         id: visualDataModel
-        delegate : TreeViewDelegate { }
+        delegate: TreeViewDelegate { }
     }
 }
 
