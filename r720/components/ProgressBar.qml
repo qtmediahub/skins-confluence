@@ -38,5 +38,9 @@ BorderImage {
         source: themeResourcePath + "/media/OSDProgressMid.png"
         border { left: 8; top: 8; right: 8; bottom: 8 }
         horizontalTileMode: BorderImage.Repeat
+
+        Behavior on width {
+            NumberAnimation {}
+        }
     }
 }
