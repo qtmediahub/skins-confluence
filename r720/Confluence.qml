@@ -435,6 +435,16 @@ FocusScope {
         }
     }
 
+    VolumeOSD {
+        id: volumeOSD
+
+        player: avPlayer
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.rightMargin: 20
+        z: UIConstants.screenZValues.diplomaticImmunity
+    }
+
     FPSItem {
         visible: runtime.config.isEnabled("fps", false)
     }

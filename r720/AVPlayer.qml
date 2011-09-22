@@ -36,11 +36,6 @@ QMHPlayer {
         }
     }
 
-    function showVolumeOSD() {
-        volumeOSD.state = "visible"
-        volumeOSDTimer.restart()
-    }
-
     function playForeground(mediaModel, row) {
         d.queuedShow = true
         root.play(mediaModel, row)
@@ -69,9 +64,7 @@ QMHPlayer {
     onPositionChanged: {
         audioVisualisationPlaceholder.metronomTick()
     }
-    onVolumeChanged: {
-        root.showVolumeOSD();
-    }
+
     onStatusChanged: {
         if (d.queuedShow && root.status == AbstractMediaPlayer.Buffered) {
             handlePendingShow()
@@ -79,6 +72,7 @@ QMHPlayer {
             playNext();
         }
     }
+
     onPlayingChanged: {
         if (root.playing && d.queuedShow)
             handlePendingShow()
@@ -170,15 +164,6 @@ QMHPlayer {
     }
 
     Timer {
-        id: volumeOSDTimer
-        interval: runtime.config.value("osd-timeout", 3000)
-        running: volumeOSD.state == "visible"
-
-        repeat: false
-        onTriggered: volumeOSD.state = ""
-    }
-
-    Timer {
         id: osdInfoTimer
         interval: runtime.config.value("osd-timeout", 3000)
 
@@ -194,39 +179,6 @@ QMHPlayer {
         color: "black"
         visible: !runtime.config.value("overlay-mode", false) && avPlayer.hasVideo
         z: -1
-    }
-
-    Row {
-        id: volumeOSD
-
-        states:
-            State {
-                name: "visible"
-                PropertyChanges {
-                    target: volumeOSD.anchors
-                    topMargin: 50
-                }
-            }
-
-        transitions:
-            Transition {
-                NumberAnimation { property: "topMargin" }
-            }
-
-        z: background.z + 2
-
-        anchors { right: parent.right; rightMargin: 80; top: parent.top; topMargin: -volumeOSD.height; }
-
-        Image {
-            id: volumeImage
-            source: themeResourcePath + "/media/VolumeIcon.png"
-        }
-
-        ProgressBar {
-            anchors.verticalCenter: volumeImage.verticalCenter
-            width: confluence.width/10
-            progress: root.volume
-        }
     }
 
     ParticleVisualization {
