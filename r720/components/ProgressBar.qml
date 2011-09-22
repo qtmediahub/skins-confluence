@@ -33,7 +33,7 @@ BorderImage {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
-        width: parent.width*progress < 16 ? 16 : parent.width*progress
+        width: parent.width*parent.progress < 16 ? 16 : parent.width*parent.progress
 
         source: themeResourcePath + "/media/OSDProgressMid.png"
         border { left: 8; top: 8; right: 8; bottom: 8 }
