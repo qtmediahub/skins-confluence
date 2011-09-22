@@ -70,7 +70,6 @@ QMHPlayer {
         audioVisualisationPlaceholder.metronomTick()
     }
     onVolumeChanged: {
-        runtime.config.setValue("media-volume", root.volume)
         root.showVolumeOSD();
     }
     onStatusChanged: {
