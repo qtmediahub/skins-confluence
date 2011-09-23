@@ -117,6 +117,7 @@ FocusScope {
         if (_openWindow && _openWindow != element) {
             _openWindow.close()
             if (_openWindow.deleteOnClose) {
+                rootMenuModel.get(_openWindowIndex).window = null
                 _openWindow = null
                 _openWindowIndex = 0
             }
