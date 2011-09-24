@@ -54,7 +54,7 @@ FocusScope {
 
         Image {
             id: thumbnail
-            source: avPlayer.mediaInfo.thumbnail === "" ? themeResourcePath + "/media/" + "DefaultAlbumCover.png" : avPlayer.mediaInfo.thumbnail
+            source: avPlayer.thumbnail === "" ? themeResourcePath + "/media/" + "DefaultAlbumCover.png" : avPlayer.thumbnail
             anchors.fill: parent
             anchors.margins: 6
 
@@ -81,7 +81,7 @@ FocusScope {
             height: childrenRect.height
 
             ConfluenceText {
-                text: avPlayer.mediaInfo.artist + "  -  " + avPlayer.mediaInfo.album
+                text: avPlayer.artist + "  -  " + avPlayer.album
                 color: "white"
                 font.bold: false
                 anchors.left: parent.left
@@ -98,7 +98,7 @@ FocusScope {
 //        }
 
         ConfluenceText {
-            text: avPlayer.mediaInfo.title
+            text: avPlayer.title
             color: "white"
             font.bold: true
             anchors.left: parent.left
@@ -114,7 +114,7 @@ FocusScope {
             height: childrenRect.height
 
             ConfluenceText {
-                text: avPlayer.mediaInfo.track ? qsTr("TRACK:") + avPlayer.mediaInfo.track : ""
+                text: avPlayer.track ? qsTr("TRACK:") + avPlayer.track : ""
                 color: "gray"
                 anchors.left: parent.left
             }

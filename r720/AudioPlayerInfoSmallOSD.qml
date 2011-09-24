@@ -47,19 +47,19 @@ Item {
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: avPlayer.mediaInfo.artist
+                text: avPlayer.artist
                 color: "white"
                 font.bold: true
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: avPlayer.mediaInfo.album
+                text: avPlayer.album
                 color: "white"
                 font.pointSize: 16
                 anchors.right: parent.right
             }
             ConfluenceText {
-                text: avPlayer.mediaInfo.title
+                text: avPlayer.title
                 color: "white"
                 font.bold: true
                 anchors.right: parent.right
@@ -81,7 +81,7 @@ Item {
 
             Image {
                 id: thumbnail
-                source: avPlayer.mediaInfo.thumbnail === "" ? themeResourcePath + "/media/" + "DefaultAlbumCover.png" : avPlayer.mediaInfo.thumbnail
+                source: avPlayer.thumbnail === "" ? themeResourcePath + "/media/" + "DefaultAlbumCover.png" : avPlayer.thumbnail
                 anchors.fill: parent
                 anchors.margins: 6
 
