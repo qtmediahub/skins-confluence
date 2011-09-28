@@ -216,7 +216,7 @@ Window {
                 ConfluenceText {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("WEATHER FORECAST")
-                    font.pixelSize: root.height/24  //40
+                    font.pixelSize: parent.width/11
                 }
 
                 Item {
