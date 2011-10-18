@@ -17,6 +17,10 @@
     "authors": [
         { "name": "Girish Ramakrishnan", "email": "girish@forwardbias.in" },
         { "name": "Donald Carr", "email": "sirspudd@gmail.com" }
+    ],
+
+    "settings": [
+        { "name": "shroom", "value": "false", "doc": "toggle shroomfluence" }
     ]
 }
 
