@@ -20,7 +20,7 @@
     ],
 
     "settings": [
-        { "name": "shroom", "value": "false", "doc": "toggle shroomfluence" }
+        { "name": "shroom", "default_value": "false", "doc": "toggle shroomfluence" }
     ]
 }
 
