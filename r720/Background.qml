@@ -25,42 +25,57 @@ Item {
     id: root
     z: UIConstants.screenZValues.background
 
+    property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
+
+    ListModel {
+        id: imagesModel
+    }
+
     function setBackground(source) {
-        if (visible) {
-            d.source = source
+        var index = -1;
+
+        for (var i = 0; i < imagesModel.count; ++i) {
+            if (imagesModel.get(i).imageSource == source) {
+                index = i;
+            }
+            imagesModel.get(i).opacity = 0
+        }
+
+        if (index !== -1) {
+            imagesModel.get(index).opacity = 1
         } else {
-            d.pendingSource = source
+            imagesModel.append({imageSource: source, opacity: 0})
+            // explicitly set opacity again, to trigget fade animation
+            imagesModel.get(imagesModel.count-1).opacity = 1
         }
     }
 
-    QtObject {
-        id: d
-        property string source
-        property string pendingSource
+    Rectangle {
+        anchors.fill: parent
+        visible: runtime.config.value("overlay-mode", true)
+        color: "black"
     }
 
-    ImageCrossFader {
-        id: fader
-        fillMode: Image.PreserveAspectCrop
-        property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
-        anchors.fill: parent;
-        source: if (themeResourcePath && d.source) {
+    Repeater {
+        model: imagesModel
+        anchors.fill: parent
+        delegate: Image {
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectCrop
+            asynchronous: true
+            opacity: model.opacity
+            source: {
+                if (imageSource) {
                     // check if source is an absolute path
-                    d.source[0] == '/' ? d.source : backgroundPath + d.source
+                    return imageSource[0] == '/' ? imageSource : root.backgroundPath + imageSource
                 } else {
-                    backgroundPath + "media-overlay.png"
+                    return root.backgroundPath + "media-overlay.png"
                 }
-        onVisibleChanged:
-            if (visible && (d.pendingSource != "")) {
-                fader.source = d.pendingSource
-                d.pendingSource = ""
             }
 
-        Rectangle {
-            anchors.fill: parent
-            visible: runtime.config.value("overlay-mode", true)
-            color: "black"
-            z: -1
+            Behavior on opacity {
+                NumberAnimation { duration: 500 }
+            }
         }
     }
 }
