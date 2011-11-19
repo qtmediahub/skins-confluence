@@ -66,7 +66,7 @@ Item {
         id: entry
 
         anchors.right: parent.right
-        anchors.rightMargin: 20
+        anchors.rightMargin: font.pixelSize // keep margin in sync with pixelSize
 
         transformOrigin: Item.Right
         opacity: 0.3

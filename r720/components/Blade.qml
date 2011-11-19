@@ -115,7 +115,6 @@ FocusScope {
             Item {
                 id: content
                 focus: true
-                anchors { right: parent.right; rightMargin: bladeRightMargin }
                 width: parent.width; height: parent.height
             }
         }
