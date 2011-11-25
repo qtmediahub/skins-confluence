@@ -156,7 +156,7 @@ QMHPlayer {
 
     Timer {
         id: osdTimer
-        interval: runtime.config.value("osd-timeout", 3000)
+        interval: runtime.skin.settings.osdTimeout
         running: controlOSD.state == "visible"
 
         repeat: false
@@ -165,7 +165,7 @@ QMHPlayer {
 
     Timer {
         id: osdInfoTimer
-        interval: runtime.config.value("osd-timeout", 3000)
+        interval: runtime.skin.settings.osdTimeout
 
         repeat: false
         onTriggered: d.seeking = false
@@ -177,7 +177,7 @@ QMHPlayer {
         id: backgroundFiller
         anchors.fill: parent
         color: "black"
-        visible: !runtime.config.value("overlay-mode", false) && avPlayer.hasVideo
+        visible: !runtime.settings.overlayMode && avPlayer.hasVideo
         z: -1
     }
 
@@ -185,7 +185,7 @@ QMHPlayer {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
         //Removing particles until backends report video content correctly
-        visible: !root.hasVideo && !runtime.config.value("overlay-mode", false)
+        visible: !root.hasVideo && !runtime.settings.overlayMode
         running: visible && root.playing
     }
 

@@ -28,7 +28,9 @@ Window {
 
     signal itemActivated(variant mediaItem)
     signal itemSelected(variant mediaItem)
-    property alias view: viewLoader.item
+    property alias view : viewLoader.item
+    property string viewType : "POSTER"
+    property string groupBy : "None"
     property variant mediaWindowRipple
     property Item informationSheet
 
@@ -80,7 +82,7 @@ Window {
         mediaModel.dotDotPosition = dotDotPosition
 
         blade.viewAction.currentOptionIndex = blade.viewAction.options.indexOf(viewType)
-        runtime.config.setValue(mediaModel.mediaType + "-currentview", viewType)
+        mediaWindow.viewType = viewType
         view.currentIndex = currentIndex
     }
 
@@ -89,7 +91,6 @@ Window {
         if (index == -1)
             index = 0
         blade.groupByAction.currentOptionIndex = index
-        runtime.config.setValue(mediaModel.mediaType + "-group-by", attribute)
         mediaModel.structure = structures[index]
     }
 
@@ -228,8 +229,8 @@ Window {
     }
 
     Component.onCompleted: {
-        setCurrentView(runtime.config.value(mediaModel.mediaType + "-currentview", "POSTER"))
-        setGroupBy(runtime.config.value(mediaModel.mediaType + "-group-by", "None"))
+        setCurrentView(mediaWindow.viewType)
+        setGroupBy(mediaWindow.groupBy)
         if (confluence.shroomfluence)
             mediaWindowRipple = confluence.createQmlObjectFromFile("MediaWindowRipple.qml", {}, root)
     }

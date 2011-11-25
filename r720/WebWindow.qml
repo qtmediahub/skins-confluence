@@ -80,20 +80,21 @@ Window {
                 url: defaultUrl
                 focus: true
                 settings.sansSerifFontFamily : "DejaVu Sans"
-                settings.javaEnabled: runtime.config.isEnabled("wk-java", false)
-                settings.javascriptCanAccessClipboard: runtime.config.isEnabled("wk-js-clipboard", false)
-                settings.javascriptCanOpenWindows: runtime.config.isEnabled("wk-js-windows", false)
-                settings.javascriptEnabled: runtime.config.isEnabled("wk-js", true)
-                settings.linksIncludedInFocusChain: runtime.config.isEnabled("wk-focus-links", true)
-                settings.localContentCanAccessRemoteUrls: runtime.config.isEnabled("wk-local-acc-remote", true)
-                settings.localStorageDatabaseEnabled: runtime.config.isEnabled("wk-local-store", true)
-                settings.offlineStorageDatabaseEnabled: runtime.config.isEnabled("wk-offline-store", true)
-                settings.offlineWebApplicationCacheEnabled: runtime.config.isEnabled("wk-web-app-cache", true)
-                settings.printElementBackgrounds: runtime.config.isEnabled("wk-print-bg", false)
-                settings.privateBrowsingEnabled: runtime.config.isEnabled("wk-private", false)
-                settings.zoomTextOnly: runtime.config.isEnabled("wk-zoom-text", false)
-                settings.pluginsEnabled: runtime.config.isEnabled("wk-plugins", false)
-                settings.autoLoadImages: runtime.config.isEnabled("wk-auto-load-images", true)
+                // please add to skin.manifest settings if we really want to have everything configurable
+                settings.javaEnabled: false
+                settings.javascriptCanAccessClipboard: false
+                settings.javascriptCanOpenWindows: false
+                settings.javascriptEnabled: true
+                settings.linksIncludedInFocusChain: true
+                settings.localContentCanAccessRemoteUrls: true
+                settings.localStorageDatabaseEnabled: true
+                settings.offlineStorageDatabaseEnabled: true
+                settings.offlineWebApplicationCacheEnabled: true
+                settings.printElementBackgrounds: false
+                settings.privateBrowsingEnabled: false
+                settings.zoomTextOnly: false
+                settings.pluginsEnabled: false
+                settings.autoLoadImages: true
 
                 preferredWidth: webViewport.width
                 //Need a default/initial value in excess of what I eventually require

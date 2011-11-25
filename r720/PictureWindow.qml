@@ -28,6 +28,8 @@ MediaWindow {
     mediaModel.mediaType: "picture"
     groupByOptions : [ qsTr("Title"), qsTr("Date") ]
     structures : [ "title", "year|month|title" ]
+    viewType : runtime.skin.settings.pictureView
+    groupBy : runtime.skin.settings.pictureGroupBy
 
     function play() {
         playlist.clear()

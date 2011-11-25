@@ -27,5 +27,7 @@ MediaWindow {
     mediaModel.mediaType: "video"
     groupByOptions : [ qsTr("Show") ]
     structures : [ "show|season|title" ]
+    viewType : runtime.skin.settings.videoView
+    groupBy : runtime.skin.settings.videoGroupBy
 }
 

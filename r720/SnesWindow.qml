@@ -27,6 +27,8 @@ MediaWindow {
     mediaModel.mediaType: "snes"
     groupByOptions : [ qsTr("Title") ]
     structures : [ "title" ]
+    viewType : runtime.skin.settings.snesView
+    groupBy : runtime.skin.settings.snesGroupBy
 
     function play() {
         //snes9x does not have a means to launch fullscreen?

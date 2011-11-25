@@ -17,7 +17,7 @@ Item {
 
     Timer {
         id: settleTimer
-        interval: runtime.config.value("splash-time", 1)
+        interval: 1
         onTriggered: confluenceEntry.load()
     }
 

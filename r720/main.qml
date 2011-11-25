@@ -63,8 +63,8 @@ Item {
     }
 
     Component.onCompleted: {
-        if (runtime.config.isEnabled("splash", true)) {
-            if (runtime.config.isEnabled("shroom", false)) {
+        if (runtime.skin.settings.splash) {
+            if (runtime.skin.settings.shroom) {
                 splashLoader.source = "ShaderSplashScreen.qml"
             } else {
                 splashLoader.source = "SplashScreen.qml"

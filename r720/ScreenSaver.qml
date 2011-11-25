@@ -11,7 +11,7 @@ Item {
         target: runtime.window
         onInputIdle: {
             if (avPlayer.playing
-                || !runtime.config.isEnabled("screensaver", false)
+                || !runtime.skin.settings.screensaver
                 || !Qt.application.active)
                 return
             var list = runtime.file.findFiles(runtime.skin.path + "/screensavers", ["*.qml"])

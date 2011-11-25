@@ -28,5 +28,7 @@ MediaWindow {
     mediaModel.mediaType: "music"
     groupByOptions : [ qsTr("Album"), qsTr("Artist"), qsTr("Genre"), qsTr("Song") ]
     structures : [ "album,artist|title", "artist|album|title", "genre|album,artist|title", "title" ]
+    viewType : runtime.skin.settings.musicView
+    groupBy : runtime.skin.settings.musicGroupBy
 }
 

@@ -27,15 +27,12 @@ Window {
 
     anchors.fill: parent
 
-    property string city: runtime.config.value("weather-city", "Amsterdam")
-
     function fahrenheit2celsius(f) {
         return ((f-32)*5/9.0).toFixed(0);
     }
 
     function showCast(name) {
-        city=name;
-        runtime.config.setValue("weather-city", city)
+        runtime.skin.settings.weatherCity = name;
         weather.opacity=1.0;
     }
 
@@ -176,7 +173,7 @@ Window {
                 onLoaded: {
                     var tmp = weatherMeasurements.get(0);
                     var info = forecastInformation.get(0);
-                    item.cityName = root.city;
+                    item.cityName = runtime.skin.settings.weatherCity;
                     forecastLoader.item.present()
 
                     if (typeof info != "undefined" && typeof info.current_date_time != "undefined") {
@@ -326,7 +323,7 @@ Window {
 
     XmlListModel {
         id: forecastInformation
-        source: "http://www.google.com/ig/api?weather=" + city
+        source: "http://www.google.com/ig/api?weather=" + runtime.skin.settings.weatherCity
         query: "/xml_api_reply/weather/forecast_information"
 
         //forecast information
@@ -337,7 +334,7 @@ Window {
 
     XmlListModel {
         id: weatherMeasurements
-        source: "http://www.google.com/ig/api?weather=" + city
+        source: "http://www.google.com/ig/api?weather=" + runtime.skin.settings.weatherCity
         query: "/xml_api_reply/weather/current_conditions"
 
         onCountChanged: if (count > 0) root.loadForecastQml()
@@ -353,7 +350,7 @@ Window {
 
     XmlListModel {
         id: weatherForecast
-        source: "http://www.google.com/ig/api?weather=" + city
+        source: "http://www.google.com/ig/api?weather=" + runtime.skin.settings.weatherCity
         query: "/xml_api_reply/weather/forecast_conditions"
 
         XmlRole { name: "day_of_week"; query: "day_of_week/@data/string()" }

@@ -29,7 +29,7 @@ FocusScope {
     id: confluence
 
     property bool shroomfluence: runtime.skin.settings.shroom
-    property bool scalingAllowed: runtime.config.isEnabled("pixmap-scaling", true)
+    property bool scalingAllowed: runtime.skin.settings.pixmapScaling
     property real scalingCorrection: confluence.width == 1280 ? 1.0 : confluence.width/1280
 
     property string themeResourcePath: runtime.skin.path + "/3rdparty/skin.confluence/"
@@ -296,7 +296,7 @@ FocusScope {
             }
         }
 
-        if (runtime.config.isEnabled("wk-plugins", false)) {
+        if (runtime.skin.settings.webkitPlugins) {
             rootMenuItems.push({ name: qsTr("youtube"), window: _browserWindow,
                                  onActivate: function() { this.initialUrl = "http://www.youtube.com/xl" } })
         }
@@ -371,7 +371,7 @@ FocusScope {
         id: weatherHeader
 
         width: content.width + dateTimeHeader.width + 50
-        city: _weatherWindow.city
+        city: runtime.skin.settings.weatherCity
 
         MouseArea {
             anchors.fill: parent
@@ -443,7 +443,7 @@ FocusScope {
     }
 
     FPSItem {
-        visible: runtime.config.isEnabled("fps", false)
+        visible: runtime.skin.settings.showFPS
     }
 }
 

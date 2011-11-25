@@ -34,7 +34,7 @@ FocusScope {
     signal activated(int index)
 
     Component.onCompleted: {
-        if (runtime.config.isEnabled("menu-soundeffects", false)) {
+        if (runtime.skin.settings.soundEffects) {
             var menuSoundEffectLoader = Qt.createComponent("./components/ConfluenceAudio.qml");
             if (menuSoundEffectLoader.status == Component.Ready) {
                 menuSoundEffect = menuSoundEffectLoader.createObject(parent)
