@@ -51,7 +51,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        visible: runtime.settings.overlayMode
+        visible: !runtime.settings.overlayMode
         color: "black"
     }
 
