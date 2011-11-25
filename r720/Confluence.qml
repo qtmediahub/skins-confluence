@@ -278,7 +278,7 @@ FocusScope {
                 onActivate: function() { this.initialUrl = "http://qt.nokia.com"; this.enableBrowserShortcuts = true } },
         ]
 
-        var apps = runtime.file.findApplications()
+        var apps = runtime.apps.findApplications()
         for (var idx in apps) {
             var path = apps[idx]
             var manifest = createQmlObjectFromFile(path + "qmhmanifest.qml")
