@@ -268,7 +268,11 @@ FocusScope {
         _browserWindow = createQmlObjectFromFile("WebWindow.qml")
         _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
 
-        background = createQmlObjectFromFile("Background.qml")
+        if (runtime.skin.settings.memoryConscious) {
+            background = createQmlObjectFromFile("BackgroundOnDemand.qml")
+        } else {
+            background = createQmlObjectFromFile("Background.qml")
+        }
 
         var rootMenuItems = [
             { name: qsTr("Music"), mediaPlugin: "music", sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
