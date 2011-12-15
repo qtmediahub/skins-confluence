@@ -45,6 +45,7 @@ FocusScope {
     property variant rootMenuModel: ListModel { }
 
     // private
+    property variant background
     property variant _browserWindow
     property variant _ticker
     property variant _weatherWindow
@@ -267,6 +268,8 @@ FocusScope {
         _browserWindow = createQmlObjectFromFile("WebWindow.qml")
         _weatherWindow = createQmlObjectFromFile("WeatherWindow.qml")
 
+        background = createQmlObjectFromFile("Background.qml")
+
         var rootMenuItems = [
             { name: qsTr("Music"), mediaPlugin: "music", sourceUrl: "MusicWindow.qml", background: "music.jpg",  constructorArgs: { deleteOnClose: true } },
             { name: qsTr("Picture"), mediaPlugin: "picture", sourceUrl: "PictureWindow.qml", background: "pictures.jpg", constructorArgs: { deleteOnClose: true } },
@@ -323,12 +326,6 @@ FocusScope {
     Item {
         id: dummyItem
         visible: false
-    }
-
-    Background {
-        id: background
-        anchors.fill: parent;
-        visible: !avPlayer.playing
     }
 
     MainBlade {

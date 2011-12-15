@@ -23,6 +23,8 @@ import "./components/uiconstants.js" as UIConstants
 Item {
     id: root
     z: UIConstants.screenZValues.background
+    anchors.fill: parent;
+    visible: !avPlayer.playing
 
     property string backgroundPath: themeResourcePath + "/backgrounds/720p/"
 
