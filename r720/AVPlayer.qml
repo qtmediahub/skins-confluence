@@ -37,8 +37,8 @@ QMHPlayer {
     }
 
     function playForeground(mediaModel, row) {
-        d.queuedShow = true
         root.play(mediaModel, row)
+        d.queuedShow = true
     }
 
     function playBackground(mediaModel, row) {
