@@ -185,7 +185,7 @@ QMHPlayer {
         id: audioVisualisationPlaceholder
         anchors.fill: parent
         //Removing particles until backends report video content correctly
-        visible: !root.hasVideo && !runtime.settings.overlayMode
+        visible: !(root.hasVideo && runtime.settings.overlayMode)
         running: visible && root.playing
     }
 
