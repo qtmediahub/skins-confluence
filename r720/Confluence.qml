@@ -127,16 +127,14 @@ FocusScope {
         if (element == mainBlade) {
             state = ""
         } else if(element == avPlayer) {
-            //FIXME: These windows no longer exist (lazy loaded)
-            //Commented out until properly fixable
-//            if(!avPlayer.hasMedia) {
-//                if (typeof runtime.videoEngine != "undefined")
-//                    show(runtime.videoEngine.window)
-//                else if (typeof runtime.musicEngine != "undefined")
-//                    show(runtime.musicEngine.window)
-//            } else {
+            if(!avPlayer.hasMedia) {
+                if (typeof runtime.videoEngine != "undefined")
+                    show(runtime.videoEngine.window)
+                else if (typeof runtime.musicEngine != "undefined")
+                    show(runtime.musicEngine.window)
+            } else {
                 show(transparentVideoOverlay)
-//            }
+            }
         } else if (element == transparentVideoOverlay) {
             _openWindow = transparentVideoOverlay
             state = "showingSelectedElementMaximized"
