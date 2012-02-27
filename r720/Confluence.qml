@@ -292,6 +292,8 @@ FocusScope {
         for (var idx in apps) {
             var path = apps[idx]
             var manifest = createQmlObjectFromFile(path + "qmhmanifest.qml")
+            if (manifest === null)
+                continue;
             var uiType = manifest.ui.substring(manifest.ui.lastIndexOf('.')+1)
             if (uiType == "qml") {
                 rootMenuItems.push({ name: manifest.name, appUrl: path + manifest.ui, background: path + manifest.background,
