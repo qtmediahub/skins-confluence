@@ -69,7 +69,7 @@ QMHPlayer {
         if (d.queuedShow && root.status == AbstractMediaPlayer.Buffered) {
             handlePendingShow()
         } else if (status == AbstractMediaPlayer.EndOfMedia) {
-            playNext();
+            mediaPlaylist.next() != -1 ? playIndex(mediaPlaylist.currentIndex) : confluence.state = "";
         }
     }
 
