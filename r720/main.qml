@@ -23,6 +23,7 @@ Item {
     id: confluenceEntry
 
     anchors.fill: parent
+    property bool rational: loader.status == Loader.Ready
 
     Connections {
         target: runtime.window

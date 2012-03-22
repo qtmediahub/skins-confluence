@@ -91,7 +91,7 @@ FocusScope {
                 focusedPixmap: avPlayer.mediaPlaylist.wrapAround ? "OSDRepeatAllFO" : "OSDRepeatOneFO"
                 onClicked: avPlayer.mediaPlaylist.wrapAround = !avPlayer.mediaPlaylist.wrapAround
             }
-            ConfluencePixmapButton { enabled: runtime.remoteSessionsModel.count > 0; basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
+            ConfluencePixmapButton { enabled: runtime.remoteSessionsModel.count() > 0; basePixmap: "OSDRecordNF"; focusedPixmap: "OSDRecordFO"; onClicked: root.showTargets(); }
             Keys.onUpPressed: root.close()
             Keys.onDownPressed: root.close()
         }
